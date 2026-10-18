@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+
+const pains = [
+  'Zamówienia ze sklepu przepisujesz do BaseLinkera, Excela albo faktury — ręcznie, codziennie.',
+  'Ceny konkurencji sprawdzasz w kilku oknach i zapisujesz w arkuszu, który i tak się rozjeżdża.',
+  'Raport sprzedaży robisz w piątek wieczorem, zamiast wyjść do domu.',
+  'Faktury i dokumenty z maila lądują w folderze „do zrobienia”, bo nie ma kiedy ich uporządkować.',
+  'Nowy pracownik uczy się trzy dni, jak obsłużyć jedno zamówienie — i tak robi błędy.',
+];
+const services = [
+  { t: 'Integracje API', d: 'Sklep ↔ BaseLinker ↔ ERP ↔ arkusz. Zamówienia, stany, ceny i statusy bez przepisywania.', tag: 'e-commerce' },
+  { t: 'Monitoring i scraping', d: 'Ceny konkurencji, dostępność, oferty, alerty. Dane codziennie rano, w jednym miejscu.', tag: 'dane' },
+  { t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby, które zgadzają się z systemem źródłowym.', tag: 'analityka' },
+  { t: 'Dokumenty i OCR', d: 'Faktury, umowy, skany — odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.', tag: 'automatyzacja' },
+  { t: 'n8n / Make / webhooki', d: 'Łączę narzędzia, które nie mają gotowej integracji. Z powiadomieniem na mailu lub Telegramie.', tag: 'workflow' },
+  { t: 'Modele AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia, odpowiedzi z kontrolą człowieka. Bez halucynacji w produkcji.', tag: 'AI' },
+];
+---
+<Base title="Studio Automatyzacji — automatyzacje dla firm | Tomasz Dziedzicki"
+      description="Automatyzacje, integracje API i raporty dla e-commerce oraz firm usługowych. Audyt 890 zł, wdrożenie od 3 900 zł, stała cena i 30 dni gwarancji."
+      path="/">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker">● Przyjmuję 2 nowe projekty w tym miesiącu</div>
+      <h1>Automatyzacje dla firm, które mają dość przepisywania danych.</h1>
+      <p class="lead">
+        Jestem Tomasz. Buduję integracje i automatyzacje dla e-commerce i firm usługowych.
+        Zaczynamy od audytu: policzę, ile godzin i złotych oszczędzisz — zanim zapłacisz za wdrożenie.
+      </p>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/audyt">Zamów audyt — 890 zł</a>
+        <a class="btn btn--ghost" href="/wdrozenia#cennik">Zobacz cennik</a>
+      </div>
+      <div class="trust">
+        <div><b>10+ lat</b>z danymi i automatyką</div>
+        <div><b>10 dni</b>typowe wdrożenie jednego procesu</div>
+        <div><b>30 dni</b>gwarancji poprawek</div>
+        <div><b>0 zł</b>ukrytych kosztów — stała cena</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="wrap">
+      <div class="grid grid--2" style="align-items:start">
+        <div>
+          <p class="eyebrow">Diagnoza</p>
+          <h2>Poznajesz to u siebie?</h2>
+          <p class="lead">Jeśli chociaż dwa punkty brzmią znajomo, jest co automatyzować.</p>
+        </div>
+        <div>
+          <ul class="list">
+            {pains.map(p => <li>{p}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Co robię</p>
+      <h2>Sześć obszarów, które oddajesz maszynie</h2>
+      <p class="lead" style="max-width:640px;margin-bottom:30px">
+        Nie sprzedaję „cyfrowej transformacji”. Biorę jeden konkretny proces i doprowadzam go do stanu,
+        w którym działa bez Ciebie — z dokumentacją i testem.
+      </p>
+      <div class="grid grid--3">
+        {services.map(s => (
+          <div class="card">
+            <span class="tag">{s.tag}</span>
+            <h3 style="margin-top:14px">{s.t}</h3>
+            <p class="muted">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="wrap">
+      <p class="eyebrow">Pakiety</p>
+      <h2>Stała cena. Konkretny zakres.</h2>
+      <p class="lead" style="max-width:640px;margin-bottom:30px">
+        Każdy pakiet kończy się działającym procesem, testem i dokumentacją. Płatność 50% na start, 50% po odbiorze.
+      </p>
+      <div class="grid grid--3">
+        <div class="card">
+          <span class="tag">Start</span>
+          <div class="price" style="margin-top:14px">3 900 zł <small>netto</small></div>
+          <p class="muted small">Jeden proces, do 3 integracji.</p>
+          <ul class="list check">
+            <li>Mapa procesu i ustalenie zakresu</li>
+            <li>Wdrożenie w 10 dni roboczych</li>
+            <li>Testy na Twoich danych</li>
+            <li>Dokumentacja i szkolenie 2 h</li>
+            <li>30 dni gwarancji</li>
+          </ul>
+          <a class="btn btn--ghost" href="/kontakt?pakiet=start">Wybieram Start</a>
+        </div>
+        <div class="card" style="border-color:var(--ink);box-shadow:0 12px 40px rgba(11,18,32,.08)">
+          <span class="tag" style="background:var(--ink);color:#fff">Najczęściej wybierany</span>
+          <div class="price" style="margin-top:14px">8 900 zł <small>netto</small></div>
+          <p class="muted small">Trzy procesy i raport, który je podsumowuje.</p>
+          <ul class="list check">
+            <li>Trzy procesy w jednym wdrożeniu</li>
+            <li>Dashboard lub raport cykliczny</li>
+            <li>Wdrożenie w 3 tygodnie</li>
+            <li>Szkolenie 3 h dla zespołu</li>
+            <li>60 dni gwarancji</li>
+          </ul>
+          <a class="btn btn--primary" href="/kontakt?pakiet=growth">Wybieram Growth</a>
+        </div>
+        <div class="card">
+          <span class="tag">Scale</span>
+          <div class="price" style="margin-top:14px">od 15 000 zł <small>netto</small></div>
+          <p class="muted small">Większe środowisko, ERP, wiele systemów.</p>
+          <ul class="list check">
+            <li>5+ procesów lub integracja ERP</li>
+            <li>Monitoring i alerty</li>
+            <li>Dokumentacja techniczna</li>
+            <li>SLA na reakcję</li>
+            <li>Opieka wdrożeniowa</li>
+          </ul>
+          <a class="btn btn--ghost" href="/kontakt?pakiet=scale">Porozmawiajmy</a>
+        </div>
+      </div>
+      <div class="notice" style="margin-top:22px">
+        <b>Oferta na start:</b> pierwsze trzy wdrożenia Start w cenie <b>2 900 zł netto</b> — w zamian za zgodę
+        na opublikowanie anonimowego case study. Limit trzech firm, potem wracam do cennika.
+      </div>
+      <p class="small muted" style="margin-top:14px">
+        Audyt (890 zł) odliczam od wdrożenia. Opieka po wdrożeniu: 690 zł netto miesięcznie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--2">
+        <div>
+          <p class="eyebrow">Proces</p>
+          <h2>Cztery kroki, zero niespodzianek</h2>
+          <p class="lead">Każdy etap ma jasny wynik. Wiesz, co dostajesz i kiedy.</p>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:12px"><h3>1. Rozmowa (20 min)</h3><p class="muted">Pytań o proces, nie o technologię. Ustalamy, czy w ogóle warto.</p></div>
+          <div class="card" style="margin-bottom:12px"><h3>2. Audyt</h3><p class="muted">Raport: mapa procesu, koszt godzin, trzy automatyzacje po zwrocie, wycena.</p></div>
+          <div class="card" style="margin-bottom:12px"><h3>3. Wdrożenie</h3><p class="muted">Stała cena, terminarz, testy na Twoich danych, dokumentacja.</p></div>
+          <div class="card"><h3>4. Opieka</h3><p class="muted">Monitoring i poprawki. Albo przekazanie kodu i pełna niezależność.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="wrap">
+      <p class="eyebrow">Dowody</p>
+      <h2>Mierzymy efekt, nie liczbę funkcji</h2>
+      <div class="grid grid--2" style="margin-top:24px">
+        <div class="card">
+          <h3>Strażnik Cen — działający prototyp</h3>
+          <p class="muted">
+            Monitoring cen i dostępności produktów w sklepach internetowych. Zbiera dane, wykrywa zmiany
+            i wysyła alert. Testowany na realnych sklepach, z obsługą blokad i limitów.
+          </p>
+          <p class="small muted">Demo na życzenie — pokażę na rozmowie.</p>
+        </div>
+        <div class="card">
+          <h3>Case studies w przygotowaniu</h3>
+          <p class="muted">
+            Dopiero startuję z biurem, więc nie wklejam wymyślonych opinii ani logotypów.
+            Pierwsze trzy wdrożenia opiszę jako case study — z liczbami, które da się sprawdzić.
+          </p>
+          <p class="small muted">Dlatego pierwsze trzy firmy dostają cenę 2 900 zł.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FAQ />
+  <CTA />
+</Base>

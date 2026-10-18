@@ -1,0 +1,14 @@
+---
+const { title = 'Porozmawiajmy o automatyzacji', text = 'Napisz, jaki proces chcesz oddać maszynie. Odpowiem w ciągu jednego dnia roboczego.' } = Astro.props;
+---
+<section class="section section--ink">
+  <div class="wrap narrow" style="text-align:center">
+    <p class="eyebrow" style="color:var(--accent)">Następny krok</p>
+    <h2 style="color:#fff">{title}</h2>
+    <p class="muted" style="max-width:560px;margin:0 auto 26px">{text}</p>
+    <div class="buttonrow" style="justify-content:center">
+      <a class="btn btn--accent" href="/audyt">Zamów audyt — 890 zł</a>
+      <a class="btn btn--light" href="mailto:tomasz.dziedzicki@gmail.com?subject=Automatyzacja%20—%20rozmowa">Napisz maila</a>
+    </div>
+  </div>
+</section>

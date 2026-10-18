@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+const { title, description, path = '/' } = Astro.props;
+const site = 'https://studioautomatyzacji.pl';
+const canonical = new URL(path, site).toString();
+const og = new URL('/og.png', site).toString();
+const nav = [
+  ['/wdrozenia', 'Oferta'],
+  ['/wdrozenia#cennik', 'Cennik'],
+  ['/case-studies', 'Case studies'],
+  ['/o-mnie', 'O mnie'],
+  ['/kontakt', 'Kontakt'],
+];
+---
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pl_PL" />
+  <meta property="og:site_name" content="Studio Automatyzacji" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={og} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b1220" />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Studio Automatyzacji — Tomasz Dziedzicki",
+    "url": site,
+    "email": "tomasz.dziedzicki@gmail.com",
+    "areaServed": "PL",
+    "description": "Automatyzacje, integracje API i raporty dla e-commerce oraz firm usługowych.",
+    "founder": { "@type": "Person", "name": "Tomasz Dziedzicki" },
+    "priceRange": "890–15000 PLN"
+  })} />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap nav">
+      <a class="brand" href="/">Studio <span>Automatyzacji</span></a>
+      <nav class="navlinks" aria-label="Menu">
+        {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+      </nav>
+      <div class="navcta">
+        <a class="btn btn--accent" href="/audyt">Zamów audyt</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="fgrid">
+        <div>
+          <div class="brand" style="color:#fff;font-size:20px">Studio <span style="color:var(--accent)">Automatyzacji</span></div>
+          <p class="small" style="margin-top:14px;max-width:420px">
+            Automatyzacje, integracje i raporty dla firm, które chcą przestać przepisywać dane.
+            Stała cena, mierzalny efekt, 30 dni gwarancji.
+          </p>
+          <p class="small">Tomasz Dziedzicki · Olsztyn · praca zdalna w całej Polsce</p>
+        </div>
+        <div>
+          <div style="font-weight:700;color:#fff;margin-bottom:12px">Oferta</div>
+          <p class="small"><a href="/audyt">Audyt automatyzacji</a></p>
+          <p class="small"><a href="/wdrozenia">Wdrożenia</a></p>
+          <p class="small"><a href="/opieka">Opieka techniczna</a></p>
+          <p class="small"><a href="/dla-agencji">Dla agencji</a></p>
+        </div>
+        <div>
+          <div style="font-weight:700;color:#fff;margin-bottom:12px">Kontakt</div>
+          <p class="small"><a href="mailto:tomasz.dziedzicki@gmail.com">tomasz.dziedzicki@gmail.com</a></p>
+          <p class="small"><a href="/kontakt">Formularz i rozmowa</a></p>
+          <p class="small"><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
+          <p class="small"><a href="/regulamin">Regulamin</a></p>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© {new Date().getFullYear()} Studio Automatyzacji — Tomasz Dziedzicki</span>
+        <span>Strona zbudowana bez trackerów. Bez ciasteczek marketingowych.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

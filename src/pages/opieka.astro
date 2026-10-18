@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+---
+<Base title="Opieka techniczna — 690 zł/mc | Studio Automatyzacji"
+      description="Opieka nad wdrożoną automatyzacją: monitoring, poprawki, raport miesięczny i priorytetowa reakcja. 690 zł netto miesięcznie."
+      path="/opieka">
+
+  <section class="section">
+    <div class="wrap narrow">
+      <p class="eyebrow">Po wdrożeniu</p>
+      <h1 style="font-size:clamp(32px,4.4vw,50px)">Opieka techniczna — 690 zł/mc</h1>
+      <p class="lead">
+        Automatyzacja to nie pomnik. Zmieniają się API, cenniki i formaty plików. Opieka polega na tym,
+        żeby proces działał dalej — bez Ciebie i bez niespodzianek.
+      </p>
+
+      <div class="kpi">
+        <div><b>3 h</b><span class="small muted">zmian w miesiącu</span></div>
+        <div><b>24 h</b><span class="small muted">reakcja na awarię</span></div>
+        <div><b>1 raport</b><span class="small muted">miesięcznie</span></div>
+      </div>
+
+      <h2>Co wchodzi</h2>
+      <ul class="list check">
+        <li>Monitoring działania i alert, gdy proces się zatrzyma.</li>
+        <li>Do 3 godzin drobnych zmian miesięcznie (nowe pole, zmiana progu, nowy raport).</li>
+        <li>Naprawa błędów wynikających ze zmian w zewnętrznych systemach.</li>
+        <li>Miesięczny raport: co działa, co się zmieniło, co warto poprawić.</li>
+        <li>Priorytetowa kolejka — Twoje zgłoszenia przed nowymi projektami.</li>
+      </ul>
+
+      <h2 style="margin-top:34px">Dla kogo</h2>
+      <div class="grid grid--2">
+        <div class="card"><h3>Ma sens</h3><p class="muted">Gdy proces jest krytyczny dla codziennej pracy: zamówienia, faktury, ceny, raporty zarządcze.</p></div>
+        <div class="card"><h3>Nie jest konieczna</h3><p class="muted">Gdy wdrożenie jest proste i stabilne, a w firmie jest ktoś, kto potrafi je utrzymać. Wtedy przekazuję dokumentację i kończymy.</p></div>
+      </div>
+
+      <div class="notice" style="margin-top:26px">
+        Opieka jest opcjonalna i miesięczna — bez rocznego zobowiązania. Możesz zrezygnować z miesiącem wypowiedzenia.
+      </div>
+
+      <div class="buttonrow" style="margin-top:26px">
+        <a class="btn btn--primary" href="mailto:tomasz.dziedzicki@gmail.com?subject=Opieka%20techniczna">Zapytaj o opiekę</a>
+        <a class="btn btn--ghost" href="/wdrozenia#cennik">Zobacz wdrożenia</a>
+      </div>
+    </div>
+  </section>
+
+  <CTA title="Masz już automatyzację, która się psuje?" text="Możemy zacząć od krótkiego przeglądu istniejącego rozwiązania. Czasem taniej jest naprawić niż budować od zera." />
+</Base>

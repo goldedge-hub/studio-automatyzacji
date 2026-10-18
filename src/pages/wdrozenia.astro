@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+const rows = [
+  ['Liczba procesów', '1', '3', '5+'],
+  ['Integracje', 'do 3', 'do 6', 'ERP / wiele systemów'],
+  ['Czas wdrożenia', '10 dni', '3 tygodnie', '4–6 tygodni'],
+  ['Testy na Twoich danych', '✓', '✓', '✓'],
+  ['Dokumentacja', '✓', '✓', '✓ + techniczna'],
+  ['Szkolenie', '2 h', '3 h', 'wg potrzeb'],
+  ['Gwarancja', '30 dni', '60 dni', 'SLA'],
+  ['Monitoring i alerty', '—', 'opcjonalnie', '✓'],
+  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
+];
+---
+<Base title="Wdrożenia automatyzacji — cennik | Studio Automatyzacji"
+      description="Wdrożenie automatyzacji: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł. Stała cena, testy, dokumentacja, 30–60 dni gwarancji."
+      path="/wdrozenia">
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Oferta</p>
+      <h1 style="font-size:clamp(32px,4.4vw,52px)">Wdrożenia, które da się rozliczyć</h1>
+      <p class="lead" style="max-width:700px">
+        Każde wdrożenie zaczynam od pytania „ile to oszczędza”, a kończę na działającym procesie,
+        teście i dokumentacji. Cena jest stała — zmiana zakresu to osobna decyzja, nie niespodzianka na fakturze.
+      </p>
+
+      <div class="grid grid--3" style="margin-top:34px">
+        <div class="card">
+          <span class="tag">Start</span>
+          <div class="price" style="margin-top:12px">3 900 zł <small>netto</small></div>
+          <p class="muted small">Jeden proces, który ma przestać zajmować Twój czas.</p>
+          <ul class="list check">
+            <li>Zakres i mapa procesu</li>
+            <li>Do 3 integracji</li>
+            <li>Wdrożenie w 10 dni</li>
+            <li>Testy i dokumentacja</li>
+            <li>30 dni gwarancji</li>
+          </ul>
+          <a class="btn btn--primary" href="mailto:tomasz.dziedzicki@gmail.com?subject=Wdrożenie%20Start">Wybieram Start</a>
+        </div>
+        <div class="card">
+          <span class="tag" style="background:var(--ink);color:#fff">Growth</span>
+          <div class="price" style="margin-top:12px">8 900 zł <small>netto</small></div>
+          <p class="muted small">Trzy procesy plus raport, który je podsumowuje.</p>
+          <ul class="list check">
+            <li>Trzy procesy w jednym projekcie</li>
+            <li>Do 6 integracji</li>
+            <li>Dashboard lub raport cykliczny</li>
+            <li>Szkolenie 3 h</li>
+            <li>60 dni gwarancji</li>
+          </ul>
+          <a class="btn btn--primary" href="mailto:tomasz.dziedzicki@gmail.com?subject=Wdrożenie%20Growth">Wybieram Growth</a>
+        </div>
+        <div class="card">
+          <span class="tag">Scale</span>
+          <div class="price" style="margin-top:12px">od 15 000 zł <small>netto</small></div>
+          <p class="muted small">Większe środowisko, ERP, wiele systemów i zespołów.</p>
+          <ul class="list check">
+            <li>5+ procesów</li>
+            <li>Integracja ERP</li>
+            <li>Monitoring i alerty</li>
+            <li>SLA na reakcję</li>
+            <li>Dokumentacja techniczna</li>
+          </ul>
+          <a class="btn btn--ghost" href="mailto:tomasz.dziedzicki@gmail.com?subject=Wdrożenie%20Scale">Porozmawiajmy</a>
+        </div>
+      </div>
+
+      <h2 id="cennik" style="margin-top:52px">Porównanie pakietów</h2>
+      <div style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Zakres</th><th>Start</th><th>Growth</th><th>Scale</th></tr></thead>
+          <tbody>
+            {rows.map(r => (
+              <tr>
+                <td><b>{r[0]}</b></td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid--2" style="margin-top:36px">
+        <div class="card">
+          <h3>Co zawsze wchodzi w cenę</h3>
+          <ul class="list check">
+            <li>Ustalenie zakresu i kryteriów odbioru</li>
+            <li>Praca na Twoich danych testowych</li>
+            <li>Dokumentacja: jak działa i co robić, gdy padnie</li>
+            <li>Przekazanie kodów i dostępów</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Czego nie robię</h3>
+          <ul class="list">
+            <li>Nie sprzedaję gotowego SaaS z abonamentem, którego nie możesz opuścić.</li>
+            <li>Nie obiecuję „wzrostu sprzedaży o 300%”.</li>
+            <li>Nie wdrażam automatyzacji, które nie mają mierzalnego efektu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notice" style="margin-top:26px">
+        <b>Płatność:</b> 50% przy starcie, 50% po odbiorze. Faktura. Przy projektach powyżej 15 000 zł — harmonogram etapami.
+      </div>
+    </div>
+  </section>
+
+  <FAQ />
+  <CTA />
+</Base>
