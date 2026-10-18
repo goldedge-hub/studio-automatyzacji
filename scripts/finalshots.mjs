@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const OUT='C:/Users/sfajr/Documents/StudioAutomation/screens/v3';
+const b=await chromium.launch({args:['--host-resolver-rules=MAP studioautomatyzacji.pl 185.199.108.153']});
+const c=await b.newContext({viewport:{width:1440,height:900}});
+const p=await c.newPage();
+await p.goto('http://studioautomatyzacji.pl/',{waitUntil:'networkidle',timeout:60000});
+await p.waitForTimeout(1400);
+await p.screenshot({path:`${OUT}/final-hero.png`});
+await p.evaluate(async()=>{for(let y=0;y<4000;y+=500){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,60));}});
+await p.waitForTimeout(600);
+await p.locator('.bento').first().screenshot({path:`${OUT}/final-bento.png`});
+console.log('ok'); await b.close();
