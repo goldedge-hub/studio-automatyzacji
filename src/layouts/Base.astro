@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title, description, path = '/' } = Astro.props;
+const { title, description, path = '/', noindex = false } = Astro.props;
 const site = 'https://studioautomatyzacji.pl';
 const canonical = new URL(path, site).toString();
 const og = new URL('/og.png', site).toString();
@@ -19,6 +19,7 @@ const nav = [
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pl_PL" />
@@ -29,7 +30,10 @@ const nav = [
   <meta property="og:image" content={og} />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#07080a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -38,23 +42,29 @@ const nav = [
     "email": "kontakt@studioautomatyzacji.pl",
     "areaServed": "PL",
     "description": "Automatyzacje, integracje API i raporty dla e-commerce oraz firm usługowych.",
-    "priceRange": "890–15000 PLN"
+    "priceRange": "890–15000 PLN",
+    "knowsAbout": ["automatyzacja procesów", "integracje API", "n8n", "Make", "OCR", "agenci AI"]
   })} />
 </head>
 <body>
+  <a href="#main" class="skip">Przejdź do treści</a>
   <header class="site">
     <div class="wrap nav">
-      <a class="brand" href="/">Studio <span>Automatyzacji</span></a>
+      <a class="brand" href="/"><span class="mark">SA</span>Studio <span>Automatyzacji</span></a>
       <nav class="navlinks" aria-label="Menu">
-        {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+        {nav.map(([href, label]) => {
+          const base = href.split('#')[0];
+          const active = base === '/' ? path === '/' : path.startsWith(base);
+          return <a href={href} class={active ? 'active' : ''}>{label}</a>;
+        })}
       </nav>
       <div class="navcta">
-        <a class="btn btn--accent" href="/audyt">Zamów audyt</a>
+        <a class="btn btn--primary" href="/audyt">Umów audyt</a>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <slot />
   </main>
 
@@ -62,33 +72,43 @@ const nav = [
     <div class="wrap">
       <div class="fgrid">
         <div>
-          <div class="brand" style="color:#fff;font-size:20px">Studio <span style="color:var(--accent)">Automatyzacji</span></div>
-          <p class="small" style="margin-top:14px;max-width:420px">
-            Automatyzacje, integracje i raporty dla firm, które chcą przestać przepisywać dane.
-            Stała cena, mierzalny efekt, 30 dni gwarancji.
+          <div class="brand"><span class="mark">SA</span>Studio <span>Automatyzacji</span></div>
+          <p class="small" style="margin-top:16px;max-width:360px">
+            Integracje, raporty i procesy, które przestają być robione ręcznie.
+            Stała cena, dokumentacja i 30 dni gwarancji.
           </p>
-          <p class="small">Studio Automatyzacji · praca zdalna w całej Polsce</p>
+          <p class="small mono" style="margin-top:18px">Praca zdalna · cała Polska</p>
         </div>
         <div>
-          <div style="font-weight:700;color:#fff;margin-bottom:12px">Oferta</div>
-          <p class="small"><a href="/audyt">Audyt automatyzacji</a></p>
+          <div class="mono" style="margin-bottom:14px">Oferta</div>
+          <p class="small"><a href="/audyt">Audyt</a></p>
           <p class="small"><a href="/wdrozenia">Wdrożenia</a></p>
-          <p class="small"><a href="/opieka">Opieka techniczna</a></p>
+          <p class="small"><a href="/opieka">Opieka</a></p>
           <p class="small"><a href="/dla-agencji">Dla agencji</a></p>
         </div>
         <div>
-          <div style="font-weight:700;color:#fff;margin-bottom:12px">Kontakt</div>
-          <p class="small"><a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a></p>
-          <p class="small"><a href="/kontakt">Formularz i rozmowa</a></p>
+          <div class="mono" style="margin-bottom:14px">Studio</div>
+          <p class="small"><a href="/o-studiu">O studiu</a></p>
+          <p class="small"><a href="/case-studies">Dowody</a></p>
+          <p class="small"><a href="/kontakt">Kontakt</a></p>
+        </div>
+        <div>
+          <div class="mono" style="margin-bottom:14px">Formalności</div>
           <p class="small"><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
           <p class="small"><a href="/regulamin">Regulamin</a></p>
+          <p class="small"><a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a></p>
         </div>
       </div>
       <div class="legal">
         <span>© {new Date().getFullYear()} Studio Automatyzacji</span>
-        <span>Strona zbudowana bez trackerów. Bez ciasteczek marketingowych.</span>
+        <span>Bez trackerów i ciasteczek marketingowych</span>
       </div>
     </div>
   </footer>
 </body>
 </html>
+
+<style>
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:0 0 8px 0;z-index:100;font-weight:600}
+  .skip:focus{left:0}
+</style>

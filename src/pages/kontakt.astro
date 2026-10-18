@@ -1,49 +1,131 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Kontakt | Studio Automatyzacji"
-      description="Napisz w sprawie audytu, wdrożenia albo współpracy white-label. Odpowiadamy w ciągu jednego dnia roboczego."
+<Base title="Kontakt — Studio Automatyzacji"
+      description="Opisz proces, który chcesz zautomatyzować. Odpowiadamy w ciągu jednego dnia roboczego, z zakresem i wyceną w 48 godzin."
       path="/kontakt">
+
   <section class="section">
-    <div class="wrap narrow">
-      <p class="eyebrow">Kontakt</p>
-      <h1 style="font-size:clamp(32px,4.4vw,50px)">Napisz, co chcesz przestać robić ręcznie</h1>
-      <p class="lead">
-        Wystarczy krótki opis. Odpowiem w ciągu jednego dnia roboczego — z pytaniami albo od razu z propozycją.
-      </p>
+    <div class="wrap">
+      <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:48px;align-items:start">
+        <div>
+          <p class="eyebrow">Kontakt</p>
+          <h1 style="font-size:clamp(34px,4.4vw,56px);margin-bottom:16px">Napisz, co chcesz<br />przestać robić ręcznie</h1>
+          <p class="lead" style="margin-bottom:30px">
+            Wystarczy krótki opis. Odpowiadamy w ciągu jednego dnia roboczego —
+            z pytaniami albo od razu z propozycją zakresu.
+          </p>
 
-      <div class="card" style="margin-top:24px">
-        <h3>Mail</h3>
-        <p style="font-size:22px;font-weight:700;letter-spacing:-.02em">
-          <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>
-        </p>
-        <p class="small muted">Jeśli wolisz rozmowę — napisz „proszę o rozmowę” i podaj dwa terminy.</p>
+          <form class="form" id="contact-form" novalidate>
+            <p class="small muted" style="margin:0">* pole wymagane</p>
+            <div class="rows">
+              <div class="field">
+                <label for="f-name">Imię lub firma</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" placeholder="np. Sklep Meblex" />
+              </div>
+              <div class="field">
+                <label for="f-email">E-mail <span aria-hidden="true">*</span></label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="twoj@email.pl" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-process">Proces do automatyzacji <span aria-hidden="true">*</span></label>
+              <textarea id="f-process" name="process" rows="5" required placeholder="Co robisz ręcznie, ile razy w tygodniu i ile to zajmuje? Np. codzienne przepisywanie zamówień z Allegro do arkusza — około 40 minut."></textarea>
+            </div>
+            <div class="field">
+              <label for="f-budget">Budżet</label>
+              <select id="f-budget" name="budget">
+                <option value="">Nie wiem jeszcze</option>
+                <option>Audyt 890 zł</option>
+                <option>Start 3 900 zł</option>
+                <option>Growth 8 900 zł</option>
+                <option>Scale od 15 000 zł</option>
+              </select>
+            </div>
+            <label class="consent">
+              <input type="checkbox" id="f-consent" required />
+              <span>Zgadzam się na kontakt w sprawie tego zgłoszenia. Dane przetwarzamy zgodnie z <a href="/polityka-prywatnosci">polityką prywatności</a>.</span>
+            </label>
+            <button class="btn btn--primary" type="submit">Przygotuj wiadomość</button>
+            <p class="small muted" id="form-note" style="margin:12px 0 0">
+              Formularz otworzy Twój program pocztowy z gotową wiadomością. Nic nie wysyłamy bez Twojej zgody.
+            </p>
+          </form>
+        </div>
+
+        <aside>
+          <div class="card">
+            <div class="mono" style="margin-bottom:10px">Bezpośredni kontakt</div>
+            <p style="font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px">
+              <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>
+            </p>
+            <p class="small muted" style="margin:0">Odpowiadamy w ciągu jednego dnia roboczego.</p>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="mono" style="margin-bottom:12px">Co warto napisać</div>
+            <ul class="list check" style="margin:0">
+              <li>Jaki proces chcesz zautomatyzować (jedno zdanie).</li>
+              <li>Z jakich narzędzi korzystasz (sklep, BaseLinker, Excel, ERP, poczta).</li>
+              <li>Ile razy w tygodniu to robisz i ile to zajmuje.</li>
+              <li>Na kiedy potrzebujesz rozwiązania.</li>
+            </ul>
+          </div>
+
+          <div class="notice" style="margin-top:16px">
+            <b>Nie musisz mieć wszystkiego uporządkowanego.</b> Często pierwsza rozmowa
+            polega na tym, żeby ustalić, który proces w ogóle warto automatyzować.
+          </div>
+        </aside>
       </div>
-
-      <h2 style="margin-top:36px">Co warto napisać</h2>
-      <ul class="list check">
-        <li>Jaki proces chcesz zautomatyzować (jedno zdanie).</li>
-        <li>Z jakich narzędzi korzystasz (sklep, BaseLinker, Excel, ERP, poczta).</li>
-        <li>Ile razy w tygodniu to robisz i ile to zajmuje.</li>
-        <li>Na kiedy potrzebujesz rozwiązania.</li>
-      </ul>
-
-      <div class="notice" style="margin-top:24px">
-        <b>Nie musisz mieć wszystkiego uporządkowanego.</b> Często pierwsza rozmowa polega na tym,
-        żeby ustalić, który proces w ogóle warto automatyzować.
-      </div>
-
-      <h2 style="margin-top:36px">Szybkie linki</h2>
-      <div class="grid grid--3">
-        <a class="card" href="mailto:kontakt@studioautomatyzacji.pl?subject=Audyt%20automatyzacji%20—%20890%20zł"><h3>Audyt</h3><p class="small muted">890 zł, raport w 3 dni</p></a>
-        <a class="card" href="mailto:kontakt@studioautomatyzacji.pl?subject=Wdrożenie%20—%20wycena"><h3>Wdrożenie</h3><p class="small muted">od 3 900 zł netto</p></a>
-        <a class="card" href="mailto:kontakt@studioautomatyzacji.pl?subject=White-label%20dla%20agencji"><h3>Agencja</h3><p class="small muted">2 500 zł / proces</p></a>
-      </div>
-
-      <p class="small muted" style="margin-top:30px">
-        Dane kontaktowe przetwarzam wyłącznie w celu odpowiedzi na wiadomość.
-        Szczegóły w <a href="/polityka-prywatnosci" style="text-decoration:underline">polityce prywatności</a>.
-      </p>
     </div>
   </section>
+
 </Base>
+
+<style>
+  .form{display:flex;flex-direction:column;gap:16px;max-width:620px}
+  .rows{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:560px){.rows{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field label{font-size:13.5px;color:var(--text-2);font-weight:500}
+  .field label span{color:var(--accent)}
+  .field input,.field textarea,.field select{
+    background:rgba(255,255,255,.035);border:1px solid var(--line-strong);border-radius:12px;
+    padding:13px 15px;color:var(--text);font-family:var(--font);font-size:15px;line-height:1.5;
+    transition:border-color .18s ease,background .18s ease;width:100%;
+  }
+  .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 22px,calc(100% - 15px) 22px;background-size:5px 5px;background-repeat:no-repeat}
+  .field input::placeholder,.field textarea::placeholder{color:#8b94a1}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:rgba(245,180,74,.55);background:rgba(245,180,74,.05)}
+  .consent{display:flex;gap:11px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5}
+  .consent input{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+  .consent a{color:var(--text-2);text-decoration:underline}
+  #contact-form .btn{align-self:flex-start;margin-top:4px}
+  @media(max-width:900px){.wrap > .grid{grid-template-columns:1fr !important;gap:32px !important}}
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const process = String(data.get('process') || '').trim();
+      const budget = String(data.get('budget') || '').trim();
+      const subject = encodeURIComponent('Zapytanie o automatyzację — ' + (name || email));
+      const body = encodeURIComponent(
+        'Imię / firma: ' + (name || '—') + '\n' +
+        'E-mail: ' + email + '\n' +
+        'Budżet: ' + (budget || 'do ustalenia') + '\n\n' +
+        'Proces do automatyzacji:\n' + process + '\n'
+      );
+      window.location.href = 'mailto:kontakt@studioautomatyzacji.pl?subject=' + subject + '&body=' + body;
+      const note = document.getElementById('form-note');
+      if (note) note.textContent = 'Otworzyliśmy Twój program pocztowy. Jeśli się nie otworzył, napisz bezpośrednio na kontakt@studioautomatyzacji.pl.';
+    });
+  }
+</script>

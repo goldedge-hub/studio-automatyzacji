@@ -1,187 +1,372 @@
 ---
 import Base from '../layouts/Base.astro';
 import FAQ from '../components/FAQ.astro';
-import CTA from '../components/CTA.astro';
+
+const flows = [
+  { name: 'Nowe zamówienie', src: 'Allegro → BaseLinker', w: '100%' },
+  { name: 'Stany i ceny', src: 'sklep → ERP → arkusz', w: '96%' },
+  { name: 'Ceny konkurencji', src: 'scraping → baza → alert', w: '92%' },
+  { name: 'Raport dzienny', src: 'dane → PDF → e-mail', w: '100%' },
+];
+
+const registry = [
+  { task: 'Zmiana statusu zamówienia', before: '3 min', after: '0 s', pct: '100%' },
+  { task: 'Odpowiedź na wiadomość klienta', before: '6 min', after: '40 s', pct: '89%' },
+  { task: 'Cena u 5 konkurentów', before: '40 min', after: '2 min', pct: '95%' },
+  { task: 'Raport dzienny sprzedaży', before: '90 min', after: '0 s', pct: '100%' },
+  { task: 'Faktura z maila do arkusza', before: '4 min', after: '0 s', pct: '100%' },
+  { task: 'Lista zamówień do wysyłki', before: '25 min', after: '3 min', pct: '88%' },
+];
 
 const pains = [
-  'Zamówienia ze sklepu przepisujesz do BaseLinkera, Excela albo faktury — ręcznie, codziennie.',
-  'Ceny konkurencji sprawdzasz w kilku oknach i zapisujesz w arkuszu, który i tak się rozjeżdża.',
-  'Raport sprzedaży robisz w piątek wieczorem, zamiast wyjść do domu.',
-  'Faktury i dokumenty z maila lądują w folderze „do zrobienia”, bo nie ma kiedy ich uporządkować.',
-  'Nowy pracownik uczy się trzy dni, jak obsłużyć jedno zamówienie — i tak robi błędy.',
+  { t: 'Zamówienia przepisywane ręcznie', d: 'Allegro, Shoper i BaseLinker mają API, a i tak ktoś przeklika je do arkusza albo faktury.' },
+  { t: 'Ceny konkurencji raz na tydzień', d: 'Podwyżkę u konkurenta widzisz po fakcie, bo sprawdzanie cen to osobne pół dnia.' },
+  { t: 'Raport, który powstaje trzy dni', d: 'Najpierw trzeba scalić pięć plików, potem poprawić to, co się nie zgadza.' },
+  { t: 'Faktury w folderze „do zrobienia”', d: 'Dokumenty z maila czekają, bo nikt nie ma czasu ich klasyfikować i wprowadzać.' },
+  { t: 'Wiedza, która siedzi w jednej osobie', d: 'Nowy pracownik uczy się procesu trzy dni — i nadal popełnia błędy w wyjątkach.' },
+  { t: 'Wiesz, że da się prościej', d: 'Brakuje wyceny, zakresu i kogoś, kto to wdroży bez ciągnącego się projektu.' },
 ];
+
 const services = [
-  { t: 'Integracje API', d: 'Sklep ↔ BaseLinker ↔ ERP ↔ arkusz. Zamówienia, stany, ceny i statusy bez przepisywania.', tag: 'e-commerce' },
-  { t: 'Monitoring i scraping', d: 'Ceny konkurencji, dostępność, oferty, alerty. Dane codziennie rano, w jednym miejscu.', tag: 'dane' },
-  { t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby, które zgadzają się z systemem źródłowym.', tag: 'analityka' },
-  { t: 'Dokumenty i OCR', d: 'Faktury, umowy, skany — odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.', tag: 'automatyzacja' },
-  { t: 'n8n / Make / webhooki', d: 'Łączę narzędzia, które nie mają gotowej integracji. Z powiadomieniem na mailu lub Telegramie.', tag: 'workflow' },
-  { t: 'Modele AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia, odpowiedzi z kontrolą człowieka. Bez halucynacji w produkcji.', tag: 'AI' },
+  { tag: 'integracje', t: 'Integracje API', d: 'Sklep, BaseLinker, ERP, arkusz i poczta rozmawiają ze sobą bez pośrednika. Zamówienia, stany, ceny i statusy płyną same.', wide: true,
+    icon: '<path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 12h18"/>' },
+  { tag: 'dane', t: 'Monitoring cen', d: 'Ceny i dostępność konkurencji codziennie rano. Zmiany powyżej progu trafiają na maila albo Telegram.', wide: false,
+    icon: '<path d="M3 17l5-5 4 3 6-7"/><path d="M3 21h18"/>' },
+  { tag: 'analityka', t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby zgodne z systemem źródłowym, nie „mniej więcej”.', wide: false,
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 15v3M12 10v8M17 6v12"/>' },
+  { tag: 'automatyzacja', t: 'Dokumenty i OCR', d: 'Faktury, umowy i skany: odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.', wide: false,
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/>' },
+  { tag: 'workflow', t: 'n8n, Make, webhooki', d: 'Łączymy narzędzia, które nie mają gotowej integracji — z powiadomieniem, logiem i obsługą błędów.', wide: false,
+    icon: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/>' },
+  { tag: 'AI', t: 'Agenci AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi z kontrolą człowieka. Bez „halucynacji na produkcji”.', wide: true,
+    icon: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>' },
+];
+
+const steps = [
+  { n: '01', t: 'Audyt', d: 'Mapa procesów, pomiar czasu i wycena. Dostajesz raport z liczbami, nie slajdy.', when: '3 dni robocze' },
+  { n: '02', t: 'Projekt', d: 'Zakres, architektura i kolejność wdrożeń. Wiesz, co powstanie i co zostaje poza zakresem.', when: '2 dni robocze' },
+  { n: '03', t: 'Wdrożenie', d: 'Budowa, testy na próbce danych, uruchomienie i szkolenie zespołu. Bez „prawie działa”.', when: '5–10 dni roboczych' },
+  { n: '04', t: 'Odbiór', d: 'Dokumentacja, przekazanie dostępu i 30 dni gwarancji na poprawki. Kod zostaje u Ciebie.', when: '30 dni opieki' },
+];
+
+const plans = [
+  { name: 'Start', price: '3 900', unit: 'zł netto', desc: 'Jeden proces, który najbardziej zjada czas.', feats: ['1 proces end-to-end', 'do 3 integracji API', 'testy na Twoich danych', 'dokumentacja i szkolenie', '30 dni gwarancji'], cta: 'Wybieram Start', href: '/kontakt?plan=start', hot: false },
+  { name: 'Growth', price: '8 900', unit: 'zł netto', desc: 'Trzy procesy i raport, który zastępuje arkusze.', feats: ['3 procesy end-to-end', 'dashboard lub raport cykliczny', 'do 6 integracji', 'alerty i obsługa błędów', '30 dni gwarancji'], cta: 'Wybieram Growth', href: '/kontakt?plan=growth', hot: true },
+  { name: 'Scale', price: 'od 15 000', unit: 'zł netto', desc: 'Większe wdrożenie z wieloma systemami i zespołami.', feats: ['od 4 procesów', 'integracje ERP / WMS', 'agenci AI z kontrolą człowieka', 'wdrożenie etapami', 'opieka po odbiorze'], cta: 'Porozmawiajmy', href: '/kontakt?plan=scale', hot: false },
 ];
 ---
-<Base title="Studio Automatyzacji — automatyzacje dla firm"
-      description="Automatyzacje, integracje API i raporty dla e-commerce oraz firm usługowych. Audyt 890 zł, wdrożenie od 3 900 zł, stała cena i 30 dni gwarancji."
+<Base title="Studio Automatyzacji — automatyzacje dla e-commerce i firm usługowych"
+      description="Integracje API, raporty i automatyzacje procesów. Audyt 890 zł, wdrożenie od 3 900 zł netto, stała cena i 30 dni gwarancji."
       path="/">
 
   <section class="hero">
     <div class="wrap">
-      <div class="kicker">● Przyjmujemy 2 nowe projekty w tym miesiącu</div>
-      <h1>Automatyzacje dla firm, które mają dość przepisywania danych.</h1>
-      <p class="lead">
-        Budujemy integracje i automatyzacje dla e-commerce i firm usługowych.
-        Zaczynamy od audytu: policzymy, ile godzin i złotych oszczędzisz — zanim zapłacisz za wdrożenie.
-      </p>
-      <div class="buttonrow">
-        <a class="btn btn--primary" href="/audyt">Zamów audyt — 890 zł</a>
-        <a class="btn btn--ghost" href="/wdrozenia#cennik">Zobacz cennik</a>
+      <div>
+        <div class="kicker reveal d1"><i></i>2 wolne terminy w tym miesiącu</div>
+        <h1 class="reveal d1">Mniej przepisywania.<br />Więcej decyzji.</h1>
+        <p class="lead reveal d2">
+          Łączymy sklepy, arkusze i magazyny w jeden system. Budujemy integracje,
+          automatyzacje w n8n i Make oraz agentów AI, którzy przejmują powtarzalne zadania —
+          z kontrolą człowieka tam, gdzie ma to znaczenie.
+        </p>
+        <div class="buttonrow reveal d3">
+          <a class="btn btn--primary" href="/audyt">Zamów audyt — 890 zł</a>
+          <a class="btn btn--ghost" href="/wdrozenia#cennik">Zobacz pakiety i ceny</a>
+        </div>
+        <div class="trust reveal d4">
+          <div><b>10+ lat</b>z danymi i automatyką</div>
+          <div><b>48 h</b>na wycenę i zakres</div>
+          <div><b>30 dni</b>gwarancji na wdrożenie</div>
+          <div><b>50/50</b>płatność na start i przy odbiorze</div>
+        </div>
       </div>
-      <div class="trust">
-        <div><b>10+ lat</b>z danymi i automatyką</div>
-        <div><b>10 dni</b>typowe wdrożenie jednego procesu</div>
-        <div><b>30 dni</b>gwarancji poprawek</div>
-        <div><b>0 zł</b>ukrytych kosztów — stała cena</div>
+
+      <div class="panel reveal d2" aria-label="Przykładowy panel automatyzacji">
+        <div class="panel-head">
+          <span class="mono">panel / przepływy</span>
+          <span class="dots"><i></i><i></i><i></i></span>
+        </div>
+        <div class="flow">
+          {flows.map((f, i) => (
+            <div class="flow-row">
+              <div>
+                <div class="name">{f.name}</div>
+                <div class="src">{f.src}</div>
+              </div>
+              <div class={`state${i === 2 ? ' warn' : ''}`}>{i === 2 ? 'w toku' : 'ok'}</div>
+              <div class="bar"><i style={`--w:${f.w};animation-delay:${0.25 + i * 0.18}s`}></i></div>
+            </div>
+          ))}
+        </div>
+        <div class="panel-foot">
+          <div>
+            <b>3 → 0</b>
+            <div class="small muted">ręcznych kroków w przepływie</div>
+          </div>
+          <a class="small mono" href="/case-studies" style="color:var(--accent)">zobacz dowody →</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--white">
-    <div class="wrap">
-      <div class="grid grid--2" style="align-items:start">
-        <div>
-          <p class="eyebrow">Diagnoza</p>
-          <h2>Poznajesz to u siebie?</h2>
-          <p class="lead">Jeśli chociaż dwa punkty brzmią znajomo, jest co automatyzować.</p>
-        </div>
-        <div>
-          <ul class="list">
-            {pains.map(p => <li>{p}</li>)}
-          </ul>
-        </div>
-      </div>
+  <div class="marquee" aria-label="Technologie">
+    <div class="marquee-track">
+      {['BaseLinker','Shoper','Allegro API','n8n','Make','Google Sheets','Python','REST API','OCR','Agenci AI','BaseLinker','Shoper','Allegro API','n8n','Make','Google Sheets','Python','REST API','OCR','Agenci AI'].map((t) => <span>{t}</span>)}
     </div>
-  </section>
+  </div>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Co robię</p>
-      <h2>Sześć obszarów, które oddajesz maszynie</h2>
-      <p class="lead" style="max-width:640px;margin-bottom:30px">
-        Nie sprzedaję „cyfrowej transformacji”. Biorę jeden konkretny proces i doprowadzam go do stanu,
-        w którym działa bez Ciebie — z dokumentacją i testem.
+      <p class="eyebrow">Rejestr procesów</p>
+      <h2>Co konkretnie znika z kalendarza</h2>
+      <p class="lead" style="max-width:760px">
+        Typowe czasy z procesów e-commerce, które automatyzujemy. To punkt odniesienia,
+        żeby policzyć własne oszczędności — nie wyniki konkretnego klienta.
       </p>
-      <div class="grid grid--3">
-        {services.map(s => (
+
+      <div class="registry">
+        <div class="registry-row head">
+          <span>Proces</span><span>Ręcznie</span><span>Po wdrożeniu</span><span>Oszczędność czasu</span>
+        </div>
+        {registry.map((r) => (
+          <div class="registry-row">
+            <span class="task">{r.task}</span>
+            <span class="before">{r.before}</span>
+            <span class="after">{r.after}</span>
+            <span class="gain">
+              <span class="bar"><i style={`--w:${r.pct}`}></i></span>
+              <span class="pct">{r.pct}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+      <p class="small muted" style="margin-top:14px">
+        Przykład: 20 zmian statusu dziennie × 3 minuty = 1 godzina dziennie, około 21 godzin miesięcznie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="wrap">
+      <p class="eyebrow">Poznajesz to u siebie?</p>
+      <h2>Sześć rzeczy, które robisz ręcznie<br />i których nikt nie powinien robić</h2>
+      <div class="grid grid--3" style="margin-top:36px">
+        {pains.map((p) => (
           <div class="card">
-            <span class="tag">{s.tag}</span>
-            <h3 style="margin-top:14px">{s.t}</h3>
-            <p class="muted">{s.d}</p>
+            <h3>{p.t}</h3>
+            <p class="small muted" style="margin:0">{p.d}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section section--white">
+  <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Pakiety</p>
-      <h2>Stała cena. Konkretny zakres.</h2>
-      <p class="lead" style="max-width:640px;margin-bottom:30px">
-        Każdy pakiet kończy się działającym procesem, testem i dokumentacją. Płatność 50% na start, 50% po odbiorze.
-      </p>
-      <div class="grid grid--3">
-        <div class="card">
-          <span class="tag">Start</span>
-          <div class="price" style="margin-top:14px">3 900 zł <small>netto</small></div>
-          <p class="muted small">Jeden proces, do 3 integracji.</p>
-          <ul class="list check">
-            <li>Mapa procesu i ustalenie zakresu</li>
-            <li>Wdrożenie w 10 dni roboczych</li>
-            <li>Testy na Twoich danych</li>
-            <li>Dokumentacja i szkolenie 2 h</li>
-            <li>30 dni gwarancji</li>
-          </ul>
-          <a class="btn btn--ghost" href="/kontakt?pakiet=start">Wybieram Start</a>
-        </div>
-        <div class="card" style="border-color:var(--ink);box-shadow:0 12px 40px rgba(11,18,32,.08)">
-          <span class="tag" style="background:var(--ink);color:#fff">Najczęściej wybierany</span>
-          <div class="price" style="margin-top:14px">8 900 zł <small>netto</small></div>
-          <p class="muted small">Trzy procesy i raport, który je podsumowuje.</p>
-          <ul class="list check">
-            <li>Trzy procesy w jednym wdrożeniu</li>
-            <li>Dashboard lub raport cykliczny</li>
-            <li>Wdrożenie w 3 tygodnie</li>
-            <li>Szkolenie 3 h dla zespołu</li>
-            <li>60 dni gwarancji</li>
-          </ul>
-          <a class="btn btn--primary" href="/kontakt?pakiet=growth">Wybieram Growth</a>
-        </div>
-        <div class="card">
-          <span class="tag">Scale</span>
-          <div class="price" style="margin-top:14px">od 15 000 zł <small>netto</small></div>
-          <p class="muted small">Większe środowisko, ERP, wiele systemów.</p>
-          <ul class="list check">
-            <li>5+ procesów lub integracja ERP</li>
-            <li>Monitoring i alerty</li>
-            <li>Dokumentacja techniczna</li>
-            <li>SLA na reakcję</li>
-            <li>Opieka wdrożeniowa</li>
-          </ul>
-          <a class="btn btn--ghost" href="/kontakt?pakiet=scale">Porozmawiajmy</a>
-        </div>
+      <p class="eyebrow">Zakres</p>
+      <h2>Sześć obszarów, w których<br />automatyzacja zwraca się najszybciej</h2>
+      <div class="bento">
+        {services.map((s) => (
+          <div class={`card${s.wide ? ' wide' : ''}`}>
+            <div>
+              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon}></svg></div>
+              <span class="tag">{s.tag}</span>
+              <h3 style="margin-top:14px">{s.t}</h3>
+              <p class="small muted" style="margin:0">{s.d}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <div class="notice" style="margin-top:22px">
-        <b>Oferta na start:</b> pierwsze trzy wdrożenia Start w cenie <b>2 900 zł netto</b> — w zamian za zgodę
-        na opublikowanie anonimowego case study. Limit trzech firm, potem wracam do cennika.
+      <div class="buttonrow" style="margin-top:26px">
+        <a class="btn btn--ghost" href="/wdrozenia">Pełna oferta i zakresy</a>
       </div>
-      <p class="small muted" style="margin-top:14px">
-        Audyt (890 zł) odliczam od wdrożenia. Opieka po wdrożeniu: 690 zł netto miesięcznie.
-      </p>
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="wrap">
+      <p class="eyebrow">Jak pracujemy</p>
+      <h2>Od rozmowy do działającego procesu<br />w czterech krokach</h2>
+      <div class="steps">
+        {steps.map((s) => (
+          <div class="step">
+            <span class="num">{s.n}</span>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+            <span class="when">{s.when}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="grid grid--2">
-        <div>
-          <p class="eyebrow">Proces</p>
-          <h2>Cztery kroki, zero niespodzianek</h2>
-          <p class="lead">Każdy etap ma jasny wynik. Wiesz, co dostajesz i kiedy.</p>
-        </div>
-        <div>
-          <div class="card" style="margin-bottom:12px"><h3>1. Rozmowa (20 min)</h3><p class="muted">Pytań o proces, nie o technologię. Ustalamy, czy w ogóle warto.</p></div>
-          <div class="card" style="margin-bottom:12px"><h3>2. Audyt</h3><p class="muted">Raport: mapa procesu, koszt godzin, trzy automatyzacje po zwrocie, wycena.</p></div>
-          <div class="card" style="margin-bottom:12px"><h3>3. Wdrożenie</h3><p class="muted">Stała cena, terminarz, testy na Twoich danych, dokumentacja.</p></div>
-          <div class="card"><h3>4. Opieka</h3><p class="muted">Monitoring i poprawki. Albo przekazanie kodu i pełna niezależność.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--white">
-    <div class="wrap">
       <p class="eyebrow">Dowody</p>
-      <h2>Mierzymy efekt, nie liczbę funkcji</h2>
-      <div class="grid grid--2" style="margin-top:24px">
+      <h2>Nie logotypy. Działające rzeczy<br />i policzalny efekt</h2>
+      <div class="proof">
+        <div class="big">
+          <div class="num">Strażnik Cen</div>
+          <div class="lbl">Prototyp monitoringu cen dla sklepu: 50 produktów, 5 konkurentów, codzienny raport o 6:00. Zbudowany, żeby pokazać mechanizm — nie jako obietnica.</div>
+          <div class="buttonrow" style="margin-top:22px">
+            <a class="btn btn--ghost" href="/case-studies">Jak to działa</a>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><b>3 dni</b><span>audyt z raportem</span></div>
+          <div class="metric"><b>10 dni</b><span>typowe wdrożenie procesu</span></div>
+          <div class="metric"><b>30 dni</b><span>gwarancji na poprawki</span></div>
+          <div class="metric"><b>0 zł</b><span>ukrytych kosztów</span></div>
+        </div>
+      </div>
+      <p class="small muted" style="margin-top:18px;max-width:760px">
+        Nie publikujemy wymyślonych case studies. Pierwsze wdrożenia klientów trafią tutaj
+        po odbiorze i zgodzie na publikację — z liczbami przed i po.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ink" id="cennik">
+    <div class="wrap">
+      <p class="eyebrow">Cennik</p>
+      <h2>Stała cena przed startem.<br />Bez rozliczania godzin</h2>
+      <p class="lead" style="max-width:640px">Zaczynamy od audytu za 890 zł. Jeśli wdrożymy projekt, kwota audytu odlicza się od pierwszej faktury.</p>
+      <div class="pricegrid">
+        {plans.map((p) => (
+          <div class={`plan${p.hot ? ' hot' : ''}`}>
+            <div>
+              <h3>{p.name}</h3>
+              <p class="desc">{p.desc}</p>
+            </div>
+            <div class="price">{p.price} <small>{p.unit}</small></div>
+            <ul class="list check">
+              {p.feats.map((f) => <li>{f}</li>)}
+            </ul>
+            <a class={`btn ${p.hot ? 'btn--primary' : 'btn--ghost'}`} href={p.href}>{p.cta}</a>
+            <span class="note">Płatność 50% przed startem, 50% po odbiorze.</span>
+          </div>
+        ))}
+      </div>
+      <div class="grid grid--2" style="margin-top:18px">
         <div class="card">
-          <h3>Strażnik Cen — działający prototyp</h3>
-          <p class="muted">
-            Monitoring cen i dostępności produktów w sklepach internetowych. Zbiera dane, wykrywa zmiany
-            i wysyła alert. Testowany na realnych sklepach, z obsługą blokad i limitów.
-          </p>
-          <p class="small muted">Demo na życzenie — pokażę na rozmowie.</p>
+          <span class="tag">Audyt</span>
+          <div class="price" style="margin-top:12px">890 <small>zł netto</small></div>
+          <p class="small muted" style="margin-top:10px">Mapa procesów, pomiar czasu, wycena wdrożenia i lista rzeczy, których nie warto automatyzować.</p>
+          <a class="btn btn--ghost" href="/audyt" style="margin-top:16px">Zobacz, co dostajesz</a>
         </div>
         <div class="card">
-          <h3>Case studies w przygotowaniu</h3>
-          <p class="muted">
-            Dopiero startuję z biurem, więc nie wklejam wymyślonych opinii ani logotypów.
-            Pierwsze trzy wdrożenia opiszę jako case study — z liczbami, które da się sprawdzić.
-          </p>
-          <p class="small muted">Dlatego pierwsze trzy firmy dostają cenę 2 900 zł.</p>
+          <span class="tag">Opieka</span>
+          <div class="price" style="margin-top:12px">690 <small>zł netto / mc</small></div>
+          <p class="small muted" style="margin-top:10px">Monitoring, poprawki, drobne zmiany i miesięczny raport. Bez godzinowego rozliczania.</p>
+          <a class="btn btn--ghost" href="/opieka" style="margin-top:16px">Zakres opieki</a>
         </div>
       </div>
     </div>
   </section>
 
-  <FAQ />
-  <CTA />
+  <section class="section" id="kalkulator">
+    <div class="wrap">
+      <div class="grid grid--2" style="gap:48px;align-items:center">
+        <div>
+          <p class="eyebrow">Kalkulator</p>
+          <h2 style="margin-bottom:16px">Policz, ile to warte<br />w Twojej firmie</h2>
+          <p class="lead" style="margin-bottom:18px">
+            Trzy suwaki i jedna liczba. Bez zostawiania maila i bez rozmowy z handlowcem.
+          </p>
+          <p class="small muted" style="max-width:420px">
+            Kalkulator liczy ostrożnie: zakłada, że automatyzacja zdejmuje 70% ręcznej pracy,
+            a stawka godzinowa to koszt pracownika wraz z narzutami.
+          </p>
+        </div>
+        <div class="calc">
+          <div class="calc-row">
+            <label for="calc-hours">Godziny ręcznej pracy tygodniowo <output id="calc-hours-v">10 h</output></label>
+            <input id="calc-hours" type="range" min="1" max="60" value="10" />
+          </div>
+          <div class="calc-row">
+            <label for="calc-cost">Koszt godziny pracy <output id="calc-cost-v">45 zł</output></label>
+            <input id="calc-cost" type="range" min="30" max="200" step="5" value="45" />
+          </div>
+          <div class="calc-row">
+            <label for="calc-people">Liczba osób w procesie <output id="calc-people-v">1</output></label>
+            <input id="calc-people" type="range" min="1" max="5" value="1" />
+          </div>
+          <div class="calc-out">
+            <div>
+              <span>Oszczędność miesięcznie</span>
+              <b id="calc-save">—</b>
+            </div>
+            <div>
+              <span>Zwrot z wdrożenia</span>
+              <b id="calc-pay">—</b>
+            </div>
+          </div>
+          <p class="small muted" id="calc-note" style="margin:14px 0 0">Szacunek dla pakietu Start (3 900 zł + audyt 890 zł).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2>Pytania, które padają<br />w pierwszej rozmowie</h2>
+      <FAQ />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="wrap">
+      <div class="grid grid--2" style="align-items:center;gap:48px">
+        <div>
+          <p class="eyebrow">Start</p>
+          <h2 style="margin-bottom:16px">Policzmy, ile godzin<br />możesz odzyskać</h2>
+          <p class="lead" style="margin-bottom:24px">
+            20 minut rozmowy o procesie, który najbardziej zjada czas. Bez prezentacji
+            i bez zobowiązań. Jeśli automatyzacja nie ma sensu, powiemy to wprost.
+          </p>
+          <div class="buttonrow">
+            <a class="btn btn--primary" href="/kontakt">Umów rozmowę</a>
+            <a class="btn btn--ghost" href="mailto:kontakt@studioautomatyzacji.pl">Napisz maila</a>
+          </div>
+        </div>
+        <div class="card" style="padding:30px">
+          <div class="mono" style="margin-bottom:14px">Co się dzieje po wysłaniu zgłoszenia</div>
+          <ul class="list check" style="margin:0">
+            <li>Odpowiadamy w ciągu jednego dnia roboczego.</li>
+            <li>Proponujemy termin 20-minutowej rozmowy.</li>
+            <li>Po rozmowie dostajesz zakres i wycenę w 48 godzin.</li>
+            <li>Jeśli pasuje — startujemy od audytu.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const $ = (id: string) => document.getElementById(id) as HTMLInputElement | null;
+    const hours = $('calc-hours'), cost = $('calc-cost'), people = $('calc-people');
+    const outH = document.getElementById('calc-hours-v');
+    const outC = document.getElementById('calc-cost-v');
+    const outP = document.getElementById('calc-people-v');
+    const outSave = document.getElementById('calc-save');
+    const outPay = document.getElementById('calc-pay');
+
+    const fmt = (n: number) => new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 0 }).format(n);
+
+    function calc() {
+      if (!hours || !cost || !people || !outSave || !outPay) return;
+      const h = Number(hours.value), c = Number(cost.value), p = Number(people.value);
+      if (outH) outH.textContent = h + ' h';
+      if (outC) outC.textContent = c + ' zł';
+      if (outP) outP.textContent = String(p);
+      const monthly = h * p * 4.33 * c * 0.7;
+      outSave.textContent = fmt(monthly) + ' zł';
+      const payback = 4790 / monthly;
+      outPay.textContent = payback <= 24 ? payback.toFixed(1).replace('.', ',') + ' mies.' : 'ponad 24 mies.';
+    }
+    [hours, cost, people].forEach((el) => el && el.addEventListener('input', calc));
+    calc();
+  </script>
+
 </Base>
