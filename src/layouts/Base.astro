@@ -1,25 +1,119 @@
 ---
 import '../styles/global.css';
+import BookingLink from '../components/BookingLink.astro';
+import {
+  BOOKING_HREF,
+  BOOKING_URL,
+  CONTACT_EMAIL,
+  PRICE_UPDATED,
+  SITE_URL,
+} from '../config';
+
 const { title, description, path = '/', noindex = false } = Astro.props;
-const site = 'https://studioautomatyzacji.pl';
+
+const site = SITE_URL;
 const canonical = new URL(path, site).toString();
 const og = new URL('/og.png', site).toString();
+
 const nav = [
   ['/wdrozenia', 'Oferta'],
-  ['/case-studies', 'Case studies'],
+  ['/ile-kosztuje', 'Ile kosztuje'],
+  ['/dla-agencji', 'Dla agencji'],
   ['/o-studiu', 'O studiu'],
   ['/kontakt', 'Kontakt'],
 ];
+
+const isActive = (href: string) => {
+  if (href === '/wdrozenia') {
+    return ['/wdrozenia', '/audyt', '/opieka'].some((p) => path === p || path.startsWith(p + '/'));
+  }
+  return path === href || path.startsWith(href + '/');
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site}/#studio`,
+  name: 'Studio Automatyzacji',
+  url: site,
+  email: CONTACT_EMAIL,
+  description:
+    'Studio automatyzacji dla e-commerce i firm usługowych. Audyt procesów, integracje API, raporty, automatyzacje n8n i Make oraz agenci AI z kontrolą człowieka.',
+  areaServed: { '@type': 'Country', name: 'Polska' },
+  priceRange: '890–15000 PLN',
+  knowsAbout: [
+    'automatyzacja procesów',
+    'integracje API',
+    'n8n',
+    'Make',
+    'OCR',
+    'raportowanie',
+    'agenci AI',
+    'RODO',
+    'AI Act',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Usługi Studio Automatyzacji (ceny netto)',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        name: 'Audyt automatyzacji',
+        price: '890',
+        priceCurrency: 'PLN',
+        url: `${site}/audyt`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'Wdrożenie Start',
+        price: '3900',
+        priceCurrency: 'PLN',
+        url: `${site}/wdrozenia`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'Wdrożenie Growth',
+        price: '8900',
+        priceCurrency: 'PLN',
+        url: `${site}/wdrozenia`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'Wdrożenie Scale',
+        price: '15000',
+        priceCurrency: 'PLN',
+        url: `${site}/wdrozenia`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'Opieka techniczna',
+        price: '690',
+        priceCurrency: 'PLN',
+        url: `${site}/opieka`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'White-label dla agencji',
+        price: '2500',
+        priceCurrency: 'PLN',
+        url: `${site}/dla-agencji`,
+      },
+    ],
+  },
+};
 ---
 <!doctype html>
-<html lang="pl" class="no-js">
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  {noindex && <meta name="robots" content="noindex" />}
+  {noindex && <meta name="robots" content="noindex, follow" />}
   <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#f4f0e6" />
+  <meta name="format-detection" content="telephone=no" />
+
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pl_PL" />
   <meta property="og:site_name" content="Studio Automatyzacji" />
@@ -27,40 +121,50 @@ const nav = [
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={og} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Studio Automatyzacji. Audyt 890 zł, wdrożenia od 3 900 zł netto." />
+
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={og} />
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#07080a" />
-  <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Studio Automatyzacji",
-    "url": site,
-    "email": "kontakt@studioautomatyzacji.pl",
-    "areaServed": "PL",
-    "description": "Automatyzacje, integracje API i raporty dla e-commerce oraz firm usługowych.",
-    "priceRange": "890–15000 PLN",
-    "knowsAbout": ["automatyzacja procesów", "integracje API", "n8n", "Make", "OCR", "agenci AI"]
-  })} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
-  <a href="#main" class="skip">Przejdź do treści</a>
-  <div class="progress" id="progress" aria-hidden="true"></div>
-  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <a class="skip" href="#main">Przejdź do treści</a>
 
-  <header class="site" id="site-header">
+  <header class="site-header">
     <div class="wrap nav">
-      <a class="brand" href="/"><span class="mark">SA</span>Studio <span>Automatyzacji</span></a>
-      <nav class="navlinks" aria-label="Menu">
-        {nav.map(([href, label]) => {
-          const base = href.split('#')[0];
-          const active = base === '/' ? path === '/' : path.startsWith(base);
-          return <a href={href} class={active ? 'active' : ''}>{label}</a>;
-        })}
+      <a class="brand" href="/">
+        Studio Automatyzacji
+        <small>Audyt i wdrożenia</small>
+      </a>
+
+      <nav class="nav-links" aria-label="Menu główne">
+        {nav.map(([href, label]) => (
+          <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
+        ))}
       </nav>
-      <div class="navcta">
-        <a class="btn btn--primary" href="/audyt">Audyt — 890 zł</a>
+
+      <div class="nav-cta">
+        <BookingLink class="btn btn--primary" />
       </div>
+
+      <details class="menu">
+        <summary>Menu</summary>
+        <nav class="menu-panel" aria-label="Menu mobilne">
+          {nav.map(([href, label]) => (
+            <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
+          ))}
+          <a href="/zaufanie">Zaufanie i dane</a>
+          <a class="btn btn--primary" href={BOOKING_HREF} target={BOOKING_URL ? '_blank' : undefined} rel={BOOKING_URL ? 'noopener noreferrer' : undefined}>
+            Umów rozmowę 20 min
+          </a>
+        </nav>
+      </details>
     </div>
   </header>
 
@@ -68,114 +172,55 @@ const nav = [
     <slot />
   </main>
 
-  <footer class="site">
+  <footer class="site-footer">
     <div class="wrap">
-      <div class="wordmark">Studio Automatyzacji</div>
-      <div class="fgrid">
+      <div class="footer-top">
+        <p class="footer-wordmark">Studio Automatyzacji</p>
+        <p>
+          Integracje, raporty i procesy, które przestają być robione ręcznie.
+          Stała cena, dokumentacja i kod po stronie klienta.
+        </p>
+      </div>
+
+      <div class="footer-grid">
         <div>
-          <p class="small" style="margin-top:16px;max-width:340px">
-            Integracje, raporty i procesy, które przestają być robione ręcznie.
-            Stała cena, dokumentacja i 30 dni gwarancji.
+          <h2>Studio</h2>
+          <p><a href="/o-studiu">O studiu</a></p>
+          <p><a href="/case-studies">Realizacje</a></p>
+          <p><a href="/zaufanie">Zaufanie i dane</a></p>
+          <p><a href="/kontakt">Kontakt</a></p>
+        </div>
+        <div>
+          <h2>Oferta</h2>
+          <p><a href="/ile-kosztuje">Ile kosztuje</a></p>
+          <p><a href="/audyt">Audyt 890 zł</a></p>
+          <p><a href="/wdrozenia">Wdrożenia</a></p>
+          <p><a href="/opieka">Opieka 690 zł/mc</a></p>
+          <p><a href="/dla-agencji">Dla agencji</a></p>
+        </div>
+        <div>
+          <h2>Dokumenty</h2>
+          <p><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
+          <p><a href="/regulamin">Regulamin</a></p>
+          <p><a href="/zaufanie#ai-act">AI Act</a></p>
+          <p><a href="/zaufanie#rodo">RODO</a></p>
+        </div>
+        <div>
+          <h2>Kontakt</h2>
+          <p>
+            <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
-          <p class="small mono" style="margin-top:18px">Praca zdalna · cała Polska</p>
-        </div>
-        <div>
-          <div class="mono" style="margin-bottom:14px">Oferta</div>
-          <p class="small"><a href="/audyt">Audyt</a></p>
-          <p class="small"><a href="/wdrozenia">Wdrożenia</a></p>
-          <p class="small"><a href="/opieka">Opieka</a></p>
-          <p class="small"><a href="/dla-agencji">Dla agencji</a></p>
-        </div>
-        <div>
-          <div class="mono" style="margin-bottom:14px">Studio</div>
-          <p class="small"><a href="/o-studiu">O studiu</a></p>
-          <p class="small"><a href="/case-studies">Case studies</a></p>
-          <p class="small"><a href="/kontakt">Kontakt</a></p>
-        </div>
-        <div>
-          <div class="mono" style="margin-bottom:14px">Formalności</div>
-          <p class="small"><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
-          <p class="small"><a href="/regulamin">Regulamin</a></p>
-          <p class="small"><a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a></p>
+          <p><a href={BOOKING_HREF} target={BOOKING_URL ? '_blank' : undefined} rel={BOOKING_URL ? 'noopener noreferrer' : undefined}>Umów rozmowę 20 min</a></p>
+          <p class="small">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
         </div>
       </div>
-      <div class="legal">
+
+      <div class="footer-legal">
         <span>© {new Date().getFullYear()} Studio Automatyzacji</span>
-        <span>Bez trackerów i ciasteczek marketingowych</span>
+        <span>Ceny netto · aktualizacja {PRICE_UPDATED}</span>
+        <span>Bez trackerów i cookies marketingowych</span>
       </div>
     </div>
   </footer>
-
-  <script>
-    import Lenis from 'lenis';
-    import { inView } from 'motion';
-
-    const header = document.getElementById('site-header');
-    const progress = document.getElementById('progress');
-
-    function onScroll() {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - doc.clientHeight;
-      if (progress) progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
-      if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 12);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // awaryjne odkrycie treści, gdyby observer nie wystartował
-    setTimeout(() => document.querySelectorAll('[data-reveal]:not(.in)').forEach((el) => el.classList.add('in')), 2600);
-
-    // spotlight
-    document.querySelectorAll<HTMLElement>('.card,.panel,.calc').forEach((el) => {
-      el.addEventListener('pointermove', (e) => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', e.clientX - r.left + 'px');
-        el.style.setProperty('--my', e.clientY - r.top + 'px');
-      });
-    });
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // reveal
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-      if (reduced) { el.classList.add('in'); return; }
-      inView(el as HTMLElement, () => {
-        el.classList.add('in');
-      }, { amount: 0.12, margin: '0px 0px -60px 0px' });
-    });
-
-    // licznik
-    document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
-      const to = Number(el.dataset.count || 0);
-      const suffix = el.dataset.suffix || '';
-      let done = false;
-      if (reduced) { el.textContent = to + suffix; return; }
-      inView(el, () => {
-        if (done) return;
-        done = true;
-        const t0 = performance.now();
-        const dur = 1100;
-        const tick = (t: number) => {
-          const k = Math.min(1, (t - t0) / dur);
-          const v = Math.round(to * (1 - Math.pow(1 - k, 3)));
-          el.textContent = v + suffix;
-          if (k < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      }, { amount: 0.6 });
-    });
-
-    // smooth scroll
-    if (!reduced) {
-      const lenis = new Lenis({ duration: 1.05, smoothWheel: true, touchMultiplier: 1.2 });
-      const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
-      requestAnimationFrame(raf);
-    }
-  </script>
 </body>
 </html>
-
-<style>
-  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:0 0 8px 0;z-index:200;font-weight:600}
-  .skip:focus{left:0}
-</style>

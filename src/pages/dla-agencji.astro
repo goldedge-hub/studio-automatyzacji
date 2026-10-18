@@ -1,49 +1,136 @@
 ---
 import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
 ---
-<Base title="Dla agencji — white-label | Studio Automatyzacji"
-      description="Automatyzacje pod marką agencji: 2 500 zł netto za proces, NDA, 5–7 dni, bez kontaktu z klientem końcowym."
-      path="/dla-agencji">
-
-  <section class="section">
-    <div class="wrap narrow">
-      <p class="eyebrow">White-label</p>
-      <h1 style="font-size:clamp(32px,4.4vw,50px)">Automatyzacje pod Twoją marką</h1>
+<Base
+  title="White-label dla agencji: 2 500 zł netto/proces | Studio Automatyzacji"
+  description="Automatyzacje pod marką agencji: 2 500 zł netto za proces, NDA, bez kontaktu z klientem końcowym, kod i dokumentacja dla agencji. Termin orientacyjnie 5–7 dni roboczych."
+  path="/dla-agencji"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>White-label</span>
+        <span>2 500 zł netto/proces</span>
+        <span>NDA na życzenie</span>
+      </div>
+      <h1>Automatyzacje pod Twoją marką</h1>
       <p class="lead">
-        Prowadzisz agencję marketingową, e-commerce albo integratorską i klient prosi o automatyzację,
-        której nie chcesz robić w domu? Wchodzę jako podwykonawca — cicho, terminowo, pod Twoim logo.
+        Prowadzisz agencję marketingową, e-commerce albo integratorską i klient prosi
+        o automatyzację, której nie chcesz robić w domu? Wchodzę jako podwykonawca.
+        Cicho, terminowo, pod Twoim logo.
       </p>
-
-      <div class="kpi">
-        <div><b>2 500 zł</b><span class="small muted">za proces (netto)</span></div>
-        <div><b>5–7 dni</b><span class="small muted">typowy czas</span></div>
-        <div><b>NDA</b><span class="small muted">na życzenie</span></div>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/kontakt?temat=agencja">Wyślij brief</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje">Zobacz cennik</a>
       </div>
-
-      <h2 data-reveal>Jak to działa</h2>
-      <ol class="list">
-        <li><b>Brief od Ciebie</b> — proces, systemy, oczekiwany efekt. Bez kontaktu z klientem końcowym.</li>
-        <li><b>Wycena i termin</b> — stała cena w 24 h.</li>
-        <li><b>Wdrożenie i testy</b> — dostajesz działające rozwiązanie i dokumentację do przekazania.</li>
-        <li><b>Wsparcie</b> — w razie awarii rozmawiasz ze mną, klient widzi Twoją markę.</li>
-      </ol>
-
-      <h2 data-reveal style="margin-top:34px">Warunki</h2>
-      <ul class="list check">
-        <li>Cena 2 500 zł netto za jeden proces (do 3 integracji).</li>
-        <li>Przy 3+ procesach miesięcznie — stawka 2 200 zł za proces.</li>
-        <li>Płatność 50/50, faktura na Twoją firmę.</li>
-        <li>Brak kontaktu z klientem końcowym bez Twojej zgody.</li>
-        <li>Kod i dokumentacja przekazane Tobie.</li>
-      </ul>
-
-      <div class="buttonrow" style="margin-top:26px">
-        <a class="btn btn--primary" href="mailto:kontakt@studioautomatyzacji.pl?subject=White-label%20dla%20agencji">Zapytaj o współpracę</a>
-      </div>
-      <p class="small muted" style="margin-top:12px">Odpowiadamy w ciągu jednego dnia roboczego.</p>
     </div>
   </section>
 
-  <CTA title="Masz klienta, który potrzebuje automatyzacji?" text="Prześlij brief — dostaniesz wycenę i termin w 24 godziny." />
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Co dostajesz</h2>
+          <ul class="checklist">
+            <li>Jeden proces end-to-end, do 3 integracji.</li>
+            <li>Wdrożenie, testy i dokumentację do przekazania klientowi.</li>
+            <li>Kod i dostępy przekazane agencji, nie bezpośrednio klientowi.</li>
+            <li>Kontakt operacyjny wyłącznie z Twoim zespołem.</li>
+            <li>NDA na życzenie, przed przekazaniem briefu.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Warunki</h2>
+          <ul class="plainlist">
+            <li>2 500 zł netto za jeden proces (do 3 integracji).</li>
+            <li>Termin orientacyjnie 5–7 dni roboczych od briefu i dostępów.</li>
+            <li>Faktura na Twoją firmę. Płatność 50/50.</li>
+            <li>Brak kontaktu z klientem końcowym bez Twojej zgody.</li>
+            <li>Nie publikujemy realizacji bez pisemnej zgody agencji i klienta.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak to działa</h2>
+        <p class="section-intro">
+          Cztery kroki. Brief, wycena, wdrożenie i przekazanie. Bez wchodzenia
+          w relację z Twoim klientem.
+        </p>
+      </div>
+
+      <div class="path">
+        <div class="path-step">
+          <span class="n">01</span>
+          <h3>Brief</h3>
+          <p class="price">Od Ciebie</p>
+          <p>Proces, systemy, oczekiwany efekt i ograniczenia. Możesz przekazać materiał klienta po anonimizacji.</p>
+          <span class="when">Start</span>
+        </div>
+        <div class="path-step">
+          <span class="n">02</span>
+          <h3>Wycena</h3>
+          <p class="price">Stała cena</p>
+          <p>Dostajesz zakres, cenę i orientacyjny termin. Bez rozliczania godzin.</p>
+          <span class="when">Przed pracami</span>
+        </div>
+        <div class="path-step">
+          <span class="n">03</span>
+          <h3>Wdrożenie</h3>
+          <p class="price">Pod Twoim logo</p>
+          <p>Budowa i testy. Cała komunikacja idzie przez Ciebie.</p>
+          <span class="when">Orientacyjnie 5–7 dni roboczych</span>
+        </div>
+        <div class="path-step">
+          <span class="n">04</span>
+          <h3>Przekazanie</h3>
+          <p class="price">Kod i dokumentacja</p>
+          <p>Otrzymujesz działające rozwiązanie, dokumentację i instrukcję utrzymania.</p>
+          <span class="when">Po testach</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Jak chronimy Twoją relację</h2>
+          <ul class="checklist">
+            <li>Nie kontaktujemy się z klientem końcowym bez zgody.</li>
+            <li>Nie umieszczamy logo agencji ani klienta bez pisemnej zgody.</li>
+            <li>Nie proponujemy klientowi usług bezpośrednio.</li>
+            <li>Dokumentacja jest przygotowana tak, żebyś mógł ją przekazać dalej.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Kiedy to nie pasuje</h2>
+          <ul class="plainlist">
+            <li>Proces wymaga ciągłej obecności u klienta i pracy w jego biurze.</li>
+            <li>Klient oczekuje umowy bezpośrednio z wykonawcą.</li>
+            <li>Zakres zmienia się co tydzień bez akceptacji zmian.</li>
+            <li>Brak dostępu do systemów i danych testowych.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:32px">
+        <strong>Potrzebujesz większego zakresu?</strong> Przy wielu procesach wyceniamy
+        projekt indywidualnie. Nie publikujemy widełek objętościowych, których nie
+        potwierdziliśmy w umowie.
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Masz klienta, który potrzebuje automatyzacji?"
+    text="Prześlij brief. Dostaniesz zakres, cenę i orientacyjny termin, zanim obiecasz cokolwiek klientowi."
+  />
 </Base>

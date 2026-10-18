@@ -1,23 +1,16 @@
 ---
-const items = [
-  { q: 'Ile to naprawdę kosztuje?', a: 'Audyt to 890 zł, odliczane od wdrożenia. Wdrożenie jednego procesu to 3 900 zł netto, trzech procesów — 8 900 zł netto. Większe projekty wyceniam od 15 000 zł. Zawsze podajemy stałą cenę przed startem.' },
-  { q: 'Czy automatyzacja zwróci się w mojej firmie?', a: 'To liczymy w audycie: godziny × stawka + koszt błędów. Jeśli proces nie zwraca się w 6 miesięcy, mówimy to wprost i nie sprzedaję wdrożenia.' },
-  { q: 'Co jeśli coś przestanie działać po wdrożeniu?', a: 'Każde wdrożenie ma 30 dni gwarancji (Growth — 60 dni). Potem możesz zostać na opiece za 690 zł miesięcznie: monitoring, poprawki i raport.' },
-  { q: 'Czy dostaję kod i dostęp do swoich danych?', a: 'Tak. Kod, dokumentacja i dostępy zostają u Ciebie. Nie blokujemy klientów własnym narzędziem — możesz odejść w każdej chwili.' },
-  { q: 'Czy moje dane są bezpieczne?', a: 'Pracujemy na dostępach ograniczonych do konkretnego zadania, dane trzymam w środowisku klienta, a hasła przekazujesz przez bezpieczny kanał. Na życzenie podpisujemy NDA.' },
-  { q: 'Nie mam API w swoim systemie. Da się?', a: 'Czasem tak — przez eksport plików, pocztę, bazę danych albo automatyzację interfejsu. W audycie sprawdzamy, co jest realne, a co wymaga wymiany narzędzia.' },
-];
+interface Item {
+  q: string;
+  a: string;
+}
+
+const { items }: { items: Item[] } = Astro.props;
 ---
-<section class="section faq">
-  <div class="wrap narrow">
-    <p class="eyebrow">Pytania</p>
-    <h2>Zanim napiszesz</h2>
-    <p class="lead" style="margin-bottom:28px">Najczęstsze wątpliwości, które słyszymy przed pierwszym wdrożeniem.</p>
-    {items.map(i => (
-      <details>
-        <summary>{i.q}</summary>
-        <p>{i.a}</p>
-      </details>
-    ))}
-  </div>
-</section>
+<div class="faq">
+  {items.map((item) => (
+    <details>
+      <summary>{item.q}</summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</div>

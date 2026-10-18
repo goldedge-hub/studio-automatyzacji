@@ -1,51 +1,123 @@
 ---
 import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
 ---
-<Base title="Opieka techniczna — 690 zł/mc | Studio Automatyzacji"
-      description="Opieka nad wdrożoną automatyzacją: monitoring, poprawki, raport miesięczny i priorytetowa reakcja. 690 zł netto miesięcznie."
-      path="/opieka">
-
-  <section class="section">
-    <div class="wrap narrow">
-      <p class="eyebrow">Po wdrożeniu</p>
-      <h1 style="font-size:clamp(32px,4.4vw,50px)">Opieka techniczna — 690 zł/mc</h1>
+<Base
+  title="Opieka techniczna 690 zł netto/mc | Studio Automatyzacji"
+  description="Opieka nad wdrożoną automatyzacją: monitoring, poprawki, drobne zmiany i raport miesięczny. 690 zł netto miesięcznie, bez rocznego zobowiązania."
+  path="/opieka"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Po wdrożeniu</span>
+        <span>690 zł netto/mc</span>
+        <span>Miesięcznie, bez zobowiązania rocznego</span>
+      </div>
+      <h1>Opieka techniczna</h1>
       <p class="lead">
-        Automatyzacja to nie pomnik. Zmieniają się API, cenniki i formaty plików. Opieka polega na tym,
-        żeby proces działał dalej — bez Ciebie i bez niespodzianek.
+        Automatyzacja nie jest pomnikiem. Zmieniają się API, cenniki i formaty plików.
+        Opieka polega na tym, żeby proces działał dalej, także wtedy, gdy zmieni się
+        coś poza naszym kodem.
       </p>
-
-      <div class="kpi">
-        <div><b>3 h</b><span class="small muted">zmian w miesiącu</span></div>
-        <div><b>24 h</b><span class="small muted">reakcja na awarię</span></div>
-        <div><b>1 raport</b><span class="small muted">miesięcznie</span></div>
-      </div>
-
-      <h2 data-reveal>Co wchodzi</h2>
-      <ul class="list check">
-        <li>Monitoring działania i alert, gdy proces się zatrzyma.</li>
-        <li>Do 3 godzin drobnych zmian miesięcznie (nowe pole, zmiana progu, nowy raport).</li>
-        <li>Naprawa błędów wynikających ze zmian w zewnętrznych systemach.</li>
-        <li>Miesięczny raport: co działa, co się zmieniło, co warto poprawić.</li>
-        <li>Priorytetowa kolejka — Twoje zgłoszenia przed nowymi projektami.</li>
-      </ul>
-
-      <h2 data-reveal style="margin-top:34px">Dla kogo</h2>
-      <div class="grid grid--2">
-        <div class="card" data-reveal><h3>Ma sens</h3><p class="muted">Gdy proces jest krytyczny dla codziennej pracy: zamówienia, faktury, ceny, raporty zarządcze.</p></div>
-        <div class="card" data-reveal><h3>Nie jest konieczna</h3><p class="muted">Gdy wdrożenie jest proste i stabilne, a w firmie jest ktoś, kto potrafi je utrzymać. Wtedy przekazuję dokumentację i kończymy.</p></div>
-      </div>
-
-      <div class="notice" style="margin-top:26px">
-        Opieka jest opcjonalna i miesięczna — bez rocznego zobowiązania. Możesz zrezygnować z miesiącem wypowiedzenia.
-      </div>
-
-      <div class="buttonrow" style="margin-top:26px">
-        <a class="btn btn--primary" href="mailto:kontakt@studioautomatyzacji.pl?subject=Opieka%20techniczna">Zapytaj o opiekę</a>
-        <a class="btn btn--ghost" href="/wdrozenia#cennik">Zobacz wdrożenia</a>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/kontakt?temat=opieka">Zapytaj o opiekę</a>
+        <a class="btn btn--ghost" href="/wdrozenia">Zobacz wdrożenia</a>
       </div>
     </div>
   </section>
 
-  <CTA title="Masz już automatyzację, która się psuje?" text="Możemy zacząć od krótkiego przeglądu istniejącego rozwiązania. Czasem taniej jest naprawić niż budować od zera." />
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Co wchodzi</h2>
+          <ul class="checklist">
+            <li>Monitoring działania i alert, gdy proces się zatrzyma.</li>
+            <li>Naprawa błędów wynikających ze zmian w zewnętrznych systemach.</li>
+            <li>Drobne zmiany: nowe pole, próg alertu, korekta raportu.</li>
+            <li>Miesięczny raport: co działa, co się zmieniło, co warto poprawić.</li>
+            <li>Priorytetowa kolejka przed nowymi projektami.</li>
+          </ul>
+          <p class="small muted" style="margin-top:14px">
+            Zakres drobnych zmian i czas reakcji ustalamy w umowie. Nie obiecujemy
+            w cenniku liczby godzin, której nie da się obronić dla każdego procesu.
+          </p>
+        </div>
+
+        <div>
+          <h2>Czego nie obejmuje</h2>
+          <ul class="plainlist">
+            <li>Nowych procesów i rozbudowy poza pierwotny zakres.</li>
+            <li>Zmian w systemach zewnętrznych, na które nie mamy wpływu.</li>
+            <li>Hostingu i licencji narzędzi, które opłaca klient.</li>
+            <li>Pracy poza uzgodnionym zakresem bez osobnej wyceny.</li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            Opieka jest opcjonalna i miesięczna. Możesz zrezygnować z miesięcznym
+            wypowiedzeniem. Po rezygnacji przekazujemy aktualną dokumentację i dostępy.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kiedy opieka ma sens</h2>
+        <p class="section-intro">
+          Nie każdy proces wymaga stałej opieki. Czasem lepiej przekazać dokumentację
+          zespołowi klienta i zakończyć współpracę.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Proces jest krytyczny</h3>
+            <p>Zamówienia, faktury, ceny albo raport zarządczy. Przerwa w działaniu kosztuje więcej niż opieka.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Systemy często się zmieniają</h3>
+            <p>API, panele i formaty plików zmieniają się bez zapowiedzi. Ktoś musi to monitorować.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Nie ma wewnętrznego utrzymania</h3>
+            <p>W firmie nie ma osoby, która zna proces i potrafi go poprawić. Wtedy opieka jest tańsza niż przestój.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Proces jest prosty i stabilny</h3>
+            <p>Wtedy opieka nie jest konieczna. Przekazujemy dokumentację i kończymy, bez abonamentu na siłę.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="note">
+        <strong>Masz już automatyzację, która się psuje?</strong> Możemy zacząć od krótkiego
+        przeglądu istniejącego rozwiązania. Czasem taniej jest naprawić niż budować od zera.
+        <a class="text-link" href="/kontakt?temat=opieka">Napisz przez formularz</a>.
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Chcesz mieć proces pod kontrolą?"
+    text="Opowiedz, co już działa i co się psuje. Po rozmowie wiadomo, czy potrzebna jest opieka, czy wystarczy jednorazowa poprawka."
+  />
 </Base>

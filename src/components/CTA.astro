@@ -1,14 +1,28 @@
 ---
-const { title = 'Porozmawiajmy o automatyzacji', text = 'Napisz, jaki proces chcesz oddać maszynie. Odpowiemy w ciągu jednego dnia roboczego.' } = Astro.props;
+import BookingLink from './BookingLink.astro';
+
+const {
+  title = 'Zacznij od 20 minut.',
+  text = 'Opowiedz o procesie, który najbardziej zjada czas. Po rozmowie wiesz, czy warto robić audyt i ile to będzie kosztować.',
+} = Astro.props;
 ---
-<section class="section section--ink">
-  <div class="wrap narrow" style="text-align:center">
-    <p class="eyebrow" style="color:var(--accent)">Następny krok</p>
-    <h2 style="color:#fff">{title}</h2>
-    <p class="muted" style="max-width:560px;margin:0 auto 26px">{text}</p>
-    <div class="buttonrow" style="justify-content:center">
-      <a class="btn btn--accent" href="/audyt">Zamów audyt — 890 zł</a>
-      <a class="btn btn--light" href="mailto:kontakt@studioautomatyzacji.pl?subject=Automatyzacja%20—%20rozmowa">Napisz maila</a>
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="cta-grid">
+      <div>
+        <p class="mono" style="color:var(--on-dark-muted)">Następny krok</p>
+        <h2>{title}</h2>
+        <p class="cta-copy">{text}</p>
+      </div>
+      <div class="cta-actions">
+        <div class="buttonrow">
+          <BookingLink class="btn btn--accent" />
+          <a class="btn btn--on-dark" href="/audyt">Audyt 890 zł</a>
+        </div>
+        <p class="small">
+          Bezpłatna rozmowa trwa 20 minut. Audyt jest osobną usługą, odliczaną od wdrożenia.
+        </p>
+      </div>
     </div>
   </div>
 </section>

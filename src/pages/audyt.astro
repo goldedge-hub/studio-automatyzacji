@@ -1,60 +1,138 @@
 ---
 import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
 ---
-<Base title="Audyt automatyzacji — 890 zł | Studio Automatyzacji"
-      description="Audyt procesu: mapa, koszt godzin, trzy automatyzacje po zwrocie i wycena wdrożenia. 890 zł, odliczane od wdrożenia. Raport w 3 dni."
-      path="/audyt">
-
-  <section class="section">
-    <div class="wrap narrow">
-      <p class="eyebrow">Produkt wejściowy</p>
-      <h1 style="font-size:clamp(32px,4.4vw,50px)">Audyt automatyzacji — 890 zł</h1>
+<Base
+  title="Audyt automatyzacji 890 zł netto | Studio Automatyzacji"
+  description="Audyt procesu: mapa, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. 890 zł netto, odliczane od wdrożenia. Raport orientacyjnie w 3 dni robocze."
+  path="/audyt"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Produkt wejściowy</span>
+        <span>890 zł netto</span>
+        <span>Raport orientacyjnie w 3 dni robocze</span>
+      </div>
+      <h1>Audyt, który mówi, czy wdrożenie ma sens</h1>
       <p class="lead">
-        Zanim cokolwiek wdrożysz, policzmy, czy to się opłaca. Dostajesz raport, który możesz pokazać
-        wspólnikowi albo księgowej — z liczbami, nie z obietnicami.
+        Zanim cokolwiek wdrożysz, policzmy koszt ręcznej pracy i realny zwrot.
+        Dostajesz raport z liczbami, priorytetami i wyceną, który możesz pokazać
+        wspólnikowi albo księgowej.
       </p>
-
-      <div class="kpi">
-        <div><b>3 dni</b><span class="small muted">czas realizacji</span></div>
-        <div><b>5 stron</b><span class="small muted">raport + wycena</span></div>
-        <div><b>890 zł</b><span class="small muted">odliczane od wdrożenia</span></div>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/kontakt?temat=audyt">Zamów audyt 890 zł</a>
+        <BookingLink class="btn btn--ghost" label="Najpierw rozmowa 20 min" />
       </div>
-
-      <h2 data-reveal>Co dostajesz</h2>
-      <ul class="list check">
-        <li>Mapę procesu: kto, co i w jakim narzędziu robi ręcznie.</li>
-        <li>Koszt: ile godzin miesięcznie i ile złotych rocznie zjada ten proces.</li>
-        <li>Trzy automatyzacje uszeregowane po zwrocie z inwestycji.</li>
-        <li>Wycena wdrożenia — stała cena i termin.</li>
-        <li>Listę ryzyk: co może pęknąć i jak temu zapobiec.</li>
-      </ul>
-
-      <h2 data-reveal style="margin-top:34px">Jak wygląda audyt</h2>
-      <ol class="list">
-        <li><b>Rozmowa 90 minut</b> — pytam o proces, narzędzia i wyjątki. Możesz nagrać ekran.</li>
-        <li><b>Analiza</b> — sprawdzam dostępność API, jakość danych i realny czas pracy.</li>
-        <li><b>Raport</b> — wysyłam w 3 dni robocze. Omawiamy go na 30-minutowej rozmowie.</li>
-      </ol>
-
-      <h2 data-reveal style="margin-top:34px">Dla kogo to ma sens</h2>
-      <div class="grid grid--2">
-        <div class="card" data-reveal><h3>Ma sens</h3><p class="muted">Gdy proces zajmuje min. 5 godzin miesięcznie, powtarza się i ma jasne reguły. Albo gdy błąd kosztuje więcej niż wdrożenie.</p></div>
-        <div class="card" data-reveal><h3>Nie ma sensu</h3><p class="muted">Gdy proces jest jednorazowy, wymaga decyzji człowieka przy każdym kroku albo system nie ma żadnego punktu zaczepienia (API, eksport, baza).</p></div>
-      </div>
-
-      <div class="notice" style="margin-top:26px">
-        <b>Gwarancja wartości:</b> jeśli w raporcie nie znajdziesz żadnej automatyzacji, która zwraca się
-        w rozsądnym czasie, zwracamy 890 zł. Bez dyskusji.
-      </div>
-
-      <div class="buttonrow" style="margin-top:28px">
-        <a class="btn btn--primary" href="mailto:kontakt@studioautomatyzacji.pl?subject=Audyt%20automatyzacji%20—%20zamówienie">Zamów audyt</a>
-        <a class="btn btn--ghost" href="/kontakt">Mam pytanie</a>
-      </div>
-      <p class="small muted" style="margin-top:14px">Płatność przelewem, faktura. Termin ustalamy w ciągu 2 dni roboczych.</p>
+      <p class="small muted" style="margin-top:14px">
+        Płatność przelewem, faktura. Audyt odliczamy od pierwszej faktury za wdrożenie.
+      </p>
     </div>
   </section>
 
-  <CTA title="Wolisz najpierw porozmawiać?" text="20 minut, bez prezentacji i bez zobowiązań. Powiem wprost, czy automatyzacja ma sens w Twoim przypadku." />
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Co dostajesz</h2>
+          <ul class="checklist">
+            <li>Mapę procesu: kto, co i w jakim narzędziu robi ręcznie.</li>
+            <li>Koszt ręcznej pracy: godziny w miesiącu i kwota w skali roku.</li>
+            <li>Priorytety: które automatyzacje mają najkrótszy zwrot.</li>
+            <li>Wycena wdrożenia: stała cena i orientacyjny termin.</li>
+            <li>Listę ryzyk: co może pęknąć i jak temu zapobiec.</li>
+            <li>Rekomendację: wdrażać, uporządkować dane albo odpuścić.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Dla kogo ma sens</h2>
+          <ul class="checklist">
+            <li>Proces powtarza się co najmniej kilka razy w miesiącu.</li>
+            <li>Ma jasne reguły, a wyjątki da się opisać.</li>
+            <li>Korzysta z systemów, które mają API, eksport albo bazę danych.</li>
+            <li>Błąd kosztuje więcej niż uporządkowanie procesu.</li>
+          </ul>
+          <h2 style="margin-top:28px">Kiedy odradzamy</h2>
+          <ul class="plainlist">
+            <li>Proces jest jednorazowy albo właśnie się zmienia.</li>
+            <li>Każdy rekord wymaga decyzji człowieka i nie da się jej rozdzielić.</li>
+            <li>Nie ma źródła prawdy, a dane są sprzeczne.</li>
+            <li>Wolumen jest zbyt niski, żeby wdrożenie się zwróciło.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak wygląda audyt</h2>
+        <p class="section-intro">
+          Cztery etapy. Terminy orientacyjne, liczone od dnia, w którym dostajemy
+          potrzebne materiały i dostępy.
+        </p>
+      </div>
+
+      <div class="path">
+        <div class="path-step">
+          <span class="n">01</span>
+          <h3>Rozmowa</h3>
+          <p class="price">60–90 minut</p>
+          <p>Pytam o proces, narzędzia i wyjątki. Możesz nagrać ekran albo pokazać dokumenty.</p>
+          <span class="when">Na start</span>
+        </div>
+        <div class="path-step">
+          <span class="n">02</span>
+          <h3>Analiza</h3>
+          <p class="price">Dane i systemy</p>
+          <p>Sprawdzam API, jakość danych, realny czas pracy i miejsca, w których proces się rozjeżdża.</p>
+          <span class="when">Orientacyjnie 1–2 dni robocze</span>
+        </div>
+        <div class="path-step">
+          <span class="n">03</span>
+          <h3>Raport</h3>
+          <p class="price">Dokument i wycena</p>
+          <p>Dostajesz mapę, koszt, priorytety, ryzyka i stałą wycenę wdrożenia.</p>
+          <span class="when">Orientacyjnie 3 dni robocze</span>
+        </div>
+        <div class="path-step">
+          <span class="n">04</span>
+          <h3>Omówienie</h3>
+          <p class="price">30 minut</p>
+          <p>Przechodzimy przez raport i decydujemy, czy wdrożenie ma sens. Bez presji.</p>
+          <span class="when">Po raporcie</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap narrow">
+      <div class="condition">
+        <h2>Warunek, który stosujemy przed wdrożeniem</h2>
+        <p>
+          Jeśli audyt nie wykaże zwrotu w maksymalnie 12 miesiącach, nie proponujemy
+          wdrożenia. To decyzja, nie haczyk. Raport zostaje u Ciebie jako dokument
+          z rekomendacjami.
+        </p>
+        <p class="small" style="margin-bottom:0">
+          Audyt jest osobną usługą. Odliczamy go od wdrożenia tylko wtedy, gdy do niego dojdzie.
+        </p>
+        <!-- DO DECYZJI TOMASA: ewentualny zwrot 890 zł za audyt nie jest zatwierdzony. Nie publikować obietnicy zwrotu. -->
+      </div>
+
+      <p class="small muted" style="margin-top:22px">
+        Nie obiecujemy konkretnego wyniku ani „gwarancji ROI”. Audyt może zakończyć się
+        rekomendacją „nie wdrażać”. Wtedy kończymy na raporcie.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Chcesz najpierw sprawdzić dopasowanie?"
+    text="Bezpłatna rozmowa 20 minut. Bez prezentacji i bez zobowiązania. Jeśli audyt nie ma sensu, powiem to wprost."
+  />
 </Base>

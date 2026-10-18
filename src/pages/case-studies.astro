@@ -2,49 +2,136 @@
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
 ---
-<Base title="Case studies | Studio Automatyzacji"
-      description="Strażnik Cen — prototyp monitoringu cen. Case studies z pierwszych wdrożeń w przygotowaniu."
-      path="/case-studies">
+<Base
+  title="Realizacje i dowody | Studio Automatyzacji"
+  description="Nie publikujemy wymyślonych case studies. Opisujemy, jak powstaje pierwszy publiczny case po pilocie za zgodą klienta, oraz działający prototyp monitoringu cen."
+  path="/case-studies"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Realizacje</span>
+        <span>Żadnych wymyślonych liczb</span>
+        <span>Pilot za zgodą klienta</span>
+      </div>
+      <h1>Realizacje bez wymyślonych liczb</h1>
+      <p class="lead">
+        Nie mamy jeszcze publicznych case studies. Nie wstawiamy cudzych logotypów,
+        wymyślonych opinii ani wyników bez pomiaru. Poniżej jest to, co faktycznie
+        istnieje, i sposób, w jaki powstanie pierwszy publiczny opis.
+      </p>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Dowody</p>
-      <h1 style="font-size:clamp(32px,4.4vw,50px)">Case studies</h1>
-      <p class="lead" style="max-width:680px">
-        Nie wklejam wymyślonych opinii ani logotypów. Poniżej jest to, co faktycznie istnieje —
-        resztę opiszę, gdy pierwsi klienci zgodzą się na publikację.
-      </p>
-
-      <div class="card" data-reveal style="margin-top:30px">
-        <span class="tag">Prototyp</span>
-        <h2 data-reveal style="margin-top:12px">Strażnik Cen — monitoring cen i dostępności</h2>
-        <div class="grid grid--3" style="margin-top:18px">
-          <div><div class="small muted">Problem</div><p>Ręczne sprawdzanie cen konkurencji w kilku sklepach dziennie. Arkusz rozjeżdża się po tygodniu.</p></div>
-          <div><div class="small muted">Rozwiązanie</div><p>Zbieranie danych z listy produktów, wykrywanie zmian, alert gdy cena spadnie lub produkt zniknie.</p></div>
-          <div><div class="small muted">Stan</div><p>Działający prototyp. Obsługa blokad i limitów, dane w jednym pliku, alert na mailu.</p></div>
+      <div class="split">
+        <div>
+          <h2>Dlaczego nie ma tu realizacji</h2>
+          <p>
+            Case study bez pomiaru przed i po jest reklamą, nie dowodem. Nie publikujemy
+            nazw klientów, logotypów ani liczb, dopóki klient nie zgodzi się na ich
+            pokazanie i dopóki nie mamy porównywalnego pomiaru.
+          </p>
+          <p>
+            Wolimy powiedzieć „jeszcze nie mamy”, niż pokazać cudzy sukces jako własny.
+            To samo dotyczy opinii i certyfikatów: na stronie nie znajdziesz ich bez
+            źródła.
+          </p>
         </div>
-        <p class="small muted" style="margin-top:16px">Demo pokazuję na rozmowie — na żywo, nie na zrzucie ekranu.</p>
-      </div>
-
-      <div class="grid grid--2" style="margin-top:22px">
-        <div class="card" data-reveal>
-          <span class="tag">W przygotowaniu</span>
-          <h3 style="margin-top:12px">Wdrożenie #1 — e-commerce</h3>
-          <p class="muted">Proces: zamówienia i statusy między sklepem a BaseLinkerem. Opiszę po zakończeniu i zgodzie klienta.</p>
+        <div class="note">
+          <strong>Prototyp, nie realizacja.</strong> Mamy działający prototyp monitoringu
+          cen: lista produktów, cykliczne zbieranie danych, wykrywanie zmian i alert.
+          Pokazujemy go na rozmowie. Nie opisujemy go jako wdrożenia klienta ani nie
+          podajemy wyników, których nie zmierzyliśmy.
         </div>
-        <div class="card" data-reveal>
-          <span class="tag">W przygotowaniu</span>
-          <h3 style="margin-top:12px">Wdrożenie #2 — raporty</h3>
-          <p class="muted">Proces: automatyczny raport sprzedaży i stanów. Opiszę po zakończeniu i zgodzie klienta.</p>
-        </div>
-      </div>
-
-      <div class="notice" style="margin-top:26px">
-        <b>Dlaczego tak?</b> Wolę powiedzieć „jeszcze nie mam”, niż pokazać cudze logotypy i zmyślone liczby.
-        Pierwsze trzy firmy dostają Start za 2 900 zł w zamian za rzetelne case study.
       </div>
     </div>
   </section>
 
-  <CTA />
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak powstanie pierwszy case</h2>
+        <p class="section-intro">
+          Pilot za zgodą klienta. Pomiar ustalamy przed startem, a publikację
+          zatwierdza klient, nie my.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Zgoda przed startem</h3>
+            <p>Klient akceptuje zakres pomiaru i wie, że wynik może być opisany publicznie albo nie.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Pomiar przed wdrożeniem</h3>
+            <p>Zapisujemy punkt startowy: czas, liczbę rekordów, koszt ręcznej pracy i częstotliwość błędów.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Ten sam pomiar po wdrożeniu</h3>
+            <p>Po ustalonym okresie mierzymy ten sam wskaźnik. Bez zmiany definicji w trakcie.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Opis do akceptacji</h3>
+            <p>Klient widzi cały tekst, zrzuty i liczby przed publikacją. Może zażądać usunięcia danych.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">05</span>
+          <div>
+            <h3>Publikacja albo cisza</h3>
+            <p>Bez pisemnej zgody nie publikujemy nic. Wycofanie zgody oznacza zdjęcie opisu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Czego nie publikujemy</h2>
+          <ul class="plainlist">
+            <li>Cudzych logotypów bez pisemnej zgody.</li>
+            <li>Opinii wymyślonych albo kupionych.</li>
+            <li>Wyników bez pomiaru przed i po.</li>
+            <li>Nazw klientów i danych osobowych bez zgody.</li>
+            <li>Zrzutów ekranu z danymi, których nie powinniśmy pokazywać.</li>
+            <li>Certyfikatów, których nie mamy.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Co możesz zobaczyć teraz</h2>
+          <ul class="checklist">
+            <li>Prototyp monitoringu cen na żywo podczas rozmowy.</li>
+            <li>Przykładowy raport z audytu bez danych klienta.</li>
+            <li>Zakres, cennik i kryteria odbioru.</li>
+            <li>Opis pracy z danymi i AI na stronie Zaufanie i dane.</li>
+          </ul>
+          <div class="buttonrow" style="margin-top:20px">
+            <a class="btn btn--ghost" href="/zaufanie">Zaufanie i dane</a>
+            <a class="btn btn--ghost" href="/audyt">Audyt 890 zł</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Masz proces, który chcesz opisać?"
+    text="Zacznijmy od rozmowy. Jeśli zdecydujesz się na pilot, pomiar i publikację ustalamy przed startem, nie po fakcie."
+  />
 </Base>

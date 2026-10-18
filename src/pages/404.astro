@@ -1,15 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Nie ma takiej strony | Studio Automatyzacji" description="Strona nie istnieje." path="/404">
-  <section class="section">
-    <div class="wrap narrow" style="text-align:center">
-      <p class="eyebrow">404</p>
+<Base
+  title="Nie ma takiej strony | Studio Automatyzacji"
+  description="Strona nie istnieje. Wróć na stronę główną albo przejdź do cennika i kontaktu."
+  path="/404"
+  noindex={true}
+>
+  <section class="page-head">
+    <div class="wrap narrow">
+      <div class="meta-line">
+        <span>404</span>
+        <span>Adres nie istnieje</span>
+      </div>
       <h1>Tej strony nie ma</h1>
-      <p class="lead">Adres mógł się zmienić albo jest literówka.</p>
-      <div class="buttonrow" style="justify-content:center;margin-top:20px">
-        <a class="btn btn--primary" href="/">Wróć na stronę główną</a>
-        <a class="btn btn--ghost" href="/kontakt">Napisz do mnie</a>
+      <p class="lead">
+        Adres mógł się zmienić albo jest w nim literówka. Wróć na stronę główną,
+        zobacz cennik albo napisz.
+      </p>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/">Strona główna</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje">Cennik</a>
+        <a class="btn btn--ghost" href="/kontakt">Kontakt</a>
       </div>
     </div>
   </section>

@@ -1,41 +1,109 @@
 ---
 import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
 ---
-<Base title="Regulamin usług | Studio Automatyzacji"
-      description="Regulamin świadczenia usług automatyzacji: zakres, ceny, płatności, gwarancja, odpowiedzialność."
-      path="/regulamin">
-  <section class="section">
+<Base
+  title="Regulamin usług | Studio Automatyzacji"
+  description="Regulamin usług automatyzacji: zakres, ceny netto, płatności, terminy orientacyjne, gwarancja, odpowiedzialność i poufność. Aktualizacja 18.10.2026."
+  path="/regulamin"
+>
+  <section class="page-head">
     <div class="wrap narrow">
-      <p class="eyebrow">Dokumenty</p>
-      <h1 style="font-size:clamp(30px,4vw,44px)">Regulamin usług</h1>
-      <p class="small muted">Obowiązuje od 18 października 2026 r.</p>
+      <div class="meta-line">
+        <span>Dokumenty</span>
+        <span>Obowiązuje od {PRICE_UPDATED}</span>
+      </div>
+      <h1>Regulamin usług</h1>
+      <p class="lead">
+        Zasady współpracy: zakres, ceny netto, płatności, terminy, odbiór,
+        gwarancja i poufność. Zakres każdego zlecenia potwierdzamy mailowo
+        przed rozpoczęciem prac.
+      </p>
+    </div>
+  </section>
 
-      <h2 data-reveal>1. Zakres</h2>
-      <p>Usługi obejmują audyt procesu, wdrożenie automatyzacji, integracje API, raporty oraz opiekę techniczną. Zakres każdego zlecenia potwierdzany jest mailowo przed rozpoczęciem prac.</p>
+  <section class="section">
+    <div class="wrap narrow prose">
+      <h2>1. Zakres</h2>
+      <p>
+        Usługi obejmują audyt procesu, wdrożenie automatyzacji, integracje API,
+        raporty oraz opiekę techniczną. Zakres, kryteria odbioru i cena są
+        potwierdzane mailowo przed rozpoczęciem prac. Prace spoza zakresu
+        wyceniamy osobno i wymagają pisemnej zgody.
+      </p>
 
-      <h2 data-reveal>2. Ceny i płatności</h2>
-      <p>Ceny podane na stronie są cenami netto. Standardowo płatność wynosi 50% przed rozpoczęciem prac i 50% po odbiorze. Wystawiam fakturę. Termin płatności: 7 dni.</p>
+      <h2>2. Ceny i płatności</h2>
+      <p>
+        Ceny podane na stronie są cenami netto i obowiązują od {PRICE_UPDATED}.
+        Standardowo płatność wynosi 50% przed rozpoczęciem prac i 50% po odbiorze.
+        Wystawiamy fakturę z 7-dniowym terminem płatności. Przy projektach powyżej
+        15 000 zł ustalamy harmonogram etapów.
+      </p>
+      <ul>
+        <li>Audyt automatyzacji: 890 zł netto, odliczany od wdrożenia.</li>
+        <li>Start: 3 900 zł netto.</li>
+        <li>Growth: 8 900 zł netto.</li>
+        <li>Scale: od 15 000 zł netto.</li>
+        <li>Opieka: 690 zł netto/mc.</li>
+        <li>White-label: 2 500 zł netto/proces.</li>
+      </ul>
 
-      <h2 data-reveal>3. Terminy</h2>
-      <p>Termin wdrożenia liczony jest od dnia przekazania dostępów i danych testowych. Opóźnienia po stronie klienta przesuwają termin o odpowiadający im czas.</p>
+      <h2>3. Terminy</h2>
+      <p>
+        Terminy podane na stronie są orientacyjne. Termin wdrożenia liczymy od dnia
+        przekazania dostępów i danych testowych. Opóźnienia po stronie klienta
+        przesuwają termin o odpowiadający im czas.
+      </p>
 
-      <h2 data-reveal>4. Odbiór i gwarancja</h2>
-      <p>Odbiór następuje po teście na danych klienta. Gwarancja obejmuje usunięcie błędów w zakresie uzgodnionym w zleceniu: 30 dni dla pakietu Start, 60 dni dla pakietu Growth, zgodnie z umową dla Scale. Gwarancja nie obejmuje zmian w systemach zewnętrznych ani nowych funkcji.</p>
+      <h2>4. Audyt i decyzja o wdrożeniu</h2>
+      <p>
+        Audyt jest osobną usługą. Jeśli dojdzie do wdrożenia, 890 zł netto odliczamy
+        od pierwszej faktury. Jeżeli audyt nie wykaże zwrotu w maksymalnie 12 miesiącach,
+        nie proponujemy wdrożenia. Raport zostaje u klienta jako dokument z rekomendacjami.
+      </p>
 
-      <h2 data-reveal>5. Odpowiedzialność</h2>
-      <p>Odpowiadamy za zgodność realizacji z uzgodnionym zakresem. Nie odpowiadamy za skutki zmian wprowadzonych przez klienta lub osoby trzecie w systemach objętych integracją, a także za przerwy w działaniu zewnętrznych API.</p>
+      <h2>5. Odbiór i gwarancja</h2>
+      <p>
+        Odbiór następuje po teście na danych klienta i spełnieniu kryteriów opisanych
+        w zleceniu. Gwarancja obejmuje usunięcie błędów w uzgodnionym zakresie:
+        30 dni dla Start, 60 dni dla Growth, zgodnie z umową dla Scale. Gwarancja
+        nie obejmuje zmian w systemach zewnętrznych ani nowych funkcji.
+      </p>
 
-      <h2 data-reveal>6. Własność intelektualna</h2>
-      <p>Po opłaceniu zlecenia klient otrzymuje kod źródłowy i dokumentację wdrożenia oraz prawo do ich wykorzystania w swojej działalności.</p>
+      <h2>6. Odpowiedzialność</h2>
+      <p>
+        Odpowiadamy za zgodność realizacji z uzgodnionym zakresem. Nie odpowiadamy
+        za skutki zmian wprowadzonych przez klienta lub osoby trzecie w systemach
+        objętych integracją ani za przerwy w działaniu zewnętrznych API. Zakres
+        odpowiedzialności określa umowa.
+      </p>
 
-      <h2 data-reveal>7. Poufność</h2>
-      <p>Dane klienta, w tym dane dostępowe i informacje o procesach, są poufne. Na życzenie podpisuję odrębną umowę NDA.</p>
+      <h2>7. Własność intelektualna</h2>
+      <p>
+        Po opłaceniu zlecenia klient otrzymuje kod źródłowy i dokumentację wdrożenia
+        oraz prawo do ich wykorzystania w swojej działalności. Licencje bibliotek
+        open source opisujemy w dokumentacji. Dostępy do systemów zostają po stronie klienta.
+      </p>
 
-      <h2 data-reveal>8. Reklamacje</h2>
-      <p>Reklamacje przyjmujemy na adres <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>. Odpowiadamy w ciągu 14 dni.</p>
+      <h2>8. Poufność</h2>
+      <p>
+        Dane klienta, w tym dane dostępowe i informacje o procesach, są poufne.
+        Na życzenie podpisujemy odrębną umowę NDA przed przekazaniem materiałów.
+        Zasady pracy z danymi opisuje strona <a href="/zaufanie">Zaufanie i dane</a>.
+      </p>
 
-      <h2 data-reveal>9. Prawo właściwe</h2>
-      <p>Do umów stosuje się prawo polskie. Spory rozstrzyga sąd właściwy dla siedziby usługodawcy, o ile strony nie uzgodnią inaczej.</p>
+      <h2>9. Reklamacje</h2>
+      <p>
+        Reklamacje przyjmujemy na adres
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Odpowiadamy w ciągu 14 dni.
+      </p>
+
+      <h2>10. Prawo właściwe</h2>
+      <p>
+        Do umów stosuje się prawo polskie. Spory rozstrzyga sąd właściwy dla siedziby
+        usługodawcy, o ile strony nie uzgodnią inaczej.
+      </p>
     </div>
   </section>
 </Base>

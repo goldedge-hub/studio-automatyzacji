@@ -1,114 +1,312 @@
 ---
 import Base from '../layouts/Base.astro';
-import FAQ from '../components/FAQ.astro';
+import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
+import FAQ from '../components/FAQ.astro';
+import { PRICE_UPDATED } from '../config';
+
+const plans = [
+  {
+    name: 'Start',
+    scope: '1 proces',
+    price: '3 900',
+    desc: 'Jeden proces, który ma przestać zajmować Twój czas.',
+    feats: [
+      '1 proces end-to-end',
+      'do 3 integracji',
+      'testy na Twoich danych',
+      'dokumentacja i szkolenie',
+      '30 dni gwarancji',
+    ],
+    href: '/kontakt?plan=start',
+    cta: 'Zapytaj o Start',
+  },
+  {
+    name: 'Growth',
+    scope: '3 procesy',
+    price: '8 900',
+    desc: 'Trzy procesy plus raport, który je podsumowuje.',
+    feats: [
+      '3 procesy end-to-end',
+      'dashboard lub raport cykliczny',
+      'do 6 integracji',
+      'alerty i obsługa błędów',
+      '60 dni gwarancji',
+    ],
+    href: '/kontakt?plan=growth',
+    cta: 'Zapytaj o Growth',
+  },
+  {
+    name: 'Scale',
+    scope: 'od 4 procesów',
+    price: 'od 15 000',
+    desc: 'Większe środowisko, ERP i wiele systemów.',
+    feats: [
+      'od 4 procesów',
+      'integracje ERP / WMS',
+      'wdrożenie etapami',
+      'SLA w umowie',
+      'opieka po odbiorze',
+    ],
+    href: '/kontakt?plan=scale',
+    cta: 'Zapytaj o Scale',
+  },
+];
+
 const rows = [
-  ['Liczba procesów', '1', '3', '5+'],
-  ['Integracje', 'do 3', 'do 6', 'ERP / wiele systemów'],
-  ['Czas wdrożenia', '10 dni', '3 tygodnie', '4–6 tygodni'],
-  ['Testy na Twoich danych', '✓', '✓', '✓'],
-  ['Dokumentacja', '✓', '✓', '✓ + techniczna'],
-  ['Szkolenie', '2 h', '3 h', 'wg potrzeb'],
-  ['Gwarancja', '30 dni', '60 dni', 'SLA'],
-  ['Monitoring i alerty', '—', 'opcjonalnie', '✓'],
+  ['Liczba procesów', '1', '3', 'od 4'],
+  ['Integracje', 'do 3', 'do 6', 'ERP / WMS, wiele systemów'],
+  ['Raport lub dashboard', 'opcjonalnie', 'w cenie', 'wg zakresu'],
+  ['Testy na danych klienta', 'tak', 'tak', 'tak'],
+  ['Dokumentacja', 'tak', 'tak', 'tak, techniczna'],
+  ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
+  ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
+  ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
+  ['Opieka', 'opcjonalnie 690 zł/mc', 'opcjonalnie 690 zł/mc', 'wg umowy'],
   ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
 ];
+
+const faq = [
+  {
+    q: 'Czy cena jest stała?',
+    a: 'Tak, dla zakresu opisanego przed startem. Zakres i kryteria odbioru zapisujemy w ofercie. Zmiana zakresu to osobna decyzja i osobna wycena, nie dopisek na końcu projektu.',
+  },
+  {
+    q: 'Od kiedy liczy się termin?',
+    a: 'Od przekazania dostępów i danych testowych. Jeśli dostępów nie ma, nie obiecujemy daty. Opóźnienia po stronie systemów klienta przesuwają termin o odpowiadający im czas.',
+  },
+  {
+    q: 'Czy testujecie na produkcji?',
+    a: 'Najpierw na próbce danych, potem na środowisku testowym, jeśli klient je ma. Uruchomienie produkcyjne nadzorujemy. Nie włączamy procesu, który nie przeszedł testu na danych klienta.',
+  },
+  {
+    q: 'Co obejmuje gwarancja?',
+    a: 'Usunięcie błędów w zakresie uzgodnionym w zleceniu: 30 dni dla Start, 60 dni dla Growth, zgodnie z umową dla Scale. Gwarancja nie obejmuje zmian w systemach zewnętrznych ani nowych funkcji.',
+  },
+  {
+    q: 'Czy dostaję kod i dokumentację?',
+    a: 'Tak. Po opłaceniu zlecenia kod źródłowy, dokumentacja i dostępy zostają po Twojej stronie. Opisujemy, jak uruchomić proces i co zrobić, gdy padnie.',
+  },
+  {
+    q: 'Czy można wdrożyć etapami?',
+    a: 'Tak, zwłaszcza w pakiecie Scale. Dzielimy zakres na etapy z osobnym odbiorem. Dzięki temu każdy etap działa i można zatrzymać projekt bez płacenia za niedokończoną całość.',
+  },
+  {
+    q: 'Czy pracujecie na naszych narzędziach?',
+    a: 'Tak. Budujemy w n8n, Make, Pythonie albo bezpośrednio na API, zależnie od procesu. Nie zmuszamy do własnej platformy abonamentowej.',
+  },
+  {
+    q: 'Czy podpisujecie NDA?',
+    a: 'Tak, na życzenie, przed przekazaniem materiałów. Zasady pracy z danymi opisujemy na stronie Zaufanie i dane.',
+  },
+];
 ---
-<Base title="Wdrożenia automatyzacji — cennik | Studio Automatyzacji"
-      description="Wdrożenie automatyzacji: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł. Stała cena, testy, dokumentacja, 30–60 dni gwarancji."
-      path="/wdrozenia">
+<Base
+  title="Wdrożenia automatyzacji: cennik i zakres | Studio Automatyzacji"
+  description="Wdrożenia automatyzacji: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji. Cennik aktualny 18.10.2026."
+  path="/wdrozenia"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Oferta</span>
+        <span>Ceny netto</span>
+        <span>Aktualizacja: {PRICE_UPDATED}</span>
+      </div>
+      <h1>Wdrożenia, które da się rozliczyć</h1>
+      <p class="lead">
+        Każde wdrożenie zaczynam od pytania „ile to oszczędza”, a kończę na działającym
+        procesie, teście i dokumentacji. Cena jest stała. Zmiana zakresu to osobna decyzja,
+        nie niespodzianka na fakturze.
+      </p>
+      <div class="buttonrow">
+        <BookingLink class="btn btn--primary" />
+        <a class="btn btn--ghost" href="/ile-kosztuje">Pełny cennik</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cennik">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pakiety wdrożeń</h2>
+        <p class="section-intro">
+          Trzy zakresy. Jeśli żaden nie pasuje, wyceniamy projekt indywidualnie.
+          Audyt 890 zł odliczamy od pierwszej faktury.
+        </p>
+      </div>
+
+      <div class="plans">
+        {plans.map((p) => (
+          <div class="plan">
+            <div class="plan-head">
+              <h3>{p.name}</h3>
+              <span class="scope">{p.scope}</span>
+            </div>
+            <p class="price">{p.price} <small>zł netto</small></p>
+            <p class="desc">{p.desc}</p>
+            <ul>
+              {p.feats.map((f) => <li>{f}</li>)}
+            </ul>
+            <a class="btn btn--ghost" href={p.href}>{p.cta}</a>
+          </div>
+        ))}
+      </div>
+
+      <div class="section-foot">
+        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura.</span>
+        <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i zależności cenowe</a>
+      </div>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Oferta</p>
-      <h1 style="font-size:clamp(32px,4.4vw,52px)">Wdrożenia, które da się rozliczyć</h1>
-      <p class="lead" style="max-width:700px">
-        Każde wdrożenie zaczynam od pytania „ile to oszczędza”, a kończę na działającym procesie,
-        teście i dokumentacji. Cena jest stała — zmiana zakresu to osobna decyzja, nie niespodzianka na fakturze.
-      </p>
-
-      <div class="grid grid--3" style="margin-top:34px">
-        <div class="card" data-reveal>
-          <span class="tag">Start</span>
-          <div class="price" style="margin-top:12px">3 900 zł <small>netto</small></div>
-          <p class="muted small">Jeden proces, który ma przestać zajmować Twój czas.</p>
-          <ul class="list check">
-            <li>Zakres i mapa procesu</li>
-            <li>Do 3 integracji</li>
-            <li>Wdrożenie w 10 dni</li>
-            <li>Testy i dokumentacja</li>
-            <li>30 dni gwarancji</li>
-          </ul>
-          <a class="btn btn--primary" href="mailto:kontakt@studioautomatyzacji.pl?subject=Wdrożenie%20Start">Wybieram Start</a>
-        </div>
-        <div class="card" data-reveal>
-          <span class="tag" style="background:var(--ink);color:#fff">Growth</span>
-          <div class="price" style="margin-top:12px">8 900 zł <small>netto</small></div>
-          <p class="muted small">Trzy procesy plus raport, który je podsumowuje.</p>
-          <ul class="list check">
-            <li>Trzy procesy w jednym projekcie</li>
-            <li>Do 6 integracji</li>
-            <li>Dashboard lub raport cykliczny</li>
-            <li>Szkolenie 3 h</li>
-            <li>60 dni gwarancji</li>
-          </ul>
-          <a class="btn btn--primary" href="mailto:kontakt@studioautomatyzacji.pl?subject=Wdrożenie%20Growth">Wybieram Growth</a>
-        </div>
-        <div class="card" data-reveal>
-          <span class="tag">Scale</span>
-          <div class="price" style="margin-top:12px">od 15 000 zł <small>netto</small></div>
-          <p class="muted small">Większe środowisko, ERP, wiele systemów i zespołów.</p>
-          <ul class="list check">
-            <li>5+ procesów</li>
-            <li>Integracja ERP</li>
-            <li>Monitoring i alerty</li>
-            <li>SLA na reakcję</li>
-            <li>Dokumentacja techniczna</li>
-          </ul>
-          <a class="btn btn--ghost" href="mailto:kontakt@studioautomatyzacji.pl?subject=Wdrożenie%20Scale">Porozmawiajmy</a>
-        </div>
+      <div class="section-head">
+        <h2>Porównanie zakresów</h2>
+        <p class="section-intro">
+          Dokumentacyjna tabela, bez ukrytych gwiazdek. „Wg umowy” znaczy, że zakres
+          ustalamy przed startem, a nie że go nie ma.
+        </p>
       </div>
 
-      <h2 data-reveal id="cennik" style="margin-top:52px">Porównanie pakietów</h2>
-      <div style="overflow-x:auto">
-        <table class="table">
-          <thead><tr><th>Zakres</th><th>Start</th><th>Growth</th><th>Scale</th></tr></thead>
+      <div class="table-wrap compare-table" tabindex="0" role="region" aria-label="Porównanie pakietów Start, Growth i Scale">
+        <table class="table table--compare">
+          <thead>
+            <tr>
+              <th scope="col">Zakres</th>
+              <th scope="col">Start</th>
+              <th scope="col">Growth</th>
+              <th scope="col">Scale</th>
+            </tr>
+          </thead>
           <tbody>
-            {rows.map(r => (
+            {rows.map((row) => (
               <tr>
-                <td><b>{r[0]}</b></td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+                <td>{row[3]}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div class="grid grid--2" style="margin-top:36px">
-        <div class="card" data-reveal>
-          <h3>Co zawsze wchodzi w cenę</h3>
-          <ul class="list check">
-            <li>Ustalenie zakresu i kryteriów odbioru</li>
-            <li>Praca na Twoich danych testowych</li>
-            <li>Dokumentacja: jak działa i co robić, gdy padnie</li>
-            <li>Przekazanie kodów i dostępów</li>
-          </ul>
-        </div>
-        <div class="card" data-reveal>
-          <h3>Czego nie robię</h3>
-          <ul class="list">
-            <li>Nie sprzedaję gotowego SaaS z abonamentem, którego nie możesz opuścić.</li>
-            <li>Nie obiecuję „wzrostu sprzedaży o 300%”.</li>
-            <li>Nie wdrażamy automatyzacji, które nie mają mierzalnego efektu.</li>
-          </ul>
-        </div>
+      <div class="compare-cards" role="group" aria-label="Porównanie pakietów Start, Growth i Scale">
+        {['Start', 'Growth', 'Scale'].map((name, index) => (
+          <div class="compare-card">
+            <h3>{name}</h3>
+            <dl>
+              {rows.map((row) => (
+                <Fragment>
+                  <dt>{row[0]}</dt>
+                  <dd class={row[0] === 'Cena netto' ? 'compare-price' : undefined}>{row[index + 1]}</dd>
+                </Fragment>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <p class="table-note">Pakiety na wąskim ekranie są pokazane jako karty.</p>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak wygląda wdrożenie</h2>
+        <p class="section-intro">
+          Cztery etapy. Terminy orientacyjne, liczone od przekazania dostępów
+          i danych testowych.
+        </p>
       </div>
 
-      <div class="notice" style="margin-top:26px">
-        <b>Płatność:</b> 50% przy starcie, 50% po odbiorze. Faktura. Przy projektach powyżej 15 000 zł — harmonogram etapami.
+      <div class="path">
+        <div class="path-step">
+          <span class="n">01</span>
+          <h3>Zakres</h3>
+          <p class="price">Kryteria odbioru</p>
+          <p>Opisujemy proces, systemy, wyjątki i to, co zostaje poza zakresem.</p>
+          <span class="when">Przed startem</span>
+        </div>
+        <div class="path-step">
+          <span class="n">02</span>
+          <h3>Budowa</h3>
+          <p class="price">Stała cena</p>
+          <p>Budujemy integrację i logikę procesu. Bez rozliczania godzin.</p>
+          <span class="when">Orientacyjnie 5–10 dni do 4–6 tygodni</span>
+        </div>
+        <div class="path-step">
+          <span class="n">03</span>
+          <h3>Testy</h3>
+          <p class="price">Twoje dane</p>
+          <p>Testujemy na próbce, potem na środowisku testowym. Sprawdzamy wyjątki i błędy.</p>
+          <span class="when">Przed odbiorem</span>
+        </div>
+        <div class="path-step">
+          <span class="n">04</span>
+          <h3>Odbiór</h3>
+          <p class="price">Kod i dokumentacja</p>
+          <p>Szkolenie, przekazanie dostępów i 30 albo 60 dni gwarancji.</p>
+          <span class="when">Po teście</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <FAQ />
-  <CTA />
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Co zawsze wchodzi w cenę</h2>
+          <ul class="checklist">
+            <li>Ustalenie zakresu i kryteriów odbioru.</li>
+            <li>Praca na Twoich danych testowych.</li>
+            <li>Dokumentacja: jak działa i co zrobić, gdy padnie.</li>
+            <li>Przekazanie kodu i dostępów.</li>
+            <li>Szkolenie zespołu w zakresie procesu.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Czego nie robimy</h2>
+          <ul class="plainlist">
+            <li>Nie sprzedajemy gotowego SaaS z abonamentem, którego nie możesz opuścić.</li>
+            <li>Nie obiecujemy „wzrostu sprzedaży o 300%”.</li>
+            <li>Nie wdrażamy automatyzacji bez mierzalnego efektu.</li>
+            <li>Nie doliczamy pracy bez pisemnej zgody.</li>
+            <li>Nie publikujemy wdrożenia jako case study bez zgody klienta.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:32px">
+        <strong>Płatność i formalności.</strong> 50% przed startem, 50% po odbiorze.
+        Faktura z 7-dniowym terminem. Przy projektach powyżej 15 000 zł ustalamy
+        harmonogram etapów. Zakres i cena są potwierdzane mailowo przed rozpoczęciem prac.
+      </div>
+
+      <p class="small muted" style="margin-top:18px">
+        Potrzebujesz danych o zgodności i bezpieczeństwie?
+        <a class="text-link" href="/zaufanie">Zaufanie, dane i zgodność</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o wdrożenie</h2>
+        <p class="section-intro">
+          Zakres, terminy, gwarancja i przekazanie kodu. Bez ogólników.
+        </p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <CTA
+    title="Nie wiesz, który pakiet?"
+    text="Zacznij od rozmowy. Po 20 minutach widać, czy wystarczy Start, czy potrzebny jest większy zakres."
+  />
 </Base>

@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { CONTACT_EMAIL } from '../config';
+---
+<Base
+  title="Zaufanie, dane i zgodność | Studio Automatyzacji"
+  description="Jak pracujemy z danymi, dostępami i AI: RODO, umowa powierzenia, NDA, AI Act z zatwierdzaniem przez człowieka, własność kodu, monitoring i logi. Bez fałszywych certyfikatów."
+  path="/zaufanie"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Zaufanie i zgodność</span>
+        <span>Bez certyfikatów, których nie mamy</span>
+      </div>
+      <h1>Dane, dostęp i AI bez marketingowych skrótów</h1>
+      <p class="lead">
+        Opisujemy, jak pracujemy z danymi i systemami klienta. Nie mamy certyfikatu
+        ISO ani SOC 2 i nie będziemy go sugerować. To, co jest poniżej, wynika
+        z zakresu konkretnego wdrożenia i umowy.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="doc-row" id="rodo">
+        <h2>RODO i powierzenie danych</h2>
+        <div class="doc-body">
+          <p>
+            Przetwarzamy tylko dane potrzebne do audytu i wdrożenia. Jeśli proces obejmuje
+            dane osobowe klientów, podpisujemy umowę powierzenia przetwarzania. Zakres,
+            cel i czas przechowywania określamy w umowie.
+          </p>
+          <ul>
+            <li>Dostęp do systemów ograniczamy do konkretnego zadania.</li>
+            <li>Nie kopiujemy całych baz, jeśli wystarczy wycinek danych.</li>
+            <li>Dane testowe anonimizujemy albo czyścimy przed użyciem, gdy to możliwe.</li>
+            <li>Po zakończeniu projektu odbieramy dostępy i potwierdzamy to klientowi.</li>
+          </ul>
+          <p class="small">
+            Szczegóły przetwarzania są w <a class="text-link" href="/polityka-prywatnosci">polityce prywatności</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-row" id="nda">
+        <h2>NDA na życzenie</h2>
+        <div class="doc-body">
+          <p>
+            NDA podpisujemy przed przekazaniem materiałów o procesach, danych i systemach.
+            To standard, nie wyjątek. Jeśli w projekcie uczestniczą podwykonawcy,
+            obejmujemy ich tym samym zobowiązaniem.
+          </p>
+          <p>
+            Materiały z audytu są dokumentem roboczym klienta. Nie publikujemy ich
+            ani nie pokazujemy jako case study bez pisemnej zgody.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-row" id="ai-act">
+        <h2>AI Act: człowiek zatwierdza</h2>
+        <div class="doc-body">
+          <p>
+            W naszych wdrożeniach AI klasyfikuje, streszcza albo przygotowuje szkic.
+            Decyzję podejmuje człowiek. Dotyczy to zwłaszcza wiadomości do klientów,
+            płatności, zamówień i danych osobowych.
+          </p>
+          <ul>
+            <li>AI nie wysyła decyzji ani nie zapisuje zmian bez zatwierdzenia.</li>
+            <li>Zakres danych wejściowych ograniczamy do minimum potrzebnego do zadania.</li>
+            <li>W procesach, w których to istotne, logujemy wejście, wynik i decyzję człowieka.</li>
+            <li>Zasady korzystania z AI opisujemy w dokumentacji wdrożenia.</li>
+          </ul>
+          <p class="small">
+            Nie twierdzimy, że całe studio jest „certyfikowane z AI Act”. Oceniamy
+            konkretne wdrożenie i jego rolę w procesie.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-row" id="wlasnosc">
+        <h2>Kod i dostępy</h2>
+        <div class="doc-body">
+          <p>
+            Po opłaceniu zlecenia klient otrzymuje kod źródłowy, dokumentację i prawo
+            do wykorzystania ich w swojej działalności. Dostępy do systemów zostają
+            po stronie klienta.
+          </p>
+          <ul>
+            <li>Nie blokujemy rozwiązania własnym abonamentem ani zamkniętą platformą.</li>
+            <li>Dostępy, których potrzebujemy, są minimalne i czasowe.</li>
+            <li>Po projekcie wykonujemy przegląd uprawnień i odbieramy swoje konta.</li>
+            <li>Licencje bibliotek open source opisujemy w dokumentacji.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="doc-row" id="monitoring">
+        <h2>Monitoring i obsługa błędów</h2>
+        <div class="doc-body">
+          <p>
+            Automatyzacja ma wykrywać problem, zanim zauważy go klient. Sposób monitoringu
+            zależy od procesu i środowiska. Nie każdy proces wymaga reakcji 24/7.
+          </p>
+          <ul>
+            <li>Alert po błędzie, przekroczeniu czasu albo braku danych wejściowych.</li>
+            <li>Ponowienia dla błędów przejściowych i kolejka przypadków do ręcznej obsługi.</li>
+            <li>Log startu, wyniku, błędu i czasu wykonania.</li>
+            <li>Zakres reakcji i czas odpowiedzi ustalamy w umowie, nie w reklamie.</li>
+          </ul>
+          <p>
+            Opieka techniczna kosztuje 690 zł netto/mc i jest opcjonalna.
+            Szczegóły są na stronie <a class="text-link" href="/opieka">Opieka</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-row" id="logi">
+        <h2>Logi i ślad działania</h2>
+        <div class="doc-body">
+          <p>
+            Logi są potrzebne do diagnozy, rozliczenia i odtworzenia zdarzenia.
+            Ich zakres i okres przechowywania ustalamy w umowie, zależnie od procesu
+            i danych, które przechodzą przez system.
+          </p>
+          <ul>
+            <li>Logujemy metadane techniczne, a nie pełną treść dokumentów, jeśli nie jest potrzebna.</li>
+            <li>Dane osobowe w logach ograniczamy i maskujemy tam, gdzie to możliwe.</li>
+            <li>Dostęp do logów ma klient i osoby prowadzące wdrożenie.</li>
+            <li>Po zakończeniu umowy logi przekazujemy albo usuwamy zgodnie z ustaleniami.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="doc-row" id="czego-nie-tworzymy">
+        <h2>Czego nie twierdzimy</h2>
+        <div class="doc-body">
+          <ul>
+            <li>Nie mamy certyfikatu ISO 27001, SOC 2 ani „certyfikatu AI Act”.</li>
+            <li>Nie gwarantujemy, że żaden błąd się nie zdarzy. Gwarantujemy procedurę reakcji.</li>
+            <li>Nie twierdzimy, że jedna umowa zapewnia zgodność całej firmy.</li>
+            <li>Nie publikujemy wymyślonych opinii, logotypów ani wyników.</li>
+          </ul>
+          <p>
+            Jeśli potrzebujesz konkretnego dokumentu, napisz na
+            <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            Odpowiemy, co możemy potwierdzić, a czego nie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Zacznij od pytania o dane."
+    text="Na rozmowie ustalamy, jakie dane przechodzą przez proces i kto ma do nich dostęp. To część projektu, nie dodatek."
+  />
+</Base>

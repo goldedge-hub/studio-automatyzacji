@@ -1,44 +1,105 @@
 ---
 import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
 ---
-<Base title="Polityka prywatności | Studio Automatyzacji"
-      description="Polityka prywatności strony studioautomatyzacji.pl — bez cookies marketingowych, bez analityki, dane tylko z korespondencji."
-      path="/polityka-prywatnosci">
-  <section class="section">
+<Base
+  title="Polityka prywatności | Studio Automatyzacji"
+  description="Polityka prywatności studioautomatyzacji.pl: bez cookies marketingowych i analityki. Dane z korespondencji i formularza, prawa RODO, kontakt."
+  path="/polityka-prywatnosci"
+>
+  <section class="page-head">
     <div class="wrap narrow">
-      <p class="eyebrow">Dokumenty</p>
-      <h1 style="font-size:clamp(30px,4vw,44px)">Polityka prywatności</h1>
-      <p class="small muted">Obowiązuje od 18 października 2026 r.</p>
+      <div class="meta-line">
+        <span>Dokumenty</span>
+        <span>Obowiązuje od {PRICE_UPDATED}</span>
+      </div>
+      <h1>Polityka prywatności</h1>
+      <p class="lead">
+        Strona nie używa cookies marketingowych ani analityki śledzącej.
+        Przetwarzamy dane, które przekazujesz w korespondencji albo formularzu.
+      </p>
+    </div>
+  </section>
 
-      <h2 data-reveal>1. Administrator</h2>
-      <p>Administratorem danych jest Studio Automatyzacji. Kontakt: <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>.</p>
+  <section class="section">
+    <div class="wrap narrow prose">
+      <h2>1. Administrator</h2>
+      <p>
+        Administratorem danych jest Studio Automatyzacji. Kontakt:
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
 
-      <h2 data-reveal>2. Jakie dane zbieram</h2>
-      <p>Wyłącznie dane, które sam przekazujesz w korespondencji mailowej: imię, adres e-mail, nazwę firmy, opis procesu i inne informacje zawarte w wiadomości.</p>
+      <h2>2. Jakie dane zbieramy</h2>
+      <p>
+        Dane, które przekazujesz w korespondencji mailowej albo formularzu: imię,
+        adres e-mail, nazwę firmy, opis procesu, budżet i inne informacje zawarte
+        w wiadomości. Nie zbieramy danych z cookies marketingowych.
+      </p>
+      {FORM_ENDPOINT && (
+        <p>
+          Formularz kontaktowy jest obsługiwany przez zewnętrznego dostawcę usługi
+          formularzowej. Dane są przekazywane wyłącznie w celu przyjęcia i obsługi
+          zgłoszenia. Dostawca przetwarza je zgodnie ze swoją polityką prywatności.
+        </p>
+      )}
 
-      <h2 data-reveal>3. Czego nie robię</h2>
-      <ul class="list">
-        <li>Nie używam plików cookies do celów marketingowych.</li>
-        <li>Nie instaluję analityki śledzącej ani pikseli reklamowych.</li>
-        <li>Nie sprzedaję ani nie udostępniam danych podmiotom trzecim w celach marketingowych.</li>
+      <h2>3. Czego nie robimy</h2>
+      <ul>
+        <li>Nie używamy plików cookies do celów marketingowych.</li>
+        <li>Nie instalujemy analityki śledzącej ani pikseli reklamowych.</li>
+        <li>Nie sprzedajemy ani nie udostępniamy danych podmiotom trzecim w celach marketingowych.</li>
+        <li>Nie publikujemy danych klientów w case studies bez pisemnej zgody.</li>
       </ul>
 
-      <h2 data-reveal>4. Cel i podstawa przetwarzania</h2>
-      <p>Dane przetwarzam w celu odpowiedzi na wiadomość i realizacji usługi — na podstawie art. 6 ust. 1 lit. b i f RODO (wykonanie umowy, uzasadniony interes: obsługa korespondencji).</p>
+      <h2>4. Cel i podstawa przetwarzania</h2>
+      <p>
+        Dane przetwarzamy w celu odpowiedzi na wiadomość i realizacji usługi,
+        na podstawie art. 6 ust. 1 lit. b i f RODO: wykonanie umowy oraz uzasadniony
+        interes polegający na obsłudze korespondencji.
+      </p>
 
-      <h2 data-reveal>5. Okres przechowywania</h2>
-      <p>Korespondencję przechowuję przez czas potrzebny do obsługi sprawy, a dokumenty księgowe — przez okres wymagany przepisami (5 lat).</p>
+      <h2>5. Okres przechowywania</h2>
+      <p>
+        Korespondencję przechowujemy przez czas potrzebny do obsługi sprawy,
+        a dokumenty księgowe przez okres wymagany przepisami. Dane z formularza
+        przechowujemy do zakończenia obsługi zgłoszenia, chyba że dojdzie do umowy.
+      </p>
 
-      <h2 data-reveal>6. Odbiorcy danych</h2>
-      <p>Dostawca poczty e-mail oraz dostawca hostingu strony (GitHub Inc., USA) w zakresie niezbędnym do działania usługi. Strona nie zawiera formularza zapisującego dane w bazie.</p>
+      <h2>6. Odbiorcy danych</h2>
+      <p>
+        Dostawca poczty e-mail, dostawca hostingu strony oraz, jeśli formularz jest
+        aktywny, dostawca usługi formularzowej. Dane przekazujemy wyłącznie w zakresie
+        niezbędnym do działania usługi. Strona nie zawiera bazy danych ani kont użytkowników.
+      </p>
 
-      <h2 data-reveal>7. Twoje prawa</h2>
-      <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz też złożyć skargę do Prezesa UODO.</p>
+      <h2>7. Twoje prawa</h2>
+      <p>
+        Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia
+        przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz też złożyć
+        skargę do Prezesa UODO. W sprawie danych napisz na
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
 
-      <h2 data-reveal>8. Bezpieczeństwo</h2>
-      <p>Dane dostępowe do systemów klienta przekazywane są wyłącznie kanałem uzgodnionym indywidualnie i przechowywane w sposób ograniczony do realizowanego zadania.</p>
+      <h2>8. Bezpieczeństwo</h2>
+      <p>
+        Dostępy do systemów klienta przekazujemy wyłącznie kanałem uzgodnionym
+        indywidualnie i przechowujemy w sposób ograniczony do realizowanego zadania.
+        Po zakończeniu projektu odbieramy swoje dostępy. Zasady opisuje strona
+        <a href="/zaufanie">Zaufanie i dane</a>.
+      </p>
 
-      <p class="small muted" style="margin-top:26px">Strona ma charakter informacyjny. Korzystanie z niej nie wymaga podawania danych osobowych.</p>
+      <h2>9. AI i dane</h2>
+      <p>
+        Jeśli proces korzysta z narzędzi AI, zakres danych wejściowych ograniczamy
+        do minimum potrzebnego do zadania, a wynik zatwierdza człowiek. Szczegóły
+        dla konkretnego wdrożenia opisujemy w dokumentacji i umowie.
+      </p>
+
+      <h2>10. Zmiany polityki</h2>
+      <p>
+        Politykę aktualizujemy, gdy zmieni się sposób działania strony albo przepisy.
+        Data obowiązywania jest podana na górze dokumentu.
+      </p>
     </div>
   </section>
 </Base>

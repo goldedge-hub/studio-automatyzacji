@@ -1,0 +1,63 @@
+---
+const assumptions = [
+  ['Zamówienia dziennie', '20'],
+  ['Ręczna obsługa jednego zamówienia', '4 min'],
+  ['Dni robocze w miesiącu', '22'],
+  ['Stawka za godzinę pracy (założenie)', '45 zł netto'],
+  ['Część pracy zdejmowana przez automatyzację (założenie)', '70%'],
+];
+
+const results = [
+  ['Praca ręczna dziennie', '20 × 4 min = 80 min (1 h 20 min)'],
+  ['Praca ręczna miesięcznie', '80 min × 22 = 1 760 min (29 h 20 min)'],
+  ['Koszt ręcznej pracy miesięcznie', '29,33 h × 45 zł = 1 320 zł'],
+  ['Oszczędność przy 70%', '1 320 zł × 70% = 924 zł/mc'],
+  ['Oszczędność w 12 miesiącach', '924 zł × 12 = 11 088 zł'],
+  ['Prosty zwrot z pakietu Start', '3 900 zł ÷ 924 zł = 4,2 miesiąca'],
+];
+---
+<div class="scenario" aria-labelledby="scenario-title">
+  <div class="scenario-head">
+    <h3 id="scenario-title">Scenariusz modelowy: 20 zamówień dziennie</h3>
+    <span class="scenario-label">Scenariusz modelowy, nie wynik klienta</span>
+  </div>
+
+  <div class="scenario-body">
+    <div class="scenario-col">
+      <h4>Założenia</h4>
+      <table>
+        <tbody>
+          {assumptions.map(([label, value]) => (
+            <tr>
+              <th scope="row">{label}</th>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scenario-col">
+      <h4>Obliczenia</h4>
+      <table>
+        <tbody>
+          {results.map(([label, value]) => (
+            <tr>
+              <th scope="row">{label}</th>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="scenario-foot">
+    <p>
+      To arytmetyka na jawnych założeniach, nie obietnica wyniku ani wynik klienta.
+      Nie uwzględnia kosztu utrzymania, licencji ani błędów. Audyt 890 zł jest odliczany
+      od wdrożenia, więc cena Start pozostaje kwotą 3 900 zł netto.
+    </p>
+    <a class="text-link small" href="/audyt">Policzmy to na Twoich danych</a>
+  </div>
+</div>

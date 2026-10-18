@@ -1,131 +1,292 @@
 ---
 import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
+import { CONTACT_EMAIL, FORM_ENDPOINT, mailtoHref } from '../config';
+
+const hasEndpoint = Boolean(FORM_ENDPOINT);
+const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zapytanie o automatyzację');
 ---
-<Base title="Kontakt — Studio Automatyzacji"
-      description="Opisz proces, który chcesz zautomatyzować. Odpowiadamy w ciągu jednego dnia roboczego, z zakresem i wyceną w 48 godzin."
-      path="/kontakt">
+<Base
+  title="Kontakt: opisz proces do automatyzacji | Studio Automatyzacji"
+  description="Opisz proces, który chcesz zautomatyzować. Odpowiadamy w ciągu jednego dnia roboczego. Bezpłatna rozmowa 20 min, audyt 890 zł, NDA na życzenie."
+  path="/kontakt"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Kontakt</span>
+        <span>Odpowiedź w ciągu jednego dnia roboczego</span>
+        <span>NDA na życzenie</span>
+      </div>
+      <h1>Opisz proces, który chcesz oddać maszynie</h1>
+      <p class="lead">
+        Wystarczy krótki opis. Odpowiemy z pytaniami albo od razu z propozycją
+        zakresu. Nie musisz mieć wszystkiego uporządkowanego.
+      </p>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:48px;align-items:start">
+      <div class="contact-grid">
         <div>
-          <p class="eyebrow">Kontakt</p>
-          <h1 style="font-size:clamp(34px,4.4vw,56px);margin-bottom:16px">Napisz, co chcesz<br />przestać robić ręcznie</h1>
-          <p class="lead" style="margin-bottom:30px">
-            Wystarczy krótki opis. Odpowiadamy w ciągu jednego dnia roboczego —
-            z pytaniami albo od razu z propozycją zakresu.
-          </p>
-
-          <form class="form" id="contact-form" novalidate>
+          <form
+            class="form"
+            id="contact-form"
+            action={formAction}
+            method="post"
+            enctype={hasEndpoint ? 'multipart/form-data' : 'text/plain'}
+            novalidate
+            data-endpoint={FORM_ENDPOINT}
+            data-email={CONTACT_EMAIL}
+            aria-describedby="form-note"
+          >
             <p class="small muted" style="margin:0">* pole wymagane</p>
-            <div class="rows">
+
+            <div class="form-grid">
               <div class="field">
                 <label for="f-name">Imię lub firma</label>
-                <input id="f-name" name="name" type="text" autocomplete="name" placeholder="np. Sklep Meblex" />
+                <input id="f-name" name="name" type="text" autocomplete="organization" placeholder="np. Sklep Meblex" />
               </div>
+
               <div class="field">
-                <label for="f-email">E-mail <span aria-hidden="true">*</span></label>
-                <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="twoj@email.pl" />
+                <label for="f-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+                <input
+                  id="f-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                  placeholder="twoj@email.pl"
+                />
+              </div>
+
+              <div class="field">
+                <label for="f-topic">Czego dotyczy zapytanie?</label>
+                <select id="f-topic" name="topic">
+                  <option value="rozmowa">Rozmowa 20 min</option>
+                  <option value="audyt">Audyt 890 zł</option>
+                  <option value="wdrozenie">Wdrożenie</option>
+                  <option value="opieka">Opieka techniczna</option>
+                  <option value="agencja">White-label dla agencji</option>
+                  <option value="inne">Inne</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="f-budget">Budżet</label>
+                <select id="f-budget" name="budget">
+                  <option value="">Nie wiem jeszcze</option>
+                  <option value="audyt">Audyt 890 zł</option>
+                  <option value="start">Start 3 900 zł</option>
+                  <option value="growth">Growth 8 900 zł</option>
+                  <option value="scale">Scale od 15 000 zł</option>
+                </select>
+              </div>
+
+              <div class="field field--full">
+                <label for="f-process">Proces do automatyzacji <span class="req" aria-hidden="true">*</span></label>
+                <textarea
+                  id="f-process"
+                  name="process"
+                  rows="6"
+                  required
+                  aria-required="true"
+                  aria-describedby="process-hint"
+                  placeholder="Co robisz ręcznie, ile razy w tygodniu i ile to zajmuje? Np. codzienne przepisywanie zamówień z Allegro do arkusza, około 40 minut."
+                ></textarea>
+                <p class="hint" id="process-hint">
+                  Wystarczy jedno zdanie o procesie, narzędziach i wolumenie. Resztę dopytamy.
+                </p>
               </div>
             </div>
-            <div class="field">
-              <label for="f-process">Proces do automatyzacji <span aria-hidden="true">*</span></label>
-              <textarea id="f-process" name="process" rows="5" required placeholder="Co robisz ręcznie, ile razy w tygodniu i ile to zajmuje? Np. codzienne przepisywanie zamówień z Allegro do arkusza — około 40 minut."></textarea>
-            </div>
-            <div class="field">
-              <label for="f-budget">Budżet</label>
-              <select id="f-budget" name="budget">
-                <option value="">Nie wiem jeszcze</option>
-                <option>Audyt 890 zł</option>
-                <option>Start 3 900 zł</option>
-                <option>Growth 8 900 zł</option>
-                <option>Scale od 15 000 zł</option>
-              </select>
-            </div>
+
             <label class="consent">
-              <input type="checkbox" id="f-consent" required />
-              <span>Zgadzam się na kontakt w sprawie tego zgłoszenia. Dane przetwarzamy zgodnie z <a href="/polityka-prywatnosci">polityką prywatności</a>.</span>
+              <input type="checkbox" id="f-consent" name="consent" value="tak" required aria-required="true" />
+              <span>
+                Zgadzam się na kontakt w sprawie tego zgłoszenia. Dane przetwarzamy zgodnie z
+                <a href="/polityka-prywatnosci">polityką prywatności</a>.
+                Zasady pracy z danymi opisuje <a href="/zaufanie">Zaufanie i dane</a>.
+              </span>
             </label>
-            <button class="btn btn--primary" type="submit">Przygotuj wiadomość</button>
-            <p class="small muted" id="form-note" style="margin:12px 0 0">
-              Formularz otworzy Twój program pocztowy z gotową wiadomością. Nic nie wysyłamy bez Twojej zgody.
+
+            <div class="hp" aria-hidden="true">
+              <label for="f-gotcha">Nie wypełniaj tego pola</label>
+              <input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button class="btn btn--primary" type="submit">
+              {hasEndpoint ? 'Wyślij zapytanie' : 'Przygotuj wiadomość w mailu'}
+            </button>
+
+            <p class="form-note" id="form-note">
+              {hasEndpoint ? (
+                <>
+                  Formularz wysyła zgłoszenie bezpośrednio. Jeśli coś nie zadziała, napisz na{' '}
+                  <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </>
+              ) : (
+                <>
+                  Formularz otworzy Twój program pocztowy z gotową wiadomością. Jeśli się nie otworzy,
+                  napisz na <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </>
+              )}
             </p>
+
+            <p class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+
+            <noscript>
+              <p class="form-note">
+                Formularz wymaga JavaScript. Napisz bezpośrednio na
+                <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              </p>
+            </noscript>
           </form>
         </div>
 
         <aside>
-          <div class="card" data-reveal>
-            <div class="mono" style="margin-bottom:10px">Bezpośredni kontakt</div>
-            <p style="font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px">
-              <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>
-            </p>
-            <p class="small muted" style="margin:0">Odpowiadamy w ciągu jednego dnia roboczego.</p>
-          </div>
+          <h2>Bezpośredni kontakt</h2>
+          <p style="font-size:19px; line-height:1.4">
+            <a class="text-link touch-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </p>
+          <p class="small muted">
+            Odpowiadamy w ciągu jednego dnia roboczego. Na życzenie podpisujemy NDA
+            przed przekazaniem materiałów.
+          </p>
 
-          <div class="card" data-reveal style="margin-top:16px">
-            <div class="mono" style="margin-bottom:12px">Co warto napisać</div>
-            <ul class="list check" style="margin:0">
-              <li>Jaki proces chcesz zautomatyzować (jedno zdanie).</li>
-              <li>Z jakich narzędzi korzystasz (sklep, BaseLinker, Excel, ERP, poczta).</li>
-              <li>Ile razy w tygodniu to robisz i ile to zajmuje.</li>
-              <li>Na kiedy potrzebujesz rozwiązania.</li>
-            </ul>
-          </div>
+          <h2 style="margin-top:30px">Co warto napisać</h2>
+          <ul class="checklist">
+            <li>Jaki proces chcesz zautomatyzować (jedno zdanie).</li>
+            <li>Z jakich narzędzi korzystasz: sklep, BaseLinker, Excel, ERP, poczta.</li>
+            <li>Ile razy w tygodniu to robisz i ile to zajmuje.</li>
+            <li>Na kiedy potrzebujesz rozwiązania.</li>
+          </ul>
 
-          <div class="notice" style="margin-top:16px">
-            <b>Nie musisz mieć wszystkiego uporządkowanego.</b> Często pierwsza rozmowa
-            polega na tym, żeby ustalić, który proces w ogóle warto automatyzować.
+          <h2 style="margin-top:30px">Wolisz rozmowę?</h2>
+          <p class="small muted">
+            20 minut o procesie. Bez prezentacji i bez zobowiązania.
+          </p>
+          <BookingLink class="btn btn--primary" />
+
+          <div class="note" style="margin-top:26px">
+            <strong>Nie musisz mieć wszystkiego uporządkowanego.</strong>
+            Często pierwsza rozmowa polega na ustaleniu, który proces w ogóle warto automatyzować.
           </div>
         </aside>
       </div>
     </div>
   </section>
 
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+
+    if (form) {
+      const endpoint = form.dataset.endpoint || '';
+      const email = form.dataset.email || '';
+      const status = document.getElementById('form-status');
+      const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      const honeypot = document.getElementById('f-gotcha') as HTMLInputElement | null;
+      const topic = document.getElementById('f-topic') as HTMLSelectElement | null;
+      const budget = document.getElementById('f-budget') as HTMLSelectElement | null;
+
+      const setStatus = (message: string, state: 'success' | 'error' | '') => {
+        if (!status) return;
+        status.textContent = message;
+        status.dataset.state = state;
+      };
+
+      const topicLabels: Record<string, string> = {
+        rozmowa: 'Rozmowa 20 min',
+        audyt: 'Audyt 890 zł',
+        wdrozenie: 'Wdrożenie',
+        opieka: 'Opieka techniczna',
+        agencja: 'White-label dla agencji',
+        inne: 'Inne',
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const requestedTopic = params.get('temat');
+      if (topic && requestedTopic && topicLabels[requestedTopic]) {
+        topic.value = requestedTopic;
+      }
+
+      const requestedPlan = params.get('plan');
+      if (budget && requestedPlan && ['audyt', 'start', 'growth', 'scale'].includes(requestedPlan)) {
+        budget.value = requestedPlan;
+      }
+
+      const buildMailto = (data: FormData, topicLabel: string) => {
+        const name = String(data.get('name') || '').trim();
+        const mail = String(data.get('email') || '').trim();
+        const process = String(data.get('process') || '').trim();
+        const budgetValue = String(data.get('budget') || '').trim();
+        const budgetLabel = budget?.selectedOptions[0]?.textContent?.trim() || 'do ustalenia';
+        const subject = `Zapytanie: ${topicLabel}${name ? ' / ' + name : ''}`;
+        const body = [
+          `Imię / firma: ${name || 'nie podano'}`,
+          `E-mail: ${mail}`,
+          `Temat: ${topicLabel}`,
+          `Budżet: ${budgetValue ? budgetLabel : 'do ustalenia'}`,
+          '',
+          'Proces do automatyzacji:',
+          process,
+        ].join('\n');
+        return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        if (honeypot?.value) {
+          setStatus('Dziękujemy. Zapytanie zostało przyjęte.', 'success');
+          return;
+        }
+
+        if (!form.reportValidity()) {
+          setStatus('Uzupełnij wymagane pola: e-mail, opis procesu i zgodę na kontakt.', 'error');
+          return;
+        }
+
+        const data = new FormData(form);
+        const topicLabel = topicLabels[String(data.get('topic') || 'inne')] || 'Inne';
+
+        if (!endpoint) {
+          window.location.href = buildMailto(data, topicLabel);
+          setStatus(`Otworzyliśmy Twój program pocztowy. Jeśli się nie otworzył, napisz na ${email}.`, 'success');
+          return;
+        }
+
+        if (submit) {
+          submit.disabled = true;
+          submit.textContent = 'Wysyłam...';
+        }
+        setStatus('Wysyłam zgłoszenie...', '');
+
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' },
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          form.reset();
+          setStatus('Dziękujemy. Zapytanie zostało wysłane. Odpowiemy w ciągu jednego dnia roboczego.', 'success');
+          if (submit) submit.textContent = 'Wysłano';
+        } catch {
+          setStatus(
+            `Nie udało się wysłać formularza. Napisz bezpośrednio na ${email}.`,
+            'error',
+          );
+          if (submit) {
+            submit.disabled = false;
+            submit.textContent = 'Wyślij zapytanie';
+          }
+          status?.focus();
+        }
+      });
+    }
+  </script>
 </Base>
-
-<style>
-  .form{display:flex;flex-direction:column;gap:16px;max-width:620px}
-  .rows{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:560px){.rows{grid-template-columns:1fr}}
-  .field{display:flex;flex-direction:column;gap:7px}
-  .field label{font-size:13.5px;color:var(--text-2);font-weight:500}
-  .field label span{color:var(--accent)}
-  .field input,.field textarea,.field select{
-    background:rgba(255,255,255,.035);border:1px solid var(--line-strong);border-radius:12px;
-    padding:13px 15px;color:var(--text);font-family:var(--font);font-size:15px;line-height:1.5;
-    transition:border-color .18s ease,background .18s ease;width:100%;
-  }
-  .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 22px,calc(100% - 15px) 22px;background-size:5px 5px;background-repeat:no-repeat}
-  .field input::placeholder,.field textarea::placeholder{color:#8b94a1}
-  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:rgba(245,180,74,.55);background:rgba(245,180,74,.05)}
-  .consent{display:flex;gap:11px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5}
-  .consent input{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex:none}
-  .consent a{color:var(--text-2);text-decoration:underline}
-  #contact-form .btn{align-self:flex-start;margin-top:4px}
-  @media(max-width:900px){.wrap > .grid{grid-template-columns:1fr !important;gap:32px !important}}
-</style>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-      const data = new FormData(form);
-      const name = String(data.get('name') || '').trim();
-      const email = String(data.get('email') || '').trim();
-      const process = String(data.get('process') || '').trim();
-      const budget = String(data.get('budget') || '').trim();
-      const subject = encodeURIComponent('Zapytanie o automatyzację — ' + (name || email));
-      const body = encodeURIComponent(
-        'Imię / firma: ' + (name || '—') + '\n' +
-        'E-mail: ' + email + '\n' +
-        'Budżet: ' + (budget || 'do ustalenia') + '\n\n' +
-        'Proces do automatyzacji:\n' + process + '\n'
-      );
-      window.location.href = 'mailto:kontakt@studioautomatyzacji.pl?subject=' + subject + '&body=' + body;
-      const note = document.getElementById('form-note');
-      if (note) note.textContent = 'Otworzyliśmy Twój program pocztowy. Jeśli się nie otworzył, napisz bezpośrednio na kontakt@studioautomatyzacji.pl.';
-    });
-  }
-</script>

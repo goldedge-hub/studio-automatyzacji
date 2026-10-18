@@ -1,0 +1,424 @@
+---
+import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
+import CTA from '../components/CTA.astro';
+import FAQ from '../components/FAQ.astro';
+import Scenario from '../components/Scenario.astro';
+import { PRICE_UPDATED } from '../config';
+
+const prices = [
+  {
+    service: 'Bezpłatna rozmowa 20 min',
+    price: '0 zł',
+    includes: 'Omówienie jednego procesu, pytania o narzędzia i wyjątki. Bez prezentacji i bez zobowiązania.',
+    term: '20 minut',
+  },
+  {
+    service: 'Audyt automatyzacji',
+    price: '890 zł netto',
+    includes: 'Mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. Odliczany od wdrożenia.',
+    term: 'Raport orientacyjnie w 3 dni robocze',
+  },
+  {
+    service: 'Wdrożenie Start',
+    price: '3 900 zł netto',
+    includes: '1 proces, do 3 integracji, testy na danych klienta, dokumentacja, szkolenie, 30 dni gwarancji.',
+    term: 'Orientacyjnie 5–10 dni roboczych',
+  },
+  {
+    service: 'Wdrożenie Growth',
+    price: '8 900 zł netto',
+    includes: '3 procesy, dashboard lub raport cykliczny, do 6 integracji, alerty i obsługa błędów, 60 dni gwarancji.',
+    term: 'Orientacyjnie 3 tygodnie',
+  },
+  {
+    service: 'Wdrożenie Scale',
+    price: 'od 15 000 zł netto',
+    includes: 'Od 4 procesów, integracje ERP / WMS, wdrożenie etapami, SLA w umowie, opieka po odbiorze.',
+    term: 'Orientacyjnie 4–6 tygodni',
+  },
+  {
+    service: 'Opieka techniczna',
+    price: '690 zł netto/mc',
+    includes: 'Monitoring, poprawki, drobne zmiany i miesięczny raport. Bez rocznego zobowiązania, miesiąc wypowiedzenia.',
+    term: 'Rozliczenie miesięczne',
+  },
+  {
+    service: 'White-label dla agencji',
+    price: '2 500 zł netto/proces',
+    includes: 'Jeden proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym, NDA na życzenie.',
+    term: 'Orientacyjnie 5–7 dni roboczych',
+  },
+];
+
+const comparison = [
+  ['Liczba procesów', '1', '3', 'od 4'],
+  ['Integracje', 'do 3', 'do 6', 'ERP / WMS, wiele systemów'],
+  ['Raport lub dashboard', 'opcjonalnie', 'w cenie', 'wg zakresu'],
+  ['Testy na danych klienta', 'tak', 'tak', 'tak'],
+  ['Dokumentacja', 'tak', 'tak', 'tak, techniczna'],
+  ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
+  ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
+  ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
+  ['Opieka', 'opcjonalnie 690 zł/mc', 'opcjonalnie 690 zł/mc', 'wg umowy'],
+  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
+];
+
+const costDrivers = [
+  {
+    t: 'Liczba procesów',
+    d: 'Każdy proces ma osobne wejście, wyjątki i kryterium odbioru. Jeden dobrze opisany proces jest tańszy niż trzy połączone.',
+  },
+  {
+    t: 'Integracje i API',
+    d: 'System z dokumentacją i testowym środowiskiem jest prostszy niż panel bez API. Rate limity i autoryzacja też wpływają na zakres.',
+  },
+  {
+    t: 'Jakość danych',
+    d: 'Duplikaty, brak identyfikatorów i ręczne poprawki wymagają dodatkowej logiki. Czasem najpierw trzeba uporządkować źródło.',
+  },
+  {
+    t: 'Wyjątki',
+    d: 'Im więcej decyzji człowieka przy pojedynczym rekordzie, tym więcej reguł i testów. Wyjątki można zostawić człowiekowi, ale trzeba je opisać.',
+  },
+  {
+    t: 'Środowisko',
+    d: 'Chmura, serwer klienta i dostępność sieci zmieniają sposób wdrożenia. Na początku ustalamy, gdzie ma działać proces.',
+  },
+  {
+    t: 'Utrzymanie',
+    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką.',
+  },
+];
+
+const notWorth = [
+  {
+    t: 'Proces zdarza się kilka razy w miesiącu',
+    d: 'Przy niskim wolumenie czas wdrożenia i utrzymania może być większy niż oszczędność. Czasem wystarczy szablon i checklista.',
+  },
+  {
+    t: 'Proces jest właśnie zmieniany',
+    d: 'Automatyzacja niestabilnego procesu utrwala bałagan. Najpierw porządkujemy reguły, potem budujemy.',
+  },
+  {
+    t: 'Brak API i niski wolumen',
+    d: 'Eksport plików albo automatyzacja interfejsu bywa możliwa, ale przy małej skali nie zwróci się. W audycie mówimy to wprost.',
+  },
+  {
+    t: 'Decyzja wymaga człowieka przy każdym kroku',
+    d: 'Jeśli każdy rekord wymaga oceny, automatyzacja może przygotować dane, ale nie zastąpi decyzji. Wtedy lepiej usprawnić kolejkę pracy.',
+  },
+  {
+    t: 'Dane nie mają źródła prawdy',
+    d: 'Dwa sprzeczne arkusze i brak identyfikatora to problem danych, nie automatyzacji. Najpierw trzeba ustalić, który system jest nadrzędny.',
+  },
+  {
+    t: 'To jednorazowe zadanie',
+    d: 'Jednorazowy raport albo migracja nie potrzebuje stałej automatyzacji. Można to policzyć jako zwykłe zlecenie.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Dlaczego audyt jest płatny?',
+    a: 'Audyt to praca: rozmowa, analiza procesu i danych, policzenie kosztu ręcznej pracy i wycena wdrożenia. Raport zostaje u Ciebie niezależnie od decyzji o wdrożeniu. Bezpłatna jest rozmowa 20 minut, żeby sprawdzić dopasowanie.',
+  },
+  {
+    q: 'Czy audyt odliczacie od wdrożenia?',
+    a: 'Tak. Jeśli dojdzie do wdrożenia, 890 zł netto odliczamy od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą za 890 zł netto.',
+  },
+  {
+    q: 'Czy ceny na stronie są aktualne?',
+    a: `Tak, cennik aktualizujemy na dzień ${PRICE_UPDATED}. Cenę potwierdzamy w ofercie przed startem. Zmiana zakresu to osobna decyzja i osobna wycena, nie dopisek na końcu projektu.`,
+  },
+  {
+    q: 'Ile trwa wdrożenie?',
+    a: 'Terminy podajemy orientacyjnie: Start zwykle 5–10 dni roboczych, Growth około 3 tygodni, Scale 4–6 tygodni. Liczymy je od przekazania dostępów i danych testowych. Opóźnienia po stronie systemów klienta przesuwają termin.',
+  },
+  {
+    q: 'Czy muszę wykupić opiekę?',
+    a: 'Nie. Opieka jest opcjonalna i miesięczna. Po wdrożeniu przekazujemy kod, dokumentację i dostępy. Jeśli Twój zespół potrafi utrzymać proces, opieka nie jest konieczna.',
+  },
+  {
+    q: 'Co, jeśli w trakcie okaże się, że potrzebny jest większy zakres?',
+    a: 'Zatrzymujemy się i wyceniamy zmianę osobno. Nie doliczamy pracy bez pisemnej zgody. Stała cena dotyczy zakresu opisanego przed startem.',
+  },
+  {
+    q: 'Czy ceny są brutto?',
+    a: 'Nie, podajemy ceny netto. Do zamówienia wystawiamy fakturę. Kwota do zapłaty zależy od Twojej sytuacji podatkowej.',
+  },
+  {
+    q: 'Czy white-label ma inne ceny?',
+    a: 'Tak. Dla agencji jeden proces do 3 integracji kosztuje 2 500 zł netto. Szczegóły i warunki są na stronie Dla agencji.',
+  },
+];
+---
+<Base
+  title="Ile kosztuje automatyzacja? Cennik netto | Studio Automatyzacji"
+  description="Jawne ceny automatyzacji: audyt 890 zł odliczany od wdrożenia, Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł. Opieka 690 zł/mc. Cennik netto, aktualizacja 18.10.2026."
+  path="/ile-kosztuje"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Cennik netto</span>
+        <span>Aktualizacja: {PRICE_UPDATED}</span>
+      </div>
+      <h1>Ile kosztuje automatyzacja</h1>
+      <p class="lead">
+        Ceny są stałe przed startem. Poniżej pełna lista, różnice między pakietami,
+        od czego zależy wycena i sytuacje, w których nie proponujemy wdrożenia.
+      </p>
+      <div class="buttonrow">
+        <BookingLink class="btn btn--primary" />
+        <a class="btn btn--ghost" href="#porownanie">Porównaj pakiety</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cennik">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Cennik usług</h2>
+        <p class="section-intro">
+          Wszystkie kwoty są netto. Terminy orientacyjne, liczone od przekazania
+          dostępów i danych testowych.
+        </p>
+      </div>
+
+      <div class="table-wrap price-table" tabindex="0" role="region" aria-label="Cennik usług Studio Automatyzacji">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Usługa</th>
+              <th scope="col">Cena netto</th>
+              <th scope="col">Co zawiera</th>
+              <th scope="col">Termin</th>
+            </tr>
+          </thead>
+          <tbody>
+            {prices.map((p) => (
+              <tr>
+                <td>{p.service}</td>
+                <td>{p.price}</td>
+                <td>{p.includes}</td>
+                <td>{p.term}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="price-cards" role="group" aria-label="Cennik usług Studio Automatyzacji">
+        {prices.map((p) => (
+          <div class="price-card">
+            <h3>{p.service}</h3>
+            <p class="price-card-price">{p.price}</p>
+            <p>{p.includes}</p>
+            <p class="price-card-term">{p.term}</p>
+          </div>
+        ))}
+      </div>
+      <p class="table-note">Cennik na wąskim ekranie jest pokazany jako lista.</p>
+      <p class="small muted" style="margin-top:14px">
+        Audyt 890 zł odliczamy od pierwszej faktury za wdrożenie. Opieka jest opcjonalna.
+        White-label rozliczamy z agencją, nie z klientem końcowym.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="porownanie">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Porównanie pakietów</h2>
+        <p class="section-intro">
+          Start dla jednego procesu, Growth dla trzech, Scale dla większego środowiska.
+          Nie sprzedajemy pakietu, którego zakresu nie da się obronić.
+        </p>
+      </div>
+
+      <div class="table-wrap compare-table" tabindex="0" role="region" aria-label="Tabela porównawcza pakietów Start, Growth i Scale">
+        <table class="table table--compare">
+          <thead>
+            <tr>
+              <th scope="col">Zakres</th>
+              <th scope="col">Start</th>
+              <th scope="col">Growth</th>
+              <th scope="col">Scale</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+                <td>{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="compare-cards" role="group" aria-label="Porównanie pakietów Start, Growth i Scale">
+        {['Start', 'Growth', 'Scale'].map((name, index) => (
+          <div class="compare-card">
+            <h3>{name}</h3>
+            <dl>
+              {comparison.map((row) => (
+                <Fragment>
+                  <dt>{row[0]}</dt>
+                  <dd class={row[0] === 'Cena netto' ? 'compare-price' : undefined}>{row[index + 1]}</dd>
+                </Fragment>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <p class="table-note">Pakiety na wąskim ekranie są pokazane jako karty.</p>
+
+      <div class="section-foot">
+        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura.</span>
+        <a class="text-link" href="/wdrozenia#cennik">Opis pakietów i zakresów</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sciezka">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Ścieżka i suma kosztów</h2>
+        <p class="section-intro">
+          Audyt nie jest opłatą wstępną do wdrożenia. To osobna usługa, którą można zakończyć
+          decyzją „nie wdrażamy”.
+        </p>
+      </div>
+
+      <div class="path">
+        <div class="path-step">
+          <span class="n">01</span>
+          <h3>Rozmowa</h3>
+          <p class="price">0 zł</p>
+          <p>Sprawdzamy, czy proces ma sens i czy warto robić audyt.</p>
+          <span class="when">20 minut</span>
+        </div>
+        <div class="path-step">
+          <span class="n">02</span>
+          <h3>Audyt</h3>
+          <p class="price">890 zł netto</p>
+          <p>Raport z kosztem, priorytetami i wyceną. Odliczany od wdrożenia.</p>
+          <span class="when">Orientacyjnie 3 dni robocze</span>
+        </div>
+        <div class="path-step">
+          <span class="n">03</span>
+          <h3>Wdrożenie</h3>
+          <p class="price">3 900 / 8 900 / od 15 000 zł netto</p>
+          <p>Stała cena za zakres. Start, Growth albo Scale.</p>
+          <span class="when">Orientacyjnie 5–10 dni do 4–6 tygodni</span>
+        </div>
+        <div class="path-step">
+          <span class="n">04</span>
+          <h3>Opieka</h3>
+          <p class="price">690 zł netto/mc</p>
+          <p>Opcjonalna. Monitoring, poprawki, raport miesięczny.</p>
+          <span class="when">Miesiąc do miesiąca</span>
+        </div>
+      </div>
+
+      <div class="condition" style="margin-top:32px">
+        <h2>Warunek, który stosujemy przed wdrożeniem</h2>
+        <p>
+          Jeśli audyt nie wykaże zwrotu w maksymalnie 12 miesiącach, nie proponujemy wdrożenia.
+          To decyzja, nie haczyk. Raport zostaje u Ciebie jako dokument z rekomendacjami.
+        </p>
+        <p class="small" style="margin-bottom:0">
+          Audyt jest osobną usługą. Odliczamy go od wdrożenia tylko wtedy, gdy do niego dojdzie.
+        </p>
+        <!-- DO DECYZJI TOMASA: ewentualny zwrot 890 zł za audyt nie jest zatwierdzony. Nie publikować obietnicy zwrotu. -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="od-czego-zalezy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Od czego zależy cena</h2>
+        <p class="section-intro">
+          Nie mamy cennika „za godzinę”. Cena wynika z zakresu, liczby integracji,
+          jakości danych i sposobu utrzymania.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {costDrivers.map((item, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{item.t}</h3>
+              <p>{item.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kiedy-sie-nie-oplaca">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kiedy automatyzacja się NIE opłaca</h2>
+        <p class="section-intro">
+          Także wtedy, gdy ktoś chce ją kupić. Lepiej powiedzieć „nie” przed audytem
+          niż po wdrożeniu, które nie ma z czego się zwrócić.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {notWorth.map((item, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{item.t}</h3>
+              <p>{item.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="note" style="margin-top:32px">
+        <strong>Uczciwa ocena dopasowania.</strong> Jeśli po rozmowie widać, że automatyzacja
+        nie ma sensu, mówimy to od razu. Bezpłatna rozmowa nie jest etapem sprzedaży,
+        po którym zawsze następuje oferta.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Scenariusz modelowy</h2>
+        <p class="section-intro">
+          Model pokazuje arytmetykę, nie wynik klienta. W audycie liczymy na Twoich danych.
+        </p>
+      </div>
+      <Scenario />
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o koszty i czas</h2>
+        <p class="section-intro">
+          Najczęstsze wątpliwości przed zamówieniem audytu albo wdrożenia.
+        </p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <CTA
+    title="Masz już proces i budżet?"
+    text="Zacznij od 20 minut. Po rozmowie wiadomo, czy potrzebny jest audyt i który pakiet ma sens."
+  />
+</Base>

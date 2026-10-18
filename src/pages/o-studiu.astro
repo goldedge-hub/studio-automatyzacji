@@ -1,61 +1,159 @@
 ---
 import Base from '../layouts/Base.astro';
+import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
+import { CONTACT_EMAIL } from '../config';
+
+const facts = [
+  ['Tryb pracy', 'Zdalnie, cała Polska'],
+  ['Kontakt', CONTACT_EMAIL],
+  ['Ceny', 'Netto, stałe przed startem'],
+  ['Płatność', '50% przed startem, 50% po odbiorze'],
+  ['Kod i dokumentacja', 'Po opłaceniu po stronie klienta'],
+  ['NDA', 'Na życzenie, przed materiałami'],
+  ['Opieka', 'Opcjonalna, 690 zł netto/mc'],
+];
 ---
-<Base title="O studiu — Studio Automatyzacji"
-      description="Studio automatyzacji dla e-commerce i firm usługowych. Integracje API, raporty, OCR i agenci AI. Stała cena, dokumentacja i 30 dni gwarancji."
-      path="/o-studiu">
+<Base
+  title="O studiu: automatyzacje po inżyniersku | Studio Automatyzacji"
+  description="Studio Automatyzacji projektuje integracje, raporty i procesy dla e-commerce i firm usługowych. Stała cena, testy, dokumentacja, kod po stronie klienta, AI z kontrolą człowieka."
+  path="/o-studiu"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>O studiu</span>
+        <span>Praca zdalna, cała Polska</span>
+        <span>Ceny netto</span>
+      </div>
+      <h1>Automatyzacje robione po inżyniersku, nie po sprzedażowemu</h1>
+      <p class="lead">
+        Studio Automatyzacji projektuje i wdraża integracje, raporty i procesy,
+        które wcześniej były robione ręcznie. Pracujemy w stałej cenie, z jasnym
+        zakresem i dokumentacją, którą zrozumie ktoś inny.
+      </p>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="grid grid--2" style="align-items:start;gap:44px">
+      <div class="split">
         <div>
-          <p class="eyebrow">O studiu</p>
-          <h1 style="font-size:clamp(32px,4.4vw,50px)">Automatyzacje robione po inżyniersku, nie po sprzedażowemu.</h1>
-          <p class="lead">
-            Studio Automatyzacji projektuje i wdraża integracje, raporty i procesy, które wcześniej
-            były robione ręcznie. Pracujemy zdalnie, w stałej cenie i z jasnym zakresem.
+          <h2>Jak podchodzimy do pracy</h2>
+          <p>
+            Zaczynamy od procesu i danych, nie od narzędzia. Jeśli system nie ma API,
+            sprawdzamy eksport, bazę albo inny punkt zaczepienia. Jeśli proces jest
+            niestabilny, najpierw go porządkujemy. Jeśli automatyzacja się nie zwraca,
+            mówimy to przed wdrożeniem.
           </p>
           <p>
-            Zaczęliśmy od systemów danych i analityki, gdzie błąd w danych kosztuje realne pieniądze.
-            To ustawiło standard: każda liczba musi się zgadzać ze źródłem, każdy proces musi mieć test,
-            a każda automatyzacja — dokumentację, którą zrozumie ktoś inny.
+            Każda liczba w raporcie musi zgadzać się ze źródłem. Każdy proces ma test
+            i dokumentację. Każde wdrożenie ma kryterium odbioru, a nie „prawie działa”.
           </p>
-          <p>
-            Budujemy integracje przez API (BaseLinker, Allegro, sklepy, arkusze, poczta, ERP),
-            procesy w n8n i Make oraz modele AI tam, gdzie naprawdę skracają pracę — zawsze z kontrolą człowieka.
-            Wdrożenie stoi na serwerze klienta albo w chmurze. Kod i dostępy zostają po stronie firmy.
-          </p>
-          <div class="buttonrow" style="margin-top:22px">
-            <a class="btn btn--primary" href="/kontakt">Porozmawiajmy</a>
-            <a class="btn btn--ghost" href="/case-studies">Zobacz dowody</a>
+
+          <h2>Jak wygląda współpraca</h2>
+          <ul class="checklist">
+            <li>Stała cena i zakres potwierdzony przed startem.</li>
+            <li>Testy na danych klienta, nie tylko na demo.</li>
+            <li>Dokumentacja i szkolenie zamiast wiedzy w głowie.</li>
+            <li>Kod i dostępy po stronie klienta po opłaceniu zlecenia.</li>
+            <li>AI przygotowuje wynik, człowiek zatwierdza decyzję.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Fakty o współpracy</h2>
+          <div class="table-wrap" style="box-shadow:none" tabindex="0" role="region" aria-label="Fakty o współpracy">
+            <table class="table" style="min-width:0">
+              <tbody>
+                {facts.map(([label, value]) => (
+                  <tr>
+                    <td style="width:42%">{label}</td>
+                    <td style="font-weight:400">{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h2 style="margin-top:32px">Czego nie robimy</h2>
+          <ul class="plainlist">
+            <li>Nie sprzedajemy abonamentu, z którego nie można wyjść.</li>
+            <li>Nie publikujemy wymyślonych case studies ani opinii.</li>
+            <li>Nie wdrażamy AI, które decyduje bez człowieka.</li>
+            <li>Nie obiecujemy wzrostu sprzedaży bez pomiaru.</li>
+            <li>Nie rozliczamy projektu godzinowo po fakcie.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Dlaczego tak</h2>
+        <p class="section-intro">
+          Klient ma dostać działający proces i dokumentację, a nie zależność
+          od dostawcy. To wpływa na sposób wyceny i przekazania pracy.
+        </p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Stała cena</h3>
+            <p>Klient zna kwotę przed startem. Ryzyko złego oszacowania bierzemy na siebie, w granicach opisanego zakresu.</p>
           </div>
         </div>
-        <div>
-          <div class="card" data-reveal style="background:var(--ink);color:#fff;border:0">
-            <div style="font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1">SA</div>
-            <p class="small" style="color:#a9b2c2;margin-top:10px">Studio Automatyzacji</p>
-            <hr style="border-color:rgba(255,255,255,.15);margin:18px 0" />
-            <ul class="list" style="color:#dfe4ec">
-              <li>10+ lat pracy z danymi i automatyką</li>
-              <li>Python, API, SQL, n8n, Make</li>
-              <li>Integracje e-commerce i raporty</li>
-              <li>Wdrożenia z dokumentacją i testami</li>
-            </ul>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Kod u klienta</h3>
+            <p>Po opłaceniu zlecenia klient może rozwijać rozwiązanie sam albo z innym wykonawcą. Nie blokujemy tego.</p>
           </div>
-          <div class="card" data-reveal style="margin-top:16px">
-            <h3>Jak pracujemy</h3>
-            <ul class="list check">
-              <li>Stała cena przed startem</li>
-              <li>Krzyżowe sprawdzenie danych</li>
-              <li>Dokumentacja, nie „wiedza w głowie”</li>
-              <li>Kod zostaje u klienta</li>
-            </ul>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Mierzalny efekt</h3>
+            <p>Przed wdrożeniem liczymy koszt ręcznej pracy. Po wdrożeniu porównujemy ten sam wskaźnik, a nie wrażenie.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Jasne granice AI</h3>
+            <p>AI wspiera klasyfikację i przygotowanie treści. Decyzje o klientach, płatnościach i zamówieniach zostają u człowieka.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <CTA title="Chcesz sprawdzić, czy się dogadamy?" text="20 minut rozmowy o procesie. Bez sprzedaży i bez zobowiązań." />
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Chcesz sprawdzić dopasowanie?</h2>
+          <p class="lead">
+            20 minut rozmowy o procesie. Bez prezentacji i bez zobowiązań.
+            Jeśli automatyzacja nie ma sensu, powiem to wprost.
+          </p>
+          <div class="buttonrow">
+            <BookingLink class="btn btn--primary" />
+            <a class="btn btn--ghost" href="/kontakt">Napisz</a>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Kontakt bezpośredni.</strong>
+          <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          Odpowiadamy w ciągu jednego dnia roboczego. Na życzenie podpisujemy NDA
+          przed przekazaniem materiałów.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
 </Base>
