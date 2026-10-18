@@ -6,14 +6,13 @@ const canonical = new URL(path, site).toString();
 const og = new URL('/og.png', site).toString();
 const nav = [
   ['/wdrozenia', 'Oferta'],
-  ['/wdrozenia#cennik', 'Cennik'],
   ['/case-studies', 'Case studies'],
   ['/o-studiu', 'O studiu'],
   ['/kontakt', 'Kontakt'],
 ];
 ---
 <!doctype html>
-<html lang="pl">
+<html lang="pl" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,9 +30,7 @@ const nav = [
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#07080a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -48,7 +45,10 @@ const nav = [
 </head>
 <body>
   <a href="#main" class="skip">Przejdź do treści</a>
-  <header class="site">
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header class="site" id="site-header">
     <div class="wrap nav">
       <a class="brand" href="/"><span class="mark">SA</span>Studio <span>Automatyzacji</span></a>
       <nav class="navlinks" aria-label="Menu">
@@ -59,7 +59,7 @@ const nav = [
         })}
       </nav>
       <div class="navcta">
-        <a class="btn btn--primary" href="/audyt">Umów audyt</a>
+        <a class="btn btn--primary" href="/audyt">Audyt — 890 zł</a>
       </div>
     </div>
   </header>
@@ -70,10 +70,10 @@ const nav = [
 
   <footer class="site">
     <div class="wrap">
+      <div class="wordmark">Studio Automatyzacji</div>
       <div class="fgrid">
         <div>
-          <div class="brand"><span class="mark">SA</span>Studio <span>Automatyzacji</span></div>
-          <p class="small" style="margin-top:16px;max-width:360px">
+          <p class="small" style="margin-top:16px;max-width:340px">
             Integracje, raporty i procesy, które przestają być robione ręcznie.
             Stała cena, dokumentacja i 30 dni gwarancji.
           </p>
@@ -89,7 +89,7 @@ const nav = [
         <div>
           <div class="mono" style="margin-bottom:14px">Studio</div>
           <p class="small"><a href="/o-studiu">O studiu</a></p>
-          <p class="small"><a href="/case-studies">Dowody</a></p>
+          <p class="small"><a href="/case-studies">Case studies</a></p>
           <p class="small"><a href="/kontakt">Kontakt</a></p>
         </div>
         <div>
@@ -105,10 +105,77 @@ const nav = [
       </div>
     </div>
   </footer>
+
+  <script>
+    import Lenis from 'lenis';
+    import { inView } from 'motion';
+
+    const header = document.getElementById('site-header');
+    const progress = document.getElementById('progress');
+
+    function onScroll() {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      if (progress) progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
+      if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 12);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // awaryjne odkrycie treści, gdyby observer nie wystartował
+    setTimeout(() => document.querySelectorAll('[data-reveal]:not(.in)').forEach((el) => el.classList.add('in')), 2600);
+
+    // spotlight
+    document.querySelectorAll<HTMLElement>('.card,.panel,.calc').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', e.clientX - r.left + 'px');
+        el.style.setProperty('--my', e.clientY - r.top + 'px');
+      });
+    });
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // reveal
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (reduced) { el.classList.add('in'); return; }
+      inView(el as HTMLElement, () => {
+        el.classList.add('in');
+      }, { amount: 0.12, margin: '0px 0px -60px 0px' });
+    });
+
+    // licznik
+    document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+      const to = Number(el.dataset.count || 0);
+      const suffix = el.dataset.suffix || '';
+      let done = false;
+      if (reduced) { el.textContent = to + suffix; return; }
+      inView(el, () => {
+        if (done) return;
+        done = true;
+        const t0 = performance.now();
+        const dur = 1100;
+        const tick = (t: number) => {
+          const k = Math.min(1, (t - t0) / dur);
+          const v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+          el.textContent = v + suffix;
+          if (k < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, { amount: 0.6 });
+    });
+
+    // smooth scroll
+    if (!reduced) {
+      const lenis = new Lenis({ duration: 1.05, smoothWheel: true, touchMultiplier: 1.2 });
+      const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+  </script>
 </body>
 </html>
 
 <style>
-  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:0 0 8px 0;z-index:100;font-weight:600}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:0 0 8px 0;z-index:200;font-weight:600}
   .skip:focus{left:0}
 </style>

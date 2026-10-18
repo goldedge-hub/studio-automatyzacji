@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import FAQ from '../components/FAQ.astro';
+import { Cable, LineChart, BarChart3, FileText, Workflow, Bot } from 'lucide-astro';
 
 const flows = [
   { name: 'Nowe zamówienie', src: 'Allegro → BaseLinker', w: '100%' },
@@ -28,18 +29,18 @@ const pains = [
 ];
 
 const services = [
-  { tag: 'integracje', t: 'Integracje API', d: 'Sklep, BaseLinker, ERP, arkusz i poczta rozmawiają ze sobą bez pośrednika. Zamówienia, stany, ceny i statusy płyną same.', wide: true,
-    icon: '<path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 12h18"/>' },
-  { tag: 'dane', t: 'Monitoring cen', d: 'Ceny i dostępność konkurencji codziennie rano. Zmiany powyżej progu trafiają na maila albo Telegram.', wide: false,
-    icon: '<path d="M3 17l5-5 4 3 6-7"/><path d="M3 21h18"/>' },
-  { tag: 'analityka', t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby zgodne z systemem źródłowym, nie „mniej więcej”.', wide: false,
-    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 15v3M12 10v8M17 6v12"/>' },
-  { tag: 'automatyzacja', t: 'Dokumenty i OCR', d: 'Faktury, umowy i skany: odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.', wide: false,
-    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/>' },
-  { tag: 'workflow', t: 'n8n, Make, webhooki', d: 'Łączymy narzędzia, które nie mają gotowej integracji — z powiadomieniem, logiem i obsługą błędów.', wide: false,
-    icon: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/>' },
-  { tag: 'AI', t: 'Agenci AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi z kontrolą człowieka. Bez „halucynacji na produkcji”.', wide: true,
-    icon: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>' },
+  { tag: 'integracje', t: 'Integracje API', d: 'Sklep, BaseLinker, ERP, arkusz i poczta rozmawiają ze sobą bez pośrednika. Zamówienia, stany, ceny i statusy płyną same.',
+    icon: Cable },
+  { tag: 'dane', t: 'Monitoring cen', d: 'Ceny i dostępność konkurencji codziennie rano. Zmiany powyżej progu trafiają na maila albo Telegram.',
+    icon: LineChart },
+  { tag: 'analityka', t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby zgodne z systemem źródłowym, nie „mniej więcej”.',
+    icon: BarChart3 },
+  { tag: 'automatyzacja', t: 'Dokumenty i OCR', d: 'Faktury, umowy i skany: odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.',
+    icon: FileText },
+  { tag: 'workflow', t: 'n8n, Make, webhooki', d: 'Łączymy narzędzia, które nie mają gotowej integracji — z powiadomieniem, logiem i obsługą błędów.',
+    icon: Workflow },
+  { tag: 'AI', t: 'Agenci AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi z kontrolą człowieka. Bez „halucynacji na produkcji”.',
+    icon: Bot },
 ];
 
 const steps = [
@@ -63,7 +64,7 @@ const plans = [
     <div class="wrap">
       <div>
         <div class="kicker reveal d1"><i></i>2 wolne terminy w tym miesiącu</div>
-        <h1 class="reveal d1">Mniej przepisywania.<br />Więcej decyzji.</h1>
+        <h1 class="reveal d1">Mniej przepisywania.<br /><span class="grad">Więcej decyzji.</span></h1>
         <p class="lead reveal d2">
           Łączymy sklepy, arkusze i magazyny w jeden system. Budujemy integracje,
           automatyzacje w n8n i Make oraz agentów AI, którzy przejmują powtarzalne zadania —
@@ -75,8 +76,8 @@ const plans = [
         </div>
         <div class="trust reveal d4">
           <div><b>10+ lat</b>z danymi i automatyką</div>
-          <div><b>48 h</b>na wycenę i zakres</div>
-          <div><b>30 dni</b>gwarancji na wdrożenie</div>
+          <div><b>890 zł</b>audyt odliczany od wdrożenia</div>
+          <div><b>10 dni</b>typowy czas wdrożenia</div>
           <div><b>50/50</b>płatność na start i przy odbiorze</div>
         </div>
       </div>
@@ -118,7 +119,7 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Rejestr procesów</p>
-      <h2>Co konkretnie znika z kalendarza</h2>
+      <h2 data-reveal>Co konkretnie znika z kalendarza</h2>
       <p class="lead" style="max-width:760px">
         Typowe czasy z procesów e-commerce, które automatyzujemy. To punkt odniesienia,
         żeby policzyć własne oszczędności — nie wyniki konkretnego klienta.
@@ -134,7 +135,7 @@ const plans = [
             <span class="before">{r.before}</span>
             <span class="after">{r.after}</span>
             <span class="gain">
-              <span class="bar"><i style={`--w:${r.pct}`}></i></span>
+              <span class="bar"><i style={`--w:${Math.round(58 + parseFloat(r.pct) * 0.42)}%`}></i></span>
               <span class="pct">{r.pct}</span>
             </span>
           </div>
@@ -149,10 +150,10 @@ const plans = [
   <section class="section section--ink">
     <div class="wrap">
       <p class="eyebrow">Poznajesz to u siebie?</p>
-      <h2>Sześć rzeczy, które robisz ręcznie<br />i których nikt nie powinien robić</h2>
+      <h2 data-reveal>Sześć rzeczy, które robisz ręcznie<br />i których nikt nie powinien robić</h2>
       <div class="grid grid--3" style="margin-top:36px">
         {pains.map((p) => (
-          <div class="card">
+          <div class="card" data-reveal>
             <h3>{p.t}</h3>
             <p class="small muted" style="margin:0">{p.d}</p>
           </div>
@@ -164,18 +165,21 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Zakres</p>
-      <h2>Sześć obszarów, w których<br />automatyzacja zwraca się najszybciej</h2>
+      <h2 data-reveal>Sześć obszarów, w których<br />automatyzacja zwraca się najszybciej</h2>
       <div class="bento">
-        {services.map((s) => (
-          <div class={`card${s.wide ? ' wide' : ''}`}>
+        {services.map((s) => {
+          const Icon = s.icon;
+          return (
+          <div class="card" data-reveal>
             <div>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon}></svg></div>
+              <div class="icon" aria-hidden="true"><Icon size={20} strokeWidth={1.6} /></div>
               <span class="tag">{s.tag}</span>
               <h3 style="margin-top:14px">{s.t}</h3>
               <p class="small muted" style="margin:0">{s.d}</p>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
       <div class="buttonrow" style="margin-top:26px">
         <a class="btn btn--ghost" href="/wdrozenia">Pełna oferta i zakresy</a>
@@ -187,10 +191,10 @@ const plans = [
   <section class="kpi-band">
     <div class="wrap">
       <div class="kpi-band-grid">
-        <div><b>10+</b><span>lat pracy z danymi i automatyką</span></div>
-        <div><b>48 h</b><span>na zakres i wycenę po rozmowie</span></div>
-        <div><b>30 dni</b><span>gwarancji na każde wdrożenie</span></div>
-        <div><b>50/50</b><span>płatność: start i odbiór</span></div>
+        <div><b data-count="48" data-suffix=" h">48 h</b><span>na zakres i wycenę po rozmowie</span></div>
+        <div><b data-count="30" data-suffix=" dni">30 dni</b><span>gwarancji na każde wdrożenie</span></div>
+        <div><b data-count="3" data-suffix="">3</b><span>integracje API w pakiecie Start</span></div>
+        <div><b data-count="100" data-suffix="%">100%</b><span>dokumentacja i przekazanie dostępu</span></div>
       </div>
     </div>
   </section>
@@ -198,7 +202,7 @@ const plans = [
   <section class="section section--ink">
     <div class="wrap">
       <p class="eyebrow">Jak pracujemy</p>
-      <h2>Od rozmowy do działającego procesu<br />w czterech krokach</h2>
+      <h2 data-reveal>Od rozmowy do działającego procesu<br />w czterech krokach</h2>
       <div class="steps">
         {steps.map((s) => (
           <div class="step">
@@ -215,7 +219,7 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Dowody</p>
-      <h2>Nie logotypy. Działające rzeczy<br />i policzalny efekt</h2>
+      <h2 data-reveal>Nie logotypy. Działające rzeczy<br />i policzalny efekt</h2>
       <div class="proof">
         <div class="big">
           <div class="num">Strażnik Cen</div>
@@ -244,7 +248,7 @@ const plans = [
       <div class="grid grid--2" style="gap:48px;align-items:center">
         <div>
           <p class="eyebrow">Integracje</p>
-          <h2 style="margin-bottom:16px">Łączymy to,<br />czego nie da się połączyć klikaniem</h2>
+          <h2 data-reveal style="margin-bottom:16px">Łączymy to,<br />czego nie da się połączyć klikaniem</h2>
           <p class="lead" style="margin-bottom:18px">
             Pracujemy na API, webhookach i eksportach. Jeśli system ma jakikolwiek punkt styku —
             integrację da się zbudować.
@@ -266,7 +270,7 @@ const plans = [
   <section class="section section--ink" id="cennik">
     <div class="wrap">
       <p class="eyebrow">Cennik</p>
-      <h2>Stała cena przed startem.<br />Bez rozliczania godzin</h2>
+      <h2 data-reveal>Stała cena przed startem.<br />Bez rozliczania godzin</h2>
       <p class="lead" style="max-width:640px">Zaczynamy od audytu za 890 zł netto. Jeśli wdrożymy projekt, kwota audytu odlicza się od pierwszej faktury.</p>
       <div class="pricegrid">
         {plans.map((p) => (
@@ -285,13 +289,13 @@ const plans = [
         ))}
       </div>
       <div class="grid grid--2" style="margin-top:18px">
-        <div class="card">
+        <div class="card" data-reveal>
           <span class="tag">Audyt</span>
           <div class="price" style="margin-top:12px">890 <small>zł netto</small></div>
           <p class="small muted" style="margin-top:10px">Mapa procesów, pomiar czasu, wycena wdrożenia i lista rzeczy, których nie warto automatyzować.</p>
           <a class="btn btn--ghost" href="/audyt" style="margin-top:16px">Zobacz, co dostajesz</a>
         </div>
-        <div class="card">
+        <div class="card" data-reveal>
           <span class="tag">Opieka</span>
           <div class="price" style="margin-top:12px">690 <small>zł netto / mc</small></div>
           <p class="small muted" style="margin-top:10px">Monitoring, poprawki, drobne zmiany i miesięczny raport. Bez godzinowego rozliczania.</p>
@@ -306,7 +310,7 @@ const plans = [
       <div class="grid grid--2" style="gap:48px;align-items:center">
         <div>
           <p class="eyebrow">Kalkulator</p>
-          <h2 style="margin-bottom:16px">Policz, ile to warte<br />w Twojej firmie</h2>
+          <h2 data-reveal style="margin-bottom:16px">Policz, ile to warte<br />w Twojej firmie</h2>
           <p class="lead" style="margin-bottom:18px">
             Trzy suwaki i jedna liczba. Bez zostawiania maila i bez rozmowy z handlowcem.
           </p>
@@ -347,7 +351,7 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">FAQ</p>
-      <h2>Pytania, które padają<br />w pierwszej rozmowie</h2>
+      <h2 data-reveal>Pytania, które padają<br />w pierwszej rozmowie</h2>
       <FAQ />
     </div>
   </section>
@@ -357,7 +361,7 @@ const plans = [
       <div class="grid grid--2" style="align-items:center;gap:48px">
         <div>
           <p class="eyebrow">Start</p>
-          <h2 style="margin-bottom:16px">Policzmy, ile godzin<br />możesz odzyskać</h2>
+          <h2 data-reveal style="margin-bottom:16px">Policzmy, ile godzin<br />możesz odzyskać</h2>
           <p class="lead" style="margin-bottom:24px">
             20 minut rozmowy o procesie, który najbardziej zjada czas. Bez prezentacji
             i bez zobowiązań. Jeśli automatyzacja nie ma sensu, powiemy to wprost.
@@ -367,7 +371,7 @@ const plans = [
             <a class="btn btn--ghost" href="mailto:kontakt@studioautomatyzacji.pl">Napisz maila</a>
           </div>
         </div>
-        <div class="card" style="padding:30px">
+        <div class="card" data-reveal style="padding:30px">
           <div class="mono" style="margin-bottom:14px">Co się dzieje po wysłaniu zgłoszenia</div>
           <ul class="list check" style="margin:0">
             <li>Odpowiadamy w ciągu jednego dnia roboczego.</li>
