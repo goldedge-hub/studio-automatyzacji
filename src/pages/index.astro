@@ -183,6 +183,18 @@ const plans = [
     </div>
   </section>
 
+
+  <section class="kpi-band">
+    <div class="wrap">
+      <div class="kpi-band-grid">
+        <div><b>10+</b><span>lat pracy z danymi i automatyką</span></div>
+        <div><b>48 h</b><span>na zakres i wycenę po rozmowie</span></div>
+        <div><b>30 dni</b><span>gwarancji na każde wdrożenie</span></div>
+        <div><b>50/50</b><span>płatność: start i odbiór</span></div>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--ink">
     <div class="wrap">
       <p class="eyebrow">Jak pracujemy</p>
@@ -223,6 +235,31 @@ const plans = [
         Nie publikujemy wymyślonych case studies. Pierwsze wdrożenia klientów trafią tutaj
         po odbiorze i zgodzie na publikację — z liczbami przed i po.
       </p>
+    </div>
+  </section>
+
+
+  <section class="section" id="integracje">
+    <div class="wrap">
+      <div class="grid grid--2" style="gap:48px;align-items:center">
+        <div>
+          <p class="eyebrow">Integracje</p>
+          <h2 style="margin-bottom:16px">Łączymy to,<br />czego nie da się połączyć klikaniem</h2>
+          <p class="lead" style="margin-bottom:18px">
+            Pracujemy na API, webhookach i eksportach. Jeśli system ma jakikolwiek punkt styku —
+            integrację da się zbudować.
+          </p>
+          <p class="small muted" style="max-width:440px;margin:0">
+            Nazwy firm i produktów należą do ich właścicieli. Wymieniamy je jako technologie,
+            na których wdrażamy, nie jako potwierdzone partnerstwa.
+          </p>
+        </div>
+        <div class="integrations" aria-label="Technologie i integracje">
+          {['BaseLinker','Shoper','Allegro','WooCommerce','Shopify','PrestaShop','IdoSell','Erli','Amazon','eBay','n8n','Make','Zapier','Google Sheets','Airtable','Slack','Telegram','Gmail','Outlook','Python','REST API','SQL','OCR','OpenAI'].map((n) => (
+            <span class="chip">{n}</span>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
