@@ -4,7 +4,7 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
 ---
 <Base
   title="Polityka prywatności | Studio Automatyzacji"
-  description="Polityka prywatności studioautomatyzacji.pl: bez cookies marketingowych i analityki. Dane z korespondencji i formularza, prawa RODO, kontakt."
+  description="Polityka prywatności: bez cookies marketingowych i analityki. Dane z formularza i korespondencji, mini-diagnoza, prawa RODO i kontakt."
   path="/polityka-prywatnosci"
 >
   <section class="page-head">
@@ -31,9 +31,10 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
 
       <h2>2. Jakie dane zbieramy</h2>
       <p>
-        Dane, które przekazujesz w korespondencji mailowej albo formularzu: imię,
-        adres e-mail, nazwę firmy, opis procesu, budżet i inne informacje zawarte
-        w wiadomości. Nie zbieramy danych z cookies marketingowych.
+        Dane, które przekazujesz w korespondencji mailowej albo formularzu: firmę lub
+        imię, adres e-mail, opis procesu, używane narzędzia, liczbę osób wykonujących
+        proces, opcjonalny temat zgłoszenia i inne informacje zawarte w wiadomości.
+        Nie zbieramy danych z cookies marketingowych.
       </p>
       {FORM_ENDPOINT && (
         <p>
@@ -53,9 +54,11 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
 
       <h2>4. Cel i podstawa przetwarzania</h2>
       <p>
-        Dane przetwarzamy w celu odpowiedzi na wiadomość i realizacji usługi,
-        na podstawie art. 6 ust. 1 lit. b i f RODO: wykonanie umowy oraz uzasadniony
-        interes polegający na obsłudze korespondencji.
+        Dane przetwarzamy w celu odpowiedzi na wiadomość, przygotowania bezpłatnej
+        mini-diagnozy, przeprowadzenia audytu i realizacji usługi, na podstawie
+        art. 6 ust. 1 lit. b i f RODO: wykonanie umowy oraz uzasadniony interes
+        polegający na obsłudze korespondencji. Mini-diagnoza jest bezpłatna i nie
+        zobowiązuje do zamówienia audytu ani wdrożenia.
       </p>
 
       <h2>5. Okres przechowywania</h2>
@@ -63,6 +66,7 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         Korespondencję przechowujemy przez czas potrzebny do obsługi sprawy,
         a dokumenty księgowe przez okres wymagany przepisami. Dane z formularza
         przechowujemy do zakończenia obsługi zgłoszenia, chyba że dojdzie do umowy.
+        Zgłoszenia bez odpowiedzi klienta usuwamy po zakończeniu obsługi sprawy.
       </p>
 
       <h2>6. Odbiorcy danych</h2>
@@ -95,7 +99,16 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         dla konkretnego wdrożenia opisujemy w dokumentacji i umowie.
       </p>
 
-      <h2>10. Zmiany polityki</h2>
+      <h2>10. Formularz i kontakt</h2>
+      <p>
+        Formularz kontaktowy zbiera tylko dane potrzebne do odpowiedzi. Jeśli
+        PUBLIC_FORM_ENDPOINT jest aktywny, zgłoszenie jest przekazywane przez
+        dostawcę usługi formularzowej. Bez endpointu formularz otwiera program
+        pocztowy i wysyła wiadomość na adres kontaktowy. W obu przypadkach
+        obowiązuje ten sam cel i okres przechowywania.
+      </p>
+
+      <h2>11. Zmiany polityki</h2>
       <p>
         Politykę aktualizujemy, gdy zmieni się sposób działania strony albo przepisy.
         Data obowiązywania jest podana na górze dokumentu.

@@ -1,15 +1,14 @@
 ---
 import '../styles/global.css';
-import BookingLink from '../components/BookingLink.astro';
 import {
-  BOOKING_HREF,
-  BOOKING_URL,
   CONTACT_EMAIL,
+  CONTACT_HREF,
+  CONTACT_RESPONSE,
   PRICE_UPDATED,
   SITE_URL,
 } from '../config';
 
-const { title, description, path = '/', noindex = false } = Astro.props;
+const { title, description, path = '/', noindex = false, faq = null } = Astro.props;
 
 const site = SITE_URL;
 const canonical = new URL(path, site).toString();
@@ -38,12 +37,16 @@ const jsonLd = {
   url: site,
   email: CONTACT_EMAIL,
   description:
-    'Studio automatyzacji dla e-commerce i firm usługowych. Audyt procesów, integracje API, raporty, automatyzacje n8n i Make oraz agenci AI z kontrolą człowieka.',
+    'Studio automatyzacji dla MŚP e-commerce: zamówienia, zwroty, stany, faktury i korespondencja. Integracje Shoper, BaseLinker, Allegro, WooCommerce, audyt procesów i opieka techniczna.',
   areaServed: { '@type': 'Country', name: 'Polska' },
-  priceRange: '890–15000 PLN',
+  priceRange: '0–15000 PLN',
   knowsAbout: [
-    'automatyzacja procesów',
+    'automatyzacja e-commerce',
     'integracje API',
+    'Shoper',
+    'BaseLinker',
+    'Allegro',
+    'WooCommerce',
     'n8n',
     'Make',
     'OCR',
@@ -56,6 +59,13 @@ const jsonLd = {
     '@type': 'OfferCatalog',
     name: 'Usługi Studio Automatyzacji (ceny netto)',
     itemListElement: [
+      {
+        '@type': 'Offer',
+        name: 'Bezpłatna mini-diagnoza e-mailem',
+        price: '0',
+        priceCurrency: 'PLN',
+        url: `${site}/audyt#mini-diagnoza`,
+      },
       {
         '@type': 'Offer',
         name: 'Audyt automatyzacji',
@@ -80,13 +90,23 @@ const jsonLd = {
       {
         '@type': 'Offer',
         name: 'Wdrożenie Scale',
-        price: '15000',
-        priceCurrency: 'PLN',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          minPrice: '15000',
+          priceCurrency: 'PLN',
+        },
         url: `${site}/wdrozenia`,
       },
       {
         '@type': 'Offer',
-        name: 'Opieka techniczna',
+        name: 'Opieka Basic',
+        price: '390',
+        priceCurrency: 'PLN',
+        url: `${site}/opieka`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'Opieka Standard',
         price: '690',
         priceCurrency: 'PLN',
         url: `${site}/opieka`,
@@ -101,6 +121,18 @@ const jsonLd = {
     ],
   },
 };
+
+const faqLd = faq
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item: { q: string; a: string }) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    }
+  : null;
 ---
 <!doctype html>
 <html lang="pl">
@@ -123,7 +155,7 @@ const jsonLd = {
   <meta property="og:image" content={og} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Studio Automatyzacji. Audyt 890 zł, wdrożenia od 3 900 zł netto." />
+  <meta property="og:image:alt" content="Studio Automatyzacji: mini-diagnoza e-mailem, audyt 890 zł netto, wdrożenia od 3 900 zł netto." />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
@@ -132,6 +164,7 @@ const jsonLd = {
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
 </head>
 <body>
   <a class="skip" href="#main">Przejdź do treści</a>
@@ -140,7 +173,7 @@ const jsonLd = {
     <div class="wrap nav">
       <a class="brand" href="/">
         Studio Automatyzacji
-        <small>Audyt i wdrożenia</small>
+        <small>Audyt i wdrożenia e-commerce</small>
       </a>
 
       <nav class="nav-links" aria-label="Menu główne">
@@ -150,7 +183,7 @@ const jsonLd = {
       </nav>
 
       <div class="nav-cta">
-        <BookingLink class="btn btn--primary" />
+        <a class="btn btn--primary" href={CONTACT_HREF}>Napisz do nas</a>
       </div>
 
       <details class="menu">
@@ -159,10 +192,9 @@ const jsonLd = {
           {nav.map(([href, label]) => (
             <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
           ))}
+          <a href="/audyt#mini-diagnoza">Bezpłatna mini-diagnoza</a>
           <a href="/zaufanie">Zaufanie i dane</a>
-          <a class="btn btn--primary" href={BOOKING_HREF} target={BOOKING_URL ? '_blank' : undefined} rel={BOOKING_URL ? 'noopener noreferrer' : undefined}>
-            Umów rozmowę 20 min
-          </a>
+          <a class="btn btn--primary" href={CONTACT_HREF}>Napisz do nas</a>
         </nav>
       </details>
     </div>
@@ -177,7 +209,7 @@ const jsonLd = {
       <div class="footer-top">
         <p class="footer-wordmark">Studio Automatyzacji</p>
         <p>
-          Integracje, raporty i procesy, które przestają być robione ręcznie.
+          Automatyzacje dla e-commerce: zamówienia, zwroty, stany, faktury i korespondencja.
           Stała cena, dokumentacja i kod po stronie klienta.
         </p>
       </div>
@@ -192,10 +224,10 @@ const jsonLd = {
         </div>
         <div>
           <h2>Oferta</h2>
-          <p><a href="/ile-kosztuje">Ile kosztuje</a></p>
+          <p><a href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a></p>
           <p><a href="/audyt">Audyt 890 zł</a></p>
           <p><a href="/wdrozenia">Wdrożenia</a></p>
-          <p><a href="/opieka">Opieka 690 zł/mc</a></p>
+          <p><a href="/opieka">Opieka od 390 zł/mc</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
         </div>
         <div>
@@ -210,7 +242,7 @@ const jsonLd = {
           <p>
             <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
-          <p><a href={BOOKING_HREF} target={BOOKING_URL ? '_blank' : undefined} rel={BOOKING_URL ? 'noopener noreferrer' : undefined}>Umów rozmowę 20 min</a></p>
+          <p><a href={CONTACT_HREF}>Napisz do nas</a> · odpowiedź w {CONTACT_RESPONSE}</p>
           <p class="small">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
         </div>
       </div>

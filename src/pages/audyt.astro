@@ -1,33 +1,166 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookingLink from '../components/BookingLink.astro';
+import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
+import FAQ from '../components/FAQ.astro';
+import { DIAGNOSIS_RESPONSE } from '../config';
+
+const auditFaq = [
+  {
+    q: 'Czy mini-diagnoza jest naprawdę bezpłatna?',
+    a: 'Tak. Nie pobieramy opłaty i nie wymagamy karty. To krótka ocena jednego procesu na podstawie opisu z formularza. Nie zawiera pełnego raportu ani wyceny wdrożenia z gwarancją.',
+  },
+  {
+    q: 'Czy mini-diagnoza zastępuje audyt?',
+    a: 'Nie. Mini-diagnoza odpowiada, czy proces warto automatyzować, i podaje szacunek godzin [EST]. Audyt obejmuje analizę systemów i danych, mapę procesu, koszt ręcznej pracy, priorytety, ryzyka, stałą wycenę wdrożenia i omówienie raportu.',
+  },
+  {
+    q: 'Ile trwa mini-diagnoza?',
+    a: `Odpowiadamy w ciągu ${DIAGNOSIS_RESPONSE}. Przy większej liczbie zgłoszeń termin może się wydłużyć — nie obiecujemy konkretnej liczby miejsc ani odpowiedzi poza kolejnością.`,
+  },
+  {
+    q: 'Co, jeśli nie mam wszystkich danych o procesie?',
+    a: 'Wystarczy opis, ile razy w tygodniu proces się powtarza, ile zajmuje i z jakich narzędzi korzystasz. Braki dopytamy e-mailem. Mini-diagnoza nie wymaga dostępów do systemów.',
+  },
+  {
+    q: 'Czy audyt zawsze kończy się propozycją wdrożenia?',
+    a: 'Nie. Jeśli audyt nie wykaże zwrotu w maksymalnie 12 miesiącach, nie proponujemy wdrożenia. Raport zostaje u Ciebie jako dokument z rekomendacjami. Nie obiecujemy zwrotu gotówki za audyt.',
+  },
+  {
+    q: 'Czy można zamówić audyt bez mini-diagnozy?',
+    a: 'Tak. Mini-diagnoza jest opcjonalnym pierwszym krokiem. Jeśli od razu wiesz, że potrzebujesz mapy, kosztu i wyceny, napisz w formularzu o audycie.',
+  },
+  {
+    q: 'Czy audyt jest odliczany od wdrożenia?',
+    a: 'Tak. 890 zł netto odliczamy od pierwszej faktury za wdrożenie. Jeśli do wdrożenia nie dojdzie, audyt pozostaje osobną usługą za 890 zł netto.',
+  },
+  {
+    q: 'Jakie dane są potrzebne do audytu?',
+    a: 'Opis procesu, lista narzędzi, przykładowe dane testowe lub dostęp do środowiska testowego. Jeśli proces obejmuje dane osobowe, podpisujemy umowę powierzenia i ograniczamy zakres danych do minimum.',
+  },
+];
+
+const comparison = [
+  ['Cena', '0 zł', '890 zł netto, odliczany od wdrożenia'],
+  ['Forma', 'Formularz i odpowiedź e-mail', 'Ustalenia 60–90 min, analiza, raport, omówienie 30 min'],
+  ['Zakres', 'Jeden proces, opis z formularza', 'Jeden proces, systemy, dane, wyjątki i ryzyka'],
+  ['Co dostajesz', 'Ocenę, czy warto automatyzować, szacunek godzin [EST], narzędzia', 'Mapę procesu, koszt ręcznej pracy, priorytety, ryzyka i stałą wycenę wdrożenia'],
+  ['Czego nie dostajesz', 'Pełnego raportu ani wyceny z gwarancją', 'Gwarancji ROI i obietnicy konkretnego wyniku'],
+  ['Czas', `Odpowiedź w ${DIAGNOSIS_RESPONSE}`, 'Raport orientacyjnie w 3 dni robocze po materiałach'],
+  ['Kiedy wybrać', 'Pierwszy kontakt, jeden proces, brak budżetu na audyt', 'Decyzja o wdrożeniu, wiele systemów, potrzebna wycena'],
+];
 ---
 <Base
-  title="Audyt automatyzacji 890 zł netto | Studio Automatyzacji"
-  description="Audyt procesu: mapa, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. 890 zł netto, odliczane od wdrożenia. Raport orientacyjnie w 3 dni robocze."
+  title="Audyt automatyzacji 890 zł i mini-diagnoza"
+  description="Bezpłatna mini-diagnoza e-mailem w 2 dni robocze albo płatny audyt 890 zł netto z mapą, kosztem i wyceną. Audyt odliczany od wdrożenia."
   path="/audyt"
+  faq={auditFaq}
 >
   <section class="page-head">
     <div class="wrap">
       <div class="meta-line">
-        <span>Produkt wejściowy</span>
-        <span>890 zł netto</span>
+        <span>Mini-diagnoza 0 zł</span>
+        <span>Audyt 890 zł netto</span>
         <span>Raport orientacyjnie w 3 dni robocze</span>
       </div>
-      <h1>Audyt, który mówi, czy wdrożenie ma sens</h1>
+      <h1>Najpierw mini-diagnoza. Potem decyzja, czy audyt ma sens</h1>
       <p class="lead">
-        Zanim cokolwiek wdrożysz, policzmy koszt ręcznej pracy i realny zwrot.
-        Dostajesz raport z liczbami, priorytetami i wyceną, który możesz pokazać
-        wspólnikowi albo księgowej.
+        Możesz zacząć bezpłatnie: opisz jeden proces, a w ciągu {DIAGNOSIS_RESPONSE}
+        dostaniesz e-mail z krótką oceną. Jeśli potrzebujesz mapy, kosztu i wyceny,
+        zamawiasz audyt za 890 zł netto, odliczany od wdrożenia.
       </p>
       <div class="buttonrow">
-        <a class="btn btn--primary" href="/kontakt?temat=audyt">Zamów audyt 890 zł</a>
-        <BookingLink class="btn btn--ghost" label="Najpierw rozmowa 20 min" />
+        <ContactLink class="btn btn--primary" label="Wyślij zgłoszenie" topic="mini-diagnoza" />
+        <a class="btn btn--ghost" href="#porownanie">Porównaj oba warianty</a>
       </div>
       <p class="small muted" style="margin-top:14px">
         Płatność przelewem, faktura. Audyt odliczamy od pierwszej faktury za wdrożenie.
+        Nie obiecujemy zwrotu gotówki.
       </p>
+    </div>
+  </section>
+
+  <section class="section" id="mini-diagnoza">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Bezpłatna mini-diagnoza e-mailem</h2>
+        <p class="section-intro">
+          Krótka, pisemna ocena jednego procesu. Bez prezentacji, bez kalendarza
+          i bez zobowiązania.
+        </p>
+      </div>
+
+      <div class="split">
+        <div>
+          <h3>Co dostajesz</h3>
+          <ul class="checklist">
+            <li>Odpowiedź, czy proces warto automatyzować teraz.</li>
+            <li>Szacunek godzin do odzyskania w miesiącu [EST].</li>
+            <li>Listę narzędzi i integracji do sprawdzenia.</li>
+            <li>Wskazanie ryzyk, wyjątków i brakujących danych.</li>
+            <li>Rekomendację: mini-diagnoza wystarczy, audyt albo stop.</li>
+          </ul>
+
+          <h3 style="margin-top:28px">Czego nie dostajesz</h3>
+          <ul class="plainlist">
+            <li>Pełnego raportu z mapą procesu.</li>
+            <li>Wyceny wdrożenia z gwarancją ceny i terminu.</li>
+            <li>Obietnicy konkretnego wyniku ani „gwarancji ROI”.</li>
+            <li>Dostępu do systemów — wystarczy opis z formularza.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="condition">
+            <h3>Jak wysłać zgłoszenie</h3>
+            <ol class="number-list">
+              <li>Wypełnij formularz na stronie kontaktu: firma lub imię, e-mail, proces, narzędzia, liczba osób.</li>
+              <li>Odpowiadamy w ciągu jednego dnia roboczego, jeśli potrzebne są dopytania.</li>
+              <li>W ciągu {DIAGNOSIS_RESPONSE} dostajesz mini-diagnozę e-mailem.</li>
+            </ol>
+            <ContactLink class="btn btn--primary" label="Opisz proces" topic="mini-diagnoza" />
+          </div>
+
+          <div class="note" style="margin-top:24px">
+            <strong>Uczciwie o terminie.</strong> Przy większej liczbie zgłoszeń odpowiedź
+            może się wydłużyć. Nie używamy liczników miejsc ani sztucznych
+            terminów. Kolejność wynika ze zgłoszeń.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="porownanie">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Mini-diagnoza vs audyt</h2>
+        <p class="section-intro">
+          Ten sam proces, dwa różne poziomy pracy. Mini-diagnoza filtruje pomysł,
+          audyt daje dokument, na którym można oprzeć decyzję.
+        </p>
+      </div>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Porównanie mini-diagnozy i audytu">
+        <table class="table table--compare">
+          <thead>
+            <tr>
+              <th scope="col">Zakres</th>
+              <th scope="col">Mini-diagnoza e-mailem</th>
+              <th scope="col">Audyt 890 zł netto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -35,7 +168,7 @@ import CTA from '../components/CTA.astro';
     <div class="wrap">
       <div class="split">
         <div>
-          <h2>Co dostajesz</h2>
+          <h2>Co dostajesz w audycie</h2>
           <ul class="checklist">
             <li>Mapę procesu: kto, co i w jakim narzędziu robi ręcznie.</li>
             <li>Koszt ręcznej pracy: godziny w miesiącu i kwota w skali roku.</li>
@@ -79,10 +212,10 @@ import CTA from '../components/CTA.astro';
       <div class="path">
         <div class="path-step">
           <span class="n">01</span>
-          <h3>Rozmowa</h3>
+          <h3>Ustalenia</h3>
           <p class="price">60–90 minut</p>
-          <p>Pytam o proces, narzędzia i wyjątki. Możesz nagrać ekran albo pokazać dokumenty.</p>
-          <span class="when">Na start</span>
+          <p>Pytam o proces, narzędzia i wyjątki. Możesz pokazać ekran albo dokumenty.</p>
+          <span class="when">Na start audytu</span>
         </div>
         <div class="path-step">
           <span class="n">02</span>
@@ -120,8 +253,8 @@ import CTA from '../components/CTA.astro';
         </p>
         <p class="small" style="margin-bottom:0">
           Audyt jest osobną usługą. Odliczamy go od wdrożenia tylko wtedy, gdy do niego dojdzie.
+          Nie obiecujemy zwrotu gotówki.
         </p>
-        <!-- DO DECYZJI TOMASA: ewentualny zwrot 890 zł za audyt nie jest zatwierdzony. Nie publikować obietnicy zwrotu. -->
       </div>
 
       <p class="small muted" style="margin-top:22px">
@@ -131,8 +264,20 @@ import CTA from '../components/CTA.astro';
     </div>
   </section>
 
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o mini-diagnozę i audyt</h2>
+        <p class="section-intro">
+          Cena, czas, dane i granice obu usług.
+        </p>
+      </div>
+      <FAQ items={auditFaq} />
+    </div>
+  </section>
+
   <CTA
-    title="Chcesz najpierw sprawdzić dopasowanie?"
-    text="Bezpłatna rozmowa 20 minut. Bez prezentacji i bez zobowiązania. Jeśli audyt nie ma sensu, powiem to wprost."
+    title="Nie wiesz, od czego zacząć?"
+    text="Napisz, jaki proces zabiera czas. Odpowiemy, czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest płatny audyt. Bez zobowiązania."
   />
 </Base>

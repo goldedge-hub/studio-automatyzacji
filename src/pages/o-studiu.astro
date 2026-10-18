@@ -1,36 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookingLink from '../components/BookingLink.astro';
+import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import { CONTACT_EMAIL } from '../config';
 
 const facts = [
+  ['Zakres', 'Audyt procesów, wdrożenia e-commerce, opieka techniczna, white-label'],
+  ['Ceny netto', 'Mini-diagnoza 0 zł · audyt 890 zł · Start 3 900 zł · Growth 8 900 zł · Scale od 15 000 zł'],
+  ['Opieka', 'Basic 390 zł/mc · Standard 690 zł/mc netto'],
+  ['White-label', '2 500 zł netto/proces'],
+  ['Czas', 'Mini-diagnoza 2 dni rob. · audyt 3 dni rob. · Start 5–10 dni · Growth ok. 3 tyg. · Scale 4–6 tyg.'],
+  ['Forma rozliczenia', '50% przed startem, 50% po odbiorze; faktura 7 dni; ceny netto'],
+  ['Własność kodu', 'Po opłaceniu zlecenia kod i dokumentacja u klienta'],
+  ['NDA', 'Na życzenie, przed przekazaniem materiałów'],
   ['Tryb pracy', 'Zdalnie, cała Polska'],
-  ['Kontakt', CONTACT_EMAIL],
-  ['Ceny', 'Netto, stałe przed startem'],
-  ['Płatność', '50% przed startem, 50% po odbiorze'],
-  ['Kod i dokumentacja', 'Po opłaceniu po stronie klienta'],
-  ['NDA', 'Na życzenie, przed materiałami'],
-  ['Opieka', 'Opcjonalna, 690 zł netto/mc'],
 ];
 ---
 <Base
-  title="O studiu: automatyzacje po inżyniersku | Studio Automatyzacji"
-  description="Studio Automatyzacji projektuje integracje, raporty i procesy dla e-commerce i firm usługowych. Stała cena, testy, dokumentacja, kod po stronie klienta, AI z kontrolą człowieka."
+  title="O studiu: automatyzacje dla e-commerce"
+  description="Studio Automatyzacji projektuje integracje i procesy dla MŚP e-commerce: zamówienia, zwroty, stany, faktury. Stała cena, kod u klienta, AI z kontrolą człowieka."
   path="/o-studiu"
 >
   <section class="page-head">
     <div class="wrap">
       <div class="meta-line">
         <span>O studiu</span>
-        <span>Praca zdalna, cała Polska</span>
+        <span>E-commerce i back-office</span>
         <span>Ceny netto</span>
       </div>
       <h1>Automatyzacje robione po inżyniersku, nie po sprzedażowemu</h1>
       <p class="lead">
-        Studio Automatyzacji projektuje i wdraża integracje, raporty i procesy,
-        które wcześniej były robione ręcznie. Pracujemy w stałej cenie, z jasnym
-        zakresem i dokumentacją, którą zrozumie ktoś inny.
+        Studio Automatyzacji projektuje i wdraża integracje, raporty i procesy
+        dla MŚP e-commerce. Drugi plan to firmy usługowe i biura z powtarzalnym
+        back-office: fakturami, dokumentami i korespondencją. Pracujemy w stałej cenie,
+        z jasnym zakresem i dokumentacją, którą zrozumie ktoś inny.
       </p>
     </div>
   </section>
@@ -64,12 +67,12 @@ const facts = [
         <div>
           <h2>Fakty o współpracy</h2>
           <div class="table-wrap" style="box-shadow:none" tabindex="0" role="region" aria-label="Fakty o współpracy">
-            <table class="table" style="min-width:0">
+            <table class="table facts-table">
               <tbody>
                 {facts.map(([label, value]) => (
                   <tr>
-                    <td style="width:42%">{label}</td>
-                    <td style="font-weight:400">{value}</td>
+                    <th scope="row">{label}</th>
+                    <td>{value}</td>
                   </tr>
                 ))}
               </tbody>
@@ -137,12 +140,12 @@ const facts = [
         <div>
           <h2>Chcesz sprawdzić dopasowanie?</h2>
           <p class="lead">
-            20 minut rozmowy o procesie. Bez prezentacji i bez zobowiązań.
-            Jeśli automatyzacja nie ma sensu, powiem to wprost.
+            Napisz, jaki proces zabiera czas. Odpowiemy w ciągu jednego dnia roboczego
+            i powiemy, czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest audyt.
           </p>
           <div class="buttonrow">
-            <BookingLink class="btn btn--primary" />
-            <a class="btn btn--ghost" href="/kontakt">Napisz</a>
+            <ContactLink class="btn btn--primary" label="Napisz do nas" />
+            <a class="btn btn--ghost" href="/audyt">Mini-diagnoza i audyt</a>
           </div>
         </div>
         <div class="note">

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookingLink from '../components/BookingLink.astro';
+import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import { PRICE_UPDATED } from '../config';
@@ -9,7 +9,7 @@ const plans = [
   {
     name: 'Start',
     scope: '1 proces',
-    price: '3 900',
+    price: '3 900',
     desc: 'Jeden proces, który ma przestać zajmować Twój czas.',
     feats: [
       '1 proces end-to-end',
@@ -18,13 +18,13 @@ const plans = [
       'dokumentacja i szkolenie',
       '30 dni gwarancji',
     ],
-    href: '/kontakt?plan=start',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Start',
   },
   {
     name: 'Growth',
     scope: '3 procesy',
-    price: '8 900',
+    price: '8 900',
     desc: 'Trzy procesy plus raport, który je podsumowuje.',
     feats: [
       '3 procesy end-to-end',
@@ -33,13 +33,13 @@ const plans = [
       'alerty i obsługa błędów',
       '60 dni gwarancji',
     ],
-    href: '/kontakt?plan=growth',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Growth',
   },
   {
     name: 'Scale',
     scope: 'od 4 procesów',
-    price: 'od 15 000',
+    price: 'od 15 000',
     desc: 'Większe środowisko, ERP i wiele systemów.',
     feats: [
       'od 4 procesów',
@@ -48,7 +48,7 @@ const plans = [
       'SLA w umowie',
       'opieka po odbiorze',
     ],
-    href: '/kontakt?plan=scale',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Scale',
   },
 ];
@@ -62,8 +62,8 @@ const rows = [
   ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
   ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
   ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
-  ['Opieka', 'opcjonalnie 690 zł/mc', 'opcjonalnie 690 zł/mc', 'wg umowy'],
-  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
+  ['Opieka', 'opcjonalnie Basic 390 / Standard 690 zł/mc', 'opcjonalnie Basic 390 / Standard 690 zł/mc', 'wg umowy'],
+  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
 ];
 
 const faq = [
@@ -102,8 +102,8 @@ const faq = [
 ];
 ---
 <Base
-  title="Wdrożenia automatyzacji: cennik i zakres | Studio Automatyzacji"
-  description="Wdrożenia automatyzacji: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji. Cennik aktualny 18.10.2026."
+  title="Wdrożenia automatyzacji: Start, Growth, Scale"
+  description="Wdrożenia e-commerce: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji."
   path="/wdrozenia"
 >
   <section class="page-head">
@@ -115,12 +115,13 @@ const faq = [
       </div>
       <h1>Wdrożenia, które da się rozliczyć</h1>
       <p class="lead">
-        Każde wdrożenie zaczynam od pytania „ile to oszczędza”, a kończę na działającym
-        procesie, teście i dokumentacji. Cena jest stała. Zmiana zakresu to osobna decyzja,
+        Wdrożenia dla e-commerce: zamówienia, zwroty, stany, faktury i korespondencja.
+        Każde zaczynam od pytania „ile to oszczędza”, a kończę na działającym procesie,
+        teście i dokumentacji. Cena jest stała, a zmiana zakresu to osobna decyzja —
         nie niespodzianka na fakturze.
       </p>
       <div class="buttonrow">
-        <BookingLink class="btn btn--primary" />
+        <ContactLink class="btn btn--primary" label="Napisz do nas" />
         <a class="btn btn--ghost" href="/ile-kosztuje">Pełny cennik</a>
       </div>
     </div>
@@ -154,7 +155,7 @@ const faq = [
       </div>
 
       <div class="section-foot">
-        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura.</span>
+        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura. Audyt 890 zł odliczany.</span>
         <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i zależności cenowe</a>
       </div>
     </div>
@@ -282,7 +283,7 @@ const faq = [
 
       <div class="note" style="margin-top:32px">
         <strong>Płatność i formalności.</strong> 50% przed startem, 50% po odbiorze.
-        Faktura z 7-dniowym terminem. Przy projektach powyżej 15 000 zł ustalamy
+        Faktura z 7-dniowym terminem. Przy projektach powyżej 15 000 zł ustalamy
         harmonogram etapów. Zakres i cena są potwierdzane mailowo przed rozpoczęciem prac.
       </div>
 
@@ -307,6 +308,6 @@ const faq = [
 
   <CTA
     title="Nie wiesz, który pakiet?"
-    text="Zacznij od rozmowy. Po 20 minutach widać, czy wystarczy Start, czy potrzebny jest większy zakres."
+    text="Napisz, jaki proces chcesz oddać maszynie. Po mini-diagnozie widać, czy wystarczy Start, czy potrzebny jest większy zakres."
   />
 </Base>

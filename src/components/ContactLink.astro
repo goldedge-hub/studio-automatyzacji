@@ -1,0 +1,11 @@
+---
+const {
+  class: className = 'btn btn--primary',
+  label = 'Napisz do nas',
+  href = '/kontakt',
+  topic,
+} = Astro.props;
+
+const target = topic ? `${href}?temat=${encodeURIComponent(topic)}` : href;
+---
+<a class={className} href={target}>{label}</a>

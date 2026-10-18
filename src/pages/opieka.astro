@@ -1,34 +1,105 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookingLink from '../components/BookingLink.astro';
 import CTA from '../components/CTA.astro';
+import FAQ from '../components/FAQ.astro';
+
+const careFaq = [
+  {
+    q: 'Czym różni się Basic od Standard?',
+    a: 'Basic 390 zł netto/mc obejmuje monitoring, alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze i raport miesięczny. Standard 690 zł netto/mc podnosi limit do 5 h, skraca SLA do 1 dnia roboczego i dodaje przegląd kwartalny oraz 1 h konsultacji miesięcznie.',
+  },
+  {
+    q: 'Czy jest roczne zobowiązanie?',
+    a: 'Nie. Oba poziomy są miesięczne, z miesięcznym okresem wypowiedzenia. Po rezygnacji przekazujemy aktualną dokumentację i dostępy.',
+  },
+  {
+    q: 'Czy opieka obejmuje nowe procesy?',
+    a: 'Nie. Nowe procesy i rozbudowa poza pierwotny zakres to osobna wycena. Opieka obejmuje utrzymanie, monitoring i drobne zmiany w limitach godzinowych.',
+  },
+  {
+    q: 'Co z nadwyżką ponad limit godzin?',
+    a: 'Wyceniamy ją osobno i informujemy przed wykonaniem pracy. Nie doliczamy godzin bez akceptacji.',
+  },
+  {
+    q: 'Czy mogę zacząć od jednorazowej poprawki?',
+    a: 'Tak. Jeśli istniejące rozwiązanie się psuje, możemy zacząć od krótkiego przeglądu i naprawy. Opieka nie jest warunkiem rozpoczęcia współpracy.',
+  },
+];
+
+const rows = [
+  ['Monitoring, alerty i kopie', 'tak', 'tak'],
+  ['Drobne zmiany', 'do 2 h/mc', 'do 5 h/mc'],
+  ['SLA reakcji', '3 dni robocze', '1 dzień roboczy'],
+  ['Raport miesięczny', 'tak', 'tak'],
+  ['Przegląd kwartalny', '—', 'tak'],
+  ['Konsultacja techniczna', '—', '1 h/mc'],
+  ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc', 'miesięczne, wypowiedzenie 1 mc'],
+  ['Cena netto', '390 zł/mc', '690 zł/mc'],
+];
 ---
 <Base
-  title="Opieka techniczna 690 zł netto/mc | Studio Automatyzacji"
-  description="Opieka nad wdrożoną automatyzacją: monitoring, poprawki, drobne zmiany i raport miesięczny. 690 zł netto miesięcznie, bez rocznego zobowiązania."
+  title="Opieka techniczna: 390 i 690 zł netto/mc"
+  description="Opieka nad automatyzacją w dwóch poziomach: Basic 390 zł netto/mc i Standard 690 zł netto/mc. Monitoring, zmiany, SLA i raport. Bez rocznego zobowiązania."
   path="/opieka"
+  faq={careFaq}
 >
   <section class="page-head">
     <div class="wrap">
       <div class="meta-line">
         <span>Po wdrożeniu</span>
-        <span>690 zł netto/mc</span>
-        <span>Miesięcznie, bez zobowiązania rocznego</span>
+        <span>Basic 390 zł netto/mc</span>
+        <span>Standard 690 zł netto/mc</span>
       </div>
-      <h1>Opieka techniczna</h1>
+      <h1>Opieka techniczna w dwóch poziomach</h1>
       <p class="lead">
         Automatyzacja nie jest pomnikiem. Zmieniają się API, cenniki i formaty plików.
-        Opieka polega na tym, żeby proces działał dalej, także wtedy, gdy zmieni się
-        coś poza naszym kodem.
+        Opieka pilnuje procesów e-commerce — zamówień, zwrotów, stanów i faktur — także
+        wtedy, gdy zmieni się coś poza naszym kodem.
       </p>
       <div class="buttonrow">
         <a class="btn btn--primary" href="/kontakt?temat=opieka">Zapytaj o opiekę</a>
-        <a class="btn btn--ghost" href="/wdrozenia">Zobacz wdrożenia</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje#opieka">Porównaj poziomy</a>
+      </div>
+      <p class="small muted" style="margin-top:14px">
+        Oferta aktualna. Ceny netto. Oba poziomy miesięczne, bez rocznego zobowiązania.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="poziomy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Basic albo Standard</h2>
+        <p class="section-intro">
+          Wybierasz zakres reakcji, nie pakiet na siłę. Nadwyżkę ponad limit godzin
+          wyceniamy osobno, przed wykonaniem pracy.
+        </p>
+      </div>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Porównanie opieki Basic i Standard">
+        <table class="table table--compare">
+          <thead>
+            <tr>
+              <th scope="col">Zakres</th>
+              <th scope="col">Basic 390 zł/mc</th>
+              <th scope="col">Standard 690 zł/mc</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--paper2">
     <div class="wrap">
       <div class="split">
         <div>
@@ -37,12 +108,12 @@ import CTA from '../components/CTA.astro';
             <li>Monitoring działania i alert, gdy proces się zatrzyma.</li>
             <li>Naprawa błędów wynikających ze zmian w zewnętrznych systemach.</li>
             <li>Drobne zmiany: nowe pole, próg alertu, korekta raportu.</li>
-            <li>Miesięczny raport: co działa, co się zmieniło, co warto poprawić.</li>
+            <li>Raport miesięczny: co działa, co się zmieniło, co warto poprawić.</li>
             <li>Priorytetowa kolejka przed nowymi projektami.</li>
           </ul>
           <p class="small muted" style="margin-top:14px">
-            Zakres drobnych zmian i czas reakcji ustalamy w umowie. Nie obiecujemy
-            w cenniku liczby godzin, której nie da się obronić dla każdego procesu.
+            Zakres drobnych zmian i czas reakcji są w tabeli powyżej i w umowie.
+            Nie obiecujemy liczby godzin, której nie da się obronić dla każdego procesu.
           </p>
         </div>
 
@@ -63,7 +134,7 @@ import CTA from '../components/CTA.astro';
     </div>
   </section>
 
-  <section class="section section--paper2">
+  <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2>Kiedy opieka ma sens</h2>
@@ -116,8 +187,18 @@ import CTA from '../components/CTA.astro';
     </div>
   </section>
 
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o opiekę</h2>
+        <p class="section-intro">Limity godzin, SLA, zobowiązanie i nadwyżki.</p>
+      </div>
+      <FAQ items={careFaq} />
+    </div>
+  </section>
+
   <CTA
     title="Chcesz mieć proces pod kontrolą?"
-    text="Opowiedz, co już działa i co się psuje. Po rozmowie wiadomo, czy potrzebna jest opieka, czy wystarczy jednorazowa poprawka."
+    text="Napisz, co już działa i co się psuje. Odpowiemy, czy potrzebna jest opieka, czy wystarczy jednorazowa poprawka."
   />
 </Base>

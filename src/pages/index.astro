@@ -1,100 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookingLink from '../components/BookingLink.astro';
+import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import Scenario from '../components/Scenario.astro';
 import { homeFaq } from '../data/faq';
-import { CONTACT_EMAIL } from '../config';
-
-const problems = [
-  {
-    t: 'Zamówienia przepisywane między systemami',
-    d: 'Sklep, BaseLinker i arkusz mają dane, ale ktoś przenosi je ręcznie. Im więcej kanałów, tym więcej okazji do pomyłki.',
-  },
-  {
-    t: 'Stany i statusy aktualizowane po fakcie',
-    d: 'Magazyn wie jedno, sklep drugie, a klient trzecie. Ręczna aktualizacja rozjeżdża się w ciągu dnia.',
-  },
-  {
-    t: 'Ceny konkurencji sprawdzane rzadko',
-    d: 'Zmiana u konkurenta wychodzi po tygodniu, bo sprawdzanie cen to osobne pół dnia pracy.',
-  },
-  {
-    t: 'Raport składany z pięciu plików',
-    d: 'Zanim trafi do decyzji, trzeba scalić eksporty i poprawić to, co się nie zgadza. Wersji jest kilka.',
-  },
-  {
-    t: 'Dokumenty czekają w skrzynce',
-    d: 'Faktury i skany leżą w folderze „do zrobienia”, bo nikt nie ma czasu ich klasyfikować i wpisywać.',
-  },
-  {
-    t: 'Proces zna jedna osoba',
-    d: 'Urlop albo zmiana pracy zatrzymuje pracę. Wiedza nie jest w dokumentacji, tylko w czyjejś głowie.',
-  },
-];
-
-const services = [
-  {
-    t: 'Integracje API',
-    d: 'Sklep, BaseLinker, ERP, arkusz i poczta wymieniają dane bez przepisywania. Zamówienia, stany, ceny i statusy płyną jednym torem.',
-    out: 'Mniej ręcznego przepisywania',
-  },
-  {
-    t: 'Monitoring cen i dostępności',
-    d: 'Cykliczne zbieranie cen i stanów z listy produktów. Zmiana powyżej progu trafia na maila albo Telegram.',
-    out: 'Reakcja przed podwyżką',
-  },
-  {
-    t: 'Raporty i dashboardy',
-    d: 'Jeden raport zamiast pięciu plików. Liczby zgodne z systemem źródłowym, z jasną definicją każdej kolumny.',
-    out: 'Decyzje na bieżących danych',
-  },
-  {
-    t: 'Dokumenty i OCR',
-    d: 'Faktury, skany i umowy: odczyt, klasyfikacja i wprowadzenie do obiegu. Wyjątki trafiają do człowieka.',
-    out: 'Mniej wpisywania',
-  },
-  {
-    t: 'n8n, Make, webhooki',
-    d: 'Łączymy narzędzia bez gotowej integracji. Z logiem, powiadomieniem i obsługą błędów, nie tylko ścieżką szczęśliwą.',
-    out: 'Powtarzalne procesy',
-  },
-  {
-    t: 'AI z kontrolą człowieka',
-    d: 'Klasyfikacja wiadomości, streszczenia i szkice odpowiedzi. AI przygotowuje wynik, człowiek go zatwierdza.',
-    out: 'Szybciej, ale decyzja u człowieka',
-  },
-];
+import { ecommerceProblems, ecommerceServices, notWorth } from '../data/content';
+import { CONTACT_EMAIL, DIAGNOSIS_RESPONSE } from '../config';
 
 const steps = [
   {
     n: '01',
-    t: 'Bezpłatna rozmowa',
-    price: '0 zł · 20 min',
-    d: 'Ustalamy, który proces ma sens automatyzować i czy w Twoim przypadku to się w ogóle opłaca.',
-    when: '20 minut',
+    t: 'Napisz do nas',
+    price: 'Formularz · e-mail',
+    d: 'Krótki opis procesu, narzędzi i liczby osób. Bez kalendarza i bez prezentacji.',
+    when: 'Odpowiedź w 1 dzień roboczy',
   },
   {
     n: '02',
-    t: 'Audyt',
-    price: '890 zł netto, odliczane od wdrożenia',
-    d: 'Mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. Raport zostaje u Ciebie.',
-    when: 'Raport orientacyjnie w 3 dni robocze',
+    t: 'Mini-diagnoza e-mailem',
+    price: '0 zł',
+    d: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin [EST] i narzędzia.',
+    when: `Odpowiedź w ${DIAGNOSIS_RESPONSE}`,
   },
   {
     n: '03',
-    t: 'Wdrożenie',
-    price: 'od 3 900 zł netto',
-    d: 'Budowa, testy na Twoich danych, dokumentacja i przekazanie dostępów. Stała cena przed startem.',
-    when: 'Orientacyjnie 5–10 dni roboczych',
-  },
-  {
-    n: '04',
-    t: 'Opieka',
-    price: '690 zł netto/mc, opcjonalnie',
-    d: 'Monitoring, poprawki i miesięczny raport. Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.',
-    when: 'Miesiąc do miesiąca',
+    t: 'Audyt 890 zł netto',
+    price: 'Odliczany od wdrożenia',
+    d: 'Mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i stała wycena wdrożenia. Raport zostaje u Ciebie.',
+    when: 'Raport orientacyjnie w 3 dni robocze',
   },
 ];
 
@@ -102,8 +36,8 @@ const plans = [
   {
     name: 'Start',
     scope: '1 proces',
-    price: '3 900',
-    desc: 'Jeden proces, który najbardziej zjada czas.',
+    price: '3 900',
+    desc: 'Jeden proces e-commerce, który najbardziej zjada czas.',
     feats: [
       '1 proces end-to-end',
       'do 3 integracji',
@@ -111,13 +45,13 @@ const plans = [
       'dokumentacja i szkolenie',
       '30 dni gwarancji',
     ],
-    href: '/kontakt?plan=start',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Start',
   },
   {
     name: 'Growth',
     scope: '3 procesy',
-    price: '8 900',
+    price: '8 900',
     desc: 'Trzy procesy i raport, który je podsumowuje.',
     feats: [
       '3 procesy end-to-end',
@@ -126,14 +60,14 @@ const plans = [
       'alerty i obsługa błędów',
       '60 dni gwarancji',
     ],
-    href: '/kontakt?plan=growth',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Growth',
   },
   {
     name: 'Scale',
     scope: 'od 4 procesów',
-    price: 'od 15 000',
-    desc: 'Większe środowisko, ERP i wiele systemów.',
+    price: 'od 15 000',
+    desc: 'Większe środowisko, ERP, WMS i wiele systemów.',
     feats: [
       'od 4 procesów',
       'integracje ERP / WMS',
@@ -141,39 +75,43 @@ const plans = [
       'SLA w umowie',
       'opieka po odbiorze',
     ],
-    href: '/kontakt?plan=scale',
+    href: '/kontakt?temat=wdrozenie',
     cta: 'Zapytaj o Scale',
   },
 ];
 ---
 <Base
-  title="Studio Automatyzacji: audyt, integracje i wdrożenia"
-  description="Automatyzacje dla e-commerce i firm usługowych. Bezpłatna rozmowa 20 min, audyt 890 zł odliczany od wdrożenia, pakiety od 3 900 zł netto. Stała cena, kod u klienta."
+  title="Automatyzacja e-commerce: mini-diagnoza i audyt"
+  description="Automatyzacje dla MŚP e-commerce: zamówienia, zwroty, stany, faktury. Bezpłatna mini-diagnoza e-mailem, audyt 890 zł odliczany od wdrożenia. Ceny netto."
   path="/"
+  faq={homeFaq}
 >
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
-        <h1>Automatyzacja, którą najpierw policzymy.</h1>
+        <h1>Automatyzacja e-commerce, którą najpierw policzymy.</h1>
         <div class="hero-aside">
           <p class="lead">
-            Projektujemy integracje i procesy dla e-commerce oraz firm usługowych.
-            Zaczynamy od bezpłatnej rozmowy 20 minut, potem audyt za 890 zł.
-            Wdrożenie ma stałą cenę, a kod zostaje u Ciebie.
+            Zamówienia, zwroty, stany, faktury i korespondencja. Łączymy Shoper,
+            BaseLinker, Allegro, WooCommerce i pocztę w procesy, które nie wymagają
+            przepisywania. Zaczynamy od bezpłatnej mini-diagnozy e-mailem.
           </p>
           <div class="buttonrow">
-            <BookingLink class="btn btn--primary" />
-            <a class="btn btn--ghost" href="/ile-kosztuje">Zobacz cennik</a>
+            <ContactLink class="btn btn--primary" label="Opisz proces" />
+            <a class="btn btn--ghost" href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a>
           </div>
-          <p class="small">Bez prezentacji. Rozmowa o jednym procesie, który chcesz oddać maszynie.</p>
+          <p class="small">
+            Wystarczy formularz. Odpowiadamy w ciągu jednego dnia roboczego,
+            a mini-diagnozę wysyłamy w {DIAGNOSIS_RESPONSE}.
+          </p>
         </div>
       </div>
 
       <div class="hero-facts">
-        <div><b>Stałe ceny netto</b>Podane przed startem, nie po fakturze.</div>
-        <div><b>Audyt 890 zł</b>Odliczany od pierwszej faktury za wdrożenie.</div>
+        <div><b>Mini-diagnoza 0 zł</b>Jeden proces, pisemna ocena e-mailem w {DIAGNOSIS_RESPONSE}.</div>
+        <div><b>Audyt 890 zł netto</b>Odliczany od pierwszej faktury za wdrożenie.</div>
+        <div><b>Stałe ceny netto</b>Start 3 900, Growth 8 900, Scale od 15 000 zł.</div>
         <div><b>Kod u klienta</b>Kod, dokumentacja i dostępy po opłaceniu zlecenia.</div>
-        <div><b>NDA na życzenie</b>Podpisujemy przed przekazaniem materiałów.</div>
       </div>
     </div>
   </section>
@@ -181,15 +119,15 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>Ręczna praca nie znika sama.</h2>
+        <h2>Ręczna obsługa nie skaluje się sama.</h2>
         <p class="section-intro">
-          Sześć sytuacji, w których proces kosztuje więcej, niż widać w kalendarzu.
-          Każdą da się opisać i policzyć.
+          Sześć sytuacji z e-commerce, w których proces kosztuje więcej, niż widać
+          w kalendarzu. Każdą da się opisać i policzyć.
         </p>
       </div>
 
       <div class="problem-grid">
-        {problems.map((p, i) => (
+        {ecommerceProblems.map((p, i) => (
           <div class="problem-item">
             <span class="n">{String(i + 1).padStart(2, '0')}</span>
             <div>
@@ -205,7 +143,7 @@ const plans = [
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>Co automatyzujemy</h2>
+        <h2>Co automatyzujemy w e-commerce</h2>
         <p class="section-intro">
           Zaczynamy od procesu, nie od narzędzia. Zakres dobieramy do systemów,
           które już masz, i do danych, które naprawdę istnieją.
@@ -213,7 +151,7 @@ const plans = [
       </div>
 
       <div class="service-list">
-        {services.map((s) => (
+        {ecommerceServices.map((s) => (
           <div class="service-row">
             <h3>{s.t}</h3>
             <p>{s.d}</p>
@@ -229,17 +167,64 @@ const plans = [
     </div>
   </section>
 
-  <section class="section section--paper2">
+  <section class="section section--paper2" id="mini-diagnoza">
     <div class="wrap">
       <div class="section-head">
-        <h2>Od rozmowy do opieki</h2>
+        <h2>Bezpłatna mini-diagnoza e-mailem</h2>
         <p class="section-intro">
-          Cztery kroki, jedna ścieżka. Ceny netto, terminy orientacyjne.
-          Termin wdrożenia liczymy od przekazania dostępów i danych testowych.
+          Zanim zamówisz audyt, sprawdź, czy proces w ogóle ma sens automatyzować.
+          Wystarczy jeden formularz i jeden proces.
         </p>
       </div>
 
-      <div class="path">
+      <div class="split">
+        <div>
+          <p class="lead">
+            Opisz proces, narzędzia i ile osób go wykonuje. W ciągu {DIAGNOSIS_RESPONSE}
+            dostajesz e-mail z krótką pisemną oceną: czy warto automatyzować,
+            ile godzin może to oszczędzić [EST] i jakich narzędzi wymaga.
+          </p>
+          <ul class="checklist">
+            <li>Jedna odpowiedź na jeden proces, nie pełny raport.</li>
+            <li>Szacunek oszczędności godzinowych oznaczony jako [EST].</li>
+            <li>Bez wyceny wdrożenia z gwarancją i bez zobowiązania.</li>
+            <li>Możliwa rekomendacja „nie automatyzować”.</li>
+          </ul>
+          <div class="buttonrow" style="margin-top:24px">
+            <ContactLink class="btn btn--primary" label="Wyślij zgłoszenie" />
+            <a class="btn btn--ghost" href="/audyt#porownanie">Porównaj z audytem</a>
+          </div>
+        </div>
+
+        <div class="condition">
+          <h3>Co dostajesz w e-mailu</h3>
+          <ul class="checklist">
+            <li>Ocenę, czy proces warto automatyzować teraz.</li>
+            <li>Szacunek godzin do odzyskania w miesiącu [EST].</li>
+            <li>Listę narzędzi i integracji do sprawdzenia.</li>
+            <li>Wskazanie ryzyk i danych, których brakuje.</li>
+            <li>Rekomendację: mini-diagnoza wystarczy, audyt albo stop.</li>
+          </ul>
+          <p class="small" style="margin:16px 0 0">
+            <strong>Uczciwie o terminie:</strong> przy większej liczbie zgłoszeń odpowiedź
+            może się wydłużyć. Nie używamy liczników miejsc ani sztucznych
+            terminów. Kolejność wynika ze zgłoszeń, nie z presji sprzedażowej.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Ścieżka w trzech krokach</h2>
+        <p class="section-intro">
+          Od wiadomości do decyzji. Ceny netto, terminy orientacyjne.
+        </p>
+      </div>
+
+      <div class="path path--3">
         {steps.map((s) => (
           <div class="path-step">
             <span class="n">{s.n}</span>
@@ -252,7 +237,10 @@ const plans = [
       </div>
 
       <div class="section-foot">
-        <span class="small muted">Audyt jest osobną usługą. Jeśli nie dojdzie do wdrożenia, raport zostaje u Ciebie.</span>
+        <span class="small muted">
+          Po audycie: wdrożenie Start 3 900 zł, Growth 8 900 zł albo Scale od 15 000 zł netto.
+          Audyt odliczamy od pierwszej faktury.
+        </span>
         <a class="text-link" href="/ile-kosztuje#sciezka">Pełne ceny i zależności</a>
       </div>
     </div>
@@ -287,7 +275,57 @@ const plans = [
 
       <div class="section-foot">
         <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i od czego zależy cena</a>
-        <span class="mono">Audyt 890 zł · Start 3 900 zł · Growth 8 900 zł · Scale od 15 000 zł</span>
+        <span class="mono">Audyt 890 zł · Start 3 900 zł · Growth 8 900 zł · Scale od 15 000 zł</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Opieka w dwóch poziomach</h2>
+        <p class="section-intro">
+          Opcjonalna, miesięczna, bez rocznego zobowiązania. Wybierasz zakres reakcji,
+          nie pakiet na siłę.
+        </p>
+      </div>
+
+      <div class="plans plans--2">
+        <div class="plan">
+          <div class="plan-head">
+            <h3>Basic</h3>
+            <span class="scope">Aktualna oferta</span>
+          </div>
+          <p class="price">390 <small>zł netto/mc</small></p>
+          <p class="desc">Monitoring i drobne zmiany w stałym zakresie.</p>
+          <ul>
+            <li>monitoring, alerty i kopie</li>
+            <li>do 2 h zmian miesięcznie</li>
+            <li>SLA reakcji 3 dni robocze</li>
+            <li>raport miesięczny</li>
+          </ul>
+          <a class="btn btn--ghost" href="/kontakt?temat=opieka">Zapytaj o Basic</a>
+        </div>
+        <div class="plan">
+          <div class="plan-head">
+            <h3>Standard</h3>
+            <span class="scope">Aktualna oferta</span>
+          </div>
+          <p class="price">690 <small>zł netto/mc</small></p>
+          <p class="desc">Szybsza reakcja i stała konsultacja techniczna.</p>
+          <ul>
+            <li>do 5 h zmian miesięcznie</li>
+            <li>SLA reakcji 1 dzień roboczy</li>
+            <li>przegląd kwartalny</li>
+            <li>1 h konsultacji miesięcznie</li>
+          </ul>
+          <a class="btn btn--ghost" href="/kontakt?temat=opieka">Zapytaj o Standard</a>
+        </div>
+      </div>
+
+      <div class="section-foot">
+        <a class="text-link" href="/opieka">Warunki opieki i czego nie obejmuje</a>
+        <span class="mono">Basic 390 zł · Standard 690 zł netto/mc</span>
       </div>
     </div>
   </section>
@@ -302,6 +340,83 @@ const plans = [
         </p>
       </div>
       <Scenario />
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kiedy NIE zlecać automatyzacji</h2>
+        <p class="section-intro">
+          Sześć sytuacji, w których mówimy „stop”. Lepiej przed audytem niż po
+          wdrożeniu, które nie ma z czego się zwrócić.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {notWorth.map((item, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{item.t}</h3>
+              <p>{item.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="note" style="margin-top:32px">
+        <strong>Uczciwa ocena dopasowania.</strong> Mini-diagnoza nie jest etapem sprzedaży,
+        po którym zawsze następuje oferta. Jeśli proces nie ma sensu, odpowiedź to powie.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak pracujemy</h2>
+        <p class="section-intro">
+          Cztery zasady, które obowiązują w każdym wdrożeniu. Bez wyjątków
+          dopisywanych na końcu.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Człowiek zatwierdza</h3>
+            <p>AI klasyfikuje, streszcza albo przygotowuje szkic. Decyzję o zamówieniu, zwrocie i płatności podejmuje człowiek.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Monitoring i logi</h3>
+            <p>Alert po błędzie, ponowienia dla błędów przejściowych i kolejka wyjątków. Log zawiera metadane potrzebne do diagnozy.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Kod u klienta</h3>
+            <p>Po opłaceniu zlecenia kod, dokumentacja i dostępy zostają po Twojej stronie. Nie blokujemy rozwiązania abonamentem.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Stały zakres i odbiór</h3>
+            <p>Kryteria odbioru ustalamy przed startem. Testy na Twoich danych, 30 albo 60 dni gwarancji na usunięcie błędów w zakresie.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-foot">
+        <a class="text-link" href="/zaufanie">RODO, NDA, AI Act i obsługa błędów</a>
+        <span class="mono">Bez certyfikatów, których nie mamy</span>
+      </div>
     </div>
   </section>
 
@@ -340,13 +455,12 @@ const plans = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="faq">
     <div class="wrap">
       <div class="section-head">
-        <h2>Pytania przed pierwszą rozmową</h2>
+        <h2>Pytania przed pierwszym e-mailem</h2>
         <p class="section-intro">
-          Krótkie odpowiedzi o cenie, terminach, kodzie i granicach AI.
-          Jeśli czegoś brakuje, napisz na
+          Cena, czas, kod, dane i granice AI. Jeśli czegoś brakuje, napisz na
           <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </p>
       </div>

@@ -1,6 +1,6 @@
 # Studio Automatyzacji — strona
 
-Statyczna strona (Astro 5) dla studia automatyzacji: audyt, wdrożenia, opieka, white-label.
+Statyczna strona (Astro 5) dla studia automatyzacji e-commerce: mini-diagnoza, audyt, wdrożenia, opieka, white-label.
 Jasny motyw redakcyjny, fonty self-hosted, bez trackerów i zewnętrznych requestów.
 
 ## Uruchomienie lokalne
@@ -16,21 +16,24 @@ npm run preview  # podgląd builda
 
 Skopiuj `.env.example` do `.env` i ustaw, jeśli potrzebujesz:
 
-- `PUBLIC_CONTACT_EMAIL` — jeden adres kontaktowy używany w mailto, JSON-LD, stopce i dokumentach.
-- `PUBLIC_FORM_ENDPOINT` — opcjonalny endpoint formularza (np. Formspree). Bez niego formularz działa jako mailto.
-- `PUBLIC_BOOKING_URL` — opcjonalny link rezerwacji. Bez niego CTA prowadzi do `/kontakt?temat=rozmowa`.
+- `PUBLIC_CONTACT_EMAIL` — jeden adres kontaktowy używany w mailto, JSON-LD, stopce i dokumentach. Domyślnie `kontakt@studioautomatyzacji.pl`.
+- `PUBLIC_FORM_ENDPOINT` — opcjonalny endpoint formularza (np. Formspree). Bez niego formularz działa jako mailto na `PUBLIC_CONTACT_EMAIL`.
 
-Domyślny kontakt: `tomasz.dziedzicki@gmail.com` (skrzynka na domenie nie istnieje).
+Formularz `/kontakt` ma pięć pól: firma lub imię, e-mail (wymagany), proces, narzędzia, liczba osób; temat jest opcjonalny. Walidacja działa natywnie w HTML, także bez JavaScriptu. Po wysłaniu bez endpointu otwiera się program pocztowy z gotową wiadomością; strona pokazuje potwierdzenie i stały fallback z adresem e-mail.
+
+## Stan skrzynki kontaktowej (ważne)
+
+`kontakt@studioautomatyzacji.pl` jest zakładana przez Hermesa. **Do czasu potwierdzenia uruchomienia skrzynki formularz i mailto nie dojdą.** Nie publikować strony ani nie uruchamiać outreachu przed potwierdzeniem odbioru wiadomości testowej. W README nie ma publicznego komunikatu „skrzynka w toku” — na stronie nie może się on pojawić.
 
 ## Strony
 
-- `/` — strona główna: hero, problemy, usługi, ścieżka, pakiety, scenariusz modelowy, FAQ.
-- `/ile-kosztuje` — cennik, tabela pakietów, zależności cenowe, kiedy automatyzacja się nie opłaca.
-- `/audyt` — audyt 890 zł netto, odliczany od wdrożenia.
+- `/` — strona główna: e-commerce, problemy, usługi, mini-diagnoza, ścieżka 3 kroków, pakiety, opieka, scenariusz modelowy, kiedy nie, FAQ.
+- `/ile-kosztuje` — cennik, porównanie pakietów, opieka Basic/Standard, zależności cenowe, kiedy automatyzacja się nie opłaca.
+- `/audyt` — bezpłatna mini-diagnoza e-mailem i płatny audyt 890 zł netto (odliczany od wdrożenia), porównanie obu usług.
 - `/wdrozenia` — pakiety Start, Growth, Scale i porównanie.
-- `/opieka` — opieka 690 zł netto/mc.
+- `/opieka` — opieka Basic 390 zł netto/mc i Standard 690 zł netto/mc.
 - `/dla-agencji` — white-label 2 500 zł netto/proces.
-- `/zaufanie` — RODO, NDA, AI Act, własność kodu, monitoring, logi.
+- `/zaufanie` — RODO, NDA, AI Act, własność kodu, monitoring, logi, jak pracujemy.
 - `/case-studies` — jawne zasady publikacji realizacji, bez wymyślonych case studies.
 - `/o-studiu`, `/kontakt`, `/polityka-prywatnosci`, `/regulamin`, `/404`.
 - `/o-mnie` — przekierowanie na `/o-studiu`.
@@ -38,13 +41,15 @@ Domyślny kontakt: `tomasz.dziedzicki@gmail.com` (skrzynka na domenie nie istnie
 ## Zasady treści
 
 - Zero wymyślonych liczb, klientów, opinii, logotypów i wyników.
-- Scenariusze efektywności są oznaczone jako „Scenariusz modelowy, nie wynik klienta”, z jawnymi założeniami.
-- Brak licznika wolnych terminów.
+- Scenariusze efektywności są oznaczone jako „Scenariusz modelowy, nie wynik klienta”, z jawnymi założeniami. Szacunki niepewne: `[EST]`.
+- Brak licznika wolnych terminów i sztucznego niedoboru.
 - Ceny netto bez zmian; data aktualizacji cennika: 18.10.2026.
-- Nie publikujemy obietnicy zwrotu opłaty za audyt. Warunek „nie proponujemy wdrożenia” jest widoczny; kwestia zwrotu pozostaje do decyzji Tomasa (patrz `PLAN.md`).
+- Audyt 890 zł jest odliczany od wdrożenia; nie ma obietnicy zwrotu gotówki.
 - Kontakt i dane: `src/config.ts`.
+- Target główny: MŚP e-commerce (Shoper, BaseLinker, Allegro, WooCommerce); usługi/biura jako drugi plan; agencje jako osobna ścieżka `/dla-agencji`.
 
 ## Publikacja
 
 Push na `main` uruchamia GitHub Actions i publikuje `dist/` na GitHub Pages.
 Domena: `studioautomatyzacji.pl` (DNS w OVH). Sitemap generuje `@astrojs/sitemap`.
+Nie pushować bez zgody Tomasa; commity lokalne na `rysiek/redesign`.

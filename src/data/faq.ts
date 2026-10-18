@@ -1,42 +1,113 @@
 export const homeFaq = [
   {
-    q: 'Od czego zaczynamy?',
-    a: 'Od bezpłatnej rozmowy 20 minut. Opisujesz proces, pytam o narzędzia i wyjątki. Po rozmowie wiesz, czy automatyzacja ma sens i czy warto zamówić audyt. Bez prezentacji i bez zobowiązania.',
+    q: 'Jak zacząć współpracę?',
+    a: 'Napisz przez formularz na stronie /kontakt. Wystarczy firma lub imię, e-mail, opis procesu, narzędzia i liczba osób, które go wykonują. Odpowiadamy w ciągu jednego dnia roboczego. Nie trzeba umawiać spotkania ani znać budżetu.',
   },
   {
-    q: 'Ile kosztuje audyt?',
-    a: '890 zł netto. To osobna usługa: mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. Jeśli zdecydujesz się na wdrożenie, 890 zł odliczamy od pierwszej faktury.',
+    q: 'Czym jest bezpłatna mini-diagnoza e-mailem?',
+    a: 'To krótka pisemna ocena jednego procesu. Wypełniasz formularz, a w ciągu 2 dni roboczych dostajesz e-mail z odpowiedzią: czy proces warto automatyzować, ile godzin może oszczędzić [EST] i jakich narzędzi wymaga. To nie jest pełny raport ani wycena wdrożenia z gwarancją. Jeśli zgłoszeń jest więcej, odpowiedź może się wydłużyć.',
   },
   {
-    q: 'Co, jeśli audyt wykaże, że wdrożenie się nie opłaca?',
-    a: 'Wtedy nie proponujemy wdrożenia. Audyt zostaje u Ciebie jako dokument z rekomendacjami. Audyt jest osobną usługą, więc nie jest zaliczką na wdrożenie, którego nie ma. Nie będziemy sprzedawać projektu bez policzonego zwrotu w maksymalnie 12 miesiącach.',
+    q: 'Czym różni się mini-diagnoza od audytu za 890 zł?',
+    a: 'Mini-diagnoza odpowiada na pytanie „czy to ma sens” na podstawie opisu z formularza. Audyt to płatna praca: ustalenia 60–90 minut, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, priorytety, ryzyka, wycena wdrożenia i 30-minutowe omówienie raportu. Audyt obejmuje też decyzję, czy wdrożenie ma sens przy zwrocie w maksymalnie 12 miesiącach.',
   },
   {
-    q: 'Czy dostaję kod i dostępy?',
-    a: 'Tak. Po opłaceniu zlecenia kod źródłowy, dokumentacja i dostępy zostają po Twojej stronie. Nie blokujemy klientów własnym narzędziem.',
+    q: 'Ile kosztuje audyt i czy jest odliczany?',
+    a: 'Audyt kosztuje 890 zł netto. Jeśli dojdzie do wdrożenia, odliczamy tę kwotę od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą, a raport zostaje u Ciebie. Nie obiecujemy zwrotu gotówki za audyt.',
+  },
+  {
+    q: 'Ile kosztują wdrożenia?',
+    a: 'Start 3 900 zł netto (1 proces, do 3 integracji, 30 dni gwarancji), Growth 8 900 zł netto (3 procesy, do 6 integracji, 60 dni gwarancji), Scale od 15 000 zł netto (od 4 procesów lub większe środowisko, wycena indywidualna). Cena jest stała dla zakresu opisanego przed startem.',
+  },
+  {
+    q: 'Ile trwa wdrożenie?',
+    a: 'Terminy są orientacyjne: Start zwykle 5–10 dni roboczych, Growth około 3 tygodni, Scale 4–6 tygodni. Liczymy je od przekazania dostępów i danych testowych. Opóźnienia po stronie systemów klienta przesuwają termin.',
+  },
+  {
+    q: 'Czy ceny są netto czy brutto?',
+    a: 'Wszystkie ceny na stronie są netto. Do zamówienia wystawiamy fakturę, a kwota do zapłaty zależy od Twojej sytuacji podatkowej. Nie doliczamy ukrytych opłat za dokumentację, testy ani przekazanie kodu.',
+  },
+  {
+    q: 'Czy dostaję kod i dokumentację?',
+    a: 'Tak. Po opłaceniu zlecenia kod źródłowy, dokumentacja i dostępy zostają po Twojej stronie. Możesz rozwijać rozwiązanie sam albo z innym wykonawcą. Nie blokujemy go własnym abonamentem ani zamkniętą platformą.',
   },
   {
     q: 'Czy podpisujecie NDA?',
-    a: 'Tak, na życzenie. NDA podpisujemy przed przekazaniem materiałów o procesach, danych i systemach.',
+    a: 'Tak, na życzenie i przed przekazaniem materiałów o procesach, danych i systemach. Jeśli w projekcie uczestniczą podwykonawcy, obejmujemy ich tym samym zobowiązaniem.',
+  },
+  {
+    q: 'Jakie dane przetwarzacie i na jakiej podstawie?',
+    a: 'Dane z formularza i korespondencji: firmę lub imię, e-mail, opis procesu, narzędzia i liczbę osób. Używamy ich do odpowiedzi i realizacji usługi na podstawie art. 6 ust. 1 lit. b i f RODO. Jeśli proces obejmuje dane osobowe klientów, podpisujemy umowę powierzenia. Szczegóły są w polityce prywatności.',
   },
   {
     q: 'Czy AI podejmuje decyzje za człowieka?',
-    a: 'Nie. W naszych wdrożeniach AI klasyfikuje, streszcza albo przygotowuje szkic, a człowiek zatwierdza wynik. Decyzje o kliencie, płatności czy zamówieniu nie są autonomiczne.',
+    a: 'Nie. W naszych wdrożeniach AI klasyfikuje, streszcza albo przygotowuje szkic, a człowiek zatwierdza wynik. Decyzje o kliencie, płatności, zamówieniu czy zwrocie nie są autonomiczne. Zasady opisujemy w dokumentacji wdrożenia i na stronie /zaufanie.',
   },
   {
-    q: 'Co, jeśli system nie ma API?',
-    a: 'Czasem da się pracować na eksporcie plików, poczcie, bazie danych albo automatyzacji interfejsu. W audycie sprawdzamy, co jest realne, a co wymaga wymiany narzędzia. Nie obiecujemy integracji bez punktu zaczepienia.',
+    q: 'Co, jeśli automatyzacja nie zadziała?',
+    a: 'W zakresie uzgodnionym w zleceniu usuwamy błędy przez 30 dni (Start) albo 60 dni (Growth); dla Scale okres określa umowa. Gwarancja nie obejmuje zmian w systemach zewnętrznych ani nowych funkcji. Nie gwarantujemy, że żaden błąd się nie zdarzy, ale mamy procedurę reakcji, logi i alerty.',
   },
   {
-    q: 'Jakie są terminy?',
-    a: 'Podajemy je orientacyjnie: raport z audytu zwykle w 3 dni robocze, wdrożenie Start zwykle 5–10 dni roboczych od przekazania dostępów. Termin liczymy od dnia, w którym mamy dostępy i dane testowe.',
+    q: 'Czy muszę wykupić opiekę?',
+    a: 'Nie. Opieka jest opcjonalna i miesięczna: Basic 390 zł netto/mc (monitoring, do 2 h zmian, SLA 3 dni robocze, raport miesięczny) albo Standard 690 zł netto/mc (do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc). Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.',
+  },
+  {
+    q: 'Na jakich narzędziach pracujecie?',
+    a: 'Na tym, co już masz: Shoper, BaseLinker, Allegro, WooCommerce, ERP, arkusze i poczta. Budujemy w n8n, Make, Pythonie albo bezpośrednio na API. Jeśli system nie ma API, sprawdzamy eksport, bazę lub inny punkt zaczepienia, zamiast obiecywać integrację, której nie ma.',
+  },
+  {
+    q: 'Kiedy nie warto zlecać automatyzacji?',
+    a: 'Gdy proces zdarza się kilka razy w miesiącu, właśnie się zmienia, nie ma źródła prawdy w danych albo każdy rekord wymaga decyzji człowieka. Wtedy mówimy to wprost — także w mini-diagnozie. Czasem taniej jest uporządkować proces niż go automatyzować.',
   },
   {
     q: 'Pracujecie z agencjami?',
-    a: 'Tak, w modelu white-label: 2 500 zł netto za proces, pod marką agencji, bez kontaktu z klientem końcowym. Szczegóły są na stronie Dla agencji.',
+    a: 'Tak, w modelu white-label: 2 500 zł netto za proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji. Nie publikujemy rabatów wolumenowych ani pilotażowych w cenniku.',
   },
   {
-    q: 'Dlaczego nie ma tu case studies?',
-    a: 'Bo nie publikujemy wymyślonych realizacji. Pierwszy publiczny case powstanie po pilocie za zgodą klienta, z pomiarem przed i po. Opisujemy, jak go robimy, na stronie Realizacje.',
+    q: 'Dlaczego nie ma tu case studies ani opinii?',
+    a: 'Bo nie publikujemy wymyślonych realizacji, logotypów ani opinii. Pierwszy publiczny case powstanie po pilocie za zgodą klienta, z pomiarem przed i po oraz akceptacją opisu. Do tego czasu pokazujemy metodykę i działający prototyp, a nie cudze wyniki.',
+  },
+];
+
+export const pricingFaq = [
+  {
+    q: 'Dlaczego mini-diagnoza jest bezpłatna, a audyt płatny?',
+    a: 'Mini-diagnoza to krótka ocena na podstawie opisu z formularza. Audyt to praca: ustalenia, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, ryzyka i wycena wdrożenia. Bezpłatna diagnoza filtruje zgłoszenia, płatny audyt daje dokument, na którym można oprzeć decyzję.',
+  },
+  {
+    q: 'Czy audyt odliczacie od wdrożenia?',
+    a: 'Tak. Jeśli dojdzie do wdrożenia, 890 zł netto odliczamy od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą za 890 zł netto. Nie obiecujemy zwrotu gotówki.',
+  },
+  {
+    q: 'Czy ceny na stronie są aktualne?',
+    a: 'Tak, cennik aktualizujemy na dzień 18.10.2026. Cenę potwierdzamy w ofercie przed startem. Zmiana zakresu to osobna decyzja i osobna wycena, nie dopisek na końcu projektu.',
+  },
+  {
+    q: 'Ile trwa wdrożenie?',
+    a: 'Terminy są orientacyjne: Start zwykle 5–10 dni roboczych, Growth około 3 tygodni, Scale 4–6 tygodni. Liczymy je od przekazania dostępów i danych testowych. Opóźnienia po stronie systemów klienta przesuwają termin.',
+  },
+  {
+    q: 'Co zawiera opieka Basic, a co Standard?',
+    a: 'Basic 390 zł netto/mc: monitoring i alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny. Standard 690 zł netto/mc: do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie. Oba poziomy są miesięczne, bez rocznego zobowiązania.',
+  },
+  {
+    q: 'Czy muszę wykupić opiekę?',
+    a: 'Nie. Po wdrożeniu przekazujemy kod, dokumentację i dostępy. Jeśli Twój zespół potrafi utrzymać proces, opieka nie jest konieczna. Jeśli nie, wybierasz Basic albo Standard.',
+  },
+  {
+    q: 'Co, jeśli w trakcie okaże się, że potrzebny jest większy zakres?',
+    a: 'Zatrzymujemy się i wyceniamy zmianę osobno. Nie doliczamy pracy bez pisemnej zgody. Stała cena dotyczy zakresu opisanego przed startem.',
+  },
+  {
+    q: 'Czy ceny są brutto?',
+    a: 'Nie, podajemy ceny netto. Do zamówienia wystawiamy fakturę. Kwota do zapłaty zależy od Twojej sytuacji podatkowej.',
+  },
+  {
+    q: 'Czy white-label ma inne ceny?',
+    a: 'Tak. Dla agencji jeden proces do 3 integracji kosztuje 2 500 zł netto. Szczegóły i warunki są na stronie Dla agencji. Nie publikujemy rabatów wolumenowych w cenniku.',
+  },
+  {
+    q: 'Jak płacę za wdrożenie?',
+    a: 'Standardowo 50% przed rozpoczęciem prac i 50% po odbiorze, z fakturą i 7-dniowym terminem płatności. Przy projektach powyżej 15 000 zł ustalamy harmonogram etapów.',
   },
 ];

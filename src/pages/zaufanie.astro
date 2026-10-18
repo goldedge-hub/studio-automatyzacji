@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from '../config';
 ---
 <Base
   title="Zaufanie, dane i zgodność | Studio Automatyzacji"
-  description="Jak pracujemy z danymi, dostępami i AI: RODO, umowa powierzenia, NDA, AI Act z zatwierdzaniem przez człowieka, własność kodu, monitoring i logi. Bez fałszywych certyfikatów."
+  description="Jak pracujemy z danymi i AI: RODO, umowa powierzenia, NDA, AI Act, zatwierdzanie przez człowieka, własność kodu i monitoring. Bez fałszywych certyfikatów."
   path="/zaufanie"
 >
   <section class="page-head">
@@ -20,6 +20,48 @@ import { CONTACT_EMAIL } from '../config';
         ISO ani SOC 2 i nie będziemy go sugerować. To, co jest poniżej, wynika
         z zakresu konkretnego wdrożenia i umowy.
       </p>
+    </div>
+  </section>
+
+  <section class="section" id="jak-pracujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak pracujemy</h2>
+        <p class="section-intro">
+          Cztery zasady, które obowiązują w każdym audycie i wdrożeniu.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Człowiek zatwierdza</h3>
+            <p>AI przygotowuje klasyfikację, streszczenie albo szkic. Wysyłkę, zmianę statusu i decyzję o płatności zatwierdza człowiek.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Monitoring i logi</h3>
+            <p>Alert po błędzie, ponowienia dla błędów przejściowych i kolejka wyjątków. Log zawiera metadane potrzebne do diagnozy, a nie pełną treść dokumentów bez potrzeby.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Kod i dostępy u klienta</h3>
+            <p>Po opłaceniu zlecenia kod, dokumentacja i dostępy zostają po stronie klienta. Nasze konta techniczne są minimalne i czasowe.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Zakres i odbiór</h3>
+            <p>Kryteria odbioru ustalamy przed startem. Testy na danych klienta, 30 albo 60 dni gwarancji na błędy w uzgodnionym zakresie.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -112,7 +154,7 @@ import { CONTACT_EMAIL } from '../config';
             <li>Zakres reakcji i czas odpowiedzi ustalamy w umowie, nie w reklamie.</li>
           </ul>
           <p>
-            Opieka techniczna kosztuje 690 zł netto/mc i jest opcjonalna.
+            Opieka techniczna kosztuje 390 zł netto/mc (Basic) albo 690 zł netto/mc (Standard) i jest opcjonalna.
             Szczegóły są na stronie <a class="text-link" href="/opieka">Opieka</a>.
           </p>
         </div>
@@ -156,6 +198,6 @@ import { CONTACT_EMAIL } from '../config';
 
   <CTA
     title="Zacznij od pytania o dane."
-    text="Na rozmowie ustalamy, jakie dane przechodzą przez proces i kto ma do nich dostęp. To część projektu, nie dodatek."
+    text="W zgłoszeniu napisz, jakie dane przechodzą przez proces i kto ma do nich dostęp. To część projektu, nie dodatek."
   />
 </Base>

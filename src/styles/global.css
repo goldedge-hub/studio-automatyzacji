@@ -680,6 +680,10 @@ select:focus-visible,
   border-top: 1px solid var(--ink);
 }
 
+.path--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .path-step {
   padding: 24px 24px 4px 0;
   border-right: 1px solid var(--line);
@@ -737,6 +741,10 @@ select:focus-visible,
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--line);
+}
+
+.plans--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .plan {
@@ -859,6 +867,29 @@ select:focus-visible,
 .table td:first-child {
   color: var(--ink);
   font-weight: 600;
+}
+
+.facts-table {
+  min-width: 0;
+}
+
+.facts-table th {
+  width: 38%;
+  padding: 12px 14px 12px 0;
+  background: transparent;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+  white-space: normal;
+}
+
+.facts-table td {
+  padding: 12px 0;
+  font-weight: 400;
 }
 
 .table--compare th:first-child,
@@ -1426,6 +1457,32 @@ select:focus-visible,
   line-height: 1.55;
 }
 
+.number-list {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.number-list li {
+  position: relative;
+  counter-increment: step;
+  padding: 9px 0 9px 30px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.number-list li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--accent);
+}
+
 /* ---------- Prose / dokumenty ---------- */
 
 .doc-row {
@@ -1643,6 +1700,11 @@ select:focus-visible,
 
   .path-step:nth-child(2) {
     border-right: 0;
+  }
+
+  .path--3 .path-step:nth-child(3) {
+    grid-column: 1 / -1;
+    padding-right: 0;
   }
 
   .path-step:nth-child(3),
