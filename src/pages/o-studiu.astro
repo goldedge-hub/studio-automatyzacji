@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+---
+<Base title="O studiu — Studio Automatyzacji"
+      description="Studio automatyzacji dla e-commerce i firm usługowych. Integracje API, raporty, OCR i agenci AI. Stała cena, dokumentacja i 30 dni gwarancji."
+      path="/o-studiu">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--2" style="align-items:start;gap:44px">
+        <div>
+          <p class="eyebrow">O studiu</p>
+          <h1 style="font-size:clamp(32px,4.4vw,50px)">Automatyzacje robione po inżyniersku, nie po sprzedażowemu.</h1>
+          <p class="lead">
+            Studio Automatyzacji projektuje i wdraża integracje, raporty i procesy, które wcześniej
+            były robione ręcznie. Pracujemy zdalnie, w stałej cenie i z jasnym zakresem.
+          </p>
+          <p>
+            Zaczęliśmy od systemów danych i analityki, gdzie błąd w danych kosztuje realne pieniądze.
+            To ustawiło standard: każda liczba musi się zgadzać ze źródłem, każdy proces musi mieć test,
+            a każda automatyzacja — dokumentację, którą zrozumie ktoś inny.
+          </p>
+          <p>
+            Budujemy integracje przez API (BaseLinker, Allegro, sklepy, arkusze, poczta, ERP),
+            procesy w n8n i Make oraz modele AI tam, gdzie naprawdę skracają pracę — zawsze z kontrolą człowieka.
+            Wdrożenie stoi na serwerze klienta albo w chmurze. Kod i dostępy zostają po stronie firmy.
+          </p>
+          <div class="buttonrow" style="margin-top:22px">
+            <a class="btn btn--primary" href="/kontakt">Porozmawiajmy</a>
+            <a class="btn btn--ghost" href="/case-studies">Zobacz dowody</a>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="background:var(--ink);color:#fff;border:0">
+            <div style="font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1">SA</div>
+            <p class="small" style="color:#a9b2c2;margin-top:10px">Studio Automatyzacji</p>
+            <hr style="border-color:rgba(255,255,255,.15);margin:18px 0" />
+            <ul class="list" style="color:#dfe4ec">
+              <li>10+ lat pracy z danymi i automatyką</li>
+              <li>Python, API, SQL, n8n, Make</li>
+              <li>Integracje e-commerce i raporty</li>
+              <li>Wdrożenia z dokumentacją i testami</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <h3>Jak pracujemy</h3>
+            <ul class="list check">
+              <li>Stała cena przed startem</li>
+              <li>Krzyżowe sprawdzenie danych</li>
+              <li>Dokumentacja, nie „wiedza w głowie”</li>
+              <li>Kod zostaje u klienta</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA title="Chcesz sprawdzić, czy się dogadamy?" text="20 minut rozmowy o procesie. Bez sprzedaży i bez zobowiązań." />
+</Base>

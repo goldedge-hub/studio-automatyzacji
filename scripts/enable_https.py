@@ -8,16 +8,18 @@ Uruchamiany z crona. Gdy certyfikat jest gotowy:
 Gdy nie jest gotowy: kończy się cicho (bez wiadomości).
 """
 import json
+import shutil
 import subprocess
 import sys
 import urllib.request
 
 REPO = "goldedge-hub/studio-automatyzacji"
 DOMAIN = "https://studioautomatyzacji.pl"
+GH = shutil.which("gh") or "C:/Users/sfajr/bin/gh.exe"
 
 
 def gh(*args: str) -> str:
-    p = subprocess.run(["gh", *args], capture_output=True, text=True, encoding="utf-8")
+    p = subprocess.run([GH, *args], capture_output=True, text=True, encoding="utf-8")
     if p.returncode != 0:
         raise RuntimeError(p.stderr.strip()[:300])
     return p.stdout
@@ -47,4 +49,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as e:
+        print(f"HTTPS check error: {e}")
+        sys.exit(0)

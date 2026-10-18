@@ -1,65 +1,16 @@
 ---
-import Base from '../layouts/Base.astro';
-import CTA from '../components/CTA.astro';
+// Stary adres — przekierowanie na /o-studiu (bez danych osobowych).
 ---
-<Base title="O mnie — Tomasz Dziedzicki | Studio Automatyzacji"
-      description="Tomasz Dziedzicki — 10+ lat pracy z danymi i automatyką. Integracje API, Python, raporty i trading automation. Olsztyn, praca zdalna."
-      path="/o-mnie">
-
-  <section class="section">
-    <div class="wrap">
-      <div class="grid grid--2" style="align-items:start;gap:44px">
-        <div>
-          <p class="eyebrow">Kto to robi</p>
-          <h1 style="font-size:clamp(32px,4.4vw,50px)">Tomasz Dziedzicki</h1>
-          <p class="lead">
-            Od ponad dziesięciu lat pracuję z danymi i automatyką: najpierw w tradingu, potem w firmach,
-            które chciały przestać robić rzeczy ręcznie.
-          </p>
-          <p>
-            Zaczynałem od systemów transakcyjnych i analizy danych rynkowych — tam błąd w danych albo
-            w automacie kosztuje realne pieniądze. To nauczyło mnie dwóch rzeczy: mierzyć wszystko
-            i nie ufać „powinno działać”.
-          </p>
-          <p>
-            Dziś buduję integracje, scrapery, raporty i automatyzacje procesów. Piszę w Pythonie,
-            łączę API (BaseLinker, Allegro, arkusze, poczta, ERP), stawiam workflow w n8n i Make.
-            Wdrażam na serwerze klienta albo w chmurze — zawsze z dokumentacją i testem.
-          </p>
-          <p>
-            Pracuję z Olsztyna, zdalnie w całej Polsce. Nie mam zespołu sprzedażowego ani prezentacji
-            na 40 slajdów: rozmawiasz i pracujesz z tą samą osobą, która wdraża.
-          </p>
-          <div class="buttonrow" style="margin-top:22px">
-            <a class="btn btn--primary" href="/kontakt">Porozmawiajmy</a>
-            <a class="btn btn--ghost" href="/case-studies">Zobacz dowody</a>
-          </div>
-        </div>
-        <div>
-          <div class="card" style="background:var(--ink);color:#fff;border:0">
-            <div style="font-size:64px;font-weight:800;letter-spacing:-.04em;line-height:1">TD</div>
-            <p class="small" style="color:#a9b2c2;margin-top:10px">Tomasz Dziedzicki · Olsztyn</p>
-            <hr style="border-color:rgba(255,255,255,.15);margin:18px 0" />
-            <ul class="list" style="color:#dfe4ec">
-              <li>10+ lat z danymi i automatyką</li>
-              <li>Python, API, SQL, n8n, MQL5</li>
-              <li>Integracje e-commerce i raporty</li>
-              <li>Wdrożenia z dokumentacją i testami</li>
-            </ul>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Jak pracuję</h3>
-            <ul class="list check">
-              <li>Stała cena przed startem</li>
-              <li>Krzyżowe sprawdzenie danych</li>
-              <li>Dokumentacja, nie „wiedza w głowie”</li>
-              <li>Kod zostaje u klienta</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <CTA title="Chcesz sprawdzić, czy się dogadamy?" text="20 minut rozmowy o procesie. Bez sprzedaży i bez zobowiązań." />
-</Base>
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="0; url=/o-studiu/" />
+    <link rel="canonical" href="https://studioautomatyzacji.pl/o-studiu/" />
+    <title>Przekierowanie — Studio Automatyzacji</title>
+  </head>
+  <body>
+    <p>Ta strona zmieniła adres. <a href="/o-studiu/">Przejdź do O studiu</a>.</p>
+  </body>
+</html>
