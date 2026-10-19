@@ -150,7 +150,12 @@ const faq = [
             <ul>
               {p.feats.map((f) => <li>{f}</li>)}
             </ul>
-            <a class="btn btn--ghost" href={p.href}>{p.cta}</a>
+            <a
+              class="btn btn--ghost"
+              href={p.href}
+              data-umami-event="cta_click"
+              data-umami-event-label={p.cta}
+            >{p.cta}</a>
           </div>
         ))}
       </div>

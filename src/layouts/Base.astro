@@ -6,6 +6,9 @@ import {
   CONTACT_RESPONSE,
   PRICE_UPDATED,
   SITE_URL,
+  UMAMI_HOST,
+  UMAMI_SRC,
+  UMAMI_WEBSITE_ID,
 } from '../config';
 import { COMPANY, COMPANY_ADDRESS } from '../data/company';
 import { P, PRICES } from '../data/pricing';
@@ -165,6 +168,14 @@ const faqLd = faq
   <meta name="twitter:image" content={og} />
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script
+    defer
+    src={UMAMI_SRC}
+    data-website-id={UMAMI_WEBSITE_ID}
+    data-host-url={UMAMI_HOST}
+    data-domains="studioautomatyzacji.pl"
+    data-do-not-track="true"
+  ></script>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
 </head>
@@ -180,23 +191,43 @@ const faqLd = faq
 
       <nav class="nav-links" aria-label="Menu główne">
         {nav.map(([href, label]) => (
-          <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
+          <a
+            href={href}
+            aria-current={isActive(href) ? 'page' : undefined}
+            data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
+            data-umami-event-label={href === '/kontakt' ? 'Nawigacja: kontakt' : undefined}
+          >{label}</a>
         ))}
       </nav>
 
       <div class="nav-cta">
-        <a class="btn btn--primary" href={CONTACT_HREF}>Napisz do nas</a>
+        <a
+          class="btn btn--primary"
+          href={CONTACT_HREF}
+          data-umami-event="cta_click"
+          data-umami-event-label="Nagłówek: napisz do nas"
+        >Napisz do nas</a>
       </div>
 
       <details class="menu">
         <summary>Menu</summary>
         <nav class="menu-panel" aria-label="Menu mobilne">
           {nav.map(([href, label]) => (
-            <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
+            <a
+              href={href}
+              aria-current={isActive(href) ? 'page' : undefined}
+              data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
+              data-umami-event-label={href === '/kontakt' ? 'Menu mobilne: kontakt' : undefined}
+            >{label}</a>
           ))}
-          <a href="/audyt#mini-diagnoza">Bezpłatna mini-diagnoza</a>
+          <a href="/audyt#mini-diagnoza" data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
           <a href="/zaufanie">Zaufanie i dane</a>
-          <a class="btn btn--primary" href={CONTACT_HREF}>Napisz do nas</a>
+          <a
+            class="btn btn--primary"
+            href={CONTACT_HREF}
+            data-umami-event="cta_click"
+            data-umami-event-label="Menu mobilne: napisz do nas"
+          >Napisz do nas</a>
         </nav>
       </details>
     </div>
@@ -222,7 +253,7 @@ const faqLd = faq
           <p><a href="/o-studiu">O studiu</a></p>
           <p><a href="/case-studies">Realizacje</a></p>
           <p><a href="/zaufanie">Zaufanie i dane</a></p>
-          <p><a href="/kontakt">Kontakt</a></p>
+          <p><a href="/kontakt" data-umami-event="cta_click" data-umami-event-label="Stopka: kontakt">Kontakt</a></p>
         </div>
         <div>
           <h2>Oferta</h2>
@@ -244,7 +275,7 @@ const faqLd = faq
           <p>
             <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
-          <p><a href={CONTACT_HREF}>Napisz do nas</a> · odpowiedź w {CONTACT_RESPONSE}</p>
+          <p><a href={CONTACT_HREF} data-umami-event="cta_click" data-umami-event-label="Stopka: napisz do nas">Napisz do nas</a> · odpowiedź w {CONTACT_RESPONSE}</p>
           <p class="small">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
         </div>
       </div>

@@ -4,8 +4,14 @@ const {
   label = 'Napisz do nas',
   href = '/kontakt',
   topic,
+  eventLabel = label,
 } = Astro.props;
 
 const target = topic ? `${href}?temat=${encodeURIComponent(topic)}` : href;
 ---
-<a class={className} href={target}>{label}</a>
+<a
+  class={className}
+  href={target}
+  data-umami-event="cta_click"
+  data-umami-event-label={eventLabel}
+>{label}</a>
