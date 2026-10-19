@@ -12,6 +12,7 @@ import {
 } from '../config';
 import { COMPANY, COMPANY_ADDRESS } from '../data/company';
 import { P, PRICES } from '../data/pricing';
+import { SEO_PAGES } from '../data/seo-pages';
 
 const { title, description, path = '/', noindex = false, faq = null } = Astro.props;
 
@@ -221,6 +222,9 @@ const faqLd = faq
             >{label}</a>
           ))}
           <a href="/audyt#mini-diagnoza" data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
+          <a href="/integracje">Integracje</a>
+          <a href="/branze">Branże</a>
+          <a href="/przykladowy-raport">Przykładowy raport</a>
           <a href="/zaufanie">Zaufanie i dane</a>
           <a
             class="btn btn--primary"
@@ -262,6 +266,12 @@ const faqLd = faq
           <p><a href="/wdrozenia">Wdrożenia</a></p>
           <p><a href="/opieka">Opieka od {P.careBasic}/mc</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
+        </div>
+        <div>
+          <h2>Integracje i branże</h2>
+          {SEO_PAGES.filter((p) => p.href.split('/').length > 2).map((p) => (
+            <p><a href={p.href}>{p.title}</a></p>
+          ))}
         </div>
         <div>
           <h2>Dokumenty</h2>
