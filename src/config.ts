@@ -7,15 +7,21 @@ export const CONTACT_EMAIL =
   clean(import.meta.env.PUBLIC_CONTACT_EMAIL) || 'kontakt@studioautomatyzacji.pl';
 
 /**
- * Opcjonalny endpoint formularza (np. Formspree). Bez niego formularz
- * otwiera klienta poczty z gotową wiadomością na CONTACT_EMAIL.
+ * Endpoint formularza (własna usługa studio-forms na VPS, zwykły POST + 303 na /dziekujemy).
+ * Działa bez JavaScriptu. Nadpisanie: PUBLIC_FORM_ENDPOINT.
  */
-export const FORM_ENDPOINT = clean(import.meta.env.PUBLIC_FORM_ENDPOINT);
+export const FORM_ENDPOINT =
+  clean(import.meta.env.PUBLIC_FORM_ENDPOINT) || 'https://radarnieruchomosci.com/sf/kontakt';
+
+/** Analityka bez cookies: self-hosted Umami (ten sam serwer co formularz). */
+export const UMAMI_SRC = 'https://radarnieruchomosci.com/u/s.js';
+export const UMAMI_HOST = 'https://radarnieruchomosci.com/u';
+export const UMAMI_WEBSITE_ID = '3cdb8d46-37a3-4f2f-b71f-8db532876f56';
 
 /** Ścieżka kontaktu. Jeden cel dla wszystkich CTA w serwisie. */
 export const CONTACT_HREF = '/kontakt';
 
-export const PRICE_UPDATED = '18.10.2026';
+export { PRICE_UPDATED } from './data/pricing';
 
 /** Deklarowane czasy odpowiedzi (obsługiwane treścią strony). */
 export const CONTACT_RESPONSE = '1 dzień roboczy';
