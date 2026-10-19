@@ -1,0 +1,859 @@
+---
+import Base from '../layouts/Base.astro';
+import { P, PRICES, PACKAGES } from '../data/pricing';
+import { CONTACT_EMAIL } from '../config';
+
+const fmt = (n: number, digits = 0) =>
+  n
+    .toLocaleString('pl-PL', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+      useGrouping: 'always',
+    })
+    .replace(/\u00a0/g, ' ');
+const num = (n: number, digits = 1) => fmt(n, digits);
+const hours = (n: number) => `${fmt(n, 1)} h`;
+const money = (n: number) => `${fmt(n, 0)} zł`;
+const moneyExact = (n: number) =>
+  `${n
+    .toLocaleString('pl-PL', {
+      minimumFractionDigits: Math.abs(n - Math.round(n)) > 0.005 ? 2 : 0,
+      maximumFractionDigits: 2,
+      useGrouping: 'always',
+    })
+    .replace(/\u00a0/g, ' ')} zł`;
+const calc = (count: number, minutes: number) =>
+  `${fmt(count, 0)} × ${num(minutes, 1)} min = ${fmt(count * minutes, 0)} min`;
+
+const rate = 55;
+const workDays = 22;
+const volumes = { orders: 240, returns: 43, messages: 300, reports: 4, skus: 600 };
+const unit = { order: 4, return: 12, invoice: 2, message: 2.5, stockDay: 12, report: 45 };
+
+const h = {
+  orders: (volumes.orders * unit.order) / 60,
+  returns: (volumes.returns * unit.return) / 60,
+  invoices: (volumes.orders * unit.invoice) / 60,
+  messages: (volumes.messages * unit.message) / 60,
+  stock: (workDays * unit.stockDay) / 60,
+  reports: (volumes.reports * unit.report) / 60,
+};
+const totalHours = h.orders + h.returns + h.invoices + h.messages + h.stock + h.reports;
+const totalCost = totalHours * rate;
+const totalYear = totalCost * 12;
+
+const assumptions = [
+  [
+    'Stawka kosztu pracy',
+    `${money(rate)}/h netto`,
+    'Wynagrodzenie, narzuty i część kosztów pośrednich. Wartość przyjęta w przykładzie [EST].',
+  ],
+  ['Dni robocze', `${workDays} dni/mc`, 'Bez weekendów i świąt. Wartość przyjęta w przykładzie [EST].'],
+  [
+    'Zamówienia',
+    `${volumes.orders}/mc`,
+    'Shoper 120 + Allegro 120. Eksport BaseLinker z okresu 30 dni [EST].',
+  ],
+  [
+    'Zwroty i reklamacje',
+    `${volumes.returns}/mc`,
+    'Około 18% zamówień. Eksport Shoper i etykiety w skrzynce [EST].',
+  ],
+  ['Wiadomości do obsługi', `${volumes.messages}/mc`, 'Etykiety i liczniki w skrzynce, bez treści wiadomości [EST].'],
+  ['Aktywne SKU', `${volumes.skus}`, 'Lista produktów w Shoper i BaseLinker [EST].'],
+  ['Raporty sprzedaży', `${volumes.reports}/mc`, 'Zestawienie tygodniowe składane ręcznie [EST].'],
+];
+
+const sources = [
+  {
+    source: 'Eksport zamówień z BaseLinker (CSV)',
+    sample: `${volumes.orders} rekordów`,
+    period: '01–30.09.2026',
+    limit: 'Brak znaczników czasu poszczególnych kroków.',
+  },
+  {
+    source: 'Eksport zwrotów i reklamacji ze Shoper',
+    sample: `${volumes.returns} rekordów`,
+    period: '01–30.09.2026',
+    limit: 'Część statusów i ustaleń została w e-mailach.',
+  },
+  {
+    source: 'Zestawienie zamówień Allegro',
+    sample: '120 rekordów',
+    period: '01–30.09.2026',
+    limit: 'Brak wspólnego identyfikatora ze Shoper; dopasowanie po numerze.',
+  },
+  {
+    source: 'Eksport faktur z systemu fakturownego',
+    sample: `${volumes.orders} rekordów`,
+    period: '01–30.09.2026',
+    limit: 'Nie potwierdzono środowiska testowego.',
+  },
+  {
+    source: 'Etykiety i liczniki w skrzynce e-mail',
+    sample: `${volumes.messages} wątków`,
+    period: '01–30.09.2026',
+    limit: 'Tylko liczba i typ zgłoszeń; bez treści i danych osobowych.',
+  },
+  {
+    source: 'Eksport stanów i listy SKU',
+    sample: `${volumes.skus} SKU`,
+    period: 'stan na 30.09.2026',
+    limit: 'Brak historii korekt i informacji, który system jest nadrzędny.',
+  },
+  {
+    source: 'Rozmowy z zespołem',
+    sample: '2 × 60 min',
+    period: 'wrzesień 2026',
+    limit: 'Czasy deklarowane, nie mierzone stoperem.',
+  },
+];
+
+const mapRows = [
+  {
+    step: '01. Odbiór i sprawdzenie nowego zamówienia',
+    who: 'osoba od zamówień',
+    tool: 'Shoper, Allegro, BaseLinker',
+    time: `1,5 min/zam. · ${volumes.orders}/mc`,
+    errors: 'pominięte zamówienie; zdublowany status',
+  },
+  {
+    step: '02. Weryfikacja danych i adresu',
+    who: 'osoba od zamówień',
+    tool: 'BaseLinker, e-mail',
+    time: `1,0 min/zam. · ${volumes.orders}/mc`,
+    errors: 'zły adres; brak telefonu; ręczna korekta',
+  },
+  {
+    step: '03. Status i przekazanie do wysyłki',
+    who: 'osoba od zamówień',
+    tool: 'BaseLinker, panel kuriera',
+    time: `1,5 min/zam. · ${volumes.orders}/mc`,
+    errors: 'status nieaktualny; brak numeru nadania',
+  },
+  {
+    step: '04. Wystawienie faktury',
+    who: 'księgowość / właściciel',
+    tool: 'system fakturowy',
+    time: `2,0 min/zam. · ${volumes.orders}/mc`,
+    errors: 'błędny NIP lub nazwa; duplikat; numeracja',
+  },
+  {
+    step: '05. Obsługa zwrotu',
+    who: 'osoba od zwrotów',
+    tool: 'Shoper, e-mail, BaseLinker',
+    time: `12 min/zwrot · ${volumes.returns}/mc`,
+    errors: 'brak statusu; zgubiony wątek; ponowne pytanie',
+  },
+  {
+    step: '06. Odpowiedź na wiadomość',
+    who: 'osoba od obsługi',
+    tool: 'poczta, Shoper',
+    time: `2,5 min/wiad. · ${volumes.messages}/mc`,
+    errors: 'niespójna informacja; wysłanie bez sprawdzenia',
+  },
+  {
+    step: '07. Kontrola stanów',
+    who: 'osoba od zamówień / właściciel',
+    tool: 'Shoper, BaseLinker, arkusz',
+    time: `12 min/dzień · ${workDays} dni`,
+    errors: 'rozjazd stanów; sprzedaż bez towaru',
+  },
+  {
+    step: '08. Raport sprzedaży',
+    who: 'właściciel',
+    tool: 'BaseLinker, arkusz',
+    time: `45 min/raport · ${volumes.reports}/mc`,
+    errors: 'wiele wersji pliku; błędne sumy',
+  },
+];
+
+const laborRows = [
+  { label: 'Obsługa zamówień', calculation: calc(volumes.orders, unit.order), hours: h.orders, cost: h.orders * rate },
+  { label: 'Zwroty i reklamacje', calculation: calc(volumes.returns, unit.return), hours: h.returns, cost: h.returns * rate },
+  { label: 'Faktury do zamówień', calculation: calc(volumes.orders, unit.invoice), hours: h.invoices, cost: h.invoices * rate },
+  { label: 'Korespondencja', calculation: calc(volumes.messages, unit.message), hours: h.messages, cost: h.messages * rate },
+  { label: 'Kontrola stanów', calculation: calc(workDays, unit.stockDay), hours: h.stock, cost: h.stock * rate },
+  { label: 'Raport sprzedaży', calculation: calc(volumes.reports, unit.report), hours: h.reports, cost: h.reports * rate },
+];
+
+const processRows = [
+  {
+    name: 'Zamówienia i statusy',
+    volume: `${volumes.orders} zamówień/mc`,
+    base: h.orders,
+    coverage: 0.75,
+    complexity: 'średnia',
+    risk: 'średnie',
+    decision: 'teraz',
+    counted: true,
+  },
+  {
+    name: 'Faktury do zamówień',
+    volume: `${volumes.orders} zamówień/mc`,
+    base: h.invoices,
+    coverage: 0.9,
+    complexity: 'niska',
+    risk: 'niskie',
+    decision: 'teraz',
+    counted: true,
+  },
+  {
+    name: 'Raport sprzedaży',
+    volume: `${volumes.reports} raporty/mc`,
+    base: h.reports,
+    coverage: 0.8,
+    complexity: 'niska',
+    risk: 'niskie',
+    decision: 'teraz',
+    counted: true,
+  },
+  {
+    name: 'Zwroty i reklamacje',
+    volume: `${volumes.returns} zwrotów/mc`,
+    base: h.returns,
+    coverage: 0.6,
+    complexity: 'średnia',
+    risk: 'średnie',
+    decision: 'później',
+    counted: true,
+  },
+  {
+    name: 'Korespondencja z klientem',
+    volume: `${volumes.messages} wiadomości/mc`,
+    base: h.messages,
+    coverage: 0.55,
+    complexity: 'średnia',
+    risk: 'wysokie',
+    decision: 'później',
+    counted: true,
+  },
+  {
+    name: 'Synchronizacja stanów',
+    volume: `${volumes.skus} SKU`,
+    base: h.stock,
+    coverage: 0.5,
+    complexity: 'wysoka',
+    risk: 'wysokie',
+    decision: 'później',
+    counted: true,
+  },
+  {
+    name: 'Korekta adresów i danych do wysyłki',
+    volume: `${volumes.returns} przypadków/mc`,
+    base: (volumes.returns * 2) / 60,
+    coverage: 1,
+    complexity: 'niska',
+    risk: 'niskie',
+    decision: 'nie',
+    counted: false,
+  },
+];
+
+const savingHours = (row: { base: number; coverage: number }) => row.base * row.coverage;
+const savingMoney = (row: { base: number; coverage: number }) => savingHours(row) * rate;
+const nowRows = processRows.filter((row) => row.decision === 'teraz');
+const nowHours = nowRows.reduce((sum, row) => sum + savingHours(row), 0);
+const nowMoney = nowRows.reduce((sum, row) => sum + savingMoney(row), 0);
+const orderRow = processRows[0];
+const startSaving = savingMoney(orderRow);
+const growthPayback = PRICES.growth / nowMoney;
+const startPayback = PRICES.start / startSaving;
+
+const tagClass = (decision: string) =>
+  decision === 'teraz'
+    ? 'report-tag report-tag--now'
+    : decision === 'później'
+      ? 'report-tag report-tag--later'
+      : 'report-tag report-tag--no';
+
+const riskRows = [
+  {
+    risk: 'Czasy deklarowane, bez pomiaru per krok',
+    impact: 'Oszczędność może być zawyżona albo zaniżona.',
+    action: 'Przed odbiorem: 5 dni pomiaru znaczników czasu w BaseLinker i systemie fakturowym.',
+  },
+  {
+    risk: 'Brak wspólnego identyfikatora Shoper / Allegro',
+    impact: 'Duplikaty i zgubione zamówienia po połączeniu kanałów.',
+    action: 'Mapowanie po numerze zamówienia i 50 testowych rekordów przed startem.',
+  },
+  {
+    risk: 'Statusy zwrotów częściowo w e-mailach',
+    impact: 'Brak jednego źródła prawdy; klient pyta drugi raz.',
+    action: 'Ustalić status w Shoper albo BaseLinkerze. Bez tego zwrotów nie automatyzujemy.',
+  },
+  {
+    risk: 'System fakturowy bez potwierdzonego środowiska testowego',
+    impact: 'Ryzyko numeracji i duplikatów faktur.',
+    action: 'Kopia bazy albo tryb testowy. Jeśli go nie ma, faktury odkładamy na później.',
+  },
+  {
+    risk: 'Brak historii korekt stanów',
+    impact: 'Nie wiadomo, który system jest nadrzędny.',
+    action: 'Wskazać źródło prawdy. Do tego czasu tylko alert, bez automatycznej korekty.',
+  },
+  {
+    risk: 'Sezonowość',
+    impact: 'Wrzesień jest poza szczytem; wolumen w Q4 może być wyższy [EST].',
+    action: 'Model przeliczyć na 300–350 zamówień/mc przed decyzją o kolejce i limitach API.',
+  },
+  {
+    risk: 'Dostępy i 2FA',
+    impact: 'Blokada startu albo zbyt szeroki dostęp.',
+    action: 'Osobne konto techniczne, least privilege, rotacja sekretów i wygaszenie po projekcie.',
+  },
+  {
+    risk: 'Dane osobowe w zwrotach i korespondencji',
+    impact: 'Zakres RODO i retencji logów.',
+    action: 'Umowa powierzenia, minimalizacja danych, logi bez pełnej treści wiadomości.',
+  },
+  {
+    risk: 'Regulaminy kanałów sprzedaży',
+    impact: 'Ograniczenia automatycznego dostępu do panelu.',
+    action: 'Korzystać z API, nie scrapować paneli. Zakres zgodny z regulaminem kanału.',
+  },
+];
+
+const acceptanceRows = [
+  {
+    area: 'Zamówienia',
+    criterion: '50 testowych zamówień (25 Shoper, 25 Allegro) w jednym rejestrze; 0 duplikatów; każde ma identyfikator źródła.',
+    method: 'Eksport i porównanie z BaseLinker po 5 dniach testu.',
+  },
+  {
+    area: 'Statusy',
+    criterion: 'Zmiana statusu w źródle jest widoczna w BaseLinker w maksymalnie 5 minut.',
+    method: 'Test z znacznikiem czasu i logiem zdarzeń.',
+  },
+  {
+    area: 'Wyjątki',
+    criterion: 'Każde odrzucone zamówienie ma powód i właściciela; kolejka nie rośnie bez alertu.',
+    method: 'Przegląd kolejki i logów po 5 dniach.',
+  },
+  {
+    area: 'Faktury',
+    criterion: '50 faktur zgodnych z zamówieniem (NIP, nazwa, kwota, numer); 0 duplikatów.',
+    method: 'Zestawienie z eksportem systemu fakturownego.',
+  },
+  {
+    area: 'Raport',
+    criterion: 'Sumy zgodne z eksportem BaseLinker co do złotówki przez 5 dni roboczych; definicje kolumn w dokumentacji.',
+    method: 'Porównanie raportu i eksportu dzień po dniu.',
+  },
+  {
+    area: 'Bezpieczeństwo',
+    criterion: 'Sekrety poza kodem; dostęp tylko do potrzebnych danych; logi bez pełnych danych osobowych.',
+    method: 'Przegląd konfiguracji i próbka logów.',
+  },
+  {
+    area: 'Wycofanie',
+    criterion: 'Proces można wyłączyć w maksymalnie 15 minut, a ścieżka ręczna nadal działa.',
+    method: 'Test wyłączenia na środowisku testowym.',
+  },
+  {
+    area: 'Dokumentacja',
+    criterion: 'Runbook, diagram procesu, lista integracji i szkolenie 60 minut.',
+    method: 'Odbiór dokumentów i szkolenie z zespołem.',
+  },
+  {
+    area: 'Gwarancja',
+    criterion: `${PACKAGES.growth.warranty} na błędy w zakresie.`,
+    method: 'Zapis w protokole odbioru.',
+  },
+];
+---
+<Base
+  title="Przykładowy raport z audytu (fikcyjny sklep)"
+  description="Pełny przykład raportu z audytu automatyzacji dla fikcyjnego sklepu odzieżowego: mapa procesu, koszt pracy [EST], ranking, ryzyka i wycena z cennika. Dane fikcyjne."
+  path="/przykladowy-raport"
+>
+  <div class="wrap" style="padding-top:24px">
+    <div class="report-banner" role="note" aria-label="Zastrzeżenie do przykładowego raportu">
+      <span class="report-banner-label">PRZYKŁAD</span>
+      <div>
+        <strong>PRZYKŁAD. Dane fikcyjne, nie jest to raport klienta ani wynik wdrożenia.</strong>
+        <p>
+          Dokument pokazuje układ, sposób liczenia i poziom szczegółowości raportu z audytu.
+          Nie zawiera danych klienta, logotypów, opinii ani wyników wdrożenia.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="page-head report-page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Przykład dokumentu</span>
+        <span>Dane fikcyjne</span>
+        <span>Ceny netto</span>
+      </div>
+      <h1>Przykładowy raport z audytu</h1>
+      <p class="lead">
+        Fikcyjny sklep odzieżowy, cztery systemy i osiem kroków procesu. Poniżej pełny
+        przykład raportu: od źródeł danych, przez koszt ręcznej pracy i ranking procesów,
+        po wycenę, ryzyka i kryteria odbioru.
+      </p>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a>
+        <a class="btn btn--ghost" href="/audyt">Zakres audytu i cena</a>
+      </div>
+      <p class="small muted report-print-hint" style="margin-top:14px">
+        Strona jest przygotowana do wydruku: Ctrl/Cmd + P. Nie generujemy pliku PDF
+        i nie wysyłamy go automatycznie.
+      </p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <article class="report-doc" aria-labelledby="report-title">
+      <header class="report-doc-head">
+        <div>
+          <p class="mono">Raport z audytu · przykład</p>
+          <h2 id="report-title">Automatyzacja obsługi zamówień, zwrotów i rozliczeń</h2>
+          <p class="report-client">
+            <strong>Sklep przykładowy</strong> (nazwa fikcyjna) · branża odzieżowa ·
+            Shoper + Allegro + BaseLinker + system fakturowy
+          </p>
+        </div>
+        <dl class="report-meta">
+          <div><dt>Dokument</dt><dd>PRZ-01/2026</dd></div>
+          <div><dt>Wersja</dt><dd>1.0 (przykład)</dd></div>
+          <div><dt>Okres analizy</dt><dd>01–30.09.2026</dd></div>
+          <div><dt>Waluta</dt><dd>PLN netto</dd></div>
+        </dl>
+      </header>
+
+      <p class="report-disclaimer">
+        <strong>Oznaczenia:</strong> [EST] to szacunek na jawnych założeniach, nie pomiar
+        ani wynik klienta. Ceny pochodzą z aktualnego cennika Studio Automatyzacji
+        i są netto. Wszystkie dane w dokumencie są fikcyjne.
+      </p>
+
+      <section class="report-section" id="zakres">
+        <h2><span class="report-num">01</span> Zakres i źródła danych</h2>
+        <p>
+          Audyt obejmował osiem kroków od przyjęcia zamówienia do raportu sprzedaży:
+          zamówienia, faktury, zwroty, korespondencję, stany i raportowanie. Analiza
+          trwała 30 dni i nie obejmowała zmian w systemach ani wdrożenia.
+        </p>
+        <ul class="plainlist">
+          <li>Zakres: Shoper, Allegro, BaseLinker, system fakturowy, skrzynka e-mail i arkusz stanów.</li>
+          <li>Bez dostępu do produkcji w trybie zapisu; tylko eksporty i odczyt danych.</li>
+          <li>Bez danych osobowych klientów w materiale przykładowym; liczniki zamiast treści.</li>
+        </ul>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Źródła danych w przykładowym audycie">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Źródło</th>
+                <th scope="col">Próbka</th>
+                <th scope="col">Okres</th>
+                <th scope="col">Ograniczenie</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sources.map((row) => (
+                <tr>
+                  <td>{row.source}</td>
+                  <td>{row.sample}</td>
+                  <td>{row.period}</td>
+                  <td>{row.limit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="report-note">
+          Braki, które wpływają na wiarygodność liczb: brak znaczników czasu per krok,
+          brak wspólnego identyfikatora zamówień Shoper / Allegro i niepotwierdzone
+          środowisko testowe systemu fakturowego. Dlatego wszystkie godziny i kwoty
+          w sekcji 3 są oznaczone [EST].
+        </p>
+      </section>
+
+      <section class="report-section" id="mapa">
+        <h2><span class="report-num">02</span> Mapa procesu</h2>
+        <p>
+          Osiem kroków wykonywanych ręcznie. Czasy są jednostkowe i deklarowane przez
+          zespół; nie pochodzą z pomiaru systemowego. Wolumen to jeden przykładowy miesiąc.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Mapa procesu w przykładowym audycie">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Krok</th>
+                <th scope="col">Kto</th>
+                <th scope="col">Narzędzie</th>
+                <th scope="col">Czas [EST]</th>
+                <th scope="col">Błędy / wyjątki</th>
+              </tr>
+            </thead>
+            <tbody>
+              {mapRows.map((row) => (
+                <tr>
+                  <td>{row.step}</td>
+                  <td>{row.who}</td>
+                  <td>{row.tool}</td>
+                  <td>{row.time}</td>
+                  <td>{row.errors}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="report-note">
+          Kroki 01–03 sumują się do 4,0 min na zamówienie. Faktura jest osobnym krokiem
+          i nie jest wliczona w te 4 minuty. Zwrot obejmuje 2–3 odpowiedzi w jednym wątku.
+        </p>
+      </section>
+
+      <section class="report-section" id="koszt">
+        <h2><span class="report-num">03</span> Koszt ręcznej pracy</h2>
+        <p>
+          Wyliczenie opiera się na czterech jawnych założeniach: wolumenie, czasie
+          jednostkowym, liczbie dni roboczych i stawce kosztu pracy. Każda liczba
+          w tej sekcji jest szacunkiem [EST], nie wynikiem pomiaru.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Założenia kosztu ręcznej pracy">
+          <table class="table facts-table">
+            <tbody>
+              {assumptions.map((row) => (
+                <tr>
+                  <th scope="row">{row[0]}</th>
+                  <td>{row[1]}</td>
+                  <td>{row[2]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Koszt ręcznej pracy w miesiącu">
+          <table class="table table--numeric">
+            <thead>
+              <tr>
+                <th scope="col">Proces</th>
+                <th scope="col">Wyliczenie [EST]</th>
+                <th scope="col">Godziny/mc [EST]</th>
+                <th scope="col">Koszt/mc [EST]</th>
+              </tr>
+            </thead>
+            <tbody>
+              {laborRows.map((row) => (
+                <tr>
+                  <td>{row.label}</td>
+                  <td>{row.calculation}</td>
+                  <td>{hours(row.hours)}</td>
+                  <td>{moneyExact(row.cost)}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Razem</td>
+                <td>—</td>
+                <td>{hours(totalHours)}</td>
+                <td>{moneyExact(totalCost)}/mc</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="condition" style="margin-top:26px">
+          <h3>Koszt w skali roku [EST]</h3>
+          <p>
+            {moneyExact(totalCost)}/mc × 12 = <strong>{money(totalYear)}</strong> rocznie.
+            To koszt pracy, nie utracony przychód. Wyliczenie nie zawiera kosztu błędów,
+            reklamacji, wysyłki ani utrzymania systemów.
+          </p>
+          <p class="small" style="margin-bottom:0">
+            Po wdrożeniu rekomendowanego zakresu zostaje około
+            {moneyExact(totalCost - nowMoney)}/mc pracy ręcznej [EST] poza trzema
+            zautomatyzowanymi procesami.
+          </p>
+        </div>
+      </section>
+
+      <section class="report-section" id="ranking">
+        <h2><span class="report-num">04</span> Ranking procesów do automatyzacji</h2>
+        <p>
+          Kolejność wynika z oszczędności, złożoności i ryzyka, nie z tego, co najłatwiej
+          sprzedać. Oszczędność to część czasu z sekcji 3, którą da się zdjąć bez
+          pogorszenia kontroli. Wszystkie wartości są szacunkami [EST].
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Ranking procesów do automatyzacji">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Proces</th>
+                <th scope="col">Wolumen</th>
+                <th scope="col">Oszczędność [EST]</th>
+                <th scope="col">Złożoność</th>
+                <th scope="col">Ryzyko</th>
+                <th scope="col">Rekomendacja</th>
+              </tr>
+            </thead>
+            <tbody>
+              {processRows.map((row) => (
+                <tr>
+                  <td>{row.name}</td>
+                  <td>{row.volume}</td>
+                  <td>
+                    {hours(savingHours(row))} · {money(savingMoney(row))}/mc
+                    {!row.counted && <span class="report-small"> (potencjał, niewliczone)</span>}
+                  </td>
+                  <td>{row.complexity}</td>
+                  <td>{row.risk}</td>
+                  <td><span class={tagClass(row.decision)}>{row.decision}</span></td>
+                </tr>
+              ))}
+              <tr>
+                <td>Razem „teraz” (3 procesy)</td>
+                <td>—</td>
+                <td>{hours(nowHours)} · {money(nowMoney)}/mc</td>
+                <td>—</td>
+                <td>—</td>
+                <td><span class="report-tag report-tag--now">rekomendacja</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="report-note">
+          Suma „teraz” nie zawiera pozycji „później” ani „nie”. Procesy nie pokrywają się,
+          więc oszczędności można sumować. Pozycja „nie” jest wyodrębnioną częścią
+          obsługi zamówień i nie jest doliczona do sumy.
+        </p>
+
+        <h3>Jedna decyzja „nie” i powód</h3>
+        <p>
+          <strong>Korekta adresów i danych do wysyłki — nie automatyzować.</strong>
+          To około {volumes.returns} przypadków w miesiącu i {hours((volumes.returns * 2) / 60)}
+          pracy [EST]. Błędy powstają w formularzu, zanim zamówienie trafi do BaseLinkera,
+          a BaseLinker już sprawdza format. Automatyzacja nie usuwa źródła problemu,
+          tylko dokłada kolejkę wyjątków. Najpierw warto poprawić formularz i pole telefonu;
+          jeśli problem zostanie, wrócić do tematu po pomiarze.
+        </p>
+      </section>
+
+      <section class="report-section" id="ryzyka">
+        <h2><span class="report-num">05</span> Ryzyka i braki danych</h2>
+        <p>
+          Ryzyka są częścią raportu, nie przypisem. Każde ma wpływ i działanie, które
+          trzeba wykonać przed wdrożeniem albo przed odbiorem.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Ryzyka i braki danych">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Ryzyko / brak</th>
+                <th scope="col">Wpływ</th>
+                <th scope="col">Co zrobić</th>
+              </tr>
+            </thead>
+            <tbody>
+              {riskRows.map((row) => (
+                <tr>
+                  <td>{row.risk}</td>
+                  <td>{row.impact}</td>
+                  <td>{row.action}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Braki danych, których nie uzupełniamy zgadywaniem</h3>
+        <ul class="plainlist">
+          <li>Brak pomiaru czasu per krok — zostaje szacunek [EST] i 5 dni pomiaru przed odbiorem.</li>
+          <li>Brak jednego statusu zwrotu — najpierw porządek w Shoper albo BaseLinkerze, potem automatyzacja.</li>
+          <li>Brak potwierdzonego środowiska testowego faktur — faktury przechodzą dopiero po teście numeracji.</li>
+          <li>Brak wskazanego źródła prawdy dla stanów — do tego czasu tylko alert, bez automatycznej korekty.</li>
+        </ul>
+      </section>
+
+      <section class="report-section" id="rekomendacja">
+        <h2><span class="report-num">06</span> Rekomendacja i wycena</h2>
+        <p>
+          Rekomendacja: wdrażać trzy procesy w pakiecie Growth — zamówienia, faktury
+          i raport sprzedaży. Zwroty, korespondencję i stany zostawić na później,
+          po uporządkowaniu statusów i danych. Korekty adresów nie automatyzować.
+        </p>
+        <p>
+          Kolejność ma znaczenie: faktury zależą od poprawnych danych zamówienia,
+          a raport od jednego rejestru zamówień. Dlatego zamówienia są pierwsze,
+          mimo że sam raport jest prostszy.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Wycena rekomendowanego zakresu">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Pozycja</th>
+                <th scope="col">Cena netto</th>
+                <th scope="col">Zakres</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Audyt automatyzacji</td>
+                <td>{P.audit} netto</td>
+                <td>Mapa, koszt pracy, priorytety, ryzyka i stała wycena wdrożenia. Odliczany od pierwszej faktury za wdrożenie.</td>
+              </tr>
+              <tr>
+                <td>Wdrożenie Growth (rekomendacja)</td>
+                <td>{P.growth} netto</td>
+                <td>{PACKAGES.growth.processes}, {PACKAGES.growth.integrations}, {PACKAGES.growth.warranty}, {PACKAGES.growth.time}.</td>
+              </tr>
+              <tr>
+                <td>Razem: audyt + Growth</td>
+                <td>{P.growth} netto</td>
+                <td>{P.audit} za audyt odliczane na pierwszej fakturze wdrożeniowej. Nie doliczamy audytu drugi raz.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="condition" style="margin-top:26px">
+          <h3>Zwrot z pakietu Growth [EST]</h3>
+          <p>
+            <strong>{P.growth} ÷ {money(nowMoney)}/mc = {num(growthPayback, 1)} miesiąca.</strong>
+          </p>
+          <p>
+            Oszczędność {money(nowMoney)}/mc to suma trzech procesów „teraz”.
+            Zwrot liczony od pełnej ceny pakietu. Nie uwzględnia opieki, hostingu ani
+            licencji, jeśli pojawią się po stronie klienta.
+          </p>
+          <p class="small" style="margin-bottom:0">
+            Alternatywa: Start — {P.start} netto, jeden proces (zamówienia), do 3 integracji.
+            Zwrot: {P.start} ÷ {money(startSaving)}/mc = {num(startPayback, 1)} miesiąca [EST].
+            Opieka po odbiorze jest opcjonalna: Basic {P.careBasic}/mc albo Standard
+            {P.careStandard}/mc. Nie jest wliczona w zwrot.
+          </p>
+        </div>
+
+        <p class="report-note">
+          Jeśli po 5 dniach pomiaru okaże się, że oszczędność spada poniżej progu
+          zwrotu w 12 miesiącach, nie składamy oferty wdrożenia. Zostaje raport
+          i rekomendacja ograniczenia zakresu.
+        </p>
+      </section>
+
+      <section class="report-section" id="odbior">
+        <h2><span class="report-num">07</span> Kryteria odbioru</h2>
+        <p>
+          Kryteria są ustalane przed startem i sprawdzane na danych testowych.
+          Brak otwartego błędu krytycznego jest warunkiem odbioru, nie dodatkiem.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Kryteria odbioru wdrożenia">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Obszar</th>
+                <th scope="col">Kryterium</th>
+                <th scope="col">Jak sprawdzamy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {acceptanceRows.map((row) => (
+                <tr>
+                  <td>{row.area}</td>
+                  <td>{row.criterion}</td>
+                  <td>{row.method}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="report-section" id="dalej">
+        <h2><span class="report-num">08</span> Co dalej</h2>
+        <div class="split">
+          <div>
+            <h3>Decyzja i kolejność</h3>
+            <ol class="number-list">
+              <li>Wybierz wariant: Growth (3 procesy) albo Start (same zamówienia).</li>
+              <li>Przed startem: 5 dni pomiaru czasu, wskazanie źródła prawdy dla stanów i lista dostępów.</li>
+              <li>Uzupełnij braki: wspólny identyfikator zamówień i status zwrotu w jednym systemie.</li>
+              <li>Po wdrożeniu: 5 dni testów, protokół odbioru i {PACKAGES.growth.warranty} na błędy w zakresie.</li>
+            </ol>
+            <p class="small muted">
+              Growth: {PACKAGES.growth.time}. Start: {PACKAGES.start.time}.
+              Terminy liczone od przekazania dostępów i danych testowych.
+            </p>
+          </div>
+          <div class="note">
+            <strong>Kontakt w sprawie raportu.</strong>
+            <p>
+              Napisz, jeśli chcesz omówić zakres albo zamówić audyt na własnych danych.
+              Nie umawiamy rozmowy przez kalendarz i nie wysyłamy oferty bez opisu procesu.
+            </p>
+            <p><a class="text-link" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a></p>
+            <p><a class="text-link" href="/audyt">Zakres i cena audytu</a></p>
+            <p><a class="text-link" href="/audyt#mini-diagnoza">Najpierw bezpłatna mini-diagnoza</a></p>
+            <p class="small" style="margin-bottom:0">
+              E-mail: <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="report-doc-foot">
+        <p>
+          <strong>Dokument przykładowy.</strong> Przygotowany na potrzeby prezentacji
+          metody. Nie zawiera danych osobowych, logotypów ani opinii.
+        </p>
+        <p class="small muted">
+          Studio Automatyzacji · raport przykładowy · ceny netto · {CONTACT_EMAIL}
+        </p>
+      </footer>
+    </article>
+  </div>
+
+  <section class="section section--dark report-print-hide">
+    <div class="wrap">
+      <div class="cta-grid">
+        <div>
+          <p class="mono" style="color:var(--on-dark-muted)">Następny krok</p>
+          <h2>Chcesz raport dla swojego sklepu?</h2>
+          <p class="cta-copy">
+            Audyt liczymy na Twoich danych, nie na przykładzie. Cena jest stała przed
+            startem, a raport zostaje u Ciebie także wtedy, gdy nie wdrażamy.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <div class="buttonrow">
+            <a class="btn btn--accent" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a>
+            <a class="btn btn--on-dark" href="/audyt">Zakres audytu i cena</a>
+          </div>
+          <p class="small">
+            Audyt {P.audit} netto, odliczany od pierwszej faktury za wdrożenie.
+            Bez kalendarza i bez automatycznej rezerwacji terminu.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flush">
+    <div class="wrap">
+      <div class="report-banner report-banner--bottom" role="note" aria-label="Zastrzeżenie w stopce przykładowego raportu">
+        <span class="report-banner-label">PRZYKŁAD</span>
+        <div>
+          <strong>PRZYKŁAD. Dane fikcyjne, nie jest to raport klienta ani wynik wdrożenia.</strong>
+          <p>
+            Ten dokument nie jest ofertą dla konkretnej firmy. Przedstawia metodę pracy
+            i poziom szczegółowości, nie wynik ani obietnicę zwrotu.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

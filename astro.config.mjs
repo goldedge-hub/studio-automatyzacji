@@ -9,4 +9,8 @@ export default defineConfig({
     }),
   ],
   build: { inlineStylesheets: 'auto' },
+  vite: {
+    // Cache w katalogu projektu (gitignored .astro/), nie we współdzielonym node_modules.
+    cacheDir: './.astro/vite',
+  },
 });
