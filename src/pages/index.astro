@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
+import Calculator from '../components/Calculator.astro';
 import Scenario from '../components/Scenario.astro';
 import { homeFaq } from '../data/faq';
 import { ecommerceProblems, ecommerceServices, notWorth } from '../data/content';
@@ -246,6 +247,19 @@ const plans = [
     </div>
   </section>
 
+  <section class="section section--paper2" id="kalkulator">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Policz, ile zostaje z ręcznej pracy</h2>
+        <p class="section-intro">
+          Krótki model na Twoich liczbach. Suwaki liczą w przeglądarce, bez wysyłania
+          danych. Pełny kalkulator z opisem założeń jest na stronie cennika.
+        </p>
+      </div>
+      <Calculator variant="compact" id="kalkulator-szybki" />
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap">
       <div class="section-head">
@@ -268,7 +282,12 @@ const plans = [
             <ul>
               {p.feats.map((f) => <li>{f}</li>)}
             </ul>
-            <a class="btn btn--ghost" href={p.href}>{p.cta}</a>
+            <a
+              class="btn btn--ghost"
+              href={p.href}
+              data-umami-event="cta_click"
+              data-umami-event-label={p.cta}
+            >{p.cta}</a>
           </div>
         ))}
       </div>
@@ -304,7 +323,7 @@ const plans = [
             <li>SLA reakcji 3 dni robocze</li>
             <li>raport miesięczny</li>
           </ul>
-          <a class="btn btn--ghost" href="/kontakt?temat=opieka">Zapytaj o Basic</a>
+          <a class="btn btn--ghost" href="/kontakt?temat=opieka" data-umami-event="cta_click" data-umami-event-label="Opieka: Basic">Zapytaj o Basic</a>
         </div>
         <div class="plan">
           <div class="plan-head">
@@ -319,7 +338,7 @@ const plans = [
             <li>przegląd kwartalny</li>
             <li>1 h konsultacji miesięcznie</li>
           </ul>
-          <a class="btn btn--ghost" href="/kontakt?temat=opieka">Zapytaj o Standard</a>
+          <a class="btn btn--ghost" href="/kontakt?temat=opieka" data-umami-event="cta_click" data-umami-event-label="Opieka: Standard">Zapytaj o Standard</a>
         </div>
       </div>
 

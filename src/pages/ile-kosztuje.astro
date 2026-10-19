@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
+import Calculator from '../components/Calculator.astro';
 import Scenario from '../components/Scenario.astro';
 import { PRICE_UPDATED } from '../config';
 import { pricingFaq } from '../data/faq';
@@ -391,6 +392,19 @@ const costDrivers = [
         automatyzacja nie ma sensu, mówimy to od razu. Bezpłatna diagnoza nie jest
         etapem sprzedaży, po którym zawsze następuje oferta.
       </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="kalkulator">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Policz oszczędność na swoich założeniach</h2>
+        <p class="section-intro">
+          Suwaki zmieniają wynik na żywo. To model [EST], nie wynik klienta.
+          W audycie liczymy na Twoich danych, nie na przeciętnych.
+        </p>
+      </div>
+      <Calculator id="kalkulator-panel" />
     </div>
   </section>
 

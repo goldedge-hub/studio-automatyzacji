@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE } from '../config';
+---
+<Base
+  title="Dziękujemy za zgłoszenie | Studio Automatyzacji"
+  description="Zgłoszenie przyjęte. Automatyczne potwierdzenie poszło e-mailem. Odpowiadamy w ciągu jednego dnia roboczego, mini-diagnozę wysyłamy w 2 dni robocze."
+  path="/dziekujemy"
+  noindex={true}
+>
+  <section class="page-head">
+    <div class="wrap narrow">
+      <div class="meta-line">
+        <span>Zgłoszenie przyjęte</span>
+        <span>Potwierdzenie wysłane automatycznie</span>
+      </div>
+      <h1>Dziękujemy. Zgłoszenie jest u nas.</h1>
+      <p class="lead">
+        Na podany adres e-mail wysłaliśmy automatyczne potwierdzenie. To potwierdzenie
+        przyjęcia zgłoszenia, nie odpowiedź merytoryczna. Odpowiedź przyjdzie osobno.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap narrow">
+      <h2>Co dalej</h2>
+      <ul class="checklist">
+        <li>
+          <strong>Czas odpowiedzi: {CONTACT_RESPONSE}.</strong> Napiszemy, czy wystarczy
+          bezpłatna mini-diagnoza, czy potrzebny jest audyt.
+        </li>
+        <li>
+          <strong>Czas mini-diagnozy: {DIAGNOSIS_RESPONSE}.</strong> Krótka pisemna ocena
+          jednego procesu, jeśli zgłoszenie jej dotyczy. Szacunki oznaczamy jako [EST].
+        </li>
+        <li>
+          <strong>Sprawdź spam i folder „Oferty”.</strong> Automatyczne potwierdzenie
+          czasem trafia tam zamiast do skrzynki głównej.
+        </li>
+        <li>
+          <strong>Potwierdzenie przyszło automatycznie.</strong> Nie musisz odpowiadać
+          na nie, jeśli nie chcesz nic dopisywać. Wystarczy, że odpowiesz na właściwą
+          wiadomość, gdy ją dostaniesz.
+        </li>
+      </ul>
+
+      <div class="note" style="margin-top:28px">
+        <strong>Nie widzisz potwierdzenia?</strong> Sprawdź spam, a jeśli wiadomości
+        nadal nie ma, napisz na
+        <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Podaj adres, z którego wysłałeś zgłoszenie — łatwiej je odnaleźć.
+      </div>
+
+      <div class="buttonrow" style="margin-top:32px">
+        <a
+          class="btn btn--primary"
+          href="/ile-kosztuje"
+          data-umami-event="cta_click"
+          data-umami-event-label="Dziękujemy: zobacz cennik"
+        >Zobacz cennik</a>
+        <a
+          class="btn btn--ghost"
+          href="/przykladowy-raport"
+          data-umami-event="cta_click"
+          data-umami-event-label="Dziękujemy: przykładowy raport"
+        >Przykładowy raport</a>
+      </div>
+
+      <p class="small muted" style="margin-top:18px">
+        Ceny netto. Kontakt odbywa się e-mailem, bez kalendarza.
+      </p>
+    </div>
+  </section>
+</Base>

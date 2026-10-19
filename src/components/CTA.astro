@@ -16,8 +16,18 @@ const {
       </div>
       <div class="cta-actions">
         <div class="buttonrow">
-          <a class="btn btn--accent" href={CONTACT_HREF}>Napisz do nas</a>
-          <a class="btn btn--on-dark" href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a>
+          <a
+            class="btn btn--accent"
+            href={CONTACT_HREF}
+            data-umami-event="cta_click"
+            data-umami-event-label="CTA: napisz do nas"
+          >Napisz do nas</a>
+          <a
+            class="btn btn--on-dark"
+            href="/audyt#mini-diagnoza"
+            data-umami-event="cta_click"
+            data-umami-event-label="CTA: mini-diagnoza 0 zł"
+          >Mini-diagnoza 0 zł</a>
         </div>
         <p class="small">
           Mini-diagnoza jest bezpłatna i przychodzi e-mailem w 2 dni robocze.

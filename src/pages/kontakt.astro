@@ -1,9 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE, FORM_ENDPOINT, mailtoHref } from '../config';
+import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE, FORM_ENDPOINT } from '../config';
 
-const hasEndpoint = Boolean(FORM_ENDPOINT);
-const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-diagnoza e-mailem');
+const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 ---
 <Base
   title="Kontakt: opisz proces e-commerce"
@@ -14,8 +13,8 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
     <div class="wrap">
       <div class="meta-line">
         <span>Kontakt</span>
-        <span>Odpowiedź w ciągu {CONTACT_RESPONSE}</span>
-        <span>Kontakt e-mailem</span>
+        <span>Czas odpowiedzi: {CONTACT_RESPONSE}</span>
+        <span>Formularz i e-mail</span>
       </div>
       <h1>Opisz proces, który zabiera czas</h1>
       <p class="lead">
@@ -30,13 +29,20 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
     <div class="wrap">
       <div class="contact-grid">
         <div>
+          <p
+            class="form-status"
+            id="form-status"
+            role="alert"
+            aria-live="assertive"
+            tabindex="-1"
+            data-email={CONTACT_EMAIL}
+          ></p>
+
           <form
             class="form"
             id="contact-form"
-            action={formAction}
+            action={FORM_ENDPOINT}
             method="post"
-            enctype={hasEndpoint ? 'multipart/form-data' : 'text/plain'}
-            data-endpoint={FORM_ENDPOINT}
             data-email={CONTACT_EMAIL}
             aria-describedby="form-note"
           >
@@ -49,6 +55,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
                   id="f-name"
                   name="name"
                   type="text"
+                  maxlength="120"
                   autocomplete="organization"
                   placeholder="np. Sklep Meblex"
                 />
@@ -60,6 +67,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
                   id="f-email"
                   name="email"
                   type="email"
+                  maxlength="200"
                   autocomplete="email"
                   required
                   aria-required="true"
@@ -73,6 +81,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
                   id="f-tools"
                   name="tools"
                   type="text"
+                  maxlength="300"
                   autocomplete="off"
                   placeholder="Shoper, BaseLinker, Allegro, Excel, poczta"
                 />
@@ -95,6 +104,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
                   id="f-process"
                   name="process"
                   rows="6"
+                  maxlength="4000"
                   required
                   aria-required="true"
                   aria-describedby="process-hint"
@@ -122,46 +132,28 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
             <label class="consent">
               <input type="checkbox" id="f-consent" name="consent" value="tak" required aria-required="true" />
               <span>
-                Zgadzam się na kontakt w sprawie tego zgłoszenia. Dane przetwarzamy zgodnie z
-                <a href="/polityka-prywatnosci">polityką prywatności</a>.
-                Zasady pracy z danymi opisuje <a href="/zaufanie">Zaufanie i dane</a>.
+                Zgadzam się na przetwarzanie podanych danych w celu odpowiedzi na to zgłoszenie.
+                Administratorem danych jest Studio Automatyzacji; szczegóły w
+                <a href="/polityka-prywatnosci">polityce prywatności</a>.
               </span>
             </label>
 
             <div class="hp" aria-hidden="true">
-              <label for="f-gotcha">Nie wypełniaj tego pola</label>
-              <input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              <label for="f-website">Nie wypełniaj tego pola</label>
+              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
             </div>
 
-            <button class="btn btn--primary" type="submit">
-              {hasEndpoint ? 'Wyślij zgłoszenie' : 'Przygotuj wiadomość w mailu'}
+            <input type="hidden" name="source" value={sourcePath} />
+            <input type="hidden" name="ts" id="f-ts" value="" />
+
+            <button class="btn btn--primary" type="submit" data-umami-event="form_submit">
+              Wyślij zgłoszenie
             </button>
 
             <p class="form-note" id="form-note">
-              {hasEndpoint ? (
-                <>
-                  Formularz wysyła zgłoszenie bezpośrednio. Jeśli coś nie zadziała, napisz na{' '}
-                  <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-                </>
-              ) : (
-                <>
-                  Formularz działa bez JavaScriptu: po wysłaniu spróbuje otworzyć Twój program pocztowy
-                  z gotową wiadomością na <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-                  Jeśli okno się nie otworzy, napisz na ten sam adres.
-                </>
-              )}
+              Po wysłaniu dostaniesz automatyczne potwierdzenie e-mailem. Odpowiadamy
+              w ciągu {CONTACT_RESPONSE}.
             </p>
-
-            <p class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
-
-            <noscript>
-              <p class="form-note">
-                Formularz nie wymaga JavaScriptu do walidacji pól. Po wysłaniu spróbuje otworzyć
-                program pocztowy z gotową wiadomością. Jeśli tak się nie stanie, napisz
-                bezpośrednio na
-                <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-              </p>
-            </noscript>
           </form>
         </div>
 
@@ -171,7 +163,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
             <a class="text-link touch-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
           <p class="small muted">
-            Odpowiadamy w ciągu {CONTACT_RESPONSE}. Mini-diagnozę e-mailem wysyłamy
+            Czas odpowiedzi: {CONTACT_RESPONSE}. Mini-diagnozę e-mailem wysyłamy
             w {DIAGNOSIS_RESPONSE}. Na życzenie podpisujemy NDA przed przekazaniem materiałów.
           </p>
 
@@ -198,121 +190,55 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
     </div>
   </section>
 
-  <script>
-    const form = document.getElementById('contact-form') as HTMLFormElement | null;
-
-    if (form) {
-      const endpoint = form.dataset.endpoint || '';
-      const email = form.dataset.email || '';
+  <script is:inline>
+    (() => {
+      const form = document.getElementById('contact-form');
+      const topic = document.getElementById('f-topic');
       const status = document.getElementById('form-status');
-      const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-      const honeypot = document.getElementById('f-gotcha') as HTMLInputElement | null;
-      const topic = document.getElementById('f-topic') as HTMLSelectElement | null;
-
-      const setStatus = (message: string, state: 'success' | 'error' | '') => {
-        if (!status) return;
-        status.textContent = message;
-        status.dataset.state = state;
-      };
-
-      const topicLabels: Record<string, string> = {
-        'mini-diagnoza': 'Mini-diagnoza e-mailem',
-        audyt: 'Audyt 890 zł netto',
-        wdrozenie: 'Wdrożenie',
-        opieka: 'Opieka techniczna',
-        agencja: 'White-label dla agencji',
-        inne: 'Inne',
-      };
-
+      const timestamp = document.getElementById('f-ts');
       const params = new URLSearchParams(window.location.search);
+
+      // Znacznik czasu dla serwera: odrzuca wysyłki szybsze niż 3 s.
+      // Bez JavaScriptu pole zostaje puste i serwer to akceptuje.
+      if (timestamp) timestamp.value = String(Date.now());
+
+      // Preselekcja tematu: /kontakt?temat=audyt itd.
       const requestedTopic = params.get('temat');
-      if (topic && requestedTopic && topicLabels[requestedTopic]) {
-        topic.value = requestedTopic;
+      if (topic && requestedTopic) {
+        const known = Array.prototype.some.call(
+          topic.options,
+          (option) => option.value === requestedTopic,
+        );
+        if (known) topic.value = requestedTopic;
       }
 
-      const buildMailto = (data: FormData, topicLabel: string) => {
-        const name = String(data.get('name') || '').trim();
-        const mail = String(data.get('email') || '').trim();
-        const process = String(data.get('process') || '').trim();
-        const tools = String(data.get('tools') || '').trim();
-        const peopleValue = String(data.get('people') || '').trim();
-        const peopleLabel = document.getElementById('f-people') as HTMLSelectElement | null;
-        const people = peopleValue
-          ? peopleLabel?.selectedOptions[0]?.textContent?.trim() || peopleValue
-          : 'nie podano';
-        const subject = `Zgłoszenie: ${topicLabel}${name ? ' / ' + name : ''}`;
-        const body = [
-          `Firma / imię: ${name || 'nie podano'}`,
-          `E-mail: ${mail}`,
-          `Temat: ${topicLabel}`,
-          `Narzędzia: ${tools || 'nie podano'}`,
-          `Liczba osób: ${people}`,
-          '',
-          'Proces, który zabiera czas:',
-          process,
-        ].join('\n');
-        return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      // Komunikaty po powrocie z serwera: /kontakt?blad=1|limit|walidacja
+      const code = params.get('blad');
+      if (!status || !code) return;
+
+      const messages = {
+        '1': 'Nie udało się wysłać. Napisz bezpośrednio na ',
+        limit: 'Za dużo zgłoszeń z tego adresu, spróbuj za godzinę',
+        walidacja: 'Uzupełnij e-mail, opis procesu i zgodę',
       };
 
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
+      const message =
+        code === '1' || code === 'limit' || code === 'walidacja' ? messages[code] : '';
+      if (!message) return;
 
-        if (honeypot?.value) {
-          setStatus('Dziękujemy. Zgłoszenie zostało przyjęte.', 'success');
-          return;
+      status.dataset.state = 'error';
+      status.textContent = message;
+
+      if (code === '1') {
+        const email = form?.dataset.email || status.dataset.email || '';
+        if (email) {
+          const link = document.createElement('a');
+          link.className = 'text-link';
+          link.href = 'mailto:' + email;
+          link.textContent = email;
+          status.appendChild(link);
         }
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          setStatus('Uzupełnij wymagane pola: e-mail, opis procesu i zgodę na kontakt.', 'error');
-          return;
-        }
-
-        const data = new FormData(form);
-        const topicLabel = topicLabels[String(data.get('topic') || 'inne')] || 'Inne';
-
-        if (!endpoint) {
-          window.location.href = buildMailto(data, topicLabel);
-          setStatus(
-            `Otworzyliśmy program pocztowy z gotową wiadomością. Wyślij ją, a odpowiemy w ciągu jednego dnia roboczego. Jeśli okno się nie otworzyło, napisz na ${email}.`,
-            'success',
-          );
-          return;
-        }
-
-        if (submit) {
-          submit.disabled = true;
-          submit.textContent = 'Wysyłam…';
-        }
-        setStatus('Wysyłam zgłoszenie…', '');
-
-        try {
-          const response = await fetch(endpoint, {
-            method: 'POST',
-            body: data,
-            headers: { Accept: 'application/json' },
-          });
-
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-          form.reset();
-          setStatus(
-            'Dziękujemy. Zgłoszenie zostało wysłane. Odpowiemy w ciągu jednego dnia roboczego, a mini-diagnozę wyślemy w ciągu 2 dni roboczych.',
-            'success',
-          );
-          if (submit) submit.textContent = 'Wysłano';
-        } catch {
-          setStatus(
-            `Nie udało się wysłać formularza. Napisz bezpośrednio na ${email} — adres jest też w stopce i w sekcji kontaktu.`,
-            'error',
-          );
-          if (submit) {
-            submit.disabled = false;
-            submit.textContent = 'Wyślij zgłoszenie';
-          }
-          status?.focus();
-        }
-      });
-    }
+      }
+    })();
   </script>
 </Base>

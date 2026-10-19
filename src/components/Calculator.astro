@@ -1,0 +1,301 @@
+---
+import { PRICES } from '../data/pricing';
+
+interface Props {
+  variant?: 'full' | 'compact';
+  id?: string;
+}
+
+const { variant = 'full', id = 'kalkulator' } = Astro.props;
+const compact = variant === 'compact';
+
+const nf0 = new Intl.NumberFormat('pl-PL', {
+  maximumFractionDigits: 0,
+  useGrouping: true,
+});
+const nf1 = new Intl.NumberFormat('pl-PL', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+  useGrouping: true,
+});
+
+const fields = [
+  { key: 'orders', label: 'Liczba spraw dziennie', min: 1, max: 300, step: 1, value: 20, unit: 'spraw' },
+  { key: 'minutes', label: 'Minuty na sprawę', min: 1, max: 30, step: 1, value: 4, unit: 'min' },
+  { key: 'days', label: 'Dni robocze w miesiącu', min: 15, max: 26, step: 1, value: 22, unit: 'dni' },
+  { key: 'rate', label: 'Stawka pracy', min: 25, max: 150, step: 1, value: 45, unit: 'zł/h' },
+  { key: 'share', label: 'Część pracy przejmowana przez automatyzację', min: 30, max: 90, step: 1, value: 70, unit: '%' },
+];
+
+const packages = [
+  { value: 'start', label: 'Start', price: PRICES.start, priceLabel: `${nf0.format(PRICES.start)} zł` },
+  { value: 'growth', label: 'Growth', price: PRICES.growth, priceLabel: `${nf0.format(PRICES.growth)} zł` },
+];
+
+const defaults = {
+  orders: 20,
+  minutes: 4,
+  days: 22,
+  rate: 45,
+  share: 70,
+};
+
+const fmtHours = (value: number) => `${nf1.format(value)} h`;
+const fmtMoney = (value: number) => `${nf0.format(Math.round(value))} zł`;
+const fmtMonths = (value: number) =>
+  Number.isFinite(value) ? `${nf1.format(value)} mies.` : '—';
+
+const compute = (orders: number, minutes: number, days: number, rate: number, share: number) => {
+  const hours = (orders * minutes * days) / 60;
+  const cost = hours * rate;
+  const saving = cost * (share / 100);
+  const saving12 = saving * 12;
+  return { hours, cost, saving, saving12 };
+};
+
+const initial = compute(
+  defaults.orders,
+  defaults.minutes,
+  defaults.days,
+  defaults.rate,
+  defaults.share,
+);
+const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving : Infinity;
+---
+<div
+  class:list={['calc', compact && 'calc--compact']}
+  id={id}
+  data-calculator
+  data-variant={variant}
+>
+  <div class="calc-head">
+    <h3 id={`${id}-title`}>Kalkulator oszczędności</h3>
+    <span class="scenario-label">Szacunek [EST], nie wynik klienta</span>
+  </div>
+
+  <div class="calc-body">
+    <div class="calc-controls">
+      <p class="calc-desc">
+        Policz, ile czasu i pieniędzy zostaje w firmie przy Twoim wolumenie i stawce.
+        Wynik liczy się w przeglądarce — nic nie wysyłamy i nie zapisujemy.
+        {compact && ' Pełny opis założeń znajdziesz w kalkulatorze na stronie cennika.'}
+      </p>
+
+      {fields.map((field) => (
+        <div class="calc-field">
+          <label for={`${id}-${field.key}`}>
+            {field.label} <span class="calc-unit">({field.unit})</span>
+          </label>
+          <div class="calc-inputs">
+            <input
+              type="range"
+              id={`${id}-${field.key}-range`}
+              min={field.min}
+              max={field.max}
+              step={field.step}
+              value={field.value}
+              aria-label={`${field.label} — suwak`}
+              aria-controls={`${id}-${field.key}`}
+              data-calc-range={field.key}
+            />
+            <input
+              type="number"
+              id={`${id}-${field.key}`}
+              min={field.min}
+              max={field.max}
+              step={field.step}
+              value={field.value}
+              inputmode="numeric"
+              data-calc-number={field.key}
+              data-default={field.value}
+            />
+          </div>
+        </div>
+      ))}
+
+      <div class="calc-field">
+        <label for={`${id}-package`}>Pakiet wdrożenia</label>
+        <select id={`${id}-package`} data-calc-package>
+          {packages.map((item) => (
+            <option value={item.value} data-price={item.price}>
+              {item.label} — {item.priceLabel} netto
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h4>Wynik</h4>
+      <dl aria-live="polite" aria-atomic="true">
+        <dt>Godziny ręcznej pracy / mc</dt>
+        <dd><span data-calc-out="hours">{fmtHours(initial.hours)}</span></dd>
+
+        <dt>Koszt ręcznej pracy / mc</dt>
+        <dd><span data-calc-out="cost">{fmtMoney(initial.cost)}</span></dd>
+
+        <dt class="calc-highlight">Oszczędność / mc</dt>
+        <dd class="calc-highlight"><span data-calc-out="saving">{fmtMoney(initial.saving)}</span></dd>
+
+        <dt>Oszczędność / 12 mies.</dt>
+        <dd><span data-calc-out="saving12">{fmtMoney(initial.saving12)}</span></dd>
+
+        <dt class="calc-highlight">Prosty zwrot z pakietu</dt>
+        <dd class="calc-highlight"><span data-calc-out="payback">{fmtMonths(initialPayback)}</span></dd>
+      </dl>
+
+      <p class="calc-warning" data-calc-warning hidden={initialPayback <= 12}>
+        Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy
+      </p>
+
+      <p class="calc-note">
+        Szacunek [EST], nie wynik klienta. Nie uwzględnia licencji i utrzymania.
+      </p>
+
+      <div class="calc-cta">
+        <a
+          class="btn btn--primary"
+          href="/kontakt?temat=mini-diagnoza"
+          data-umami-event="cta_click"
+          data-umami-event-label="Kalkulator: opisz ten proces"
+        >Opisz ten proces</a>
+        {compact && (
+          <a
+            class="text-link"
+            href="/ile-kosztuje#kalkulator"
+            data-umami-event="cta_click"
+            data-umami-event-label="Kalkulator: policz dokładniej"
+          >Policz dokładniej</a>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  type UmamiWindow = Window & {
+    umami?: { track: (event: string, data?: Record<string, string | number>) => void };
+  };
+
+  const pl0 = new Intl.NumberFormat('pl-PL', {
+    maximumFractionDigits: 0,
+    useGrouping: true,
+  });
+  const pl1 = new Intl.NumberFormat('pl-PL', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+    useGrouping: true,
+  });
+
+  const roots = document.querySelectorAll<HTMLElement>('[data-calculator]');
+
+  roots.forEach((root) => {
+    const packageSelect = root.querySelector<HTMLSelectElement>('[data-calc-package]');
+    const warning = root.querySelector<HTMLElement>('[data-calc-warning]');
+    const outputs = root.querySelectorAll<HTMLElement>('[data-calc-out]');
+
+    const setOutput = (key: string, value: string) => {
+      outputs.forEach((output) => {
+        if (output.dataset.calcOut === key) output.textContent = value;
+      });
+    };
+
+    const readValue = (key: string): number => {
+      const range = root.querySelector<HTMLInputElement>(`[data-calc-range="${key}"]`);
+      const number = root.querySelector<HTMLInputElement>(`[data-calc-number="${key}"]`);
+      const min = Number(range?.min ?? number?.min ?? 0);
+      const max = Number(range?.max ?? number?.max ?? 0);
+      const fallback = Number(number?.dataset.default ?? min);
+      const raw = number && number.value.trim() !== '' ? Number(number.value) : fallback;
+      const value = Number.isFinite(raw) ? raw : fallback;
+      return Math.min(max, Math.max(min, value));
+    };
+
+    const update = () => {
+      const orders = readValue('orders');
+      const minutes = readValue('minutes');
+      const days = readValue('days');
+      const rate = readValue('rate');
+      const share = readValue('share');
+      const selected = packageSelect?.selectedOptions[0];
+      const price = Number(selected?.dataset.price ?? 0);
+
+      const hours = (orders * minutes * days) / 60;
+      const cost = hours * rate;
+      const saving = cost * (share / 100);
+      const saving12 = saving * 12;
+      const payback = saving > 0 ? price / saving : Infinity;
+
+      setOutput('hours', `${pl1.format(hours)} h`);
+      setOutput('cost', `${pl0.format(Math.round(cost))} zł`);
+      setOutput('saving', `${pl0.format(Math.round(saving))} zł`);
+      setOutput('saving12', `${pl0.format(Math.round(saving12))} zł`);
+      setOutput(
+        'payback',
+        Number.isFinite(payback) ? `${pl1.format(payback)} mies.` : '—',
+      );
+
+      if (warning) warning.hidden = Number.isFinite(payback) && payback <= 12;
+    };
+
+    let tracked = false;
+    let trackTimer: number | undefined;
+
+    const trackOnce = () => {
+      if (tracked) return;
+      tracked = true;
+      const pakiet = packageSelect?.value || 'start';
+      (window as UmamiWindow).umami?.track('calculator_use', { pakiet });
+    };
+
+    const scheduleTrack = () => {
+      if (tracked) return;
+      window.clearTimeout(trackTimer);
+      trackTimer = window.setTimeout(trackOnce, 700);
+    };
+
+    root
+      .querySelectorAll<HTMLInputElement>('[data-calc-range], [data-calc-number]')
+      .forEach((input) => {
+        input.addEventListener('input', () => {
+          const key = input.dataset.calcRange || input.dataset.calcNumber || '';
+          const range = root.querySelector<HTMLInputElement>(`[data-calc-range="${key}"]`);
+          const number = root.querySelector<HTMLInputElement>(`[data-calc-number="${key}"]`);
+
+          if (input.type === 'range') {
+            if (number) number.value = input.value;
+          } else if (number && number.value.trim() !== '' && range) {
+            range.value = input.value;
+          }
+
+          update();
+          scheduleTrack();
+        });
+
+        input.addEventListener('change', () => {
+          if (input.type === 'number') {
+            const min = Number(input.min);
+            const max = Number(input.max);
+            const fallback = Number(input.dataset.default ?? min);
+            let value = Number(input.value);
+            if (!Number.isFinite(value)) value = fallback;
+            value = Math.min(max, Math.max(min, value));
+            input.value = String(value);
+
+            const key = input.dataset.calcNumber || '';
+            const range = root.querySelector<HTMLInputElement>(`[data-calc-range="${key}"]`);
+            if (range) range.value = String(value);
+            update();
+          }
+          scheduleTrack();
+        });
+      });
+
+    packageSelect?.addEventListener('change', () => {
+      update();
+      scheduleTrack();
+    });
+
+    update();
+  });
+</script>
