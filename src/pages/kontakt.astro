@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE, FORM_ENDPOINT, mailtoHref } from '../config';
+import { P } from '../data/pricing';
 
 const hasEndpoint = Boolean(FORM_ENDPOINT);
 const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-diagnoza e-mailem');
@@ -38,6 +39,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
             enctype={hasEndpoint ? 'multipart/form-data' : 'text/plain'}
             data-endpoint={FORM_ENDPOINT}
             data-email={CONTACT_EMAIL}
+            data-audit-label={`Audyt ${P.audit} netto`}
             aria-describedby="form-note"
           >
             <p class="small muted" style="margin:0">* pole wymagane</p>
@@ -110,7 +112,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
                 <label for="f-topic">Temat (opcjonalnie)</label>
                 <select id="f-topic" name="topic">
                   <option value="mini-diagnoza">Mini-diagnoza e-mailem (bezpłatnie)</option>
-                  <option value="audyt">Audyt 890 zł netto</option>
+                  <option value="audyt">Audyt {P.audit} netto</option>
                   <option value="wdrozenie">Wdrożenie</option>
                   <option value="opieka">Opieka techniczna</option>
                   <option value="agencja">White-label dla agencji</option>
@@ -208,6 +210,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
       const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
       const honeypot = document.getElementById('f-gotcha') as HTMLInputElement | null;
       const topic = document.getElementById('f-topic') as HTMLSelectElement | null;
+      const auditLabel = form.dataset.auditLabel || 'Audyt';
 
       const setStatus = (message: string, state: 'success' | 'error' | '') => {
         if (!status) return;
@@ -217,7 +220,7 @@ const formAction = hasEndpoint ? FORM_ENDPOINT : mailtoHref('Zgłoszenie: mini-d
 
       const topicLabels: Record<string, string> = {
         'mini-diagnoza': 'Mini-diagnoza e-mailem',
-        audyt: 'Audyt 890 zł netto',
+        audyt: auditLabel,
         wdrozenie: 'Wdrożenie',
         opieka: 'Opieka techniczna',
         agencja: 'White-label dla agencji',

@@ -7,6 +7,8 @@ import {
   PRICE_UPDATED,
   SITE_URL,
 } from '../config';
+import { COMPANY, COMPANY_ADDRESS } from '../data/company';
+import { P, PRICES } from '../data/pricing';
 
 const { title, description, path = '/', noindex = false, faq = null } = Astro.props;
 
@@ -39,7 +41,7 @@ const jsonLd = {
   description:
     'Studio automatyzacji dla MŚP e-commerce: zamówienia, zwroty, stany, faktury i korespondencja. Integracje Shoper, BaseLinker, Allegro, WooCommerce, audyt procesów i opieka techniczna.',
   areaServed: { '@type': 'Country', name: 'Polska' },
-  priceRange: '0–15000 PLN',
+  priceRange: `0–${PRICES.scaleFrom} PLN`,
   knowsAbout: [
     'automatyzacja e-commerce',
     'integracje API',
@@ -69,21 +71,21 @@ const jsonLd = {
       {
         '@type': 'Offer',
         name: 'Audyt automatyzacji',
-        price: '890',
+        price: String(PRICES.audit),
         priceCurrency: 'PLN',
         url: `${site}/audyt`,
       },
       {
         '@type': 'Offer',
         name: 'Wdrożenie Start',
-        price: '3900',
+        price: String(PRICES.start),
         priceCurrency: 'PLN',
         url: `${site}/wdrozenia`,
       },
       {
         '@type': 'Offer',
         name: 'Wdrożenie Growth',
-        price: '8900',
+        price: String(PRICES.growth),
         priceCurrency: 'PLN',
         url: `${site}/wdrozenia`,
       },
@@ -92,7 +94,7 @@ const jsonLd = {
         name: 'Wdrożenie Scale',
         priceSpecification: {
           '@type': 'PriceSpecification',
-          minPrice: '15000',
+          minPrice: String(PRICES.scaleFrom),
           priceCurrency: 'PLN',
         },
         url: `${site}/wdrozenia`,
@@ -100,21 +102,21 @@ const jsonLd = {
       {
         '@type': 'Offer',
         name: 'Opieka Basic',
-        price: '390',
+        price: String(PRICES.careBasic),
         priceCurrency: 'PLN',
         url: `${site}/opieka`,
       },
       {
         '@type': 'Offer',
         name: 'Opieka Standard',
-        price: '690',
+        price: String(PRICES.careStandard),
         priceCurrency: 'PLN',
         url: `${site}/opieka`,
       },
       {
         '@type': 'Offer',
         name: 'White-label dla agencji',
-        price: '2500',
+        price: String(PRICES.whiteLabel),
         priceCurrency: 'PLN',
         url: `${site}/dla-agencji`,
       },
@@ -155,7 +157,7 @@ const faqLd = faq
   <meta property="og:image" content={og} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Studio Automatyzacji: mini-diagnoza e-mailem, audyt 890 zł netto, wdrożenia od 3 900 zł netto." />
+  <meta property="og:image:alt" content={`Studio Automatyzacji: mini-diagnoza e-mailem, audyt ${P.audit} netto, wdrożenia od ${P.start} netto.`} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
@@ -224,10 +226,10 @@ const faqLd = faq
         </div>
         <div>
           <h2>Oferta</h2>
-          <p><a href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a></p>
-          <p><a href="/audyt">Audyt 890 zł</a></p>
+          <p><a href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
+          <p><a href="/audyt">Audyt {P.audit}</a></p>
           <p><a href="/wdrozenia">Wdrożenia</a></p>
-          <p><a href="/opieka">Opieka od 390 zł/mc</a></p>
+          <p><a href="/opieka">Opieka od {P.careBasic}/mc</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
         </div>
         <div>
@@ -249,6 +251,9 @@ const faqLd = faq
 
       <div class="footer-legal">
         <span>© {new Date().getFullYear()} Studio Automatyzacji</span>
+        {COMPANY.legalName && <span>{COMPANY.legalName}</span>}
+        {COMPANY.nip && <span>NIP {COMPANY.nip}</span>}
+        {COMPANY_ADDRESS && <span>{COMPANY_ADDRESS}</span>}
         <span>Ceny netto · aktualizacja {PRICE_UPDATED}</span>
         <span>Bez trackerów i cookies marketingowych</span>
       </div>

@@ -1,5 +1,6 @@
 ---
 import { CONTACT_HREF } from '../config';
+import { P } from '../data/pricing';
 
 const {
   title = 'Zacznij od jednej wiadomości.',
@@ -17,11 +18,11 @@ const {
       <div class="cta-actions">
         <div class="buttonrow">
           <a class="btn btn--accent" href={CONTACT_HREF}>Napisz do nas</a>
-          <a class="btn btn--on-dark" href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a>
+          <a class="btn btn--on-dark" href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a>
         </div>
         <p class="small">
           Mini-diagnoza jest bezpłatna i przychodzi e-mailem w 2 dni robocze.
-          Audyt 890 zł netto odliczamy od wdrożenia.
+          Audyt {P.audit} netto odliczamy od wdrożenia.
         </p>
       </div>
     </div>

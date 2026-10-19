@@ -5,55 +5,56 @@ import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import Scenario from '../components/Scenario.astro';
 import { PRICE_UPDATED } from '../config';
+import { P } from '../data/pricing';
 import { pricingFaq } from '../data/faq';
 import { notWorth } from '../data/content';
 
 const prices = [
   {
     service: 'Mini-diagnoza e-mailem',
-    price: '0 zł',
+    price: P.miniDiagnosis,
     includes: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin [EST], narzędzia. Bez pełnego raportu i bez wyceny z gwarancją.',
     term: 'Odpowiedź w 2 dni robocze',
   },
   {
     service: 'Audyt automatyzacji',
-    price: '890 zł netto',
+    price: `${P.audit} netto`,
     includes: 'Mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i wycena wdrożenia. Odliczany od wdrożenia.',
     term: 'Raport orientacyjnie w 3 dni robocze',
   },
   {
     service: 'Wdrożenie Start',
-    price: '3 900 zł netto',
+    price: `${P.start} netto`,
     includes: '1 proces, do 3 integracji, testy na danych klienta, dokumentacja, szkolenie, 30 dni gwarancji.',
     term: 'Orientacyjnie 5–10 dni roboczych',
   },
   {
     service: 'Wdrożenie Growth',
-    price: '8 900 zł netto',
+    price: `${P.growth} netto`,
     includes: '3 procesy, dashboard lub raport cykliczny, do 6 integracji, alerty i obsługa błędów, 60 dni gwarancji.',
     term: 'Orientacyjnie 3 tygodnie',
   },
   {
     service: 'Wdrożenie Scale',
-    price: 'od 15 000 zł netto',
+    price: `${P.scaleFrom} netto`,
     includes: 'Od 4 procesów, integracje ERP / WMS, wdrożenie etapami, SLA w umowie, opieka po odbiorze.',
     term: 'Orientacyjnie 4–6 tygodni',
   },
   {
     service: 'Opieka Basic',
-    price: '390 zł netto/mc',
+    price: `${P.careBasic} netto/mc`,
     includes: 'Monitoring, alerty i kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny.',
     term: 'Rozliczenie miesięczne, wypowiedzenie 1 mc',
   },
   {
     service: 'Opieka Standard',
-    price: '690 zł netto/mc',
+    price: `${P.careStandard} netto/mc`,
     includes: 'Monitoring, alerty i kopie, do 5 h zmian miesięcznie, SLA reakcji 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc.',
     term: 'Rozliczenie miesięczne, wypowiedzenie 1 mc',
   },
   {
     service: 'White-label dla agencji',
-    price: '2 500 zł netto/proces',
+    price: `${P.whiteLabel} netto/proces`,
     includes: 'Jeden proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym, NDA na życzenie.',
     term: 'Orientacyjnie 5–7 dni roboczych',
   },
@@ -68,8 +69,8 @@ const comparison = [
   ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
   ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
   ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
-  ['Opieka', 'Basic 390 / Standard 690 zł/mc', 'Basic 390 / Standard 690 zł/mc', 'wg umowy'],
-  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
+  ['Opieka', `Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, `Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, 'wg umowy'],
+  ['Cena netto', P.start, P.growth, P.scaleFrom],
 ];
 
 const careRows = [
@@ -109,7 +110,7 @@ const costDrivers = [
 ---
 <Base
   title="Cennik automatyzacji: audyt, wdrożenia, opieka"
-  description="Jawne ceny netto: mini-diagnoza 0 zł, audyt 890 zł odliczany od wdrożenia, Start 3 900, Growth 8 900, Scale od 15 000, opieka 390 i 690 zł/mc."
+  description={`Jawne ceny netto: mini-diagnoza ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.careBasic} i ${P.careStandard}/mc.`}
   path="/ile-kosztuje"
   faq={pricingFaq}
 >
@@ -182,10 +183,41 @@ const costDrivers = [
       </div>
       <p class="table-note">Cennik na wąskim ekranie jest pokazany jako lista.</p>
       <p class="small muted" style="margin-top:14px">
-        Audyt 890 zł odliczamy od pierwszej faktury za wdrożenie. Mini-diagnoza jest
+        Audyt {P.audit} odliczamy od pierwszej faktury za wdrożenie. Mini-diagnoza jest
         bezpłatna i nie zobowiązuje do audytu. White-label rozliczamy z agencją,
         nie z klientem końcowym.
       </p>
+    </div>
+  </section>
+
+  <section class="section" id="czego-nie-obejmuje">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Czego nie obejmuje cena</h2>
+        <p class="section-intro">
+          Cztery rzeczy, które zostają po stronie klienta albo wymagają osobnej wyceny
+          przed wykonaniem pracy. Nie dokładamy ich do faktury po fakcie.
+        </p>
+      </div>
+
+      <ul class="plainlist">
+        <li>
+          <strong>Licencje narzędzi i koszty API</strong> ponosi klient, bo działają na
+          jego kontach i zależą od jego wolumenu.
+        </li>
+        <li>
+          <strong>Prace poza zakresem</strong> wyceniamy przed wykonaniem i realizujemy
+          dopiero po pisemnej akceptacji.
+        </li>
+        <li>
+          <strong>Migracje danych historycznych</strong> to osobne zlecenie, chyba że
+          zakres wdrożenia wprost je obejmuje.
+        </li>
+        <li>
+          <strong>Zmiany procesów po odbiorze</strong> wyceniamy osobno i nie wchodzą
+          w cenę wdrożenia ani w limit opieki.
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -261,8 +293,8 @@ const costDrivers = [
           <thead>
             <tr>
               <th scope="col">Zakres</th>
-              <th scope="col">Basic 390 zł/mc</th>
-              <th scope="col">Standard 690 zł/mc</th>
+              <th scope="col">Basic {P.careBasic}/mc</th>
+              <th scope="col">Standard {P.careStandard}/mc</th>
             </tr>
           </thead>
           <tbody>
@@ -298,21 +330,21 @@ const costDrivers = [
         <div class="path-step">
           <span class="n">01</span>
           <h3>Napisz do nas</h3>
-          <p class="price">0 zł</p>
+          <p class="price">{P.miniDiagnosis}</p>
           <p>Opisujesz proces, narzędzia i liczbę osób. Odpowiadamy w ciągu 1 dnia roboczego.</p>
           <span class="when">Formularz · e-mail</span>
         </div>
         <div class="path-step">
           <span class="n">02</span>
           <h3>Mini-diagnoza</h3>
-          <p class="price">0 zł</p>
+          <p class="price">{P.miniDiagnosis}</p>
           <p>Krótka pisemna ocena jednego procesu: sens, szacunek godzin [EST], narzędzia.</p>
           <span class="when">Odpowiedź w 2 dni robocze</span>
         </div>
         <div class="path-step">
           <span class="n">03</span>
           <h3>Audyt</h3>
-          <p class="price">890 zł netto</p>
+          <p class="price">{P.audit} netto</p>
           <p>Raport z kosztem, priorytetami i wyceną. Odliczany od wdrożenia.</p>
           <span class="when">Orientacyjnie 3 dni robocze</span>
         </div>
@@ -320,8 +352,8 @@ const costDrivers = [
 
       <div class="section-foot">
         <span class="small muted">
-          Po audycie: wdrożenie 3 900 / 8 900 / od 15 000 zł netto, potem opcjonalna
-          opieka 390 albo 690 zł netto/mc.
+          Po audycie: wdrożenie {P.start} / {P.growth} / {P.scaleFrom} netto, potem opcjonalna
+          opieka {P.careBasic} albo {P.careStandard} netto/mc.
         </span>
         <a class="text-link" href="/wdrozenia">Zakres wdrożeń</a>
       </div>

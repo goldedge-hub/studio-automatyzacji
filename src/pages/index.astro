@@ -6,7 +6,8 @@ import FAQ from '../components/FAQ.astro';
 import Scenario from '../components/Scenario.astro';
 import { homeFaq } from '../data/faq';
 import { ecommerceProblems, ecommerceServices, notWorth } from '../data/content';
-import { CONTACT_EMAIL, DIAGNOSIS_RESPONSE } from '../config';
+import { CONTACT_EMAIL, DIAGNOSIS_RESPONSE, PRICE_UPDATED } from '../config';
+import { P } from '../data/pricing';
 
 const steps = [
   {
@@ -19,13 +20,13 @@ const steps = [
   {
     n: '02',
     t: 'Mini-diagnoza e-mailem',
-    price: '0 zł',
+    price: P.miniDiagnosis,
     d: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin [EST] i narzędzia.',
     when: `Odpowiedź w ${DIAGNOSIS_RESPONSE}`,
   },
   {
     n: '03',
-    t: 'Audyt 890 zł netto',
+    t: `Audyt ${P.audit} netto`,
     price: 'Odliczany od wdrożenia',
     d: 'Mapa procesu, koszt ręcznej pracy, priorytety, ryzyka i stała wycena wdrożenia. Raport zostaje u Ciebie.',
     when: 'Raport orientacyjnie w 3 dni robocze',
@@ -36,7 +37,7 @@ const plans = [
   {
     name: 'Start',
     scope: '1 proces',
-    price: '3 900',
+    price: P.start,
     desc: 'Jeden proces e-commerce, który najbardziej zjada czas.',
     feats: [
       '1 proces end-to-end',
@@ -51,7 +52,7 @@ const plans = [
   {
     name: 'Growth',
     scope: '3 procesy',
-    price: '8 900',
+    price: P.growth,
     desc: 'Trzy procesy i raport, który je podsumowuje.',
     feats: [
       '3 procesy end-to-end',
@@ -66,7 +67,7 @@ const plans = [
   {
     name: 'Scale',
     scope: 'od 4 procesów',
-    price: 'od 15 000',
+    price: P.scaleFrom,
     desc: 'Większe środowisko, ERP, WMS i wiele systemów.',
     feats: [
       'od 4 procesów',
@@ -82,7 +83,7 @@ const plans = [
 ---
 <Base
   title="Automatyzacja e-commerce: mini-diagnoza i audyt"
-  description="Automatyzacje dla MŚP e-commerce: zamówienia, zwroty, stany, faktury. Bezpłatna mini-diagnoza e-mailem, audyt 890 zł odliczany od wdrożenia. Ceny netto."
+  description={`Automatyzacje dla MŚP e-commerce: zamówienia, zwroty, stany, faktury. Bezpłatna mini-diagnoza e-mailem, audyt ${P.audit} odliczany od wdrożenia. Ceny netto.`}
   path="/"
   faq={homeFaq}
 >
@@ -98,7 +99,7 @@ const plans = [
           </p>
           <div class="buttonrow">
             <ContactLink class="btn btn--primary" label="Opisz proces" />
-            <a class="btn btn--ghost" href="/audyt#mini-diagnoza">Mini-diagnoza 0 zł</a>
+            <a class="btn btn--ghost" href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a>
           </div>
           <p class="small">
             Wystarczy formularz. Odpowiadamy w ciągu jednego dnia roboczego,
@@ -108,9 +109,9 @@ const plans = [
       </div>
 
       <div class="hero-facts">
-        <div><b>Mini-diagnoza 0 zł</b>Jeden proces, pisemna ocena e-mailem w {DIAGNOSIS_RESPONSE}.</div>
-        <div><b>Audyt 890 zł netto</b>Odliczany od pierwszej faktury za wdrożenie.</div>
-        <div><b>Stałe ceny netto</b>Start 3 900, Growth 8 900, Scale od 15 000 zł.</div>
+        <div><b>Mini-diagnoza {P.miniDiagnosis}</b>Jeden proces, pisemna ocena e-mailem w {DIAGNOSIS_RESPONSE}.</div>
+        <div><b>Audyt {P.audit} netto</b>Odliczany od pierwszej faktury za wdrożenie.</div>
+        <div><b>Stałe ceny netto</b>Start {P.start}, Growth {P.growth}, Scale {P.scaleFrom}.</div>
         <div><b>Kod u klienta</b>Kod, dokumentacja i dostępy po opłaceniu zlecenia.</div>
       </div>
     </div>
@@ -162,7 +163,7 @@ const plans = [
 
       <div class="section-foot">
         <a class="text-link" href="/wdrozenia">Zakres wdrożeń i pakiety</a>
-        <span class="mono">Ceny netto · aktualizacja 18.10.2026</span>
+        <span class="mono">Ceny netto · aktualizacja {PRICE_UPDATED}</span>
       </div>
     </div>
   </section>
@@ -238,7 +239,7 @@ const plans = [
 
       <div class="section-foot">
         <span class="small muted">
-          Po audycie: wdrożenie Start 3 900 zł, Growth 8 900 zł albo Scale od 15 000 zł netto.
+          Po audycie: wdrożenie Start {P.start}, Growth {P.growth} albo Scale {P.scaleFrom} netto.
           Audyt odliczamy od pierwszej faktury.
         </span>
         <a class="text-link" href="/ile-kosztuje#sciezka">Pełne ceny i zależności</a>
@@ -251,7 +252,7 @@ const plans = [
       <div class="section-head">
         <h2>Pakiety wdrożeń</h2>
         <p class="section-intro">
-          Ceny netto, stałe przed startem. Audyt 890 zł odliczamy od pierwszej faktury.
+          Ceny netto, stałe przed startem. Audyt {P.audit} odliczamy od pierwszej faktury.
           Płatność 50% przed startem, 50% po odbiorze.
         </p>
       </div>
@@ -263,7 +264,7 @@ const plans = [
               <h3>{p.name}</h3>
               <span class="scope">{p.scope}</span>
             </div>
-            <p class="price">{p.price} <small>zł netto</small></p>
+            <p class="price">{p.price} <small>netto</small></p>
             <p class="desc">{p.desc}</p>
             <ul>
               {p.feats.map((f) => <li>{f}</li>)}
@@ -275,7 +276,7 @@ const plans = [
 
       <div class="section-foot">
         <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i od czego zależy cena</a>
-        <span class="mono">Audyt 890 zł · Start 3 900 zł · Growth 8 900 zł · Scale od 15 000 zł</span>
+        <span class="mono">Audyt {P.audit} · Start {P.start} · Growth {P.growth} · Scale {P.scaleFrom}</span>
       </div>
     </div>
   </section>
@@ -296,7 +297,7 @@ const plans = [
             <h3>Basic</h3>
             <span class="scope">Aktualna oferta</span>
           </div>
-          <p class="price">390 <small>zł netto/mc</small></p>
+          <p class="price">{P.careBasic} <small>netto/mc</small></p>
           <p class="desc">Monitoring i drobne zmiany w stałym zakresie.</p>
           <ul>
             <li>monitoring, alerty i kopie</li>
@@ -311,7 +312,7 @@ const plans = [
             <h3>Standard</h3>
             <span class="scope">Aktualna oferta</span>
           </div>
-          <p class="price">690 <small>zł netto/mc</small></p>
+          <p class="price">{P.careStandard} <small>netto/mc</small></p>
           <p class="desc">Szybsza reakcja i stała konsultacja techniczna.</p>
           <ul>
             <li>do 5 h zmian miesięcznie</li>
@@ -325,7 +326,7 @@ const plans = [
 
       <div class="section-foot">
         <a class="text-link" href="/opieka">Warunki opieki i czego nie obejmuje</a>
-        <span class="mono">Basic 390 zł · Standard 690 zł netto/mc</span>
+        <span class="mono">Basic {P.careBasic} · Standard {P.careStandard} netto/mc</span>
       </div>
     </div>
   </section>

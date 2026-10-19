@@ -29,10 +29,10 @@ Formularz `/kontakt` ma pięć pól: firma lub imię, e-mail (wymagany), proces,
 
 - `/` — strona główna: e-commerce, problemy, usługi, mini-diagnoza, ścieżka 3 kroków, pakiety, opieka, scenariusz modelowy, kiedy nie, FAQ.
 - `/ile-kosztuje` — cennik, porównanie pakietów, opieka Basic/Standard, zależności cenowe, kiedy automatyzacja się nie opłaca.
-- `/audyt` — bezpłatna mini-diagnoza e-mailem i płatny audyt 890 zł netto (odliczany od wdrożenia), porównanie obu usług.
+- `/audyt` — bezpłatna mini-diagnoza e-mailem i płatny audyt (cena w `src/data/pricing.ts`, odliczany od wdrożenia), porównanie obu usług.
 - `/wdrozenia` — pakiety Start, Growth, Scale i porównanie.
-- `/opieka` — opieka Basic 390 zł netto/mc i Standard 690 zł netto/mc.
-- `/dla-agencji` — white-label 2 500 zł netto/proces.
+- `/opieka` — opieka Basic i Standard (ceny w `src/data/pricing.ts`).
+- `/dla-agencji` — white-label (cena w `src/data/pricing.ts`).
 - `/zaufanie` — RODO, NDA, AI Act, własność kodu, monitoring, logi, jak pracujemy.
 - `/case-studies` — jawne zasady publikacji realizacji, bez wymyślonych case studies.
 - `/o-studiu`, `/kontakt`, `/polityka-prywatnosci`, `/regulamin`, `/404`.
@@ -43,8 +43,8 @@ Formularz `/kontakt` ma pięć pól: firma lub imię, e-mail (wymagany), proces,
 - Zero wymyślonych liczb, klientów, opinii, logotypów i wyników.
 - Scenariusze efektywności są oznaczone jako „Scenariusz modelowy, nie wynik klienta”, z jawnymi założeniami. Szacunki niepewne: `[EST]`.
 - Brak licznika wolnych terminów i sztucznego niedoboru.
-- Ceny netto bez zmian; data aktualizacji cennika: 18.10.2026.
-- Audyt 890 zł jest odliczany od wdrożenia; nie ma obietnicy zwrotu gotówki.
+- Ceny netto; jedyne źródło cen i daty aktualizacji: `src/data/pricing.ts`.
+- Audyt jest odliczany od wdrożenia; nie ma obietnicy zwrotu gotówki.
 - Kontakt i dane: `src/config.ts`.
 - Target główny: MŚP e-commerce (Shoper, BaseLinker, Allegro, WooCommerce); usługi/biura jako drugi plan; agencje jako osobna ścieżka `/dla-agencji`.
 

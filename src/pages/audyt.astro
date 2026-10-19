@@ -4,6 +4,7 @@ import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import { DIAGNOSIS_RESPONSE } from '../config';
+import { P } from '../data/pricing';
 
 const auditFaq = [
   {
@@ -32,7 +33,7 @@ const auditFaq = [
   },
   {
     q: 'Czy audyt jest odliczany od wdrożenia?',
-    a: 'Tak. 890 zł netto odliczamy od pierwszej faktury za wdrożenie. Jeśli do wdrożenia nie dojdzie, audyt pozostaje osobną usługą za 890 zł netto.',
+    a: `Tak. ${P.audit} netto odliczamy od pierwszej faktury za wdrożenie. Jeśli do wdrożenia nie dojdzie, audyt pozostaje osobną usługą za ${P.audit} netto.`,
   },
   {
     q: 'Jakie dane są potrzebne do audytu?',
@@ -41,7 +42,7 @@ const auditFaq = [
 ];
 
 const comparison = [
-  ['Cena', '0 zł', '890 zł netto, odliczany od wdrożenia'],
+  ['Cena', P.miniDiagnosis, `${P.audit} netto, odliczany od wdrożenia`],
   ['Forma', 'Formularz i odpowiedź e-mail', 'Ustalenia 60–90 min, analiza, raport, omówienie 30 min'],
   ['Zakres', 'Jeden proces, opis z formularza', 'Jeden proces, systemy, dane, wyjątki i ryzyka'],
   ['Co dostajesz', 'Ocenę, czy warto automatyzować, szacunek godzin [EST], narzędzia', 'Mapę procesu, koszt ręcznej pracy, priorytety, ryzyka i stałą wycenę wdrożenia'],
@@ -51,23 +52,23 @@ const comparison = [
 ];
 ---
 <Base
-  title="Audyt automatyzacji 890 zł i mini-diagnoza"
-  description="Bezpłatna mini-diagnoza e-mailem w 2 dni robocze albo płatny audyt 890 zł netto z mapą, kosztem i wyceną. Audyt odliczany od wdrożenia."
+  title={`Audyt automatyzacji ${P.audit} i mini-diagnoza`}
+  description={`Bezpłatna mini-diagnoza e-mailem w 2 dni robocze albo płatny audyt ${P.audit} netto z mapą, kosztem i wyceną. Audyt odliczany od wdrożenia.`}
   path="/audyt"
   faq={auditFaq}
 >
   <section class="page-head">
     <div class="wrap">
       <div class="meta-line">
-        <span>Mini-diagnoza 0 zł</span>
-        <span>Audyt 890 zł netto</span>
+        <span>Mini-diagnoza {P.miniDiagnosis}</span>
+        <span>Audyt {P.audit} netto</span>
         <span>Raport orientacyjnie w 3 dni robocze</span>
       </div>
       <h1>Najpierw mini-diagnoza. Potem decyzja, czy audyt ma sens</h1>
       <p class="lead">
         Możesz zacząć bezpłatnie: opisz jeden proces, a w ciągu {DIAGNOSIS_RESPONSE}
         dostaniesz e-mail z krótką oceną. Jeśli potrzebujesz mapy, kosztu i wyceny,
-        zamawiasz audyt za 890 zł netto, odliczany od wdrożenia.
+        zamawiasz audyt za {P.audit} netto, odliczany od wdrożenia.
       </p>
       <div class="buttonrow">
         <ContactLink class="btn btn--primary" label="Wyślij zgłoszenie" topic="mini-diagnoza" />
@@ -147,7 +148,7 @@ const comparison = [
             <tr>
               <th scope="col">Zakres</th>
               <th scope="col">Mini-diagnoza e-mailem</th>
-              <th scope="col">Audyt 890 zł netto</th>
+              <th scope="col">Audyt {P.audit} netto</th>
             </tr>
           </thead>
           <tbody>

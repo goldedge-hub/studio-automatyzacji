@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
+import { COMPANY, COMPANY_ADDRESS } from '../data/company';
+import { P, PRICES, zl } from '../data/pricing';
 ---
 <Base
   title="Regulamin usług | Studio Automatyzacji"
-  description="Regulamin usług automatyzacji: zakres, ceny netto, mini-diagnoza, audyt, płatności, terminy, gwarancja i poufność. Aktualizacja 18.10.2026."
+  description={`Regulamin usług automatyzacji: zakres, ceny netto, mini-diagnoza, audyt, płatności, terminy, gwarancja i poufność. Aktualizacja ${PRICE_UPDATED}.`}
   path="/regulamin"
 >
   <section class="page-head">
@@ -24,7 +26,16 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
 
   <section class="section">
     <div class="wrap narrow prose">
-      <h2>1. Zakres</h2>
+      <h2>1. Usługodawca</h2>
+      <p>Usługodawcą jest Studio Automatyzacji.</p>
+      {COMPANY.legalName && <p>Nazwa prawna: {COMPANY.legalName}.</p>}
+      {COMPANY.nip && <p>NIP: {COMPANY.nip}.</p>}
+      {COMPANY_ADDRESS && <p>Adres: {COMPANY_ADDRESS}.</p>}
+      <p>
+        Kontakt: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2>2. Zakres</h2>
       <p>
         Usługi obejmują audyt procesu, wdrożenie automatyzacji, integracje API,
         raporty oraz opiekę techniczną. Zakres, kryteria odbioru i cena są
@@ -32,29 +43,29 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
         wyceniamy osobno i wymagają pisemnej zgody.
       </p>
 
-      <h2>2. Ceny i płatności</h2>
+      <h2>3. Ceny i płatności</h2>
       <p>
         Ceny podane na stronie są cenami netto i obowiązują od {PRICE_UPDATED}.
         Standardowo płatność wynosi 50% przed rozpoczęciem prac i 50% po odbiorze.
         Wystawiamy fakturę z 7-dniowym terminem płatności. Przy projektach powyżej
-        15 000 zł ustalamy harmonogram etapów.
+        {zl(PRICES.scaleFrom)} ustalamy harmonogram etapów.
       </p>
       <ul>
-        <li>Mini-diagnoza e-mailem: 0 zł.</li>
-        <li>Audyt automatyzacji: 890 zł netto, odliczany od wdrożenia.</li>
-        <li>Start: 3 900 zł netto.</li>
-        <li>Growth: 8 900 zł netto.</li>
-        <li>Scale: od 15 000 zł netto.</li>
-        <li>Opieka Basic: 390 zł netto/mc.</li>
-        <li>Opieka Standard: 690 zł netto/mc.</li>
-        <li>White-label: 2 500 zł netto/proces.</li>
+        <li>Mini-diagnoza e-mailem: {P.miniDiagnosis}.</li>
+        <li>Audyt automatyzacji: {P.audit} netto, odliczany od wdrożenia.</li>
+        <li>Start: {P.start} netto.</li>
+        <li>Growth: {P.growth} netto.</li>
+        <li>Scale: {P.scaleFrom} netto.</li>
+        <li>Opieka Basic: {P.careBasic} netto/mc.</li>
+        <li>Opieka Standard: {P.careStandard} netto/mc.</li>
+        <li>White-label: {P.whiteLabel} netto/proces.</li>
       </ul>
       <p>
         Ceny są netto. VAT doliczamy zgodnie z przepisami. Mini-diagnoza jest bezpłatna
         i nie zobowiązuje do zamówienia audytu ani wdrożenia.
       </p>
 
-      <h2>3. Terminy i kontakt</h2>
+      <h2>4. Terminy i kontakt</h2>
       <p>
         Zgłoszenia przyjmujemy formularzem albo e-mailem. Odpowiadamy w ciągu jednego
         dnia roboczego. Mini-diagnozę e-mailem wysyłamy w ciągu 2 dni roboczych;
@@ -67,7 +78,7 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
         przesuwają termin o odpowiadający im czas.
       </p>
 
-      <h2>4. Mini-diagnoza, audyt i decyzja o wdrożeniu</h2>
+      <h2>5. Mini-diagnoza, audyt i decyzja o wdrożeniu</h2>
       <p>
         Mini-diagnoza jest bezpłatna i obejmuje krótką pisemną ocenę jednego procesu:
         czy warto go automatyzować, szacunek godzin [EST] i wskazanie narzędzi.
@@ -75,13 +86,13 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
         oznaczamy jako [EST] i nie stanowią obietnicy wyniku.
       </p>
       <p>
-        Audyt jest osobną usługą. Jeśli dojdzie do wdrożenia, 890 zł netto odliczamy
+        Audyt jest osobną usługą. Jeśli dojdzie do wdrożenia, {P.audit} netto odliczamy
         od pierwszej faktury. Jeżeli audyt nie wykaże zwrotu w maksymalnie 12 miesiącach,
         nie proponujemy wdrożenia. Raport zostaje u klienta jako dokument z rekomendacjami.
         Nie obiecujemy zwrotu gotówki za audyt.
       </p>
 
-      <h2>5. Odbiór i gwarancja</h2>
+      <h2>6. Odbiór i gwarancja</h2>
       <p>
         Odbiór następuje po teście na danych klienta i spełnieniu kryteriów opisanych
         w zleceniu. Gwarancja obejmuje usunięcie błędów w uzgodnionym zakresie:
@@ -89,7 +100,7 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
         nie obejmuje zmian w systemach zewnętrznych ani nowych funkcji.
       </p>
 
-      <h2>6. Odpowiedzialność</h2>
+      <h2>7. Odpowiedzialność</h2>
       <p>
         Odpowiadamy za zgodność realizacji z uzgodnionym zakresem. Nie odpowiadamy
         za skutki zmian wprowadzonych przez klienta lub osoby trzecie w systemach
@@ -97,21 +108,21 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
         odpowiedzialności określa umowa.
       </p>
 
-      <h2>7. Własność intelektualna</h2>
+      <h2>8. Własność intelektualna</h2>
       <p>
         Po opłaceniu zlecenia klient otrzymuje kod źródłowy i dokumentację wdrożenia
         oraz prawo do ich wykorzystania w swojej działalności. Licencje bibliotek
         open source opisujemy w dokumentacji. Dostępy do systemów zostają po stronie klienta.
       </p>
 
-      <h2>8. Poufność</h2>
+      <h2>9. Poufność</h2>
       <p>
         Dane klienta, w tym dane dostępowe i informacje o procesach, są poufne.
         Na życzenie podpisujemy odrębną umowę NDA przed przekazaniem materiałów.
         Zasady pracy z danymi opisuje strona <a href="/zaufanie">Zaufanie i dane</a>.
       </p>
 
-      <h2>9. Reklamacje</h2>
+      <h2>10. Reklamacje</h2>
       <p>
         Reklamacje przyjmujemy na adres
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
@@ -119,10 +130,10 @@ import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
       </p>
       <p>
         Reklamacja nie obejmuje zmiany zakresu ani nowych funkcji. Zasady gwarancji
-        opisuje punkt 5.
+        opisuje punkt 6.
       </p>
 
-      <h2>10. Prawo właściwe</h2>
+      <h2>11. Prawo właściwe</h2>
       <p>
         Do umów stosuje się prawo polskie. Spory rozstrzyga sąd właściwy dla siedziby
         usługodawcy, o ile strony nie uzgodnią inaczej.

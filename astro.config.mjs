@@ -9,4 +9,5 @@ export default defineConfig({
     }),
   ],
   build: { inlineStylesheets: 'auto' },
+  vite: { cacheDir: './.astro/vite' },
 });

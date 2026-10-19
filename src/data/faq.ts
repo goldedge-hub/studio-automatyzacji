@@ -1,3 +1,6 @@
+import { P } from './pricing';
+import { PRICE_UPDATED } from '../config';
+
 export const homeFaq = [
   {
     q: 'Jak zacząć współpracę?',
@@ -8,16 +11,16 @@ export const homeFaq = [
     a: 'To krótka pisemna ocena jednego procesu. Wypełniasz formularz, a w ciągu 2 dni roboczych dostajesz e-mail z odpowiedzią: czy proces warto automatyzować, ile godzin może oszczędzić [EST] i jakich narzędzi wymaga. To nie jest pełny raport ani wycena wdrożenia z gwarancją. Jeśli zgłoszeń jest więcej, odpowiedź może się wydłużyć.',
   },
   {
-    q: 'Czym różni się mini-diagnoza od audytu za 890 zł?',
+    q: `Czym różni się mini-diagnoza od audytu za ${P.audit}?`,
     a: 'Mini-diagnoza odpowiada na pytanie „czy to ma sens” na podstawie opisu z formularza. Audyt to płatna praca: ustalenia 60–90 minut, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, priorytety, ryzyka, wycena wdrożenia i 30-minutowe omówienie raportu. Audyt obejmuje też decyzję, czy wdrożenie ma sens przy zwrocie w maksymalnie 12 miesiącach.',
   },
   {
     q: 'Ile kosztuje audyt i czy jest odliczany?',
-    a: 'Audyt kosztuje 890 zł netto. Jeśli dojdzie do wdrożenia, odliczamy tę kwotę od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą, a raport zostaje u Ciebie. Nie obiecujemy zwrotu gotówki za audyt.',
+    a: `Audyt kosztuje ${P.audit} netto. Jeśli dojdzie do wdrożenia, odliczamy tę kwotę od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą, a raport zostaje u Ciebie. Nie obiecujemy zwrotu gotówki za audyt.`,
   },
   {
     q: 'Ile kosztują wdrożenia?',
-    a: 'Start 3 900 zł netto (1 proces, do 3 integracji, 30 dni gwarancji), Growth 8 900 zł netto (3 procesy, do 6 integracji, 60 dni gwarancji), Scale od 15 000 zł netto (od 4 procesów lub większe środowisko, wycena indywidualna). Cena jest stała dla zakresu opisanego przed startem.',
+    a: `Start ${P.start} netto (1 proces, do 3 integracji, 30 dni gwarancji), Growth ${P.growth} netto (3 procesy, do 6 integracji, 60 dni gwarancji), Scale ${P.scaleFrom} netto (od 4 procesów lub większe środowisko, wycena indywidualna). Cena jest stała dla zakresu opisanego przed startem.`,
   },
   {
     q: 'Ile trwa wdrożenie?',
@@ -49,7 +52,7 @@ export const homeFaq = [
   },
   {
     q: 'Czy muszę wykupić opiekę?',
-    a: 'Nie. Opieka jest opcjonalna i miesięczna: Basic 390 zł netto/mc (monitoring, do 2 h zmian, SLA 3 dni robocze, raport miesięczny) albo Standard 690 zł netto/mc (do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc). Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.',
+    a: `Nie. Opieka jest opcjonalna i miesięczna: Basic ${P.careBasic} netto/mc (monitoring, do 2 h zmian, SLA 3 dni robocze, raport miesięczny) albo Standard ${P.careStandard} netto/mc (do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc). Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.`,
   },
   {
     q: 'Na jakich narzędziach pracujecie?',
@@ -61,7 +64,7 @@ export const homeFaq = [
   },
   {
     q: 'Pracujecie z agencjami?',
-    a: 'Tak, w modelu white-label: 2 500 zł netto za proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji. Nie publikujemy rabatów wolumenowych ani pilotażowych w cenniku.',
+    a: `Tak, w modelu white-label: ${P.whiteLabel} netto za proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji. Nie publikujemy rabatów wolumenowych ani pilotażowych w cenniku.`,
   },
   {
     q: 'Dlaczego nie ma tu case studies ani opinii?',
@@ -76,11 +79,11 @@ export const pricingFaq = [
   },
   {
     q: 'Czy audyt odliczacie od wdrożenia?',
-    a: 'Tak. Jeśli dojdzie do wdrożenia, 890 zł netto odliczamy od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą za 890 zł netto. Nie obiecujemy zwrotu gotówki.',
+    a: `Tak. Jeśli dojdzie do wdrożenia, ${P.audit} netto odliczamy od pierwszej faktury. Jeśli nie, audyt pozostaje osobną usługą za ${P.audit} netto. Nie obiecujemy zwrotu gotówki.`,
   },
   {
     q: 'Czy ceny na stronie są aktualne?',
-    a: 'Tak, cennik aktualizujemy na dzień 18.10.2026. Cenę potwierdzamy w ofercie przed startem. Zmiana zakresu to osobna decyzja i osobna wycena, nie dopisek na końcu projektu.',
+    a: `Tak, cennik aktualizujemy na dzień ${PRICE_UPDATED}. Cenę potwierdzamy w ofercie przed startem. Zmiana zakresu to osobna decyzja i osobna wycena, nie dopisek na końcu projektu.`,
   },
   {
     q: 'Ile trwa wdrożenie?',
@@ -88,7 +91,7 @@ export const pricingFaq = [
   },
   {
     q: 'Co zawiera opieka Basic, a co Standard?',
-    a: 'Basic 390 zł netto/mc: monitoring i alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny. Standard 690 zł netto/mc: do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie. Oba poziomy są miesięczne, bez rocznego zobowiązania.',
+    a: `Basic ${P.careBasic} netto/mc: monitoring i alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny. Standard ${P.careStandard} netto/mc: do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie. Oba poziomy są miesięczne, bez rocznego zobowiązania.`,
   },
   {
     q: 'Czy muszę wykupić opiekę?',
@@ -104,10 +107,10 @@ export const pricingFaq = [
   },
   {
     q: 'Czy white-label ma inne ceny?',
-    a: 'Tak. Dla agencji jeden proces do 3 integracji kosztuje 2 500 zł netto. Szczegóły i warunki są na stronie Dla agencji. Nie publikujemy rabatów wolumenowych w cenniku.',
+    a: `Tak. Dla agencji jeden proces do 3 integracji kosztuje ${P.whiteLabel} netto. Szczegóły i warunki są na stronie Dla agencji. Nie publikujemy rabatów wolumenowych w cenniku.`,
   },
   {
     q: 'Jak płacę za wdrożenie?',
-    a: 'Standardowo 50% przed rozpoczęciem prac i 50% po odbiorze, z fakturą i 7-dniowym terminem płatności. Przy projektach powyżej 15 000 zł ustalamy harmonogram etapów.',
+    a: `Standardowo 50% przed rozpoczęciem prac i 50% po odbiorze, z fakturą i 7-dniowym terminem płatności. Przy projektach powyżej ${P.scaleFrom.replace('od ', '')} ustalamy harmonogram etapów.`,
   },
 ];

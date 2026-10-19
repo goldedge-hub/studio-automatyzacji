@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
+import { CONTACT_EMAIL, PRICE_UPDATED } from '../config';
+import { COMPANY, COMPANY_ADDRESS } from '../data/company';
 ---
 <Base
   title="Polityka prywatności | Studio Automatyzacji"
-  description="Polityka prywatności: bez cookies marketingowych i analityki. Dane z formularza i korespondencji, mini-diagnoza, prawa RODO i kontakt."
+  description="Polityka prywatności: formularz kontaktowy, Resend, self-hosted Umami bez cookies, dane z korespondencji, okres przechowywania, prawa RODO i kontakt."
   path="/polityka-prywatnosci"
 >
   <section class="page-head">
@@ -15,7 +16,7 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
       </div>
       <h1>Polityka prywatności</h1>
       <p class="lead">
-        Strona nie używa cookies marketingowych ani analityki śledzącej.
+        Strona korzysta z self-hosted Umami bez cookies i bez profilowania.
         Przetwarzamy dane, które przekazujesz w korespondencji albo formularzu.
       </p>
     </div>
@@ -28,6 +29,9 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         Administratorem danych jest Studio Automatyzacji. Kontakt:
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
+      {COMPANY.legalName && <p>Nazwa prawna: {COMPANY.legalName}.</p>}
+      {COMPANY.nip && <p>NIP: {COMPANY.nip}.</p>}
+      {COMPANY_ADDRESS && <p>Adres: {COMPANY_ADDRESS}.</p>}
 
       <h2>2. Jakie dane zbieramy</h2>
       <p>
@@ -36,13 +40,13 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         proces, opcjonalny temat zgłoszenia i inne informacje zawarte w wiadomości.
         Nie zbieramy danych z cookies marketingowych.
       </p>
-      {FORM_ENDPOINT && (
-        <p>
-          Formularz kontaktowy jest obsługiwany przez zewnętrznego dostawcę usługi
-          formularzowej. Dane są przekazywane wyłącznie w celu przyjęcia i obsługi
-          zgłoszenia. Dostawca przetwarza je zgodnie ze swoją polityką prywatności.
-        </p>
-      )}
+      <p>
+        Formularz kontaktowy wysyła dane na nasz serwer przez usługę formularza na
+        serwerze VPS, pod adresem radarnieruchomosci.com/sf/. Zgłoszenie jest zapisywane
+        w bazie na tym serwerze i przekazywane e-mailem na
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Adres IP jest używany
+        tylko do ochrony przed nadużyciami i zapisywany w postaci skrótu (hash).
+      </p>
 
       <h2>3. Czego nie robimy</h2>
       <ul>
@@ -57,23 +61,25 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         Dane przetwarzamy w celu odpowiedzi na wiadomość, przygotowania bezpłatnej
         mini-diagnozy, przeprowadzenia audytu i realizacji usługi, na podstawie
         art. 6 ust. 1 lit. b i f RODO: wykonanie umowy oraz uzasadniony interes
-        polegający na obsłudze korespondencji. Mini-diagnoza jest bezpłatna i nie
-        zobowiązuje do zamówienia audytu ani wdrożenia.
+        polegający na obsłudze korespondencji i ochronie formularza przed nadużyciami.
+        Mini-diagnoza jest bezpłatna i nie zobowiązuje do zamówienia audytu ani wdrożenia.
       </p>
 
       <h2>5. Okres przechowywania</h2>
       <p>
-        Korespondencję przechowujemy przez czas potrzebny do obsługi sprawy,
-        a dokumenty księgowe przez okres wymagany przepisami. Dane z formularza
-        przechowujemy do zakończenia obsługi zgłoszenia, chyba że dojdzie do umowy.
-        Zgłoszenia bez odpowiedzi klienta usuwamy po zakończeniu obsługi sprawy.
+        Zgłoszenia z formularza przechowujemy przez 12 miesięcy od ostatniego kontaktu,
+        a następnie usuwamy. Korespondencję przechowujemy przez czas potrzebny do obsługi
+        sprawy, a dokumenty księgowe przez okres wymagany przepisami. Skrót adresu IP
+        przechowujemy nie dłużej niż 30 dni.
       </p>
 
       <h2>6. Odbiorcy danych</h2>
       <p>
-        Dostawca poczty e-mail, dostawca hostingu strony oraz, jeśli formularz jest
-        aktywny, dostawca usługi formularzowej. Dane przekazujemy wyłącznie w zakresie
-        niezbędnym do działania usługi. Strona nie zawiera bazy danych ani kont użytkowników.
+        Dane przekazujemy wyłącznie w zakresie niezbędnym do działania usługi: dostawcy
+        hostingu VPS (usługa formularza i self-hosted Umami), dostawcy poczty odbierającej
+        wiadomości oraz Resend (Resend, Inc.) jako podmiotowi przetwarzającemu, który
+        wysyła powiadomienie o zgłoszeniu i automatyczne potwierdzenie do nadawcy.
+        E-maile z Resend są obsługiwane w regionie UE (eu-west-1, Irlandia).
       </p>
 
       <h2>7. Twoje prawa</h2>
@@ -88,7 +94,9 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
       <p>
         Dostępy do systemów klienta przekazujemy wyłącznie kanałem uzgodnionym
         indywidualnie i przechowujemy w sposób ograniczony do realizowanego zadania.
-        Po zakończeniu projektu odbieramy swoje dostępy. Zasady opisuje strona
+        Po zakończeniu projektu odbieramy swoje dostępy. Zgłoszenia z formularza są
+        przechowywane w bazie na serwerze VPS, a dostęp do nich mają tylko osoby
+        obsługujące zgłoszenia. Zasady opisuje strona
         <a href="/zaufanie">Zaufanie i dane</a>.
       </p>
 
@@ -99,16 +107,32 @@ import { CONTACT_EMAIL, FORM_ENDPOINT, PRICE_UPDATED } from '../config';
         dla konkretnego wdrożenia opisujemy w dokumentacji i umowie.
       </p>
 
-      <h2>10. Formularz i kontakt</h2>
+      <h2>10. Formularz kontaktowy</h2>
       <p>
-        Formularz kontaktowy zbiera tylko dane potrzebne do odpowiedzi. Jeśli
-        PUBLIC_FORM_ENDPOINT jest aktywny, zgłoszenie jest przekazywane przez
-        dostawcę usługi formularzowej. Bez endpointu formularz otwiera program
-        pocztowy i wysyła wiadomość na adres kontaktowy. W obu przypadkach
-        obowiązuje ten sam cel i okres przechowywania.
+        Formularz kontaktowy wysyła dane na nasz serwer przez usługę formularza na
+        serwerze VPS, pod adresem radarnieruchomosci.com/sf/. Zgłoszenie jest zapisywane
+        w bazie na tym serwerze i przekazywane e-mailem na
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Powiadomienie o
+        zgłoszeniu i automatyczne potwierdzenie do nadawcy wysyła Resend (Resend, Inc.)
+        jako podmiot przetwarzający, w regionie UE (eu-west-1, Irlandia).
+      </p>
+      <p>
+        Zgłoszenia przechowujemy przez 12 miesięcy od ostatniego kontaktu, a potem
+        usuwamy. Adres IP używamy tylko do ochrony przed nadużyciami (limit zgłoszeń)
+        i przechowujemy go w postaci skrótu (hash), nie dłużej niż 30 dni.
       </p>
 
-      <h2>11. Zmiany polityki</h2>
+      <h2>11. Analityka</h2>
+      <p>
+        Korzystamy z self-hosted Umami. Skrypt jest ładowany z
+        radarnieruchomosci.com/u/ i nie zapisuje cookies, identyfikatorów reklamowych
+        ani profili użytkownika. Umami zbiera zanonimizowane statystyki odsłon
+        i zdarzeń: kliknięcia CTA, wysłanie formularza i użycie kalkulatora.
+        Nie profilujemy użytkowników i nie łączymy tych danych z osobą. Dlatego
+        strona nie wyświetla banera cookies.
+      </p>
+
+      <h2>12. Zmiany polityki</h2>
       <p>
         Politykę aktualizujemy, gdy zmieni się sposób działania strony albo przepisy.
         Data obowiązywania jest podana na górze dokumentu.

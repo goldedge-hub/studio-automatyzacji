@@ -1,4 +1,9 @@
 ---
+import { P, PRICES } from '../data/pricing';
+
+const monthlySaving = 924;
+const paybackMonths = (PRICES.start / monthlySaving).toFixed(1).replace('.', ',');
+
 const assumptions = [
   ['Zamówienia dziennie', '20'],
   ['Ręczna obsługa jednego zamówienia', '4 min'],
@@ -13,7 +18,7 @@ const results = [
   ['Koszt ręcznej pracy miesięcznie', '29,33 h × 45 zł = 1 320 zł'],
   ['Oszczędność przy 70%', '1 320 zł × 70% = 924 zł/mc'],
   ['Oszczędność w 12 miesiącach', '924 zł × 12 = 11 088 zł'],
-  ['Prosty zwrot z pakietu Start', '3 900 zł ÷ 924 zł = 4,2 miesiąca'],
+  ['Prosty zwrot z pakietu Start', `${P.start} ÷ 924 zł = ${paybackMonths} miesiąca`],
 ];
 ---
 <div class="scenario" aria-labelledby="scenario-title">
@@ -55,8 +60,8 @@ const results = [
   <div class="scenario-foot">
     <p>
       To arytmetyka na jawnych założeniach, nie obietnica wyniku ani wynik klienta.
-      Nie uwzględnia kosztu utrzymania, licencji ani błędów. Audyt 890 zł jest odliczany
-      od wdrożenia, więc cena Start pozostaje kwotą 3 900 zł netto.
+      Nie uwzględnia kosztu utrzymania, licencji ani błędów. Audyt {P.audit} jest odliczany
+      od wdrożenia, więc cena Start pozostaje kwotą {P.start} netto.
     </p>
     <a class="text-link small" href="/audyt">Policzmy to na Twoich danych</a>
   </div>

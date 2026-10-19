@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
+import { P } from '../data/pricing';
 ---
 <Base
   title="Realizacje i dowody | Studio Automatyzacji"
@@ -123,7 +124,7 @@ import CTA from '../components/CTA.astro';
           </ul>
           <div class="buttonrow" style="margin-top:20px">
             <a class="btn btn--ghost" href="/zaufanie">Zaufanie i dane</a>
-            <a class="btn btn--ghost" href="/audyt">Audyt 890 zł</a>
+            <a class="btn btn--ghost" href="/audyt">Audyt {P.audit}</a>
           </div>
         </div>
       </div>

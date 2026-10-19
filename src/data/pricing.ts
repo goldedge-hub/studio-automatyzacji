@@ -4,7 +4,7 @@
  */
 export const PRICE_UPDATED = '20.10.2026';
 
-const fmt = (n: number) => n.toLocaleString('pl-PL').replace(/\u00a0/g, ' ');
+const fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 export const zl = (n: number) => `${fmt(n)} zł`;
 
 export const PRICES = {

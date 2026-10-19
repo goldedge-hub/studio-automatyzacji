@@ -2,11 +2,12 @@
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
+import { P } from '../data/pricing';
 
 const careFaq = [
   {
     q: 'Czym różni się Basic od Standard?',
-    a: 'Basic 390 zł netto/mc obejmuje monitoring, alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze i raport miesięczny. Standard 690 zł netto/mc podnosi limit do 5 h, skraca SLA do 1 dnia roboczego i dodaje przegląd kwartalny oraz 1 h konsultacji miesięcznie.',
+    a: `Basic ${P.careBasic} netto/mc obejmuje monitoring, alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze i raport miesięczny. Standard ${P.careStandard} netto/mc podnosi limit do 5 h, skraca SLA do 1 dnia roboczego i dodaje przegląd kwartalny oraz 1 h konsultacji miesięcznie.`,
   },
   {
     q: 'Czy jest roczne zobowiązanie?',
@@ -34,12 +35,12 @@ const rows = [
   ['Przegląd kwartalny', '—', 'tak'],
   ['Konsultacja techniczna', '—', '1 h/mc'],
   ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc', 'miesięczne, wypowiedzenie 1 mc'],
-  ['Cena netto', '390 zł/mc', '690 zł/mc'],
+  ['Cena netto', `${P.careBasic}/mc`, `${P.careStandard}/mc`],
 ];
 ---
 <Base
-  title="Opieka techniczna: 390 i 690 zł netto/mc"
-  description="Opieka nad automatyzacją w dwóch poziomach: Basic 390 zł netto/mc i Standard 690 zł netto/mc. Monitoring, zmiany, SLA i raport. Bez rocznego zobowiązania."
+  title={`Opieka techniczna: ${P.careBasic} i ${P.careStandard} netto/mc`}
+  description={`Opieka nad automatyzacją w dwóch poziomach: Basic ${P.careBasic} netto/mc i Standard ${P.careStandard} netto/mc. Monitoring, zmiany, SLA i raport. Bez rocznego zobowiązania.`}
   path="/opieka"
   faq={careFaq}
 >
@@ -47,8 +48,8 @@ const rows = [
     <div class="wrap">
       <div class="meta-line">
         <span>Po wdrożeniu</span>
-        <span>Basic 390 zł netto/mc</span>
-        <span>Standard 690 zł netto/mc</span>
+        <span>Basic {P.careBasic} netto/mc</span>
+        <span>Standard {P.careStandard} netto/mc</span>
       </div>
       <h1>Opieka techniczna w dwóch poziomach</h1>
       <p class="lead">
@@ -81,8 +82,8 @@ const rows = [
           <thead>
             <tr>
               <th scope="col">Zakres</th>
-              <th scope="col">Basic 390 zł/mc</th>
-              <th scope="col">Standard 690 zł/mc</th>
+              <th scope="col">Basic {P.careBasic}/mc</th>
+              <th scope="col">Standard {P.careStandard}/mc</th>
             </tr>
           </thead>
           <tbody>

@@ -4,12 +4,13 @@ import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import { PRICE_UPDATED } from '../config';
+import { P, PRICES, zl } from '../data/pricing';
 
 const plans = [
   {
     name: 'Start',
     scope: '1 proces',
-    price: '3 900',
+    price: P.start,
     desc: 'Jeden proces, który ma przestać zajmować Twój czas.',
     feats: [
       '1 proces end-to-end',
@@ -24,7 +25,7 @@ const plans = [
   {
     name: 'Growth',
     scope: '3 procesy',
-    price: '8 900',
+    price: P.growth,
     desc: 'Trzy procesy plus raport, który je podsumowuje.',
     feats: [
       '3 procesy end-to-end',
@@ -39,7 +40,7 @@ const plans = [
   {
     name: 'Scale',
     scope: 'od 4 procesów',
-    price: 'od 15 000',
+    price: P.scaleFrom,
     desc: 'Większe środowisko, ERP i wiele systemów.',
     feats: [
       'od 4 procesów',
@@ -62,8 +63,8 @@ const rows = [
   ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
   ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
   ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
-  ['Opieka', 'opcjonalnie Basic 390 / Standard 690 zł/mc', 'opcjonalnie Basic 390 / Standard 690 zł/mc', 'wg umowy'],
-  ['Cena netto', '3 900 zł', '8 900 zł', 'od 15 000 zł'],
+  ['Opieka', `opcjonalnie Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, `opcjonalnie Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, 'wg umowy'],
+  ['Cena netto', P.start, P.growth, P.scaleFrom],
 ];
 
 const faq = [
@@ -103,7 +104,7 @@ const faq = [
 ---
 <Base
   title="Wdrożenia automatyzacji: Start, Growth, Scale"
-  description="Wdrożenia e-commerce: Start 3 900 zł, Growth 8 900 zł, Scale od 15 000 zł netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji."
+  description={`Wdrożenia e-commerce: Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom} netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji.`}
   path="/wdrozenia"
 >
   <section class="page-head">
@@ -133,7 +134,7 @@ const faq = [
         <h2>Pakiety wdrożeń</h2>
         <p class="section-intro">
           Trzy zakresy. Jeśli żaden nie pasuje, wyceniamy projekt indywidualnie.
-          Audyt 890 zł odliczamy od pierwszej faktury.
+          Audyt {P.audit} odliczamy od pierwszej faktury.
         </p>
       </div>
 
@@ -144,7 +145,7 @@ const faq = [
               <h3>{p.name}</h3>
               <span class="scope">{p.scope}</span>
             </div>
-            <p class="price">{p.price} <small>zł netto</small></p>
+            <p class="price">{p.price} <small>netto</small></p>
             <p class="desc">{p.desc}</p>
             <ul>
               {p.feats.map((f) => <li>{f}</li>)}
@@ -155,7 +156,7 @@ const faq = [
       </div>
 
       <div class="section-foot">
-        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura. Audyt 890 zł odliczany.</span>
+        <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura. Audyt {P.audit} odliczany.</span>
         <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i zależności cenowe</a>
       </div>
     </div>
@@ -283,7 +284,7 @@ const faq = [
 
       <div class="note" style="margin-top:32px">
         <strong>Płatność i formalności.</strong> 50% przed startem, 50% po odbiorze.
-        Faktura z 7-dniowym terminem. Przy projektach powyżej 15 000 zł ustalamy
+        Faktura z 7-dniowym terminem. Przy projektach powyżej {zl(PRICES.scaleFrom)} ustalamy
         harmonogram etapów. Zakres i cena są potwierdzane mailowo przed rozpoczęciem prac.
       </div>
 

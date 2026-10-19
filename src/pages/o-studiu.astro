@@ -3,12 +3,13 @@ import Base from '../layouts/Base.astro';
 import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import { CONTACT_EMAIL } from '../config';
+import { P } from '../data/pricing';
 
 const facts = [
   ['Zakres', 'Audyt procesów, wdrożenia e-commerce, opieka techniczna, white-label'],
-  ['Ceny netto', 'Mini-diagnoza 0 zł · audyt 890 zł · Start 3 900 zł · Growth 8 900 zł · Scale od 15 000 zł'],
-  ['Opieka', 'Basic 390 zł/mc · Standard 690 zł/mc netto'],
-  ['White-label', '2 500 zł netto/proces'],
+  ['Ceny netto', `Mini-diagnoza ${P.miniDiagnosis} · audyt ${P.audit} · Start ${P.start} · Growth ${P.growth} · Scale ${P.scaleFrom}`],
+  ['Opieka', `Basic ${P.careBasic}/mc · Standard ${P.careStandard}/mc netto`],
+  ['White-label', `${P.whiteLabel} netto/proces`],
   ['Czas', 'Mini-diagnoza 2 dni rob. · audyt 3 dni rob. · Start 5–10 dni · Growth ok. 3 tyg. · Scale 4–6 tyg.'],
   ['Forma rozliczenia', '50% przed startem, 50% po odbiorze; faktura 7 dni; ceny netto'],
   ['Własność kodu', 'Po opłaceniu zlecenia kod i dokumentacja u klienta'],
