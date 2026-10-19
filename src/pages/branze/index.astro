@@ -1,0 +1,189 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const cards = [
+  {
+    href: '/branze/sklepy-wielokanalowe',
+    kicker: 'Sklep + Allegro + marketplace',
+    title: 'Sklepy wielokanałowe',
+    desc: 'Jedno zamówienie, kilka kanałów sprzedaży. Stany, statusy, wysyłki i zwroty, które muszą spotkać się w jednym miejscu.',
+    cta: 'Sklepy wielokanałowe',
+  },
+  {
+    href: '/branze/hurtownie-b2b',
+    kicker: 'Zamówienia mailem i PDF',
+    title: 'Hurtownie i dystrybucja B2B',
+    desc: 'Zamówienia bez sklepowego checkoutu, oferty, ceny klientów i stany. Odczyt dokumentu, dopasowanie produktów i potwierdzenie.',
+    cta: 'Hurtownie B2B',
+  },
+  {
+    href: '/branze/biura-rachunkowe',
+    kicker: 'Dokumenty i KSeF',
+    title: 'Biura rachunkowe',
+    desc: 'Dokumenty od klientów e-commerce, faktury kosztowe, KSeF i przypomnienia. Automatyzacja rejestru, nie decyzji podatkowych.',
+    cta: 'Biura rachunkowe',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy strona branżowa to gotowy produkt?',
+    a: 'Nie. To opis typowych procesów i granic automatyzacji. Zakres ustalamy po mini-diagnozie i audycie, na podstawie Twoich systemów, danych i wyjątków. Nie sprzedajemy jednego szablonu wszystkim.',
+  },
+  {
+    q: 'Od czego zacząć w sklepie wielokanałowym?',
+    a: 'Od jednego źródła prawdy dla stanów i zamówień. Dopiero potem warto automatyzować statusy, wysyłki, zwroty i raporty. Kolejność ma znaczenie, bo każdy kolejny przepływ korzysta z tych samych danych.',
+  },
+  {
+    q: 'Czy w B2B da się odczytać zamówienie z PDF?',
+    a: 'Często tak, ale wynik wymaga weryfikacji. PDF bywa skanem, ma inne układy i niejednoznaczne ilości. Dlatego projektujemy kolejkę wyjątków i nie traktujemy odczytu jako nieomylnego.',
+  },
+  {
+    q: 'Czy biuro rachunkowe może automatyzować KSeF?',
+    a: 'Może uporządkować pobieranie, rejestr i przypomnienia, w zakresie uprawnień klientów. Decyzje podatkowe, akceptacja dokumentów i odpowiedzialność pozostają po stronie biura. Nie zastępujemy księgowości.',
+  },
+];
+---
+<Base
+  title="Branże: automatyzacja e-commerce i B2B"
+  description="Automatyzacja dla sklepów wielokanałowych, hurtowni B2B i biur rachunkowych. Typowe procesy, wyjątki i ceny netto."
+  path="/branze"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Branże</span>
+        <span>E-commerce, B2B, dokumenty</span>
+        <span>Ceny netto</span>
+      </div>
+      <h1>Branże, w których ręczna obsługa zaczyna kosztować</h1>
+      <p class="lead">
+        Automatyzacja nie jest uniwersalna. Inny jest sklep sprzedający na trzech
+        marketplace’ach, inna hurtownia przyjmująca zamówienia mailem, a inne biuro
+        rachunkowe zbierające dokumenty od kilkudziesięciu klientów. Poniżej trzy
+        obszary, w których procesy mają wspólny mianownik: powtarzalne dane, wiele
+        wyjątków i koszt błędu większy niż koszt uporządkowania.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#wspolny-mianownik">Co łączy te branże</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Trzy obszary</h2>
+        <p class="section-intro">
+          Każda strona opisuje typowe problemy, przepływy krok po kroku, sytuacje,
+          w których nie warto automatyzować, oraz zakres cenowy.
+        </p>
+      </div>
+
+      <div class="plans">
+        {cards.map((c) => (
+          <div class="plan">
+            <p class="mono" style="margin:0 0 10px">{c.kicker}</p>
+            <div class="plan-head">
+              <h3>{c.title}</h3>
+            </div>
+            <p class="desc">{c.desc}</p>
+            <a class="btn btn--ghost" href={c.href}>{c.cta}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="wspolny-mianownik">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co łączy te branże</h2>
+        <p class="section-intro">
+          Trzy warunki, które zwykle decydują, czy automatyzacja ma sens. Jeśli
+          któregoś brakuje, najpierw porządkujemy proces, a nie budujemy integrację.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-item">
+          <span class="n">01</span>
+          <div>
+            <h3>Powtarzalny przepływ</h3>
+            <p>Te same kroki, te same pola, ten sam typ wyjątku. Jeśli za każdym razem proces wygląda inaczej, automatyzacja utrwali chaos zamiast go usunąć.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">02</span>
+          <div>
+            <h3>Mierzalny koszt błędu</h3>
+            <p>Podwójne zamówienie, sprzedaż bez towaru, brak faktury, pominięty dokument. Warto policzyć, ile kosztuje jedna pomyłka i ile takich pomyłek zdarza się w miesiącu [EST].</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Jasna rola człowieka</h3>
+            <p>Wyjątki mają właściciela, a decyzje nie są udawane przez system. Automatyzacja przygotowuje dane, człowiek zatwierdza to, co wymaga odpowiedzialności.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:28px">
+        <strong>Nie każda branża potrzebuje wdrożenia.</strong> Jeśli proces zdarza się
+        kilka razy w miesiącu, natywne integracje wystarczają, a dane nie mają jednego
+        źródła prawdy, powiemy to w mini-diagnozie. Bezpłatna diagnoza nie jest etapem,
+        po którym zawsze następuje oferta.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Jakie procesy wracają najczęściej</h2>
+          <ul class="checklist">
+            <li>Zamówienie z kilku kanałów trafia do jednego systemu.</li>
+            <li>Stan magazynowy aktualizuje się w sklepie i na marketplace.</li>
+            <li>Zwrot dostaje status, właściciela i powiązanie z dokumentem.</li>
+            <li>Dokumenty od klientów trafiają do jednego rejestru.</li>
+            <li>Raport sprzedaży powstaje z danych źródłowych, nie z pięciu eksportów.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Gdzie szukać szczegółów</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje">Integracje e-commerce: BaseLinker, Shoper, WooCommerce, KSeF</a></li>
+            <li><a class="text-link" href="/poradnik/ile-kosztuje-integracja-baselinker-allegro">Ile kosztuje integracja BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji i mini-diagnoza</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Pełny cennik netto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o pracę branżową</h2>
+        <p class="section-intro">
+          Zakres, kolejność i granice automatyzacji. Bez gotowych recept dla każdej
+          firmy.
+        </p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Twój proces wygląda inaczej niż w podręczniku?"
+    text="Opisz go własnymi słowami: co przychodzi, gdzie trafia i co robisz, gdy coś nie pasuje. Mini-diagnoza pomoże ustalić, czy to problem integracji, danych czy samej kolejki pracy."
+  />
+</Base>

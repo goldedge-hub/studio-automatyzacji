@@ -1,0 +1,327 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+import { P, PRICES } from '../../data/pricing';
+
+const costDrivers = [
+  {
+    t: 'Liczba przepływów',
+    d: 'Samo pobranie zamówienia to inna praca niż zamówienia, statusy, stany, wysyłki, zwroty i faktury. Każdy przepływ ma własne wyjątki i kryterium odbioru.',
+  },
+  {
+    t: 'Liczba integracji',
+    d: 'BaseLinker i Allegro to dwa systemy, ale dochodzi magazyn, hurtownia, system fakturowania i KSeF. Każde połączenie trzeba sprawdzić i utrzymać.',
+  },
+  {
+    t: 'Jakość danych',
+    d: 'Brak SKU, duplikaty i ręczne korekty wymagają dodatkowej logiki. Czasem najpierw trzeba uporządkować kartotekę, a dopiero potem automatyzować.',
+  },
+  {
+    t: 'Wyjątki',
+    d: 'Im więcej decyzji człowieka przy pojedynczym rekordzie, tym więcej reguł i testów. Wyjątki można zostawić człowiekowi, ale trzeba je opisać.',
+  },
+  {
+    t: 'Utrzymanie',
+    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką Basic lub Standard.',
+  },
+];
+
+const example = {
+  orders: 30,
+  minutes: 3,
+  days: 22,
+  rate: 50,
+  automation: 0.6,
+};
+
+const hours = (example.orders * example.minutes * example.days) / 60;
+const monthlyCost = hours * example.rate;
+const monthlySaving = monthlyCost * example.automation;
+const payback = PRICES.start / monthlySaving;
+
+const rows = [
+  ['Audyt', P.audit, 'odliczany od pierwszej faktury za wdrożenie'],
+  ['Start', P.start, '1 proces, do 3 integracji, 30 dni gwarancji'],
+  ['Growth', P.growth, '3 procesy, do 6 integracji, 60 dni gwarancji'],
+  ['Scale', P.scaleFrom, 'od 4 procesów, ERP / WMS, wycena indywidualna'],
+  ['Opieka Basic', `${P.careBasic}/mc`, 'monitoring, do 2 h zmian, SLA 3 dni robocze'],
+  ['Opieka Standard', `${P.careStandard}/mc`, 'do 5 h zmian, SLA 1 dzień roboczy'],
+];
+
+const faq = [
+  {
+    q: `Czy ${P.start} to cena każdej integracji BaseLinker ↔ Allegro?`,
+    a: `To cena pakietu Start za jeden proces i do trzech integracji. Nie każda integracja wymaga tego zakresu. Po mini-diagnozie może się okazać, że wystarczy dobra konfiguracja natywnego połączenia BaseLinkera z Allegro.`,
+  },
+  {
+    q: 'Czy muszę zamówić audyt przed integracją?',
+    a: 'Nie. Audyt nie jest obowiązkowy. Mini-diagnoza jest bezpłatna, a integrację można zlecić po ustaleniu zakresu. Audyt daje mapę procesu i wycenę; odliczamy go od wdrożenia.',
+  },
+  {
+    q: 'Czy cena zawiera licencje BaseLinkera i Allegro?',
+    a: 'Nie. Ceny netto dotyczą naszej pracy: analizy, integracji, testów, dokumentacji i przekazania kodu. Licencje, prowizje i koszty narzędzi po stronie klienta nie są częścią tej kwoty.',
+  },
+  {
+    q: 'Czy zwrot z integracji jest gwarantowany?',
+    a: 'Nie. Przykład to model na jawnych założeniach [EST], nie wynik klienta i nie obietnica. Nie gwarantujemy oszczędności, bo zależą od wolumenu, jakości danych i tego, ile pracy naprawdę da się zdjąć.',
+  },
+];
+---
+<Base
+  title="Ile kosztuje integracja BaseLinker ↔ Allegro"
+  description="Od czego zależy koszt integracji BaseLinker ↔ Allegro, co jest w cenie, kiedy wystarczy gotowa integracja i jak policzyć zwrot. Ceny netto."
+  path="/poradnik/ile-kosztuje-integracja-baselinker-allegro"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Poradnik</span>
+        <span>Koszt i decyzja</span>
+        <span>Przykład modelowy [EST]</span>
+      </div>
+      <h1>Ile kosztuje integracja BaseLinker ↔ Allegro</h1>
+      <p class="lead">
+        Krótka odpowiedź: od jednego przepływu do kilku powiązanych. Dłuższa: zależy
+        od tego, ile reguł i wyjątków trzeba opisać. Poniżej rozkład kosztu, granica
+        opłacalności i uczciwa odpowiedź, kiedy nie zlecać niczego, bo gotowa
+        integracja BaseLinkera wystarcza.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="/ile-kosztuje#kalkulator">Policz zwrot</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Od czego zależy koszt</h2>
+        <p class="section-intro">
+          Pięć zmiennych, które najbardziej przesuwają wycenę. Technologia jest
+          zwykle prostsza niż reguły, które trzeba z nią pogodzić.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {costDrivers.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co jest w cenie, a czego nie ma</h2>
+        <p class="section-intro">
+          Zakres jest stały przed startem. Dzięki temu wiadomo, co dostajesz,
+          a czego nie należy oczekiwać jako „drobnej poprawki”.
+        </p>
+      </div>
+
+      <div class="split">
+        <div>
+          <h3>W cenie</h3>
+          <ul class="checklist">
+            <li>Analiza procesu i spis wyjątków.</li>
+            <li>Mapowanie statusów, produktów i metod dostawy.</li>
+            <li>Idempotencja, kolejka błędów i logi.</li>
+            <li>Testy na Twoich danych i kryteria odbioru.</li>
+            <li>Dokumentacja, szkolenie i przekazanie kodu.</li>
+            <li>30 albo 60 dni gwarancji w zakresie.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Poza ceną</h3>
+          <ul class="plainlist">
+            <li>Licencje BaseLinkera, Allegro i innych narzędzi.</li>
+            <li>Koszt hostingu lub platformy automatyzacji.</li>
+            <li>Zmiany w API po stronie zewnętrznych systemów.</li>
+            <li>Nowe funkcje po okresie gwarancji.</li>
+            <li>Porady podatkowe i interpretacja przepisów.</li>
+            <li>Prace po stronie klienta: dostępy, dane, decyzje.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy wystarczy gotowa integracja BaseLinkera</h2>
+          <p class="lead">
+            BaseLinker ma API i natywne integracje z Allegro. Jeśli Twój proces mieści
+            się w standardzie, osobne wdrożenie może być wydatkiem bez zwrotu.
+          </p>
+          <ul class="checklist">
+            <li>Sprzedajesz na jednym koncie Allegro i korzystasz z natywnego połączenia.</li>
+            <li>Masz standardowe statusy, dostawy i płatności.</li>
+            <li>Stany pochodzą z jednego magazynu, a korekty są rzadkie.</li>
+            <li>Jedna osoba ogarnia wyjątki w ciągu dnia.</li>
+            <li>Nie potrzebujesz nietypowych raportów ani integracji z KSeF.</li>
+          </ul>
+          <div class="note" style="margin-top:20px">
+            <strong>Uczciwie:</strong> w takiej sytuacji powiemy „skonfiguruj BaseLinker”.
+          </div>
+        </div>
+
+        <div>
+          <h2>Kiedy opłaca się zlecić</h2>
+          <ul class="checklist">
+            <li>Masz wiele kont Allegro albo kilka kanałów sprzedaży.</li>
+            <li>Stany pochodzą z hurtowni, ERP lub kilku magazynów.</li>
+            <li>Statusy i zwroty wymagają reguł, których nie ma w panelu.</li>
+            <li>Powtarzające się błędy kosztują więcej niż uporządkowanie procesu [EST].</li>
+            <li>Potrzebujesz kolejki wyjątków, logów i monitoringu.</li>
+            <li>Dokumenty i faktury muszą być powiązane z zamówieniem.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak policzyć zwrot</h2>
+        <p class="section-intro">
+          Policz koszt ręcznej pracy, a nie „procent automatyzacji”. Poniższy przykład
+          jest modelem [EST], nie wynikiem klienta.
+        </p>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <h3>Przykład: 30 zamówień dziennie, 3 minuty ręcznej obsługi</h3>
+          <span class="scenario-label">Przykład modelowy [EST], nie wynik klienta</span>
+        </div>
+        <div class="scenario-body">
+          <div class="scenario-col">
+            <h4>Założenia</h4>
+            <table>
+              <tbody>
+                <tr><th scope="row">Zamówienia dziennie</th><td>{example.orders} [EST]</td></tr>
+                <tr><th scope="row">Ręczna obsługa jednego zamówienia</th><td>{example.minutes} min [EST]</td></tr>
+                <tr><th scope="row">Dni robocze w miesiącu</th><td>{example.days}</td></tr>
+                <tr><th scope="row">Stawka godzinowa</th><td>{example.rate} zł netto [EST]</td></tr>
+                <tr><th scope="row">Praca zdejmowana przez automatyzację</th><td>60% [EST]</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="scenario-col">
+            <h4>Obliczenia</h4>
+            <table>
+              <tbody>
+                <tr><th scope="row">Praca ręczna dziennie</th><td>{((example.orders * example.minutes) / 60).toFixed(1).replace('.', ',')} h</td></tr>
+                <tr><th scope="row">Praca ręczna miesięcznie</th><td>{hours.toFixed(1).replace('.', ',')} h</td></tr>
+                <tr><th scope="row">Koszt ręcznej pracy</th><td>{monthlyCost.toLocaleString('pl-PL')} zł/mc</td></tr>
+                <tr><th scope="row">Oszczędność przy 60%</th><td>{monthlySaving.toLocaleString('pl-PL')} zł/mc</td></tr>
+                <tr><th scope="row">Prosty zwrot z pakietu Start</th><td>{payback.toFixed(1).replace('.', ',')} miesiąca</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="scenario-foot">
+          <p>
+            Model nie uwzględnia kosztu utrzymania, licencji ani błędów. W audycie
+            podmieniamy te założenia na Twoje dane. Kalkulator i pełny cennik:
+            <a class="text-link" href="/ile-kosztuje#kalkulator"> /ile-kosztuje#kalkulator</a>.
+          </p>
+          <a class="text-link small" href="/audyt">Policzmy to na Twoich danych</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Nasze ceny jako przykład</h2>
+        <p class="section-intro">
+          Ceny netto, stałe dla zakresu opisanego przed startem. Poniżej pakiety,
+          które najczęściej dotyczą integracji BaseLinker ↔ Allegro.
+        </p>
+      </div>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Pakiety i ceny netto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Usługa</th>
+              <th scope="col">Cena netto</th>
+              <th scope="col">Zakres</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="small muted" style="margin-top:14px">
+        Pełny opis pakietów, opieki i zasad rozliczenia:
+        <a class="text-link" href="/ile-kosztuje">/ile-kosztuje</a>.
+        Audyt odliczamy od pierwszej faktury za wdrożenie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/baselinker-allegro">Integracja BaseLinker ↔ Allegro: problemy i przepływy</a></li>
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe: sklep, Allegro, marketplace</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji i mini-diagnoza</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Pytania o koszt</h2>
+          <p class="muted">
+            Poniżej najczęstsze wątpliwości. Jeśli czegoś brakuje, napisz; odpowiemy
+            e-mailem, bez kalendarza i bez prezentacji.
+          </p>
+          <a class="btn btn--primary" href="/kontakt?temat=mini-diagnoza">Zapytaj o mini-diagnozę</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>FAQ: koszt integracji</h2>
+        <p class="section-intro">
+          Cena, zakres, licencje i zwrot. Bez gwarancji, których nie można obronić.
+        </p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Chcesz wiedzieć, czy wystarczy gotowa integracja?"
+    text="Opisz, ile masz kont Allegro, skąd pochodzą stany i co robisz ręcznie, gdy coś się nie zgadza. Mini-diagnoza powie wprost, czy potrzebne jest wdrożenie, czy tylko konfiguracja."
+  />
+</Base>

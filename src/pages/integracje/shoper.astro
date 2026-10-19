@@ -1,0 +1,225 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Stany między sklepem, hurtownią i BaseLinkerem',
+    d: 'Shoper pokazuje jedno, hurtownia drugie, BaseLinker trzecie. Bez jednego źródła prawdy i bufora sklep sprzedaje towar, który właśnie się skończył.',
+  },
+  {
+    t: 'Webhooki bez mechanizmu zapasowego',
+    d: 'Webhook może nie dojść albo przyjść po czasie. Jeśli integracja opiera się tylko na nim, zamówienie zostaje w sklepie i nie trafia dalej.',
+  },
+  {
+    t: 'Produkty i warianty bez spójnego SKU',
+    d: 'Ten sam produkt ma inny identyfikator w sklepie, hurtowni i BaseLinkerze. Dopasowanie po nazwie działa do pierwszej zmiany nazwy.',
+  },
+  {
+    t: 'Statusy, płatności i dostawy',
+    d: 'Status Shopera nie odpowiada statusowi w BaseLinkerze, a płatność i dostawa mają inne słowniki. Klient widzi „w realizacji”, gdy paczka już wyszła.',
+  },
+  {
+    t: 'Faktury, zwroty i limity API',
+    d: 'Dane do dokumentu są rozproszone, zwrot nie domyka zamówienia, a zbyt częste odpytywanie API powoduje błędy przejściowe.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy Shoper ma REST API i webhooki?',
+    a: 'Tak, Shoper udostępnia REST API i webhooki. Zakres zależy od planu i umowy, dlatego przed wdrożeniem sprawdzamy dokumentację oraz dostęp do zasobów.',
+  },
+  {
+    q: 'Czy webhooki wystarczą do synchronizacji?',
+    a: 'Nie jako jedyny mechanizm. Webhook przyspiesza reakcję, ale może nie dojść. Dlatego dodajemy cykliczne sprawdzenie stanu i idempotencję, żeby brak jednego zdarzenia nie oznaczał trwałej dziury w danych.',
+  },
+  {
+    q: 'Jak uniknąć rozjazdu stanów?',
+    a: 'Najpierw ustalamy źródło prawdy. Potem liczymy stan dostępny z buforem, wysyłamy zmiany partiami i zapisujemy wynik. Produkty bez mapowania trafiają do kolejki.',
+  },
+  {
+    q: 'Czy automatyzacja wystawi fakturę do zamówienia?',
+    a: 'Może przygotować dane i przekazać je do systemu fakturowania, a następnie zapisać numer. Wysyłka do KSeF, korekty i faktury konsumenckie wymagają reguł oraz weryfikacji. Nie zastępujemy księgowości.',
+  },
+];
+---
+<Base
+  title="Shoper: integracja API, zamówień i stanów"
+  description="Integracja Shoper: REST API, webhooki, zamówienia, produkty i stany. Połączenie z BaseLinkerem, hurtownią i fakturowaniem. Ceny netto."
+  path="/integracje/shoper"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Integracje</span>
+        <span>Shoper REST API i webhooki</span>
+        <span>Zamówienia, stany, dokumenty</span>
+      </div>
+      <h1>Integracja Shoper: API, webhooki i obieg zamówień</h1>
+      <p class="lead">
+        Shoper udostępnia REST API i webhooki. Trudniejsze są reguły wokół zamówień,
+        wariantów, stanów i dokumentów: co jest źródłem prawdy, jak dopasować produkty
+        i co zrobić, gdy webhook nie dojdzie.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Integracja Shopera najczęściej zatrzymuje się na danych, które w trzech
+          systemach mają różne znaczenia.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Każdy można wdrożyć osobno, z własnym kryterium odbioru.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Zamówienie ze Shopera trafia dalej</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> webhook o nowym zamówieniu albo status opłacone.</p>
+          <ol class="number-list">
+            <li>Odbierz zdarzenie i zapisz identyfikator zamówienia.</li>
+            <li>Sprawdź, czy rekord już istnieje w systemie docelowym.</li>
+            <li>Pobierz pełne dane przez API, jeśli webhook jest skrócony.</li>
+            <li>Dopasuj produkty, dostawę i płatność, a następnie utwórz rekord.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zamówienie ma jedną kopię i pełny kontekst dla zespołu.</p>
+          <p><strong>Wyjątki:</strong> brak produktu, niepotwierdzona płatność, adres zagraniczny, wariant bez SKU.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Stany i produkty z hurtowni do Shopera</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> import stanów, zmiana w magazynie albo cykliczne sprawdzenie.</p>
+          <ol class="number-list">
+            <li>Dopasuj produkty po SKU lub EAN, nie po nazwie.</li>
+            <li>Oblicz stan dostępny: źródło minus rezerwacje minus bufor.</li>
+            <li>Wyślij zmiany partiami przez API i zapisz wynik.</li>
+            <li>Produkty bez mapowania odłóż do kolejki.</li>
+          </ol>
+          <p><strong>Wynik:</strong> sklep pokazuje stan bliższy magazynowi, a nowy towar nie czeka na ręczne wprowadzenie.</p>
+          <p><strong>Wyjątki:</strong> brak SKU, stan ujemny, produkt konfigurowalny, oferta wycofana, konflikt z korektą.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Faktura do zamówienia i dane do KSeF</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> status opłacone albo wysłane, zależnie od reguły.</p>
+          <ol class="number-list">
+            <li>Pobierz dane nabywcy i pozycje zamówienia.</li>
+            <li>Sprawdź NIP i kompletność danych. Braki zatrzymaj przed wystawieniem.</li>
+            <li>Przekaż dane do systemu fakturowania i zapisz numer dokumentu.</li>
+            <li>Jeśli dokument ma trafić do KSeF, wyślij go i zapisz numer oraz status.</li>
+          </ol>
+          <p><strong>Wynik:</strong> dokument jest powiązany z zamówieniem, a zespół nie szuka numeru w skrzynce.</p>
+          <p><strong>Wyjątki:</strong> błędny NIP, faktura konsumencka, korekta, odrzucenie przez KSeF, brak uprawnień.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Zwrot wraca do jednego obiegu</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zgłoszenie zwrotu z formularza, maila albo panelu.</p>
+          <ol class="number-list">
+            <li>Utwórz rekord zwrotu powiązany z zamówieniem i klientem.</li>
+            <li>Zapisz powód, stan towaru i oczekiwany sposób rozliczenia.</li>
+            <li>Po przyjęciu towaru przywróć stan, jeśli reguła na to pozwala.</li>
+            <li>Przygotuj dane do korekty i powiadom klienta o statusie.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zwrot nie ginie w skrzynce, a stany i dokumenty mają wspólne źródło.</p>
+          <p><strong>Wyjątki:</strong> częściowy zwrot, uszkodzony towar, spór, korekta wystawiona ręcznie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            Shoper ma własne integracje, a BaseLinker łączy się z nim natywnie. Czasem
+            najlepszą decyzją jest dobra konfiguracja tego, co już jest.
+          </p>
+          <ul class="plainlist">
+            <li>Natywne połączenie Shoper–BaseLinker obsługuje zamówienia, stany i statusy.</li>
+            <li>Hurtownia nie ma API ani stabilnego eksportu, a wolumen nie uzasadnia pracy.</li>
+            <li>Sklep jest w trakcie migracji.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/baselinker-allegro">BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/integracje/ksef">KSeF dla sklepów</a></li>
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>API to nie umowa.</strong> Przed startem sprawdzamy, do jakich
+            zasobów ma dostęp Twoje konto i jakie operacje są dozwolone.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje integracja Shoper"
+    intro="Start obejmuje zwykle jeden przepływ, na przykład zamówienia albo stany. Growth ma sens, gdy łączymy kilka przepływów. Ceny netto."
+    fit="Start dla zamówień Shoper → BaseLinker; Growth dla zamówień, stanów, produktów i dokumentów; Scale dla wielu magazynów, ERP lub WMS."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o integrację Shoper</h2>
+        <p class="section-intro">API, webhooki, stany i dokumenty. Bez założenia, że każdy plan ma ten sam zakres dostępu.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Chcesz połączyć Shoper z jednym systemem?"
+    text="Napisz, które dane mają krążyć między Shoperem, BaseLinkerem, hurtownią i fakturowaniem. Sprawdzimy, czy wystarczy natywna integracja."
+  />
+</Base>

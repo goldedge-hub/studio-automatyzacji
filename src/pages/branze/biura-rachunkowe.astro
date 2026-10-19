@@ -1,0 +1,226 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Dokumenty w mailach, dyskach i portalach',
+    d: 'Klient wysyła fakturę mailem, paragon w chmurze, a umowę w kolejnym linku. Bez rejestru biuro szuka, czy dokument już dotarł.',
+  },
+  {
+    t: 'Braki i nieczytelne skany',
+    d: 'Brak NIP, ucięta kwota, nieostre zdjęcie. Jeśli nikt nie oznaczy braku, dokument wraca po tygodniu albo trafia do księgowania z błędem.',
+  },
+  {
+    t: 'Faktury kosztowe i KSeF',
+    d: 'Część dokumentów przychodzi z KSeF, część mailem, część w panelu klienta. Bez jednego rejestru trudno ustalić, co już jest, a czego brakuje.',
+  },
+  {
+    t: 'Duplikaty i różne wersje',
+    d: 'Ten sam dokument trafia dwa razy: raz od klienta, raz z KSeF. Bez klucza i statusu pojawiają się podwójne wpisy i ręczne porównywanie.',
+  },
+  {
+    t: 'Przypomnienia i raporty z pamięci',
+    d: 'Brak dokumentu zauważa się przy zamykaniu miesiąca. Raport dla klienta powstaje ręcznie, choć zawiera te same informacje co rejestr.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy automatyzacja zastępuje księgowego?',
+    a: 'Nie. Automatyzacja porządkuje rejestr, pobieranie i przypomnienia. Decyzje podatkowe i akceptacja dokumentów pozostają po stronie biura i klienta.',
+  },
+  {
+    q: 'Jak wygląda kwestia RODO?',
+    a: 'Jeśli proces obejmuje dane osobowe, potrzebna jest właściwa podstawa i umowa powierzenia. Dostęp ograniczamy do danych potrzebnych do zadania, a po projekcie wygaszamy go. Szczegóły ustalamy przed startem.',
+  },
+  {
+    q: 'Czy KSeF można połączyć z rejestrem biura?',
+    a: 'Można uporządkować pobieranie dokumentów w zakresie uprawnień, zapis w rejestrze i statusy. Nie podajemy terminów ani progów obowiązku. Aktualne zasady sprawdź na ksef.podatki.gov.pl i potwierdź z księgowością.',
+  },
+  {
+    q: 'Czy AI decyduje, co zaksięgować?',
+    a: 'Nie. AI może odczytać dokument, zaproponować klasyfikację i wskazać braki. Człowiek zatwierdza wynik. Dokumenty o skutku podatkowym nie są księgowane autonomicznie.',
+  },
+];
+---
+<Base
+  title="Biura rachunkowe: dokumenty, KSeF i przypomnienia"
+  description="Automatyzacja biura rachunkowego obsługującego e-commerce: dokumenty od klientów, faktury kosztowe, KSeF i przypomnienia. Ceny netto."
+  path="/branze/biura-rachunkowe"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Branże</span>
+        <span>Biura rachunkowe i e-commerce</span>
+        <span>Dokumenty, KSeF, przypomnienia</span>
+      </div>
+      <h1>Automatyzacja biura rachunkowego obsługującego e-commerce</h1>
+      <p class="lead">
+        Biuro rachunkowe nie potrzebuje automatu, który „samo księguje”. Potrzebuje
+        rejestru, który nie gubi dokumentów, pokazuje braki i nie zmusza do szukania
+        w skrzynkach. Przepływy wokół dokumentów, KSeF i przypomnień.
+        Decyzję podejmuje człowiek.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Pięć sytuacji, które wracają przy obsłudze klientów e-commerce. Większość
+          dotyczy porządku, nie księgowania.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Zakres danych i uprawnień ustalamy przed startem.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Dokument od klienta trafia do rejestru</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> mail z załącznikiem, upload w portalu albo plik w folderze.</p>
+          <ol class="number-list">
+            <li>Zapisz dokument z nadawcą, datą i identyfikatorem pliku.</li>
+            <li>Odczytaj podstawowe pola. Przy skanie użyj OCR i oznacz wynik jako wymagający weryfikacji.</li>
+            <li>Rozpoznaj typ dokumentu i przypisz go do klienta oraz okresu.</li>
+            <li>Sprawdź duplikat po numerze i sumie. Nadaj status i przekaż dalej.</li>
+          </ol>
+          <p><strong>Wynik:</strong> dokument jest w jednym rejestrze i ma status, zamiast być kolejnym plikiem w skrzynce.</p>
+          <p><strong>Wyjątki:</strong> nieczytelny skan, brak NIP, nieznany klient, duplikat, dokument spoza zakresu.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Faktury kosztowe z KSeF do rejestru</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nowy dokument w KSeF albo cykliczne sprawdzenie.</p>
+          <ol class="number-list">
+            <li>Pobierz dokumenty dostępne w zakresie uprawnień klienta.</li>
+            <li>Zapisz identyfikator KSeF i datę pobrania.</li>
+            <li>Dopasuj dokument do klienta, dostawcy i okresu.</li>
+            <li>Oznacz status i przekaż do dalszego obiegu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> dokumenty kosztowe są w rejestrze obok tych przysłanych mailem.</p>
+          <p><strong>Wyjątki:</strong> brak dopasowania, różnica kwot, duplikat, dokument poza zakresem uprawnień.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Przypomnienia o brakujących dokumentach</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> harmonogram albo wykryty brak w rejestrze.</p>
+          <ol class="number-list">
+            <li>Sprawdź kompletność dokumentów dla klienta i okresu.</li>
+            <li>Zbuduj listę braków z konkretnym typem dokumentu.</li>
+            <li>Wyślij przypomnienie według szablonu i zapisz datę.</li>
+            <li>Zapisz odpowiedź klienta i zamknij brak, gdy dokument dotrze.</li>
+          </ol>
+          <p><strong>Wynik:</strong> przypomnienia wychodzą wcześniej i nie zależą od pamięci jednej osoby.</p>
+          <p><strong>Wyjątki:</strong> klient zgłosił problem, dokument jest w drodze, okres zamknięty, nowy klient.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Wyjaśnienie i raport dla klienta</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nieczytelne pole, niezgodna kwota albo koniec okresu.</p>
+          <ol class="number-list">
+            <li>Utwórz pozycję w kolejce z opisem problemu i linkiem do dokumentu.</li>
+            <li>Przygotuj szkic zapytania i pozwól osobie odpowiedzialnej go zatwierdzić.</li>
+            <li>Zapisz odpowiedź i zamknij pozycję albo przekaż ją dalej.</li>
+            <li>Na koniec okresu wygeneruj raport z otwartych i zamkniętych pozycji.</li>
+          </ol>
+          <p><strong>Wynik:</strong> wyjaśnienia nie giną w wątkach, a klient dostaje jedną wiadomość.</p>
+          <p><strong>Wyjątki:</strong> decyzja podatkowa, korekta, dokument niezgodny z umową, spór z kontrahentem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            W małym biurze prosty rejestr i dobre nawyki bywają lepsze niż wdrożenie.
+            Automatyzacja ma sens, gdy dokumentów przybywa i zaczynają ginąć.
+          </p>
+          <ul class="plainlist">
+            <li>Twój system księgowy już obsługuje KSeF i kompletność dokumentów.</li>
+            <li>Brakuje umów powierzenia i zgód na przetwarzanie danych.</li>
+            <li>Nikt nie ma czasu przeglądać kolejki wyjątków.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/ksef">KSeF dla sklepów internetowych</a></li>
+            <li><a class="text-link" href="/integracje/shoper">Shoper: dokumenty i zamówienia</a></li>
+            <li><a class="text-link" href="/branze/hurtownie-b2b">Hurtownie B2B: zamówienia i dokumenty</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>Granica odpowiedzialności.</strong> Automatyzujemy rejestr i obieg
+            dokumentów. Nie interpretujemy przepisów i nie podejmujemy decyzji podatkowych.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje automatyzacja w biurze rachunkowym"
+    intro="Start zwykle obejmuje jeden przepływ, na przykład rejestr dokumentów. Growth ma sens, gdy dochodzą KSeF, przypomnienia i raporty. Ceny netto."
+    fit="Start dla jednego kanału dokumentów; Growth dla dokumentów, KSeF i przypomnień; Scale dla wielu klientów, spółek lub integracji z systemem księgowym."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o automatyzację w biurze</h2>
+        <p class="section-intro">Dokumenty, KSeF, RODO i granice decyzji. W sprawach podatkowych odsyłamy do oficjalnych źródeł.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Chcesz uporządkować dokumenty od klientów?"
+    text="Opisz, skąd przychodzą dokumenty, jak sprawdzasz kompletność i co robisz, gdy czegoś brakuje. Mini-diagnoza wskaże, czy problem jest w rejestrze, uprawnieniach czy kolejce."
+  />
+</Base>

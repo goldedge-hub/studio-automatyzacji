@@ -1,0 +1,257 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+import { P } from '../../data/pricing';
+
+const cards = [
+  {
+    href: '/integracje/baselinker-allegro',
+    kicker: 'Zamówienia i stany',
+    title: 'BaseLinker ↔ Allegro',
+    desc: 'Zamówienia, statusy, stany, wysyłki, zwroty i faktury. Najczęstsze pułapki: duplikaty, mapowanie statusów, limity API i rozjazd stanów.',
+    cta: 'BaseLinker i Allegro',
+  },
+  {
+    href: '/integracje/shoper',
+    kicker: 'Sklep i zaplecze',
+    title: 'Shoper',
+    desc: 'REST API i webhooki, zamówienia, produkty, stany oraz połączenie z BaseLinkerem, hurtownią i fakturowaniem.',
+    cta: 'Shoper i API',
+  },
+  {
+    href: '/integracje/woocommerce',
+    kicker: 'Wtyczka czy integracja',
+    title: 'WooCommerce',
+    desc: 'REST API, webhooki, synchronizacja stanów, faktury i maile o statusie. Kiedy wystarczy wtyczka, a kiedy potrzebna jest warstwa poza sklepem.',
+    cta: 'WooCommerce',
+  },
+  {
+    href: '/integracje/ksef',
+    kicker: 'Dokumenty',
+    title: 'KSeF',
+    desc: 'Faktury z zamówień, wysyłka do KSeF, pobieranie faktur kosztowych, numer KSeF, obsługa błędów i kolejki oraz faktury konsumenckie.',
+    cta: 'KSeF dla sklepu',
+  },
+];
+
+const principles = [
+  {
+    t: 'Jeden system jest źródłem prawdy',
+    d: 'Stan, cena i status zamówienia muszą mieć jednego właściciela. Integracja tylko przenosi dane i pilnuje, żeby nie nadpisywały się nawzajem.',
+  },
+  {
+    t: 'Powtórzone zdarzenie nie tworzy drugiego rekordu',
+    d: 'Webhook może przyjść dwa razy albo po czasie. Każdy przepływ potrzebuje klucza idempotencji i reguły „już to widziałem”.',
+  },
+  {
+    t: 'Wyjątek ma kolejkę, nie skrzynkę',
+    d: 'Błąd mapowania, brak produktu i spór o zwrot trafiają do jednego miejsca z kontekstem. Człowiek decyduje, system nie udaje, że wie.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy integracja to to samo co wtyczka?',
+    a: 'Nie. Wtyczka zwykle łączy dwa konkretne systemy i działa w ich wnętrzu. Integracja to warstwa reguł: mapowanie danych, ponowienia, idempotencja, obsługa wyjątków i logi. Przy dwóch systemach wtyczka może wystarczyć; przy trzech lub czterech zwykle potrzebne jest coś pomiędzy nimi.',
+  },
+  {
+    q: 'Czy każda integracja wymaga API?',
+    a: 'Nie, ale API jest najstabilniejszym punktem zaczepienia. Jeśli system go nie ma, sprawdzamy eksport plików, bazę danych albo inne udokumentowane wejście. Nie obiecujemy integracji, której nie da się utrzymać.',
+  },
+  {
+    q: 'Od czego zacząć, jeśli mam kilka problemów naraz?',
+    a: 'Od jednego procesu, który najczęściej się psuje i ma największy koszt błędu. Zwykle jest to obieg zamówienia albo stan magazynowy. Dopiero potem dokładamy zwroty, faktury i raporty.',
+  },
+  {
+    q: 'Ile trwa taka integracja?',
+    a: 'Dla jednego procesu i do trzech integracji orientacyjnie 5–10 dni roboczych po przekazaniu dostępów i danych testowych. Przy większym środowisku terminy są dłuższe. Nie podajemy daty, zanim nie zobaczymy systemów i wyjątków.',
+  },
+];
+---
+<Base
+  title="Integracje e-commerce: BaseLinker, Shoper, WooCommerce"
+  description="Praktyczne integracje e-commerce: BaseLinker i Allegro, Shoper, WooCommerce oraz KSeF. Typowe problemy, przepływy, wyjątki i ceny netto."
+  path="/integracje"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Integracje</span>
+        <span>API, webhooki, kolejki wyjątków</span>
+        <span>Ceny netto</span>
+      </div>
+      <h1>Integracje e-commerce, które mają źródło prawdy</h1>
+      <p class="lead">
+        Integracja nie polega na tym, żeby „połączyć API”. Polega na ustaleniu, który
+        system jest nadrzędny, co się dzieje przy powtórzonym zdarzeniu i kiedy człowiek
+        musi przejąć rekord. Poniżej cztery obszary, które w e-commerce najczęściej
+        wymagają uporządkowania: BaseLinker z Allegro, Shoper, WooCommerce i KSeF.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#zasady">Trzy zasady integracji</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Cztery obszary integracji</h2>
+        <p class="section-intro">
+          Każda podstrona opisuje typowe problemy, konkretne przepływy krok po kroku,
+          sytuacje, w których nie warto automatyzować, oraz zakres cenowy.
+        </p>
+      </div>
+
+      <div class="plans seo-plans">
+        {cards.map((c) => (
+          <div class="plan">
+            <p class="mono" style="margin:0 0 10px">{c.kicker}</p>
+            <div class="plan-head">
+              <h3>{c.title}</h3>
+            </div>
+            <p class="desc">{c.desc}</p>
+            <a class="btn btn--ghost" href={c.href}>{c.cta}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="zasady">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Trzy pytania przed każdą integracją</h2>
+        <p class="section-intro">
+          Technologia jest drugim pytaniem. Najpierw trzeba opisać reguły, których
+          system ma pilnować, i wyjątki, których nie powinien udawać.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {principles.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="note" style="margin-top:28px">
+        <strong>Nie każdy sklep potrzebuje integracji na zamówienie.</strong>
+        Jeśli BaseLinker albo Shoper mają natywne połączenie, które obsługuje Twoje
+        przypadki, czasem wystarczy je dobrze skonfigurować. Mówimy to także wtedy,
+        gdy oznacza to brak zlecenia.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Gdzie szukać dalszych decyzji</h2>
+          <p class="lead">
+            Integracje nie działają w oderwaniu od kanałów sprzedaży i dokumentów.
+            Dlatego obok stron technicznych mamy ujęcie branżowe i poradnik kosztowy.
+          </p>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe: sklep, Allegro i marketplace</a></li>
+            <li><a class="text-link" href="/branze/hurtownie-b2b">Hurtownie B2B: zamówienia mailem i PDF</a></li>
+            <li><a class="text-link" href="/branze/biura-rachunkowe">Biura rachunkowe obsługujące e-commerce</a></li>
+            <li><a class="text-link" href="/poradnik/ile-kosztuje-integracja-baselinker-allegro">Ile kosztuje integracja BaseLinker ↔ Allegro</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Jak wyceniamy</h2>
+          <p class="muted">
+            Cena zależy od liczby przepływów, jakości danych, liczby integracji i tego,
+            ile wyjątków zostaje po stronie człowieka. Nie rozliczamy godzin ani nie
+            doliczamy pracy bez pisemnej zgody.
+          </p>
+          <ul class="checklist">
+            <li>Audyt {P.audit} netto, odliczany od wdrożenia.</li>
+            <li>Start {P.start}, Growth {P.growth}, Scale {P.scaleFrom} netto.</li>
+            <li>Opieka opcjonalna: Basic {P.careBasic}/mc, Standard {P.careStandard}/mc.</li>
+            <li>Kod, dokumentacja i dostępy zostają u Ciebie.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje uporządkowanie integracji"
+    intro="Najczęściej jeden przepływ zamyka się w pakiecie Start, a kilka powiązanych przepływów w pakiecie Growth. Ceny są stałe dla zakresu opisanego przed startem."
+    fit="Przykład zakresu: Start obejmuje jedno połączenie, na przykład zamówienia Allegro → BaseLinker. Growth ma sens, gdy dochodzą stany, statusy, zwroty i faktury. Scale dotyczy wielu kanałów, ERP albo WMS."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o integracje</h2>
+        <p class="section-intro">
+          Zakres, API, kolejność wdrożenia i terminy. Bez obietnic, że „wszystko
+          da się zautomatyzować”.
+        </p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Opisz jeden przepływ, nie cały ekosystem."
+    text="Wystarczy, żebyśmy wiedzieli, co się dzieje ręcznie, między jakimi systemami i co najczęściej się psuje. Odpowiemy, czy wystarczy natywna integracja, czy potrzebna jest osobna praca."
+  />
+</Base>
+
+<style>
+  .seo-plans {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .seo-plans .plan {
+    padding-inline: 22px;
+  }
+
+  .seo-plans .plan .desc {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 1080px) {
+    .seo-plans {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .seo-plans .plan:nth-child(2) {
+      border-right: 0;
+    }
+
+    .seo-plans .plan:nth-child(3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .seo-plans {
+      grid-template-columns: 1fr;
+    }
+
+    .seo-plans .plan {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .seo-plans .plan:nth-child(3) {
+      border-top: 0;
+    }
+  }
+</style>

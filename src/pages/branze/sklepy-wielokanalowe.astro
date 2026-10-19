@@ -1,0 +1,223 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Stany w każdym kanale liczone inaczej',
+    d: 'Sklep, Allegro i marketplace mają własne rezerwacje i opóźnienia. Bez bufora i jednego źródła prawdy jeden kanał sprzedaje towar, który zniknął w drugim.',
+  },
+  {
+    t: 'Zamówienia w kilku panelach',
+    d: 'Każde zamówienie trzeba otworzyć w innym miejscu i sprawdzić płatność, adres oraz dostawę. Przy większym wolumenie dane są przepisywane między ekranami.',
+  },
+  {
+    t: 'Oferty i produkty bez wspólnego SKU',
+    d: 'Ten sam produkt ma inny identyfikator w sklepie, BaseLinkerze i u dostawcy. Dopasowanie po nazwie działa do pierwszej zmiany nazwy.',
+  },
+  {
+    t: 'Statusy i numery przesyłek nie wracają',
+    d: 'Paczka powstaje w jednym systemie, a klient na marketplace widzi „w realizacji”. Brak trackingu kończy się pytaniem do obsługi.',
+  },
+  {
+    t: 'Zwroty i raporty rozrzucone po kanałach',
+    d: 'Zgłoszenie z Allegro, maila i formularza trafia do trzech miejsc. Raport trzeba scalać z plików, zanim dane staną się nieaktualne.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy sklep wielokanałowy musi mieć BaseLinker?',
+    a: 'Nie. BaseLinker jest jednym z rozwiązań, ale nie warunkiem. Liczy się jedno źródło prawdy dla zamówień i stanów oraz reguły publikacji do kanałów. Czasem wystarczy natywna integracja sklepu z marketplace.',
+  },
+  {
+    q: 'Jak nie sprzedawać towaru, którego nie ma?',
+    a: 'Trzeba ustalić stan dostępny: magazyn minus rezerwacje minus bufor. Aktualizacje wysyła się partiami, a rozjazdy porównuje z odpowiedziami. Można mocno ograniczyć overselling.',
+  },
+  {
+    q: 'Co z podwójnymi zamówieniami?',
+    a: 'Każdy kanał dostaje klucz idempotencji oparty na identyfikatorze zamówienia. System sprawdza, czy rekord już istnieje, zanim utworzy nowy. Powtórzone zdarzenie kończy się zapisem „bez zmian”.',
+  },
+  {
+    q: 'Czy automatyzacja obejmuje zwroty i faktury?',
+    a: 'Może objąć rejestr zwrotów, przywracanie stanów i przygotowanie danych do dokumentów. Korekty i wysyłka do KSeF wymagają reguł oraz weryfikacji. Człowiek zatwierdza to, co ma skutek podatkowy.',
+  },
+];
+---
+<Base
+  title="Sklepy wielokanałowe: sklep, Allegro, marketplace"
+  description="Automatyzacja sklepu wielokanałowego: zamówienia, stany, statusy, wysyłki, zwroty i raporty. Jeden obieg zamiast kilku paneli. Ceny netto."
+  path="/branze/sklepy-wielokanalowe"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Branże</span>
+        <span>Sklep, Allegro, marketplace</span>
+        <span>Zamówienia i stany</span>
+      </div>
+      <h1>Automatyzacja sklepu wielokanałowego: sklep, Allegro, marketplace</h1>
+      <p class="lead">
+        W sklepie wielokanałowym problemem nie jest brak kanałów, tylko brak wspólnego
+        obiegu. To samo zamówienie może przyjść ze sklepu, Allegro i marketplace’u,
+        a stan musi być aktualny wszędzie. Poniżej, co można połączyć, gdzie są
+        wyjątki i kiedy zostać przy natywnych integracjach.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Pięć sytuacji, które pojawiają się, gdy kanałów przybywa szybciej niż
+          wspólnych reguł.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Każdy kanał ma swoje ograniczenia, więc reguły opisujemy osobno.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Zamówienie z marketplace trafia do jednego obiegu</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nowe zamówienie w sklepie, Allegro albo marketplace.</p>
+          <ol class="number-list">
+            <li>Odbierz zdarzenie i zapisz identyfikator oraz kanał.</li>
+            <li>Sprawdź, czy zamówienie nie istnieje już w systemie nadrzędnym.</li>
+            <li>Pobierz pozycje, płatność, dostawę i dane klienta.</li>
+            <li>Dopasuj produkty i utwórz rekord z powiązaniem do kanału.</li>
+          </ol>
+          <p><strong>Wynik:</strong> jedno zamówienie w jednym miejscu, z informacją, skąd przyszło.</p>
+          <p><strong>Wyjątki:</strong> nieznany produkt, nietypowa dostawa, brak płatności, zamówienie zbiorcze.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Stany aktualizowane we wszystkich kanałach</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zmiana stanu w magazynie, zamówienie albo przyjęcie towaru.</p>
+          <ol class="number-list">
+            <li>Ustal stan dostępny: magazyn minus rezerwacje minus bufor.</li>
+            <li>Przypisz produkt do ofert w każdym kanale po SKU lub EAN.</li>
+            <li>Wyślij zmiany partiami, z osobnymi limitami dla kanałów.</li>
+            <li>Zapisz wynik i porównaj odpowiedzi. Rozjazd zgłoś alertem.</li>
+          </ol>
+          <p><strong>Wynik:</strong> kanały widzą stan bliższy rzeczywistemu, a nie wynik ostatniego eksportu.</p>
+          <p><strong>Wyjątki:</strong> brak mapowania, stan ujemny, oferta zakończona, kanał bez stabilnego API.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Status i numer przesyłki wracają do kanału</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> utworzenie paczki albo zmiana statusu w systemie nadrzędnym.</p>
+          <ol class="number-list">
+            <li>Pobierz numer, przewoźnika i powiązanie z zamówieniem.</li>
+            <li>Ustal, do którego kanału i zamówienia należy przesyłka.</li>
+            <li>Wyślij numer i status, zapisując potwierdzenie.</li>
+            <li>Oznacz zamówienie jako wysłane zgodnie z mapowaniem kanału.</li>
+          </ol>
+          <p><strong>Wynik:</strong> klient widzi tracking i aktualny status, a zespół nie klika w panelach.</p>
+          <p><strong>Wyjątki:</strong> brak numeru, ponowne nadanie, kilka paczek, kanał bez aktualizacji statusu.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Zwroty z różnych kanałów w jednej kolejce</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zgłoszenie zwrotu z marketplace, formularza albo maila.</p>
+          <ol class="number-list">
+            <li>Utwórz rekord zwrotu z informacją o kanale i zamówieniu.</li>
+            <li>Zapisz powód, stan towaru i oczekiwany sposób rozliczenia.</li>
+            <li>Po przyjęciu towaru przywróć stan, jeśli reguła na to pozwala.</li>
+            <li>Przygotuj dane do korekty i wyślij klientowi status sprawy.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zwrot ma właściciela i status, niezależnie od tego, skąd przyszedł.</p>
+          <p><strong>Wyjątki:</strong> częściowy zwrot, uszkodzony towar, spór, korekta wystawiona ręcznie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            Wiele sklepów działa dobrze na dwóch kanałach i natywnych integracjach.
+            Osobne wdrożenie ma sens, gdy ręczne klejenie danych naprawdę zajmuje czas.
+          </p>
+          <ul class="plainlist">
+            <li>Masz dwa kanały i niski wolumen, a natywne integracje wystarczają.</li>
+            <li>Nie ma jednego źródła prawdy dla stanów.</li>
+            <li>Nie ma osoby, która przejmie wyjątki i zatwierdzi korekty.</li>
+            <li>Właśnie zmieniasz platformę albo liczbę kanałów.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/baselinker-allegro">BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/integracje/shoper">Shoper: API i webhooki</a></li>
+            <li><a class="text-link" href="/integracje/woocommerce">WooCommerce: stany i wtyczki</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje automatyzacja sklepu wielokanałowego"
+    intro="Start zwykle obejmuje jeden przepływ dla dwóch kanałów. Growth ma sens, gdy dochodzą statusy, wysyłki i zwroty. Ceny netto."
+    fit="Start dla dwóch kanałów; Growth dla trzech procesów; Scale dla wielu marketplace’ów, ERP lub WMS."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o sklepy wielokanałowe</h2>
+        <p class="section-intro">Kanały, stany, duplikaty i zwroty. Bez założenia, że każdy marketplace działa tak samo.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Ile kanałów obsługujesz ręcznie?"
+    text="Opisz, skąd przychodzą zamówienia, gdzie sprawdzasz stan i co robisz, gdy kanały się rozjeżdżają. Mini-diagnoza pomoże ustalić, czy potrzebna jest wspólna warstwa."
+  />
+</Base>
