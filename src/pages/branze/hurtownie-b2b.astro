@@ -1,0 +1,225 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Zamówienia w mailach i PDF-ach',
+    d: 'Każdy klient ma inny układ dokumentu, inne nazwy produktów i jednostki. Część zamówień przychodzi w treści maila, część w załączniku, a część jako skan.',
+  },
+  {
+    t: 'Dopasowanie produktów po nazwie',
+    d: 'Ten sam towar ma nazwę handlową, katalogową i kod producenta. Bez wspólnego SKU osoba przepisuje pozycje i sprawdza każdą linijkę.',
+  },
+  {
+    t: 'Indywidualne ceny i rabaty',
+    d: 'Cennik zależy od klienta, wolumenu i historii. Automat, który nie zna reguł rabatowych, potwierdzi cenę, której handlowiec nie chciał.',
+  },
+  {
+    t: 'Stany i dostępność w kilku magazynach',
+    d: 'Część towaru jest w magazynie głównym, część w dostawie, część zarezerwowana. Bez jednej definicji dostępności klient słyszy inną odpowiedź niż system.',
+  },
+  {
+    t: 'Oferty i dokumenty bez wersji',
+    d: 'Oferta wraca z inną ceną, a nikt nie wie, która wersja jest wiążąca. Potwierdzenie, WZ i faktura powstają w różnych programach.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy odczyt zamówienia z PDF jest niezawodny?',
+    a: 'Nie traktujemy go jako nieomylny. PDF może być skanem albo mieć niejednoznaczną ilość. Dlatego łączymy odczyt z weryfikacją i pokazujemy wynik w kolejce.',
+  },
+  {
+    q: 'Czy można połączyć się z naszym ERP?',
+    a: 'To zależy od tego, czy ERP ma API, eksport albo inne udokumentowane wejście. Sprawdzamy to przed wyceną. Jeśli integracja nie jest stabilna, mówimy o tym, zamiast obiecywać połączenie na siłę.',
+  },
+  {
+    q: 'Czy automatyzacja sama ustali cenę dla klienta?',
+    a: 'Może zastosować cennik i reguły rabatowe, jeśli są zapisane w systemie. Przy indywidualnych ustaleniach przygotowuje propozycję, a handlowiec zatwierdza. Nie ukrywamy wyjątków w kodzie.',
+  },
+  {
+    q: 'Jak policzyć, czy to się zwraca?',
+    a: 'Liczysz czas ręcznej obsługi, liczbę zamówień i koszt błędu. To model [EST], nie gwarancja. W audycie podmieniamy założenia na Twoje dane.',
+  },
+];
+---
+<Base
+  title="Hurtownie B2B: zamówienia, oferty i stany"
+  description="Automatyzacja hurtowni B2B: zamówienia mailem i PDF, oferty, ceny klientów, stany i potwierdzenia. Odczyt z weryfikacją człowieka. Ceny netto."
+  path="/branze/hurtownie-b2b"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Branże</span>
+        <span>Hurtownie i dystrybucja B2B</span>
+        <span>Zamówienia mailem i PDF</span>
+      </div>
+      <h1>Automatyzacja hurtowni B2B: zamówienia mailem, PDF, oferty i stany</h1>
+      <p class="lead">
+        W B2B zamówienie często nie przechodzi przez checkout, tylko przez maila,
+        PDF albo telefon. Automatyzacja musi zacząć się od odczytu i weryfikacji danych,
+        a nie od przycisku „złóż zamówienie”.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Pięć miejsc, w których ręczna obsługa B2B zjada czas i zwiększa ryzyko
+          pomyłki.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Odczyt dokumentu zawsze zostawia miejsce na weryfikację.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Zamówienie z maila lub PDF trafia do ERP</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> mail z zamówieniem, załącznik PDF albo formularz B2B.</p>
+          <ol class="number-list">
+            <li>Odbierz wiadomość i zapisz nadawcę, temat oraz załącznik.</li>
+            <li>Odczytaj nagłówek i pozycje. Przy skanie użyj OCR i oznacz wynik jako wymagający weryfikacji.</li>
+            <li>Dopasuj produkty po SKU, kodzie producenta lub aliasie.</li>
+            <li>Sprawdź cenę i dostępność, utwórz zamówienie i wyślij potwierdzenie.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zamówienie jest w ERP, a klient dostaje potwierdzenie bez przepisywania.</p>
+          <p><strong>Wyjątki:</strong> nieczytelny dokument, niejednoznaczna ilość, produkt poza katalogiem, cena niezgodna z cennikiem.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Oferta ma wersję i follow-up</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zapytanie od klienta albo potrzeba odświeżenia oferty.</p>
+          <ol class="number-list">
+            <li>Utwórz ofertę na podstawie cennika i warunków klienta.</li>
+            <li>Zapisz wersję, datę i osobę odpowiedzialną.</li>
+            <li>Wyślij ofertę i zaplanuj przypomnienie według reguły.</li>
+            <li>Po akceptacji utwórz zamówienie powiązane z konkretną wersją.</li>
+          </ol>
+          <p><strong>Wynik:</strong> wiadomo, która wersja jest aktualna i co z niej wynikło.</p>
+          <p><strong>Wyjątki:</strong> rabat poza regułą, niestandardowe warunki, zmiana ceny zakupu, brak terminu dostawy.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Stany i dostępność w jednym obrazie</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zmiana stanu w magazynie, przyjęcie dostawy albo nowa rezerwacja.</p>
+          <ol class="number-list">
+            <li>Pobierz stany z magazynów i uwzględnij rezerwacje.</li>
+            <li>Dodaj dostawy planowane tylko wtedy, gdy reguła na to pozwala.</li>
+            <li>Przelicz dostępność na jednostki sprzedażowe i zapisz definicję.</li>
+            <li>Opublikuj wynik w sklepie B2B, portalu albo raporcie.</li>
+          </ol>
+          <p><strong>Wynik:</strong> handlowiec i klient widzą tę samą dostępność, z jasnym terminem.</p>
+          <p><strong>Wyjątki:</strong> kilka magazynów, braki, różne jednostki, rezerwacje poza systemem, opóźniona dostawa.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Potwierdzenie i dokumenty bez przepisywania</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> przyjęcie zamówienia do realizacji.</p>
+          <ol class="number-list">
+            <li>Wygeneruj potwierdzenie z numerem zamówienia i pozycjami.</li>
+            <li>Wyślij je klientowi i zapisz status wysyłki.</li>
+            <li>Przekaż dane do WZ i fakturowania, zachowując powiązanie z zamówieniem.</li>
+            <li>Zapisz numery dokumentów przy zamówieniu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> klient ma potwierdzenie, a zespół nie przepisuje danych.</p>
+          <p><strong>Wyjątki:</strong> zmiana zamówienia po potwierdzeniu, realizacja częściowa, korekta danych, dokument do akceptacji.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            W B2B niska jakość dokumentów bywa większym problemem niż brak
+            automatyzacji. Czasem najpierw trzeba uporządkować katalog i szablony.
+          </p>
+          <ul class="plainlist">
+            <li>Masz kilka zamówień dziennie i wszystkie przechodzą przez formularz.</li>
+            <li>Nie ma cyfrowego katalogu ani spójnych SKU.</li>
+            <li>ERP nie ma API ani stabilnego eksportu, a wolumen nie uzasadnia pracy.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe</a></li>
+            <li><a class="text-link" href="/integracje/shoper">Shoper: zamówienia i dokumenty</a></li>
+            <li><a class="text-link" href="/integracje/ksef">KSeF dla sklepów</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>Odczyt to nie decyzja.</strong> System może wyciągnąć pozycje
+            z dokumentu, ale przy niejasności zatrzymuje rekord.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje automatyzacja w B2B"
+    intro="Start zwykle obejmuje jeden przepływ, na przykład zamówienie z maila do ERP. Growth ma sens, gdy dochodzą oferty, stany i dokumenty. Ceny netto."
+    fit="Start dla jednego typu dokumentu; Growth dla zamówień, ofert i stanów; Scale dla wielu magazynów lub ERP."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o automatyzację B2B</h2>
+        <p class="section-intro">PDF, ERP, ceny i dokumenty. Bez obietnicy, że odczyt zawsze będzie poprawny.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Ile zamówień przepisujesz z maili?"
+    text="Opisz, jak wygląda typowe zamówienie, jakie dokumenty przychodzą i co robisz, gdy czegoś brakuje. Mini-diagnoza oceni, czy odczyt i ERP mają sens przy Twoim wolumenie."
+  />
+</Base>

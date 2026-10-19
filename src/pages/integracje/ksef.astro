@@ -1,0 +1,231 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Dane do faktury są rozproszone',
+    d: 'NIP bywa w profilu klienta, adres w zamówieniu, a pozycje w jeszcze innym miejscu. Zanim dokument powstanie, ktoś porównuje trzy ekrany.',
+  },
+  {
+    t: 'Wysyłka bez pełnego statusu',
+    d: 'Dokument został wysłany, ale nie wiadomo, czy został przyjęty. Bez zapisu odpowiedzi zespół sprawdza każdą fakturę osobno.',
+  },
+  {
+    t: 'Brak numeru KSeF w zamówieniu',
+    d: 'Numer zostaje w systemie fakturowania, a zamówienie nie wie, która faktura do niego należy. Korekta wymaga ręcznego szukania.',
+  },
+  {
+    t: 'Faktury kosztowe pobierane ręcznie',
+    d: 'Dokumenty od dostawców trafiają do skrzynki, dysku i KSeF. Bez rejestru część faktur zostaje nierozliczona.',
+  },
+  {
+    t: 'Błędy wysyłki bez kolejki',
+    d: 'Błąd przejściowy i trwały wyglądają tak samo. Bez rozróżnienia i ponowień faktura zostaje w zawieszeniu.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy KSeF jest obowiązkowy?',
+    a: 'KSeF jest obowiązkowym systemem e-fakturowania dla podmiotów objętych przepisami. Terminy i zakres wynikają z prawa i mogą się zmieniać, dlatego nie podajemy dat ani progów. Oficjalne informacje: ksef.podatki.gov.pl.',
+  },
+  {
+    q: 'Czy każda faktura ze sklepu trafia do KSeF?',
+    a: 'Nie zakładaj tego. Faktury konsumenckie i inne dokumenty mogą mieć inny obieg niż faktury B2B. W automatyzacji rozdzielamy typy dokumentów, a zakres potwierdzamy z aktualnymi zasadami i Twoim systemem fakturowania.',
+  },
+  {
+    q: 'Czym jest numer KSeF i po co go zapisywać?',
+    a: 'To identyfikator, który dokument otrzymuje po przyjęciu w KSeF. Zapisujemy go przy fakturze i zamówieniu, żeby dopasować dokumenty, pokazać status i obsłużyć korektę bez szukania w panelu.',
+  },
+  {
+    q: 'Co się dzieje, gdy wysyłka się nie uda?',
+    a: 'Błąd przejściowy wraca do kolejki z backoffem. Błąd trwały trafia do człowieka z kontekstem i dokumentem do poprawy.',
+  },
+];
+---
+<Base
+  title="KSeF dla sklepów: faktury, wysyłka i błędy"
+  description="KSeF dla sklepów: faktury z zamówień, wysyłka, faktury kosztowe, numer KSeF, kolejka błędów i faktury konsumenckie. Ceny netto."
+  path="/integracje/ksef"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Integracje</span>
+        <span>Krajowy System e-Faktur</span>
+        <span>Dokumenty i kolejka błędów</span>
+      </div>
+      <h1>KSeF dla sklepów internetowych: faktury, wysyłka i błędy</h1>
+      <p class="lead">
+        KSeF, czyli Krajowy System e-Faktur, to system prowadzony przez Ministerstwo
+        Finansów. Dla sklepu oznacza dodatkowy obieg dokumentów: od zamówienia, przez
+        wystawienie faktury, po wysyłkę i zapis numeru KSeF. Poniżej, co uporządkować,
+        a czego nie automatyzować bez zrozumienia przepisów.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+      <p class="small muted" style="margin-top:16px">
+        Nie podajemy terminów ani progów prawnych. Aktualne zasady sprawdź u Ministerstwa
+        Finansów: <a class="text-link" href="https://ksef.podatki.gov.pl" target="_blank" rel="noopener">ksef.podatki.gov.pl</a>.
+        To nie jest porada podatkowa.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          KSeF dodaje nowy zestaw statusów i błędów. Najwięcej czasu zajmuje
+          powiązanie dokumentu z zamówieniem.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Zakres prawny i podatkowy zawsze potwierdzasz z księgowością.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Faktura B2B z zamówienia trafia do KSeF</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> status opłacone albo wysłane, zgodnie z regułą, lub ręczne zatwierdzenie.</p>
+          <ol class="number-list">
+            <li>Pobierz dane nabywcy i pozycje zamówienia.</li>
+            <li>Sprawdź NIP i kompletność danych. Braki zatrzymaj przed wystawieniem.</li>
+            <li>Przygotuj dokument w systemie fakturowania i powiąż go z zamówieniem.</li>
+            <li>Wyślij dokument do KSeF, zapisz odpowiedź oraz numer KSeF.</li>
+          </ol>
+          <p><strong>Wynik:</strong> faktura ma status, numer KSeF i powiązanie z zamówieniem.</p>
+          <p><strong>Wyjątki:</strong> brak NIP, błędne dane, odrzucenie, timeout, brak uprawnień, faktura konsumencka.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Faktury kosztowe w jednym rejestrze</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nowy dokument w KSeF albo cykliczne sprawdzenie.</p>
+          <ol class="number-list">
+            <li>Pobierz dokumenty dostępne w zakresie uprawnień.</li>
+            <li>Zapisz je w rejestrze z identyfikatorem i datą pobrania.</li>
+            <li>Dopasuj do dostawcy, zamówienia lub faktury.</li>
+            <li>Oznacz status i przekaż do dalszego obiegu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> dokumenty kosztowe są w jednym miejscu i mają status.</p>
+          <p><strong>Wyjątki:</strong> duplikat, brak dopasowania, różnica kwot, dokument poza zakresem uprawnień.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Kolejka błędów i ponowienia</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> błąd wysyłki lub pobrania dokumentu.</p>
+          <ol class="number-list">
+            <li>Zapisz dokument, zamówienie, odpowiedź i czas.</li>
+            <li>Klasyfikuj błąd jako przejściowy albo trwały.</li>
+            <li>Błąd przejściowy ponów z backoffem i limitem prób.</li>
+            <li>Błąd trwały pokaż człowiekowi z propozycją poprawy.</li>
+          </ol>
+          <p><strong>Wynik:</strong> wiadomo, które dokumenty czekają.</p>
+          <p><strong>Wyjątki:</strong> trwały błąd danych, brak tokenu, zmiana po stronie systemu, duplikat.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Korekty i faktury konsumenckie</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zwrot, błąd danych albo decyzja o korekcie.</p>
+          <ol class="number-list">
+            <li>Znajdź dokument pierwotny i sprawdź, czy ma numer KSeF.</li>
+            <li>Ustal typ dokumentu i zakres korekty. Nie zakładaj jednego obiegu dla wszystkich.</li>
+            <li>Przygotuj korektę powiązaną z dokumentem pierwotnym.</li>
+            <li>Wyślij dokument, jeśli podlega wysyłce, i zapisz status.</li>
+          </ol>
+          <p><strong>Wynik:</strong> korekta jest powiązana z pierwotną fakturą, a typ dokumentu nie został zgubiony.</p>
+          <p><strong>Wyjątki:</strong> brak numeru KSeF, korekta poza systemem, faktura konsumencka, wątpliwość co do zakresu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            KSeF to obszar, w którym automat nie może zastąpić decyzji podatkowej.
+            Czasem lepiej zostawić wysyłkę w systemie fakturowania.
+          </p>
+          <ul class="plainlist">
+            <li>Twój system fakturowania już obsługuje KSeF i robi to poprawnie.</li>
+            <li>Masz mało faktur B2B i ręczny proces jest dobrze opisany.</li>
+            <li>Dane klientów są nieuporządkowane. Najpierw rejestr, potem automatyzacja.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/shoper">Shoper: zamówienia i dokumenty</a></li>
+            <li><a class="text-link" href="/branze/biura-rachunkowe">Biura rachunkowe i KSeF</a></li>
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>Granica zakresu.</strong> Automatyzujemy obieg dokumentu i kolejkę
+            błędów. Nie interpretujemy przepisów i nie podejmujemy decyzji podatkowych.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje obsługa KSeF"
+    intro="Start zwykle obejmuje wysyłkę faktur z jednego systemu. Growth ma sens, gdy dochodzą faktury kosztowe, korekty i kolejka błędów. Ceny netto."
+    fit="Start dla jednego przepływu; Growth dla wysyłki, faktur kosztowych i korekt; Scale dla wielu systemów lub ERP."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o KSeF</h2>
+        <p class="section-intro">Zakres obowiązku, typy dokumentów, numer KSeF i błędy. W sprawach podatkowych odsyłamy do oficjalnych źródeł.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Chcesz uporządkować obieg faktur?"
+    text="Opisz, skąd biorą się faktury, gdzie trafiają i co robisz, gdy wysyłka się nie uda. Mini-diagnoza wskaże, czy problem jest w danych, systemie czy kolejce błędów."
+  />
+</Base>

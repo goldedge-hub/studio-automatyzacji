@@ -1,0 +1,225 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Rozjazd stanów',
+    d: 'Allegro, BaseLinker i magazyn liczą rezerwacje inaczej. Bez bufora i jednego źródła prawdy pojawia się sprzedaż towaru, którego nie ma.',
+  },
+  {
+    t: 'Duplikaty zamówień',
+    d: 'To samo zamówienie przychodzi webhookiem i w synchronizacji. Bez klucza idempotencji powstają dwa rekordy i podwójne odejmowanie stanu.',
+  },
+  {
+    t: 'Mapowanie statusów',
+    d: 'Statusy Allegro i BaseLinkera nie są 1:1. Anulowanie, zwrot i „do wysyłki” mogą trafić w niewłaściwe miejsce.',
+  },
+  {
+    t: 'Limity API i ponowienia',
+    d: 'Brak backoffu i kolejki powoduje błędy przejściowe oraz dziury w synchronizacji po jednym nieudanym wywołaniu.',
+  },
+  {
+    t: 'Wysyłki, zwroty i faktury',
+    d: 'Numer przesyłki nie wraca do Allegro, zwrot nie domyka zamówienia, a dokument nie ma powiązania z rekordem.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czy BaseLinker ma API i integrację z Allegro?',
+    a: 'Tak. BaseLinker udostępnia API i ma natywne integracje z Allegro. Aktualny zakres opisuje jego dokumentacja. Pracujemy na udokumentowanych interfejsach, nie na automatach klikających w panel.',
+  },
+  {
+    q: 'Czy potrzebna jest osobna integracja, jeśli BaseLinker już łączy się z Allegro?',
+    a: 'Nie zawsze. Osobna warstwa ma sens przy nietypowych statusach, wielu kontach, kolejce wyjątków i dokumentach. Jeśli natywne połączenie wystarcza, mówimy to wprost.',
+  },
+  {
+    q: 'Jak rozwiązujecie duplikaty i limity API?',
+    a: 'Każdy przepływ dostaje klucz idempotencji i sprawdzenie „czy rekord już istnieje”. Zmiany wysyłamy partiami, a błędy przejściowe wracają do kolejki z backoffem. Błąd trwały trafia do człowieka.',
+  },
+  {
+    q: 'Czy automatyzacja wystawi fakturę i wyśle ją do KSeF?',
+    a: 'Może przygotować dane i przekazać je do systemu fakturowania. Wysyłka do KSeF, korekty i faktury konsumenckie wymagają reguł oraz weryfikacji. To nie jest automatyczna księgowość.',
+  },
+];
+---
+<Base
+  title="BaseLinker i Allegro: integracja zamówień i stanów"
+  description="Integracja BaseLinker ↔ Allegro: zamówienia, statusy, stany, wysyłki, zwroty i faktury. Typowe problemy, przepływy i ceny netto."
+  path="/integracje/baselinker-allegro"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Integracje</span>
+        <span>BaseLinker ↔ Allegro</span>
+        <span>Zamówienia, stany, wysyłki</span>
+      </div>
+      <h1>Integracja BaseLinker ↔ Allegro: zamówienia, stany i wysyłki</h1>
+      <p class="lead">
+        BaseLinker ma API i natywne integracje z Allegro, więc samo połączenie zwykle
+        działa. Problemy zaczynają się w regułach: który status jest nadrzędny, kiedy
+        blokować stan i kto przejmuje wyjątek. Poniżej te miejsca.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Pięć sytuacji, które wracają przy integracji BaseLinkera z Allegro.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Zakres zależy od Twoich reguł, nie od liczby dostępnych endpointów.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Zamówienie z Allegro trafia do BaseLinkera</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nowe zamówienie albo zmiana statusu na opłacone.</p>
+          <ol class="number-list">
+            <li>Pobierz zamówienie i zapisz identyfikator źródłowy oraz skrót treści.</li>
+            <li>Sprawdź, czy rekord już istnieje. Jeśli tak, zakończ bez zmian.</li>
+            <li>Dopasuj produkty, dostawę i płatność do słowników BaseLinkera.</li>
+            <li>Utwórz zamówienie i zapisz jego identyfikator w logu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> jedno zamówienie i jedno miejsce dalszej pracy.</p>
+          <p><strong>Wyjątki:</strong> nieznany produkt, nietypowa dostawa, brak płatności, konflikt danych klienta.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Status i numer przesyłki wracają do Allegro</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zmiana statusu w BaseLinkerze albo nadanie numeru paczki.</p>
+          <ol class="number-list">
+            <li>Sprawdź, czy status jest przeznaczony do publikacji i czy nie cofa poprzedniego.</li>
+            <li>Wyślij status oraz numer przesyłki, zapisując odpowiedź.</li>
+            <li>Przy błędzie przejściowym ponów z backoffem; po wyczerpaniu prób traf do kolejki.</li>
+          </ol>
+          <p><strong>Wynik:</strong> klient widzi aktualny status i tracking, a zespół nie klika w dwóch panelach.</p>
+          <p><strong>Wyjątki:</strong> anulowanie po wysyłce, brak numeru, kilku przewoźników, zamówienie zbiorcze.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Stany z BaseLinkera do ofert Allegro</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zmiana stanu po zamówieniu, przyjęciu towaru albo korekcie.</p>
+          <ol class="number-list">
+            <li>Ustal stan dostępny: magazyn minus rezerwacje minus bufor.</li>
+            <li>Ogranicz publikację do produktów powiązanych z aktywnymi ofertami.</li>
+            <li>Wyślij zmiany partiami i porównaj wynik z odpowiedzią.</li>
+          </ol>
+          <p><strong>Wynik:</strong> Allegro widzi stan bliższy rzeczywistemu, a nie liczbę z ostatniego eksportu.</p>
+          <p><strong>Wyjątki:</strong> stan ujemny, brak mapowania, oferta zakończona, ręczna korekta w panelu.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Zwrot domyka zamówienie i dokumenty</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zgłoszenie zwrotu z Allegro, formularza albo wiadomości klienta.</p>
+          <ol class="number-list">
+            <li>Utwórz rekord zwrotu powiązany z zamówieniem.</li>
+            <li>Sprawdź, czy towar wrócił i czy stan można przywrócić.</li>
+            <li>Przygotuj dane do korekty i zamknij zamówienie.</li>
+            <li>Wyślij klientowi potwierdzenie z dalszym krokiem.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zwrot ma status, a stany i dokumenty nie rozjeżdżają się z zamówieniem.</p>
+          <p><strong>Wyjątki:</strong> uszkodzony towar, spór, częściowy zwrot, korekta wystawiona poza systemem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            Część sklepów nie potrzebuje osobnego wdrożenia. Lepiej powiedzieć to
+            przed audytem niż po zapłacie za integrację, która powtarza natywne
+            połączenie.
+          </p>
+          <ul class="plainlist">
+            <li>Natywna integracja obsługuje Twoje statusy, jedno konto i standardowe wysyłki.</li>
+            <li>Masz kilka zamówień dziennie i jedna osoba ogarnia wyjątki w kwadrans.</li>
+            <li>Kartoteka nie ma spójnych SKU. Najpierw dane, potem automatyzacja.</li>
+            <li>Chcesz ominąć API klikaniem w panel. To rozwiązanie kruche.</li>
+            <li>Nie ma osoby, która przejmie wyjątki i zatwierdzi korekty.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/shoper">Integracja Shoper: API i webhooki</a></li>
+            <li><a class="text-link" href="/branze/sklepy-wielokanalowe">Sklepy wielokanałowe</a></li>
+            <li><a class="text-link" href="/poradnik/ile-kosztuje-integracja-baselinker-allegro">Ile kosztuje integracja BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>Zakres, nie obietnica.</strong> Przed startem zapisujemy, które
+            statusy i stany są publikowane, a które zostają ręczne.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje integracja BaseLinker ↔ Allegro"
+    intro="Start zwykle obejmuje jedną oś: zamówienia albo stany. Growth ma sens, gdy łączymy kilka przepływów. Ceny netto."
+    fit="Start dla jednego przepływu i jednego konta Allegro; Growth dla zamówień, statusów, stanów i zwrotów; Scale dla wielu kont, ERP lub WMS."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o BaseLinker i Allegro</h2>
+        <p class="section-intro">API, duplikaty, limity i dokumenty. Bez gwarancji, że każdy przypadek da się w pełni zautomatyzować.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Masz rozjazd stanów albo duplikaty?"
+    text="Opisz, między jakimi systemami krąży zamówienie i co robisz ręcznie, gdy coś się nie zgadza. Mini-diagnoza powie, czy wystarczy konfiguracja BaseLinkera."
+  />
+</Base>
