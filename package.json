@@ -5,13 +5,20 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/og.mjs",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "og": "node scripts/og.mjs",
+    "test": "node --experimental-strip-types scripts/calc-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource/sora": "^5.3.0",
     "astro": "^5.13.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.63.0"
   }
 }

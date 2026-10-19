@@ -1,5 +1,6 @@
 ---
 import { PRICES } from '../data/pricing';
+import { compute, paybackVerdict } from '../lib/calc';
 
 interface Props {
   variant?: 'full' | 'compact';
@@ -45,14 +46,6 @@ const fmtMoney = (value: number) => `${nf0.format(Math.round(value))} zł`;
 const fmtMonths = (value: number) =>
   Number.isFinite(value) ? `${nf1.format(value)} mies.` : '—';
 
-const compute = (orders: number, minutes: number, days: number, rate: number, share: number) => {
-  const hours = (orders * minutes * days) / 60;
-  const cost = hours * rate;
-  const saving = cost * (share / 100);
-  const saving12 = saving * 12;
-  return { hours, cost, saving, saving12 };
-};
-
 const initial = compute(
   defaults.orders,
   defaults.minutes,
@@ -61,6 +54,11 @@ const initial = compute(
   defaults.share,
 );
 const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving : Infinity;
+const initialVerdict = paybackVerdict(initialPayback);
+const verdictText = (payback: number) =>
+  paybackVerdict(payback) === 'ok'
+    ? `Przy tych założeniach pakiet zwraca się w ok. ${fmtMonths(payback)} (szacunek [EST]).`
+    : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
 ---
 <div
   class:list={['calc', compact && 'calc--compact']}
@@ -144,8 +142,12 @@ const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving :
         <dd class="calc-highlight"><span data-calc-out="payback">{fmtMonths(initialPayback)}</span></dd>
       </dl>
 
-      <p class="calc-warning" data-calc-warning hidden={initialPayback <= 12}>
-        Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy
+      <p
+        class:list={['calc-warning', `calc-verdict--${initialVerdict}`]}
+        data-calc-warning
+        data-state={initialVerdict}
+      >
+        {verdictText(initialPayback)}
       </p>
 
       <p class="calc-note">
@@ -173,6 +175,8 @@ const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving :
 </div>
 
 <script>
+  import { compute, paybackVerdict } from '../lib/calc';
+
   type UmamiWindow = Window & {
     umami?: { track: (event: string, data?: Record<string, string | number>) => void };
   };
@@ -220,22 +224,28 @@ const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving :
       const selected = packageSelect?.selectedOptions[0];
       const price = Number(selected?.dataset.price ?? 0);
 
-      const hours = (orders * minutes * days) / 60;
-      const cost = hours * rate;
-      const saving = cost * (share / 100);
-      const saving12 = saving * 12;
-      const payback = saving > 0 ? price / saving : Infinity;
+      const result = compute(orders, minutes, days, rate, share);
+      const payback = result.saving > 0 ? price / result.saving : Infinity;
 
-      setOutput('hours', `${pl1.format(hours)} h`);
-      setOutput('cost', `${pl0.format(Math.round(cost))} zł`);
-      setOutput('saving', `${pl0.format(Math.round(saving))} zł`);
-      setOutput('saving12', `${pl0.format(Math.round(saving12))} zł`);
+      setOutput('hours', `${pl1.format(result.hours)} h`);
+      setOutput('cost', `${pl0.format(Math.round(result.cost))} zł`);
+      setOutput('saving', `${pl0.format(Math.round(result.saving))} zł`);
+      setOutput('saving12', `${pl0.format(Math.round(result.saving12))} zł`);
       setOutput(
         'payback',
         Number.isFinite(payback) ? `${pl1.format(payback)} mies.` : '—',
       );
 
-      if (warning) warning.hidden = Number.isFinite(payback) && payback <= 12;
+      const verdict = paybackVerdict(payback);
+      if (warning) {
+        warning.dataset.state = verdict;
+        warning.classList.toggle('calc-verdict--ok', verdict === 'ok');
+        warning.classList.toggle('calc-verdict--bad', verdict === 'bad');
+        warning.textContent =
+          verdict === 'ok'
+            ? `Przy tych założeniach pakiet zwraca się w ok. ${pl1.format(payback)} mies. (szacunek [EST]).`
+            : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
+      }
     };
 
     let tracked = false;

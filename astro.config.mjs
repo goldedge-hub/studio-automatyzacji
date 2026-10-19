@@ -11,6 +11,12 @@ export default defineConfig({
   ],
   build: { inlineStylesheets: 'auto' },
   vite: {
+    build: {
+      // Skrypty zawsze jako osobne pliki: tekst komunikatu kalkulatora nie może
+      // trafić do HTML, bo bez JS byłby czytany jako widoczna treść.
+      assetsInlineLimit: (filePath, content) =>
+        filePath.endsWith('.css') ? content.length < 4096 : false,
+    },
     // Cache w katalogu projektu (gitignored .astro/), nie we współdzielonym node_modules.
     cacheDir: './.astro/vite',
   },

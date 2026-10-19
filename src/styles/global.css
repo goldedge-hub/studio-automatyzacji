@@ -1274,15 +1274,21 @@ select:focus-visible,
 .calc-warning {
   margin: 0;
   padding: 12px 14px;
-  border-left: 3px solid var(--danger);
+  border-left: 3px solid var(--accent);
   background: var(--accent-soft);
   color: var(--ink);
   font-size: 13px;
   line-height: 1.5;
 }
 
-.calc-warning[hidden] {
-  display: none;
+.calc-warning.calc-verdict--ok,
+.calc-warning[data-state="ok"] {
+  border-left-color: var(--accent);
+}
+
+.calc-warning.calc-verdict--bad,
+.calc-warning[data-state="bad"] {
+  border-left-color: var(--danger);
 }
 
 .calc-note {
