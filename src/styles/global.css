@@ -2183,3 +2183,400 @@ select:focus-visible,
     padding-block: 24px;
   }
 }
+
+/* ---------- Przykładowy raport z audytu ---------- */
+
+.report-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px 18px;
+  align-items: start;
+  padding: 18px 20px;
+  border: 1px solid var(--danger);
+  border-left-width: 5px;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.report-banner-label {
+  padding: 5px 8px;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.report-banner strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.report-banner p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.report-banner--bottom {
+  margin-top: 0;
+}
+
+.report-doc {
+  margin-bottom: clamp(44px, 6vw, 78px);
+  padding: clamp(22px, 4.5vw, 56px);
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  box-shadow: 0 24px 60px -50px rgba(25, 26, 22, 0.45);
+}
+
+.report-doc-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 36px;
+  padding-bottom: 22px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.report-doc-head h2 {
+  max-width: 24ch;
+  margin: 6px 0 10px;
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.04;
+}
+
+.report-client {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.report-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  gap: 10px 24px;
+  align-self: start;
+  min-width: min(100%, 280px);
+  margin: 0;
+}
+
+.report-meta dt {
+  margin: 0 0 2px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.report-meta dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.report-disclaimer {
+  margin: 18px 0 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.report-doc p,
+.report-doc li {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.report-doc .small {
+  font-size: 13.5px;
+}
+
+.report-section {
+  margin-top: 32px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+
+.report-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+  font-size: clamp(24px, 2.7vw, 32px);
+  line-height: 1.08;
+}
+
+.report-num {
+  flex: none;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.report-section h3 {
+  margin: 28px 0 10px;
+  font-size: 20px;
+}
+
+.report-doc .table {
+  font-size: 13.5px;
+}
+
+.report-doc .table th,
+.report-doc .table td {
+  padding: 11px 13px;
+}
+
+.report-doc .table-wrap + .table-wrap {
+  margin-top: 18px;
+}
+
+.report-note {
+  margin: 14px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--line-strong);
+  color: var(--muted) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.report-small {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.report-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.report-tag--now {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.report-tag--later {
+  background: transparent;
+  color: var(--ink);
+}
+
+.report-tag--no {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.report-doc-foot {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 2px solid var(--ink);
+}
+
+.report-doc-foot p:first-child {
+  margin-top: 0;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+
+.report-doc-foot p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Schemat prototypu monitoringu cen ---------- */
+
+.flow-figure {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  overflow-x: auto;
+}
+
+.flow-figure svg {
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+
+.flow-figure figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.flow-box {
+  fill: var(--paper-2);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.flow-box--accent {
+  fill: var(--accent-soft);
+  stroke: var(--accent);
+}
+
+.flow-line {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.flow-arrow-head {
+  fill: var(--line-strong);
+}
+
+.flow-figure text {
+  fill: var(--ink);
+  font-family: var(--font);
+}
+
+.flow-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.flow-sub {
+  fill: var(--muted);
+  font-size: 11.5px;
+}
+
+.flow-caption {
+  fill: var(--muted);
+  font-size: 10.5px;
+}
+
+@page {
+  margin: 14mm;
+}
+
+@media print {
+  .report-page-head,
+  .report-print-hint,
+  .report-print-hide {
+    display: none !important;
+  }
+
+  .report-banner {
+    break-inside: avoid;
+    border: 1px solid #000;
+    background: #fff;
+  }
+
+  .report-banner-label,
+  .report-tag {
+    border-color: #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .report-doc {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .report-doc-head {
+    padding-bottom: 12px;
+    border-bottom: 2px solid #000;
+  }
+
+  .report-doc-head h2 {
+    font-size: 20pt;
+  }
+
+  .report-meta {
+    min-width: 0;
+  }
+
+  .report-section {
+    margin-top: 16px;
+    padding-top: 14px;
+  }
+
+  .report-section h2 {
+    font-size: 14pt;
+    break-after: avoid;
+  }
+
+  .report-section h3 {
+    font-size: 11.5pt;
+    break-after: avoid;
+  }
+
+  .report-doc p,
+  .report-doc li,
+  .report-doc .table {
+    font-size: 9.5pt;
+    line-height: 1.45;
+  }
+
+  .report-doc .table {
+    min-width: 0;
+  }
+
+  .report-doc .table-wrap {
+    overflow: visible;
+    border-color: #000;
+    box-shadow: none;
+    break-inside: auto;
+  }
+
+  .report-doc .table th,
+  .report-doc .table td {
+    padding: 5px 7px;
+  }
+
+  .report-doc .table tr {
+    break-inside: avoid;
+  }
+
+  .report-doc a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .report-doc .condition {
+    break-inside: avoid;
+    border: 1px solid #000;
+    background: #fff;
+  }
+
+  .flow-figure {
+    break-inside: avoid;
+    overflow: visible;
+  }
+
+  .flow-figure svg {
+    min-width: 0;
+  }
+}

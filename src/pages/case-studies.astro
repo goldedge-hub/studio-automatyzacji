@@ -4,8 +4,8 @@ import CTA from '../components/CTA.astro';
 import { P } from '../data/pricing';
 ---
 <Base
-  title="Realizacje i dowody | Studio Automatyzacji"
-  description="Nie publikujemy wymyślonych case studies. Opisujemy, jak powstaje pierwszy publiczny case po pilocie za zgodą klienta, oraz działający prototyp monitoringu cen."
+  title="Realizacje, prototyp monitoringu cen i przykładowy raport"
+  description="Nie publikujemy wymyślonych case studies. Pokazujemy działający prototyp monitoringu cen, jego architekturę i ograniczenia oraz przykładowy raport z audytu na fikcyjnych danych."
   path="/case-studies"
 >
   <section class="page-head">
@@ -13,14 +13,18 @@ import { P } from '../data/pricing';
       <div class="meta-line">
         <span>Realizacje</span>
         <span>Żadnych wymyślonych liczb</span>
-        <span>Pilot za zgodą klienta</span>
+        <span>Prototyp, nie wdrożenie klienta</span>
       </div>
       <h1>Realizacje bez wymyślonych liczb</h1>
       <p class="lead">
         Nie mamy jeszcze publicznych case studies. Nie wstawiamy cudzych logotypów,
         wymyślonych opinii ani wyników bez pomiaru. Poniżej jest to, co faktycznie
-        istnieje, i sposób, w jaki powstanie pierwszy publiczny opis.
+        istnieje: prototyp monitoringu cen, jego ograniczenia i przykładowy raport z audytu.
       </p>
+      <div class="buttonrow">
+        <a class="btn btn--primary" href="#prototyp">Prototyp monitoringu cen</a>
+        <a class="btn btn--ghost" href="/przykladowy-raport">Przykładowy raport z audytu</a>
+      </div>
     </div>
   </section>
 
@@ -43,14 +47,192 @@ import { P } from '../data/pricing';
         <div class="note">
           <strong>Prototyp, nie realizacja.</strong> Mamy działający prototyp monitoringu
           cen: lista produktów, cykliczne zbieranie danych, wykrywanie zmian i alert.
-          Pokazujemy go na życzenie, przy mini-diagnozie albo audycie. Nie opisujemy go jako wdrożenia klienta ani nie
-          podajemy wyników, których nie zmierzyliśmy.
+          Pokazujemy go na życzenie, przy mini-diagnozie albo audycie. Nie opisujemy go
+          jako wdrożenia klienta ani nie podajemy wyników, których nie zmierzyliśmy.
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--paper2">
+  <section class="section section--paper2" id="prototyp">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Prototyp monitoringu cen: co dokładnie robi</h2>
+        <p class="section-intro">
+          Pięć kroków, jeden schemat i jasne granice. To prototyp wewnętrzny,
+          nie wdrożenie klienta i nie usługa z SLA.
+        </p>
+      </div>
+
+      <div class="split">
+        <div>
+          <h3>Co robi</h3>
+          <ol class="number-list">
+            <li>
+              <strong>Lista produktów.</strong> Adresy publicznych stron produktowych.
+              Lista jest jawna, ograniczona i prowadzona ręcznie, bez zgadywania cen
+              z wyszukiwarki.
+            </li>
+            <li>
+              <strong>Cykl pobierania.</strong> Harmonogram uruchamia pobranie ceny
+              z publicznej strony produktu. Bez logowania, bez panelu klienta i bez
+              omijania zabezpieczeń.
+            </li>
+            <li>
+              <strong>Porównanie z poprzednim odczytem.</strong> Zapisujemy cenę, walutę,
+              czas i status odpowiedzi. Porównanie dotyczy dwóch kolejnych odczytów,
+              nie „ceny rynkowej”.
+            </li>
+            <li>
+              <strong>Alert przy zmianie ponad próg.</strong> Próg jest parametrem
+              (kwota albo procent), nie stałą rekomendacją. Jeden alert na zmianę,
+              bez powtarzania tej samej informacji.
+            </li>
+            <li>
+              <strong>Historia zmian.</strong> Każdy odczyt i każda zmiana zostaje
+              w historii: produkt, URL, stara cena, nowa cena, różnica i czas.
+            </li>
+          </ol>
+        </div>
+
+        <div class="note">
+          <strong>Status: prototyp, nie wdrożenie klienta.</strong>
+          <p>
+            Prototyp działa na ograniczonej liście publicznych stron i nie ma SLA.
+            Pokazujemy go na życzenie przy mini-diagnozie albo audycie. Nie wysyłamy
+            nagrania ani nie publikujemy zrzutów z danymi klienta.
+          </p>
+          <p>
+            Nie podajemy wyników, których nie zmierzyliśmy, i nie nazywamy prototypu
+            case study. To narzędzie do sprawdzenia metody, nie dowód oszczędności.
+          </p>
+          <p class="small" style="margin-bottom:0">
+            <a class="text-link" href="/przykladowy-raport">Przykładowy raport z audytu</a>
+            pokazuje, jak wygląda dokument i wyliczenia na fikcyjnych danych.
+          </p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:34px">Schemat przepływu</h3>
+      <figure class="flow-figure">
+        <svg
+          viewBox="0 0 970 300"
+          role="img"
+          aria-labelledby="price-flow-title price-flow-desc"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title id="price-flow-title">Przepływ prototypu monitoringu cen</title>
+          <desc id="price-flow-desc">
+            Lista produktów trafia do kolejki z harmonogramem. System pobiera cenę
+            z publicznej strony, porównuje ją z poprzednim odczytem i sprawdza próg.
+            Przy zmianie ponad próg wysyła alert e-mail. Każdy odczyt trafia do historii
+            i logu. Schemat nie oznacza automatycznej decyzji cenowej.
+          </desc>
+          <defs>
+            <marker
+              id="price-flow-arrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto-start-reverse"
+            >
+              <path class="flow-arrow-head" d="M 0 0 L 10 5 L 0 10 z"></path>
+            </marker>
+          </defs>
+
+          <rect class="flow-box" x="20" y="112" width="155" height="76"></rect>
+          <text class="flow-title" x="97" y="141" text-anchor="middle">Lista produktów</text>
+          <text class="flow-sub" x="97" y="160" text-anchor="middle">publiczne URL-e</text>
+          <text class="flow-sub" x="97" y="176" text-anchor="middle">lista jawna</text>
+
+          <rect class="flow-box" x="210" y="112" width="165" height="76"></rect>
+          <text class="flow-title" x="292" y="141" text-anchor="middle">Kolejka i harmonogram</text>
+          <text class="flow-sub" x="292" y="160" text-anchor="middle">limit równoległości</text>
+          <text class="flow-sub" x="292" y="176" text-anchor="middle">co N godzin</text>
+
+          <rect class="flow-box" x="410" y="112" width="165" height="76"></rect>
+          <text class="flow-title" x="492" y="141" text-anchor="middle">Pobranie ceny</text>
+          <text class="flow-sub" x="492" y="160" text-anchor="middle">publiczna strona</text>
+          <text class="flow-sub" x="492" y="176" text-anchor="middle">bez logowania</text>
+
+          <rect class="flow-box" x="610" y="112" width="155" height="76"></rect>
+          <text class="flow-title" x="687" y="141" text-anchor="middle">Porównanie</text>
+          <text class="flow-sub" x="687" y="160" text-anchor="middle">z poprzednim</text>
+          <text class="flow-sub" x="687" y="176" text-anchor="middle">odczytem</text>
+
+          <rect class="flow-box flow-box--accent" x="800" y="112" width="150" height="76"></rect>
+          <text class="flow-title" x="875" y="141" text-anchor="middle">Zmiana ceny</text>
+          <text class="flow-sub" x="875" y="160" text-anchor="middle">ponad próg?</text>
+          <text class="flow-sub" x="875" y="176" text-anchor="middle">parametr</text>
+
+          <rect class="flow-box" x="800" y="16" width="150" height="64"></rect>
+          <text class="flow-title" x="875" y="43" text-anchor="middle">Alert e-mail</text>
+          <text class="flow-sub" x="875" y="61" text-anchor="middle">tylko przy zmianie</text>
+
+          <rect class="flow-box" x="800" y="220" width="150" height="64"></rect>
+          <text class="flow-title" x="875" y="247" text-anchor="middle">Historia i log</text>
+          <text class="flow-sub" x="875" y="265" text-anchor="middle">każdy odczyt</text>
+
+          <line class="flow-line" x1="175" y1="150" x2="203" y2="150" marker-end="url(#price-flow-arrow)"></line>
+          <line class="flow-line" x1="375" y1="150" x2="403" y2="150" marker-end="url(#price-flow-arrow)"></line>
+          <line class="flow-line" x1="575" y1="150" x2="603" y2="150" marker-end="url(#price-flow-arrow)"></line>
+          <line class="flow-line" x1="765" y1="150" x2="793" y2="150" marker-end="url(#price-flow-arrow)"></line>
+          <line class="flow-line" x1="875" y1="112" x2="875" y2="84" marker-end="url(#price-flow-arrow)"></line>
+          <line class="flow-line" x1="875" y1="188" x2="875" y2="216" marker-end="url(#price-flow-arrow)"></line>
+
+          <text class="flow-caption" x="887" y="100" text-anchor="start">ponad próg</text>
+          <text class="flow-caption" x="887" y="210" text-anchor="start">każdy odczyt</text>
+          <text class="flow-caption" x="485" y="286" text-anchor="middle">
+            Częstotliwość, próg i lista produktów są parametrami. Bez logowania na cudze konta.
+          </text>
+        </svg>
+        <figcaption>
+          Schemat poglądowy: lista → kolejka i harmonogram → pobranie ceny → porównanie →
+          próg → alert e-mail. Każdy odczyt trafia też do historii i logu. Strzałki
+          oznaczają kolejność, nie automatyczną decyzję cenową.
+        </figcaption>
+      </figure>
+
+      <div class="split" style="margin-top:32px">
+        <div>
+          <h3>Architektura w punktach</h3>
+          <ul class="checklist">
+            <li><strong>Harmonogram.</strong> Cykliczne uruchomienie (cron) co N godzin. N jest parametrem, nie obietnicą częstotliwości.</li>
+            <li><strong>Kolejka.</strong> Osobne zadanie na produkt, z limitem równoległości, żeby nie obciążać jednej strony.</li>
+            <li><strong>Pobranie.</strong> Zwykły GET publicznej strony i parser ceny. Brak logowania, captcha i obejść zabezpieczeń.</li>
+            <li><strong>Zapis odczytu.</strong> Produkt, URL, cena, waluta, czas, status HTTP i czas odpowiedzi.</li>
+            <li><strong>Logi.</strong> Każda zmiana i każdy błąd ma wpis. Log nie zawiera pełnych danych osobowych.</li>
+            <li><strong>Ponowienia.</strong> Błąd przejściowy (timeout, 5xx) ma 2–3 próby z odstępem. Po wyczerpaniu idzie alert techniczny.</li>
+            <li><strong>Alert e-mail.</strong> Produkt, stara i nowa cena, różnica, próg i link do źródła. Jeden alert na zmianę.</li>
+            <li><strong>Odporność.</strong> Zmiana układu strony kończy się błędem parsera, nie fałszywą ceną. Wolimy brak odczytu niż zmyśloną liczbę.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Czego NIE robi i gdzie są ograniczenia</h3>
+          <ul class="plainlist">
+            <li>Nie loguje się na cudze konta i nie omija captcha, paywalla ani blokad.</li>
+            <li>Nie ignoruje regulaminów serwisów. Jeśli regulamin zabrania automatycznego pobierania, nie zbieramy danych.</li>
+            <li>Nie pobiera częściej, niż to sensowne i dozwolone. To nie monitoring co minutę.</li>
+            <li>Nie gwarantuje ceny: strona może pokazywać cenę regionalną, po zalogowaniu, z cache albo dynamicznie.</li>
+            <li>Nie podejmuje decyzji cenowych. Wysyła alert, decyzję podejmuje człowiek.</li>
+            <li>Nie zastępuje API ani feedu cenowego, jeśli dostawca je udostępnia. API jest pierwsze, scraping to ostatnia opcja.</li>
+            <li>Nie jest wdrożeniem klienta, nie ma SLA i nie ma zmierzonych wyników.</li>
+            <li>Nie przechowuje danych osobowych. Zakres danych to produkt i cena.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="small muted" style="margin-top:20px">
+        Pokaz na życzenie: przy mini-diagnozie albo audycie, na ograniczonej liście
+        publicznych stron. Bez obietnicy wyników i bez prezentacji sprzedażowej.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2>Jak powstanie pierwszy case</h2>
@@ -117,8 +299,8 @@ import { P } from '../data/pricing';
         <div>
           <h2>Co możesz zobaczyć teraz</h2>
           <ul class="checklist">
-            <li>Prototyp monitoringu cen na żywo, pokazywany na życzenie.</li>
-            <li>Przykładowy raport z audytu bez danych klienta.</li>
+            <li><a class="text-link" href="#prototyp">Prototyp monitoringu cen</a> wraz ze schematem i ograniczeniami.</li>
+            <li><a class="text-link" href="/przykladowy-raport">Przykładowy raport z audytu</a> na fikcyjnych danych, bez danych klienta.</li>
             <li>Zakres, cennik i kryteria odbioru.</li>
             <li>Opis pracy z danymi i AI na stronie Zaufanie i dane.</li>
           </ul>
