@@ -4,3 +4,10 @@ dist/
 .env
 .DS_Store
 *.log
+
+# Materiały wewnętrzne (plany, audyty, zrzuty) — trzymać poza publicznym repo
+PLAN*.md
+audit*/
+after*/
+before*/
+studio-shots/
