@@ -3,7 +3,7 @@
 
 Uruchamiany z crona. Gdy certyfikat jest gotowy:
 - ustawia https_enforced=true,
-- sprawdza https://studioautomatyzacji.pl,
+- sprawdza https://www.studioautomatyzacji.pl (www = domena główna od 20.10),
 - wypisuje wynik (cron dostarczy go na Telegram).
 Gdy nie jest gotowy: kończy się cicho (bez wiadomości).
 """
@@ -14,7 +14,7 @@ import sys
 import urllib.request
 
 REPO = "goldedge-hub/studio-automatyzacji"
-DOMAIN = "https://studioautomatyzacji.pl"
+DOMAIN = "https://www.studioautomatyzacji.pl"
 GH = shutil.which("gh") or "C:/Users/sfajr/bin/gh.exe"
 
 
