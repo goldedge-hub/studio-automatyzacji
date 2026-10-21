@@ -17,17 +17,17 @@ check('0 mies. => bad', () => assert.equal(paybackVerdict(0), 'bad'));
 check('brak oszczędności (share 0) => bad', () => {
   const result = compute(20, 4, 22, 45, 0);
   assert.equal(result.saving, 0);
-  assert.equal(paybackVerdict(3400 / result.saving), 'bad');
+  assert.equal(paybackVerdict(2380 / result.saving), 'bad');
 });
-check('domyślne wartości kalkulatora (20, 4, 22, 45, 70; Start 3400) => ok', () => {
+check('domyślne wartości kalkulatora (20, 4, 22, 45, 70; Start 2380) => ok', () => {
   const result = compute(20, 4, 22, 45, 70);
   assert.ok(Math.abs(result.hours - 29.3333) < 0.001);
   assert.equal(Math.round(result.cost), 1320);
   assert.equal(Math.round(result.saving), 924);
   assert.equal(Math.round(result.saving12), 11088);
-  const payback = 3400 / result.saving;
-  assert.ok(Math.abs(payback - 3.6797) < 0.001);
-  assert.equal(Number(payback.toFixed(1)), 3.7);
+  const payback = 2380 / result.saving;
+  assert.ok(Math.abs(payback - 2.5758) < 0.001);
+  assert.equal(Number(payback.toFixed(1)), 2.6);
   assert.equal(paybackVerdict(payback), 'ok');
 });
 

@@ -1,21 +1,21 @@
 /**
  * Jedyne źródło cen na stronie (netto, PLN). Zmiana ceny = zmiana tutaj.
- * Uzasadnienie rynkowe: /workspace/marketing/studio-automatyzacji/competitors-1910/RAPORT.md (poza repo).
+ * Uzasadnienie: decyzja Chiefa 21.10.2026 — obniżka 30% od cen z 19.10.2026.
  */
-export const PRICE_UPDATED = '19.10.2026';
+export const PRICE_UPDATED = '21.10.2026';
 
 const fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 export const zl = (n: number) => `${fmt(n)} zł`;
 
 export const PRICES = {
   miniDiagnosis: 0,
-  audit: 1490,
-  start: 3400,
-  growth: 10900,
-  scaleFrom: 19900,
-  careBasic: 390,
-  careStandard: 790,
-  whiteLabel: 2400,
+  audit: 1043,
+  start: 2380,
+  growth: 7630,
+  scaleFrom: 13930,
+  careBasic: 273,
+  careStandard: 553,
+  whiteLabel: 1680,
 } as const;
 
 export const P = {
