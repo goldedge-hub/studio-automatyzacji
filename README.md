@@ -51,5 +51,5 @@ Formularz `/kontakt` ma pięć pól: firma lub imię, e-mail (wymagany), proces,
 ## Publikacja
 
 Push na `main` uruchamia GitHub Actions i publikuje `dist/` na GitHub Pages.
-Domena główna: `studioautomatyzacji.pl` (www przekierowuje na apex; DNS w OVH). Sitemap generuje `@astrojs/sitemap`.
+Domena główna: `www.studioautomatyzacji.pl` (apex przekierowuje na www; DNS w OVH). Sitemap generuje `@astrojs/sitemap`.
 Nie pushować bez zgody Tomasa; commity lokalne na `rysiek/redesign`.
