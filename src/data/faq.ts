@@ -52,7 +52,7 @@ export const homeFaq = [
   },
   {
     q: 'Czy muszę wykupić opiekę?',
-    a: `Nie. Opieka jest opcjonalna i miesięczna: Basic ${P.careBasic} netto/mc (monitoring, do 2 h zmian, SLA 3 dni robocze, raport miesięczny) albo Standard ${P.careStandard} netto/mc (do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc). Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.`,
+    a: `Nie. Opieka jest opcjonalna i miesięczna: ${P.care} netto/mc (monitoring, alerty i kopie, do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc). Bez rocznego zobowiązania, z miesięcznym wypowiedzeniem.`,
   },
   {
     q: 'Na jakich narzędziach pracujecie?',
@@ -64,7 +64,7 @@ export const homeFaq = [
   },
   {
     q: 'Pracujecie z agencjami?',
-    a: `Tak, w modelu white-label: ${P.whiteLabel} netto za proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji. Nie publikujemy rabatów wolumenowych ani pilotażowych w cenniku.`,
+    a: `Tak, w modelu white-label: ${P.whiteLabel} netto za proces do 3 integracji, ${P.whiteLabel3plus} netto przy trzech procesach lub więcej. Pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji.`,
   },
   {
     q: 'Dlaczego nie ma tu logotypów klientów ani opinii?',
@@ -90,12 +90,12 @@ export const pricingFaq = [
     a: 'Terminy są orientacyjne: Start zwykle 5–10 dni roboczych, Growth około 3 tygodni, Scale 4–6 tygodni. Liczymy je od przekazania dostępów i danych testowych. Opóźnienia po stronie systemów klienta przesuwają termin.',
   },
   {
-    q: 'Co zawiera opieka Basic, a co Standard?',
-    a: `Basic ${P.careBasic} netto/mc: monitoring i alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny. Standard ${P.careStandard} netto/mc: do 5 h zmian, SLA 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie. Oba poziomy są miesięczne, bez rocznego zobowiązania.`,
+    q: 'Co zawiera opieka techniczna?',
+    a: `Opieka ${P.care} netto/mc: monitoring i alerty, kopie, do 5 h zmian miesięcznie, SLA reakcji 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie. Plan jest miesięczny, bez rocznego zobowiązania.`,
   },
   {
     q: 'Czy muszę wykupić opiekę?',
-    a: 'Nie. Po wdrożeniu przekazujemy kod, dokumentację i dostępy. Jeśli Twój zespół potrafi utrzymać proces, opieka nie jest konieczna. Jeśli nie, wybierasz Basic albo Standard.',
+    a: 'Nie. Po wdrożeniu przekazujemy kod, dokumentację i dostępy. Jeśli Twój zespół potrafi utrzymać proces, opieka nie jest konieczna. Jeśli nie, dobieramy plan miesięczny.',
   },
   {
     q: 'Co, jeśli w trakcie okaże się, że potrzebny jest większy zakres?',
@@ -107,7 +107,7 @@ export const pricingFaq = [
   },
   {
     q: 'Czy white-label ma inne ceny?',
-    a: `Tak. Dla agencji jeden proces do 3 integracji kosztuje ${P.whiteLabel} netto. Szczegóły i warunki są na stronie Dla agencji. Nie publikujemy rabatów wolumenowych w cenniku.`,
+    a: `Tak. Dla agencji jeden proces do 3 integracji kosztuje ${P.whiteLabel} netto, a przy trzech procesach lub więcej ${P.whiteLabel3plus} netto za proces. Szczegóły i warunki są na stronie Dla agencji.`,
   },
   {
     q: 'Jak płacę za wdrożenie?',

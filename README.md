@@ -28,13 +28,13 @@ Formularz `/kontakt` ma pięć pól: firma lub imię, e-mail (wymagany), proces,
 ## Strony
 
 - `/` — strona główna: e-commerce, problemy, usługi, mini-diagnoza, ścieżka 3 kroków, pakiety, opieka, scenariusz modelowy, kiedy nie, FAQ.
-- `/ile-kosztuje` — cennik, porównanie pakietów, opieka Basic/Standard, zależności cenowe, kiedy automatyzacja się nie opłaca.
+- `/ile-kosztuje` — cennik, porównanie pakietów, opieka techniczna, zależności cenowe, kiedy automatyzacja się nie opłaca.
 - `/audyt` — bezpłatna mini-diagnoza e-mailem i płatny audyt (cena w `src/data/pricing.ts`, odliczany od wdrożenia), porównanie obu usług.
 - `/wdrozenia` — pakiety Start, Growth, Scale i porównanie.
-- `/opieka` — opieka Basic i Standard (ceny w `src/data/pricing.ts`).
+- `/opieka` — opieka techniczna (cena w `src/data/pricing.ts`).
 - `/dla-agencji` — white-label (cena w `src/data/pricing.ts`).
 - `/zaufanie` — RODO, NDA, AI Act, własność kodu, monitoring, logi, jak pracujemy.
-- `/case-studies` — jawne zasady publikacji realizacji, bez wymyślonych case studies.
+- `/case-studies` — trzy studia przypadku: prototyp monitoringu cen i dwa typowe zakresy wdrożeń, z jawnym oznaczeniem dowodu i granic.
 - `/o-studiu`, `/kontakt`, `/polityka-prywatnosci`, `/regulamin`, `/404`.
 - `/o-mnie` — przekierowanie na `/o-studiu`.
 

@@ -24,7 +24,7 @@ const costDrivers = [
   },
   {
     t: 'Utrzymanie',
-    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką Basic lub Standard.',
+    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką techniczną.',
   },
 ];
 
@@ -46,8 +46,7 @@ const rows = [
   ['Start', P.start, '1 proces, do 3 integracji, 30 dni gwarancji'],
   ['Growth', P.growth, '3 procesy, do 6 integracji, 60 dni gwarancji'],
   ['Scale', P.scaleFrom, 'od 4 procesów, ERP / WMS, wycena indywidualna'],
-  ['Opieka Basic', `${P.careBasic}/mc`, 'monitoring, do 2 h zmian, SLA 3 dni robocze'],
-  ['Opieka Standard', `${P.careStandard}/mc`, 'do 5 h zmian, SLA 1 dzień roboczy'],
+  ['Opieka', `${P.care}/mc`, 'monitoring, do 5 h zmian, SLA 1 dzień roboczy, raport miesięczny'],
 ];
 
 const faq = [

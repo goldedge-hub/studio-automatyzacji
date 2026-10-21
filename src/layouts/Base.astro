@@ -129,15 +129,8 @@ const jsonLd = {
       },
       {
         '@type': 'Offer',
-        name: 'Opieka Basic',
-        price: String(PRICES.careBasic),
-        priceCurrency: 'PLN',
-        url: `${site}/opieka`,
-      },
-      {
-        '@type': 'Offer',
-        name: 'Opieka Standard',
-        price: String(PRICES.careStandard),
+        name: 'Opieka techniczna (miesięcznie)',
+        price: String(PRICES.care),
         priceCurrency: 'PLN',
         url: `${site}/opieka`,
       },
@@ -145,6 +138,13 @@ const jsonLd = {
         '@type': 'Offer',
         name: 'White-label dla agencji',
         price: String(PRICES.whiteLabel),
+        priceCurrency: 'PLN',
+        url: `${site}/dla-agencji`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'White-label dla agencji — od trzech procesów',
+        price: String(PRICES.whiteLabel3plus),
         priceCurrency: 'PLN',
         url: `${site}/dla-agencji`,
       },
@@ -298,7 +298,7 @@ const faqLd = faq
           <p><a href="/audyt">Audyt {P.audit}</a></p>
           <p><a href="/wdrozenia">Wdrożenia</a></p>
           <p><a href="/ile-kosztuje">Cennik</a></p>
-          <p><a href="/opieka">Opieka od {P.careBasic}/mc</a></p>
+          <p><a href="/opieka">Opieka {P.careMc}</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
         </div>
 

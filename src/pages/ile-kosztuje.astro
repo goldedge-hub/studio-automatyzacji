@@ -42,21 +42,15 @@ const prices = [
     term: 'Orientacyjnie 4–6 tygodni',
   },
   {
-    service: 'Opieka Basic',
-    price: `${P.careBasic} netto/mc`,
-    includes: 'Monitoring, alerty i kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze, raport miesięczny.',
-    term: 'Rozliczenie miesięczne, wypowiedzenie 1 mc',
-  },
-  {
-    service: 'Opieka Standard',
-    price: `${P.careStandard} netto/mc`,
+    service: 'Opieka techniczna',
+    price: `${P.care} netto/mc`,
     includes: 'Monitoring, alerty i kopie, do 5 h zmian miesięcznie, SLA reakcji 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji/mc.',
     term: 'Rozliczenie miesięczne, wypowiedzenie 1 mc',
   },
   {
     service: 'White-label dla agencji',
     price: `${P.whiteLabel} netto/proces`,
-    includes: 'Jeden proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym, NDA na życzenie.',
+    includes: 'Jeden proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym, NDA na życzenie. Przy trzech procesach lub więcej stawka wynosi ' + P.whiteLabel3plus + ' netto za proces.',
     term: 'Orientacyjnie 5–7 dni roboczych',
   },
 ];
@@ -70,16 +64,16 @@ const comparison = [
   ['Szkolenie', 'tak', 'tak', 'wg potrzeb'],
   ['Gwarancja', '30 dni', '60 dni', 'wg umowy'],
   ['Monitoring i alerty', 'opcjonalnie', 'w cenie', 'w cenie'],
-  ['Opieka', `Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, `Basic ${P.careBasic} / Standard ${P.careStandard}/mc`, 'wg umowy'],
+  ['Opieka', `${P.care}/mc`, `${P.care}/mc`, 'wg umowy'],
   ['Cena netto', P.start, P.growth, P.scaleFrom],
 ];
 
 const careRows = [
-  ['Monitoring, alerty i kopie', 'tak', 'tak'],
-  ['Drobne zmiany', 'do 2 h/mc', 'do 5 h/mc'],
-  ['SLA reakcji', '3 dni robocze', '1 dzień roboczy'],
-  ['Przegląd', 'raport miesięczny', 'przegląd kwartalny + 1 h konsultacji/mc'],
-  ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc', 'miesięczne, wypowiedzenie 1 mc'],
+  ['Monitoring, alerty i kopie', 'tak'],
+  ['Drobne zmiany', 'do 5 h/mc'],
+  ['SLA reakcji', '1 dzień roboczy'],
+  ['Przegląd', 'kwartalny + 1 h konsultacji/mc'],
+  ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc'],
 ];
 
 const costDrivers = [
@@ -105,13 +99,13 @@ const costDrivers = [
   },
   {
     t: 'Utrzymanie',
-    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką Basic lub Standard.',
+    d: 'Monitoring, alerty i reakcja na zmiany w API to osobna praca. Można ją zostawić po stronie klienta albo objąć opieką techniczną.',
   },
 ];
 ---
 <Base
   title="Cennik automatyzacji: audyt, wdrożenia, opieka"
-  description={`Jawne ceny netto: mini-diagnoza ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.careBasic} i ${P.careStandard}/mc.`}
+  description={`Jawne ceny netto: mini-diagnoza ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.care}/mc.`}
   path="/ile-kosztuje"
   faq={pricingFaq}
 >
@@ -125,7 +119,7 @@ const costDrivers = [
       <h1>Ile kosztuje automatyzacja</h1>
       <p class="lead">
         Ceny są stałe przed startem. Poniżej pełna lista, różnice między pakietami,
-        opieka w dwóch poziomach, od czego zależy wycena i sytuacje, w których
+        opieka miesięczna, od czego zależy wycena i sytuacje, w których
         nie proponujemy wdrożenia.
       </p>
       <div class="buttonrow">
@@ -282,20 +276,19 @@ const costDrivers = [
   <section class="section section--paper2" id="opieka">
     <div class="wrap">
       <div class="section-head">
-        <h2>Opieka w dwóch poziomach</h2>
+        <h2>Opieka miesięczna</h2>
         <p class="section-intro">
-          Oba poziomy są miesięczne, bez rocznego zobowiązania, z miesięcznym
+          Plan jest miesięczny, bez rocznego zobowiązania, z miesięcznym
           wypowiedzeniem. Ceny netto.
         </p>
       </div>
 
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Porównanie opieki Basic i Standard">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Zakres opieki technicznej">
         <table class="table table--compare">
           <thead>
             <tr>
               <th scope="col">Zakres</th>
-              <th scope="col">Basic {P.careBasic}/mc</th>
-              <th scope="col">Standard {P.careStandard}/mc</th>
+              <th scope="col">Opieka {P.care}/mc</th>
             </tr>
           </thead>
           <tbody>
@@ -303,7 +296,6 @@ const costDrivers = [
               <tr>
                 <td>{row[0]}</td>
                 <td>{row[1]}</td>
-                <td>{row[2]}</td>
               </tr>
             ))}
           </tbody>
@@ -354,7 +346,7 @@ const costDrivers = [
       <div class="section-foot">
         <span class="small muted">
           Po audycie: wdrożenie {P.start} / {P.growth} / {P.scaleFrom} netto, potem opcjonalna
-          opieka {P.careBasic} albo {P.careStandard} netto/mc.
+          opieka {P.care} netto/mc.
         </span>
         <a class="text-link" href="/wdrozenia">Zakres wdrożeń</a>
       </div>

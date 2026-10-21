@@ -6,12 +6,12 @@ import { P } from '../data/pricing';
 
 const careFaq = [
   {
-    q: 'Czym różni się Basic od Standard?',
-    a: `Basic ${P.careBasic} netto/mc obejmuje monitoring, alerty, kopie, do 2 h zmian miesięcznie, SLA reakcji 3 dni robocze i raport miesięczny. Standard ${P.careStandard} netto/mc podnosi limit do 5 h, skraca SLA do 1 dnia roboczego i dodaje przegląd kwartalny oraz 1 h konsultacji miesięcznie.`,
+    q: 'Co obejmuje opieka?',
+    a: `Opieka ${P.care} netto/mc obejmuje monitoring, alerty, kopie, do 5 h zmian miesięcznie, SLA reakcji 1 dzień roboczy, przegląd kwartalny i 1 h konsultacji miesięcznie.`,
   },
   {
     q: 'Czy jest roczne zobowiązanie?',
-    a: 'Nie. Oba poziomy są miesięczne, z miesięcznym okresem wypowiedzenia. Po rezygnacji przekazujemy aktualną dokumentację i dostępy.',
+    a: 'Nie. Plan jest miesięczny, z miesięcznym okresem wypowiedzenia. Po rezygnacji przekazujemy aktualną dokumentację i dostępy.',
   },
   {
     q: 'Czy opieka obejmuje nowe procesy?',
@@ -28,19 +28,19 @@ const careFaq = [
 ];
 
 const rows = [
-  ['Monitoring, alerty i kopie', 'tak', 'tak'],
-  ['Drobne zmiany', 'do 2 h/mc', 'do 5 h/mc'],
-  ['SLA reakcji', '3 dni robocze', '1 dzień roboczy'],
-  ['Raport miesięczny', 'tak', 'tak'],
-  ['Przegląd kwartalny', '—', 'tak'],
-  ['Konsultacja techniczna', '—', '1 h/mc'],
-  ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc', 'miesięczne, wypowiedzenie 1 mc'],
-  ['Cena netto', `${P.careBasic}/mc`, `${P.careStandard}/mc`],
+  ['Monitoring, alerty i kopie', 'tak'],
+  ['Drobne zmiany', 'do 5 h/mc'],
+  ['SLA reakcji', '1 dzień roboczy'],
+  ['Raport miesięczny', 'tak'],
+  ['Przegląd kwartalny', 'tak'],
+  ['Konsultacja techniczna', '1 h/mc'],
+  ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc'],
+  ['Cena netto', `${P.care}/mc`],
 ];
 ---
 <Base
-  title={`Opieka techniczna: ${P.careBasic} i ${P.careStandard} netto/mc`}
-  description={`Opieka nad automatyzacją w dwóch poziomach: Basic ${P.careBasic} netto/mc i Standard ${P.careStandard} netto/mc. Monitoring, zmiany, SLA i raport. Bez rocznego zobowiązania.`}
+  title={`Opieka techniczna: ${P.care} netto/mc`}
+  description={`Opieka nad automatyzacją: ${P.care} netto/mc. Monitoring, zmiany, SLA i raport. Bez rocznego zobowiązania.`}
   path="/opieka"
   faq={careFaq}
 >
@@ -48,10 +48,10 @@ const rows = [
     <div class="wrap">
       <div class="meta-line">
         <span>Po wdrożeniu</span>
-        <span>Basic {P.careBasic} netto/mc</span>
-        <span>Standard {P.careStandard} netto/mc</span>
+        <span>Opieka {P.care} netto/mc</span>
+        <span>Wypowiedzenie 1 mc</span>
       </div>
-      <h1>Opieka techniczna w dwóch poziomach</h1>
+      <h1>Opieka techniczna po wdrożeniu</h1>
       <p class="lead">
         Automatyzacja nie jest pomnikiem. Zmieniają się API, cenniki i formaty plików.
         Opieka pilnuje procesów e-commerce — zamówień, zwrotów, stanów i faktur — także
@@ -59,10 +59,10 @@ const rows = [
       </p>
       <div class="buttonrow">
         <a class="btn btn--primary" href="/kontakt?temat=opieka" data-umami-event="cta_click" data-umami-event-label="Opieka: zapytaj o opiekę">Zapytaj o opiekę</a>
-        <a class="btn btn--ghost" href="/ile-kosztuje#opieka">Porównaj poziomy</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje#opieka">Zobacz cennik opieki</a>
       </div>
       <p class="small muted" style="margin-top:14px">
-        Oferta aktualna. Ceny netto. Oba poziomy miesięczne, bez rocznego zobowiązania.
+        Oferta aktualna. Ceny netto. Plan miesięczny, bez rocznego zobowiązania.
       </p>
     </div>
   </section>
@@ -70,20 +70,19 @@ const rows = [
   <section class="section" id="poziomy">
     <div class="wrap">
       <div class="section-head">
-        <h2>Basic albo Standard</h2>
+        <h2>Jeden plan, miesięcznie</h2>
         <p class="section-intro">
-          Wybierasz zakres reakcji, nie pakiet na siłę. Nadwyżkę ponad limit godzin
+          Stały zakres reakcji zamiast pakietu na siłę. Nadwyżkę ponad limit godzin
           wyceniamy osobno, przed wykonaniem pracy.
         </p>
       </div>
 
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Porównanie opieki Basic i Standard">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Zakres opieki technicznej">
         <table class="table table--compare">
           <thead>
             <tr>
               <th scope="col">Zakres</th>
-              <th scope="col">Basic {P.careBasic}/mc</th>
-              <th scope="col">Standard {P.careStandard}/mc</th>
+              <th scope="col">Opieka {P.care}/mc</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +90,6 @@ const rows = [
               <tr>
                 <td>{row[0]}</td>
                 <td>{row[1]}</td>
-                <td>{row[2]}</td>
               </tr>
             ))}
           </tbody>

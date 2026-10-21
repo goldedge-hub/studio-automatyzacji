@@ -1,6 +1,7 @@
 /**
  * Jedyne źródło cen na stronie (netto, PLN). Zmiana ceny = zmiana tutaj.
- * Uzasadnienie: decyzja Chiefa 21.10.2026 — obniżka 30% od cen z 19.10.2026.
+ * Model z 21.10.2026 (raport 11:31, akceptacja Chiefa): jeden plan opieki,
+ * white-label z drugim progiem wolumenowym, audyt jako tania bramka wejściowa.
  */
 export const PRICE_UPDATED = '21.10.2026';
 
@@ -9,13 +10,14 @@ export const zl = (n: number) => `${fmt(n)} zł`;
 
 export const PRICES = {
   miniDiagnosis: 0,
-  audit: 1043,
-  start: 2380,
-  growth: 7630,
-  scaleFrom: 13930,
-  careBasic: 273,
-  careStandard: 553,
-  whiteLabel: 1680,
+  audit: 623,
+  start: 2730,
+  growth: 6230,
+  scaleFrom: 10500,
+  care: 483,
+  whiteLabel: 1750,
+  whiteLabel3plus: 1540,
+  caseStudy: 2030,
 } as const;
 
 export const P = {
@@ -24,9 +26,11 @@ export const P = {
   start: zl(PRICES.start),
   growth: zl(PRICES.growth),
   scaleFrom: `od ${zl(PRICES.scaleFrom)}`,
-  careBasic: zl(PRICES.careBasic),
-  careStandard: zl(PRICES.careStandard),
+  care: zl(PRICES.care),
+  careMc: `${zl(PRICES.care)}/mc`,
   whiteLabel: zl(PRICES.whiteLabel),
+  whiteLabel3plus: zl(PRICES.whiteLabel3plus),
+  caseStudy: zl(PRICES.caseStudy),
 };
 
 /** Zakres pakietów (bez zmian merytorycznych względem poprzedniej wersji, tylko ceny). */
