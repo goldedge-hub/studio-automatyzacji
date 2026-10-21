@@ -3,10 +3,14 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://www.studioautomatyzacji.pl',
+  trailingSlash: 'always',
   integrations: [
     sitemap({
       filter: (page) =>
-        !page.includes('/o-mnie') && !page.includes('/404') && !page.includes('/dziekujemy'),
+        !page.includes('/o-mnie') &&
+        !page.includes('/404') &&
+        !page.includes('/dziekujemy') &&
+        !page.includes('/cennik'),
     }),
   ],
   build: { inlineStylesheets: 'always' },

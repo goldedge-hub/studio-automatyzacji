@@ -6,6 +6,7 @@ import Base from '../layouts/Base.astro';
   description="Ta strona nie istnieje. Przejdź na stronę główną, zobacz cennik automatyzacji, mini-diagnozę albo napisz do nas e-mailem."
   path="/404"
   noindex={true}
+  hideCanonical={true}
 >
   <section class="page-head">
     <div class="wrap narrow">
@@ -20,8 +21,8 @@ import Base from '../layouts/Base.astro';
       </p>
       <div class="buttonrow">
         <a class="btn btn--primary" href="/">Strona główna</a>
-        <a class="btn btn--ghost" href="/ile-kosztuje">Cennik</a>
-        <a class="btn btn--ghost" href="/kontakt" data-umami-event="cta_click" data-umami-event-label="404: kontakt">Kontakt</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje/">Cennik</a>
+        <a class="btn btn--ghost" href="/kontakt/" data-umami-event="cta_click" data-umami-event-label="404: kontakt">Kontakt</a>
       </div>
     </div>
   </section>

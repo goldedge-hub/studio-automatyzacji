@@ -20,44 +20,52 @@ import jbmExt from '../fonts/jbm-ext-400.woff2?url';
 import {
   CONTACT_EMAIL,
   CONTACT_HREF,
-  CONTACT_RESPONSE,
+  CONTACT_RESPONSE_PHRASE,
   PRICE_UPDATED,
   SITE_URL,
   UMAMI_HOST,
   UMAMI_SRC,
   UMAMI_WEBSITE_ID,
+  withTrailingSlash,
 } from '../config';
 import { COMPANY, COMPANY_ADDRESS } from '../data/company';
 import { P, PRICES } from '../data/pricing';
 import { SEO_PAGES } from '../data/seo-pages';
 
-const { title, description, path = '/', noindex = false, faq = null } = Astro.props;
+const {
+  title,
+  description,
+  path = '/',
+  noindex = false,
+  faq = null,
+  hideCanonical = false,
+} = Astro.props;
 
 const site = SITE_URL;
-const canonical = new URL(path, site).toString();
+const canonical = new URL(withTrailingSlash(path), site).toString();
 const og = new URL('/og.png', site).toString();
 const year = new Date().getFullYear();
 
 const nav = [
-  ['/wdrozenia', 'Wdrożenia'],
-  ['/audyt', 'Audyt'],
-  ['/opieka', 'Opieka'],
-  ['/dla-agencji', 'Dla agencji'],
-  ['/case-studies', 'Case studies'],
-  ['/o-studiu', 'Studio'],
+  ['/wdrozenia/', 'Wdrożenia'],
+  ['/audyt/', 'Audyt'],
+  ['/opieka/', 'Opieka'],
+  ['/ile-kosztuje/', 'Cennik'],
+  ['/dla-agencji/', 'Dla agencji'],
+  ['/case-studies/', 'Case studies'],
+  ['/o-studiu/', 'Studio'],
 ];
 
 const mobileNavExtra = [
-  ['/ile-kosztuje', 'Cennik'],
-  ['/integracje', 'Integracje'],
-  ['/branze', 'Branże'],
-  ['/przykladowy-raport', 'Przykładowy raport'],
-  ['/zaufanie', 'Zaufanie i dane'],
+  ['/integracje/', 'Integracje'],
+  ['/branze/', 'Branże'],
+  ['/przykladowy-raport/', 'Przykładowy raport'],
+  ['/zaufanie/', 'Zaufanie i dane'],
 ];
 
-const isActive = (href: string) => path === href || path.startsWith(href + '/');
+const isActive = (href: string) => path === href || path.startsWith(href);
 
-const miniDiagnosisActive = path === '/audyt';
+const miniDiagnosisActive = path === '/audyt/';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -94,59 +102,62 @@ const jsonLd = {
         name: 'Bezpłatna mini-diagnoza e-mailem',
         price: '0',
         priceCurrency: 'PLN',
-        url: `${site}/audyt#mini-diagnoza`,
+        url: `${site}/audyt/#mini-diagnoza`,
       },
       {
         '@type': 'Offer',
         name: 'Audyt automatyzacji',
         price: String(PRICES.audit),
         priceCurrency: 'PLN',
-        url: `${site}/audyt`,
+        url: `${site}/audyt/`,
       },
       {
         '@type': 'Offer',
         name: 'Wdrożenie Start',
+        description: '1 proces, do 3 integracji, 30 dni gwarancji.',
         price: String(PRICES.start),
         priceCurrency: 'PLN',
-        url: `${site}/wdrozenia`,
+        url: `${site}/wdrozenia/`,
       },
       {
         '@type': 'Offer',
         name: 'Wdrożenie Growth',
+        description: '3 procesy, do 6 integracji, 60 dni gwarancji.',
         price: String(PRICES.growth),
         priceCurrency: 'PLN',
-        url: `${site}/wdrozenia`,
+        url: `${site}/wdrozenia/`,
       },
       {
         '@type': 'Offer',
         name: 'Wdrożenie Scale',
+        description: 'Od 4 procesów, integracje ERP / WMS, wycena indywidualna.',
         priceSpecification: {
           '@type': 'PriceSpecification',
           minPrice: String(PRICES.scaleFrom),
           priceCurrency: 'PLN',
         },
-        url: `${site}/wdrozenia`,
+        url: `${site}/wdrozenia/`,
       },
       {
         '@type': 'Offer',
         name: 'Opieka techniczna (miesięcznie)',
         price: String(PRICES.care),
         priceCurrency: 'PLN',
-        url: `${site}/opieka`,
+        url: `${site}/opieka/`,
       },
       {
         '@type': 'Offer',
         name: 'White-label dla agencji',
         price: String(PRICES.whiteLabel),
         priceCurrency: 'PLN',
-        url: `${site}/dla-agencji`,
+        url: `${site}/dla-agencji/`,
       },
       {
         '@type': 'Offer',
         name: 'White-label dla agencji — od trzech procesów',
         price: String(PRICES.whiteLabel3plus),
         priceCurrency: 'PLN',
-        url: `${site}/dla-agencji`,
+        url: `${site}/dla-agencji/`,
       },
     ],
   },
@@ -172,7 +183,7 @@ const faqLd = faq
   <title>{title}</title>
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, follow" />}
-  <link rel="canonical" href={canonical} />
+  {!hideCanonical && <link rel="canonical" href={canonical} />}
   <meta name="theme-color" content="#F4F1E8" />
   <meta name="format-detection" content="telephone=no" />
 
@@ -181,7 +192,7 @@ const faqLd = faq
   <meta property="og:site_name" content="Studio Automatyzacji" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical} />
+  {!hideCanonical && <meta property="og:url" content={canonical} />}
   <meta property="og:image" content={og} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -192,7 +203,9 @@ const faqLd = faq
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={og} />
 
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
   <link rel="preload" href={frauncesNormal} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={frauncesExt} as="font" type="font/woff2" crossorigin />
@@ -229,8 +242,8 @@ const faqLd = faq
             href={href}
             class={isActive(href) ? 'is-active' : ''}
             aria-current={isActive(href) ? 'page' : undefined}
-            data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
-            data-umami-event-label={href === '/kontakt' ? 'Nawigacja: kontakt' : undefined}
+            data-umami-event={href === '/kontakt/' ? 'cta_click' : undefined}
+            data-umami-event-label={href === '/kontakt/' ? 'Nawigacja: kontakt' : undefined}
           >{label}</a>
         ))}
       </nav>
@@ -241,7 +254,7 @@ const faqLd = faq
           href={CONTACT_HREF}
           data-umami-event="cta_click"
           data-umami-event-label="Nagłówek: napisz do nas"
-        >Porozmawiajmy →</a>
+        >Napisz do nas →</a>
 
         <details class="menu">
           <summary>Menu</summary>
@@ -251,11 +264,11 @@ const faqLd = faq
                 href={href}
                 class={isActive(href) ? 'is-active' : ''}
                 aria-current={isActive(href) ? 'page' : undefined}
-                data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
-                data-umami-event-label={href === '/kontakt' ? 'Menu mobilne: kontakt' : undefined}
+                data-umami-event={href === '/kontakt/' ? 'cta_click' : undefined}
+                data-umami-event-label={href === '/kontakt/' ? 'Menu mobilne: kontakt' : undefined}
               >{label}</a>
             ))}
-            <a href="/audyt#mini-diagnoza" class={miniDiagnosisActive ? 'is-active' : ''} aria-current={miniDiagnosisActive ? 'page' : undefined} data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
+            <a href="/audyt/#mini-diagnoza" class={miniDiagnosisActive ? 'is-active' : ''} aria-current={miniDiagnosisActive ? 'page' : undefined} data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
             {mobileNavExtra.map(([href, label]) => (
               <a
                 href={href}
@@ -286,20 +299,20 @@ const faqLd = faq
       <div class="foot-grid">
         <div>
           <p class="foot-label">Studio</p>
-          <p><a href="/o-studiu">O studiu</a></p>
-          <p><a href="/case-studies">Realizacje</a></p>
-          <p><a href="/zaufanie">Zaufanie i dane</a></p>
-          <p><a href="/kontakt" data-umami-event="cta_click" data-umami-event-label="Stopka: kontakt">Kontakt</a></p>
+          <p><a href="/o-studiu/">O studiu</a></p>
+          <p><a href="/case-studies/">Realizacje</a></p>
+          <p><a href="/zaufanie/">Zaufanie i dane</a></p>
+          <p><a href="/kontakt/" data-umami-event="cta_click" data-umami-event-label="Stopka: kontakt">Kontakt</a></p>
         </div>
 
         <div>
           <p class="foot-label">Oferta</p>
-          <p><a href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
-          <p><a href="/audyt">Audyt {P.audit}</a></p>
-          <p><a href="/wdrozenia">Wdrożenia</a></p>
-          <p><a href="/ile-kosztuje">Cennik</a></p>
-          <p><a href="/opieka">Opieka {P.careMc}</a></p>
-          <p><a href="/dla-agencji">Dla agencji</a></p>
+          <p><a href="/audyt/#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
+          <p><a href="/audyt/">Audyt {P.audit}</a></p>
+          <p><a href="/wdrozenia/">Wdrożenia</a></p>
+          <p><a href="/ile-kosztuje/">Cennik</a></p>
+          <p><a href="/opieka/">Opieka {P.careMc}</a></p>
+          <p><a href="/dla-agencji/">Dla agencji</a></p>
         </div>
 
         <div>
@@ -311,10 +324,10 @@ const faqLd = faq
 
         <div>
           <p class="foot-label">Dokumenty</p>
-          <p><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
-          <p><a href="/regulamin">Regulamin</a></p>
-          <p><a href="/zaufanie#ai-act">AI Act</a></p>
-          <p><a href="/zaufanie#rodo">RODO</a></p>
+          <p><a href="/polityka-prywatnosci/">Polityka prywatności</a></p>
+          <p><a href="/regulamin/">Regulamin</a></p>
+          <p><a href="/zaufanie/#ai-act">AI Act</a></p>
+          <p><a href="/zaufanie/#rodo">RODO</a></p>
         </div>
 
         <div>
@@ -324,7 +337,7 @@ const faqLd = faq
           </p>
           <p>
             <a href={CONTACT_HREF} data-umami-event="cta_click" data-umami-event-label="Stopka: napisz do nas">Napisz do nas</a>
-            · odpowiedź w {CONTACT_RESPONSE}
+            · odpowiadamy {CONTACT_RESPONSE_PHRASE}
           </p>
           <p class="small muted">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
         </div>

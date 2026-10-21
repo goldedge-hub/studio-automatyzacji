@@ -1,0 +1,20 @@
+---
+// GitHub Pages nie obsługuje 301. Strona-przekierowanie na /ile-kosztuje/:
+// meta refresh 0 + link + canonical + noindex; poza sitemapą.
+const target = 'https://www.studioautomatyzacji.pl/ile-kosztuje/';
+---
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cennik — przejście do cennika usług | Studio Automatyzacji</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href={target} />
+  <meta http-equiv="refresh" content="0; url=/ile-kosztuje/" />
+  <script is:inline>window.location.replace('/ile-kosztuje/');</script>
+</head>
+<body>
+  <p>Cennik znajduje się na stronie <a href="/ile-kosztuje/">ile-kosztuje/</a>.</p>
+</body>
+</html>
