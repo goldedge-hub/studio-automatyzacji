@@ -2171,3 +2171,64 @@ input[type="range"]::-moz-range-thumb{
   .site-header,.site-footer,.cta-actions,.buttonrow{display:none}
   .report-doc{border:0;box-shadow:none}
 }
+
+/* ---------- Kontekst zgłoszenia (preset CTA) ---------- */
+.form-context{
+  display:grid;
+  gap:4px;
+  margin:0;
+  padding:14px 16px;
+  border-left:3px solid var(--accent);
+  background:var(--paper-2);
+}
+.form-context[hidden]{display:none}
+.form-context .mono{
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.form-context strong{
+  font-family:var(--font-display);
+  font-size:clamp(19px,1.7vw,23px);
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:-.02em;
+}
+.form-context p{
+  margin:2px 0 0;
+  color:var(--muted);
+  font-size:12.5px;
+  line-height:1.55;
+}
+
+/* ---------- Wskazówka przewijania tabel i schematów (mobile) ---------- */
+@media (max-width: 699px) {
+  .table-wrap::before,
+  .flow-figure::before {
+    content: "przewiń →";
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    display: block;
+    width: max-content;
+    margin: 0 0 8px;
+    padding: 8px 10px 8px 0;
+    background: var(--paper);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .table-wrap {
+    box-shadow: inset -18px 0 18px -18px rgba(25, 26, 22, .35);
+  }
+
+  .flow-figure {
+    box-shadow: inset -18px 0 18px -18px rgba(25, 26, 22, .35);
+  }
+}

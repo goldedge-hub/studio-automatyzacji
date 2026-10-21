@@ -18,7 +18,7 @@ const results = [
   ['Koszt ręcznej pracy miesięcznie', '29,33 h × 45 zł = 1 320 zł'],
   ['Oszczędność przy 70%', '1 320 zł × 70% = 924 zł/mc'],
   ['Oszczędność w 12 miesiącach', '924 zł × 12 = 11 088 zł'],
-  ['Prosty zwrot z pakietu Start', `${P.start} ÷ 924 zł = ${paybackMonths} miesiąca`],
+  ['Prosty okres zwrotu z pakietu Start', `${P.start} ÷ 924 zł = ${paybackMonths} miesiąca`],
 ];
 ---
 <div class="scenario" aria-labelledby="scenario-title">
@@ -63,6 +63,6 @@ const results = [
       Nie uwzględnia kosztu utrzymania, licencji ani błędów. Audyt {P.audit} jest odliczany
       od wdrożenia, więc cena Start pozostaje kwotą {P.start} netto.
     </p>
-    <a class="text-link small" href="/audyt">Policzmy to na Twoich danych</a>
+    <a class="text-link small" href="/audyt/">Policzmy to na Twoich danych</a>
   </div>
 </div>

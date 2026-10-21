@@ -4,7 +4,7 @@ import { P } from '../data/pricing';
 
 const {
   title = 'Zacznij od jednej wiadomości.',
-  text = 'Opisz proces, który zabiera czas. Odpowiemy w ciągu jednego dnia roboczego i powiemy, czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest płatny audyt.',
+  text = 'Opisz proces, który zabiera czas. Odpowiemy w ciągu 1 dnia roboczego i powiemy, czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest płatny audyt.',
 } = Astro.props;
 ---
 <section class="section section--dark">
@@ -25,13 +25,13 @@ const {
           >Napisz do nas</a>
           <a
             class="btn btn--on-dark"
-            href="/audyt#mini-diagnoza"
+            href="/audyt/#mini-diagnoza"
             data-umami-event="cta_click"
             data-umami-event-label="CTA: mini-diagnoza 0 zł"
           >Mini-diagnoza {P.miniDiagnosis}</a>
         </div>
         <p class="small">
-          Mini-diagnoza jest bezpłatna i przychodzi e-mailem w 2 dni robocze.
+          Mini-diagnoza jest bezpłatna i przychodzi e-mailem w ciągu 2 dni roboczych.
           Audyt {P.audit} netto odliczamy od wdrożenia.
         </p>
       </div>

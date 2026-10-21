@@ -4,11 +4,11 @@ import { PRICE_UPDATED } from '../config';
 export const homeFaq = [
   {
     q: 'Jak zacząć współpracę?',
-    a: 'Napisz przez formularz na stronie /kontakt. Wystarczy firma lub imię, e-mail, opis procesu, narzędzia i liczba osób, które go wykonują. Odpowiadamy w ciągu jednego dnia roboczego. Nie trzeba umawiać spotkania ani znać budżetu.',
+    a: 'Napisz przez formularz na stronie /kontakt. Wystarczy firma lub imię, e-mail, opis procesu, narzędzia i liczba osób, które go wykonują. Odpowiadamy w ciągu 1 dnia roboczego. Nie trzeba znać budżetu ani przygotowywać prezentacji.',
   },
   {
     q: 'Czym jest bezpłatna mini-diagnoza e-mailem?',
-    a: 'To krótka pisemna ocena jednego procesu. Wypełniasz formularz, a w ciągu 2 dni roboczych dostajesz e-mail z odpowiedzią: czy proces warto automatyzować, ile godzin może oszczędzić [EST] i jakich narzędzi wymaga. To nie jest pełny raport ani wycena wdrożenia z gwarancją. Jeśli zgłoszeń jest więcej, odpowiedź może się wydłużyć.',
+    a: 'To krótka pisemna ocena jednego procesu. Wypełniasz formularz, a w ciągu 2 dni roboczych dostajesz e-mail z odpowiedzią: czy proces warto automatyzować, ile godzin może oszczędzić (szacunek) i jakich narzędzi wymaga. To nie jest pełny raport ani wycena wdrożenia z gwarancją. Jeśli zgłoszeń jest więcej, odpowiedź może się wydłużyć.',
   },
   {
     q: `Czym różni się mini-diagnoza od audytu za ${P.audit}?`,
