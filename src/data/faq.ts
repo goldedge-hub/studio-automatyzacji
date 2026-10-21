@@ -68,7 +68,7 @@ export const homeFaq = [
   },
   {
     q: 'Dlaczego nie ma tu logotypów klientów ani opinii?',
-    a: 'Bo nie publikujemy wymyślonych realizacji, logotypów ani opinii. Pierwszy publiczny case powstanie po pilocie za zgodą klienta, z pomiarem przed i po oraz akceptacją opisu. Do tego czasu pokazujemy metodykę i działający prototyp, a nie cudze wyniki.',
+    a: 'Bo nie publikujemy wymyślonych realizacji, logotypów ani opinii. Na stronie Case studies pokazujemy działający prototyp i dwa typowe zakresy wdrożeń — każdy z jasnym oznaczeniem, co jest faktem, a co hipotezą. Publiczny case klienta powstanie po pilocie za zgodą klienta, z pomiarem przed i po oraz akceptacją opisu.',
   },
 ];
 

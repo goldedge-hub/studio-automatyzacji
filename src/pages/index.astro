@@ -26,6 +26,7 @@ const cases = [
     n: '01',
     t: 'Strażnik Cen',
     tag: 'prototyp',
+    href: '/case-studies#straznik-cen',
     before: 'ręczne sprawdzanie cen',
     after: '<b>50</b> produktów · 5 konkurentów',
     compare: {
@@ -38,6 +39,7 @@ const cases = [
     n: '02',
     t: 'Integracja zamówień',
     tag: 'zakres',
+    href: '/case-studies#integracja-zamowien',
     before: 'przepisywanie między systemami',
     after: '<b>1</b> przepływ bez klikania',
     compare: {
@@ -50,6 +52,7 @@ const cases = [
     n: '03',
     t: 'Raport operacyjny',
     tag: 'zakres',
+    href: '/case-studies#raport-operacyjny',
     before: '5 plików i godziny scalania',
     after: '<b>1</b> raport o 06:00',
     compare: {
@@ -235,7 +238,7 @@ const plans = [
               </div>
               <div class="case-foot">
                 <p class="case-note">{c.compare.note}</p>
-                <a class="link-arrow" href="/case-studies">Zobacz pełny opis <span>→</span></a>
+                <a class="link-arrow" href={c.href}>Zobacz pełny opis <span>→</span></a>
               </div>
             </div>
           </details>

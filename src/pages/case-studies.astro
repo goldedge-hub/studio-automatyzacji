@@ -2,27 +2,173 @@
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
 import { P } from '../data/pricing';
+import '../styles/case-studies.css';
+
+const cases = [
+  {
+    slug: 'straznik-cen',
+    n: '01',
+    status: 'Prototyp wewnętrzny',
+    title: 'Strażnik cen',
+    lead: 'Pięć sklepów, 50 produktów i jeden poranny przebieg — zamiast otwierania kart po kolei.',
+    scope: '50 produktów · 5 konkurentów',
+    time: 'pokaz na życzenie',
+    type: 'Prototyp wewnętrzny',
+    stack: 'Python · HTTP · SQL · e-mail / Telegram',
+    flow: ['Publiczne strony', 'Kolejka', 'Odczyt ceny', 'Alert'],
+    before: 'Ręczne sprawdzanie cen w pięciu sklepach. 50 produktów, godzina dziennie, arkusze rozjeżdżają się między osobami.',
+    after: 'Jeden przebieg rano. Alert tylko przy zmianie powyżej progu, historia odczytów i link do źródła.',
+    problem:
+      'Jeśli ceny konkurencji sprawdza się ręcznie, to albo dzieje się rzadko, albo zajmuje to godzinę dziennie. Prototyp powstał z prostego pytania: czy da się zamienić tę pracę w jeden poranny przebieg.',
+    build: [
+      'Lista publicznych URL-i produktów — jawna, ograniczona, prowadzona ręcznie.',
+      'Harmonogram i kolejka: osobne zadanie na produkt, limit równoległości, ponowienia przy timeoutach.',
+      'Parser ceny i zapis odczytu: cena, waluta, czas, status HTTP.',
+      'Porównanie z poprzednim odczytem i alert po przekroczeniu progu.',
+      'Historia zmian i log; każdy alert prowadzi do źródła.',
+    ],
+    how: [
+      'Harmonogram uruchamia kolejkę.',
+      'Pobieramy publiczną stronę produktu — bez logowania i obchodzenia zabezpieczeń.',
+      'Zapisujemy odczyt i porównujemy z poprzednim.',
+      'Jeśli różnica przekracza próg, wysyłamy jeden alert.',
+      'Jeśli parser nie rozpoznaje strony, zgłaszamy błąd — nie wstawiamy zgadywanej ceny.',
+    ],
+    measure: [
+      'Czas, który osoba traci na ręczne sprawdzanie.',
+      'Liczba odczytów zakończonych błędem i fałszywych alertów.',
+      'Pokrycie listy: ile produktów ma komplet odczytów.',
+      'Czas od zmiany ceny do alertu.',
+    ],
+    limits: [
+      'Nie loguje się na cudze konta i nie omija captcha, paywalla ani blokad.',
+      'Nie ignoruje regulaminów serwisów; jeśli automatyczny odczyt jest zabroniony, nie zbieramy danych.',
+      'Nie gwarantuje ceny — strona może pokazywać cenę regionalną, po zalogowaniu albo z cache.',
+      'Nie podejmuje decyzji cenowej; alert trafia do człowieka.',
+      'To prototyp bez SLA i bez zmierzonego wyniku klienta.',
+    ],
+    cta: 'Chcę sprawdzić swój proces',
+    href: '/kontakt?temat=monitoring-cen',
+  },
+  {
+    slug: 'integracja-zamowien',
+    n: '02',
+    status: 'Zakres wdrożenia',
+    title: 'Integracja zamówień',
+    lead: 'Od przepisywania między sklepem, BaseLinker i ERP do jednego statusu, który nie ginie.',
+    type: 'Typowy zakres, nie realizacja klienta',
+    scope: '1 przepływ · 3 systemy',
+    stack: 'Webhook / REST · BaseLinker · ERP · log błędów',
+    flow: ['Sklep', 'BaseLinker', 'ERP', 'Status'],
+    time: 'orientacyjnie 5–10 dni roboczych',
+    before: 'Przepisywanie zamówień między sklepem, BaseLinker i ERP. Literówki, opóźnienia i brak jednego statusu.',
+    after: 'Jeden przepływ: zamówienie, stan, status i faktura bez przepisywania.',
+    problem:
+      'Zamówienie powstaje w sklepie, ale status żyje w trzech miejscach. Każde przepisanie to okazja do literówki, a błąd wychodzi dopiero przy pakowaniu — w najgorszym momencie.',
+    build: [
+      'Odbiór zamówienia przez webhook lub API, bez kopiowania z maila.',
+      'Mapowanie pól i statusów między systemami; jedno źródło prawdy dla statusu.',
+      'Klucz idempotencji, żeby ponowienie nie tworzyło duplikatu.',
+      'Kolejka błędów: nieudane mapowanie trafia do człowieka z kontekstem, nie do kosza.',
+      'Log przepływu: skąd przyszło zamówienie, co zapisano i gdzie powstał błąd.',
+    ],
+    how: [
+      'Sklep wysyła zdarzenie o nowym zamówieniu.',
+      'Kolejka pobiera dane i mapuje je na pola BaseLinkera oraz ERP.',
+      'System zapisuje status i fakturę, zachowując identyfikator zamówienia.',
+      'Błąd zatrzymuje przepływ i trafia do kolejki z pełnym kontekstem.',
+    ],
+    measure: [
+      'Czas od zamówienia do gotowego statusu.',
+      'Liczba ręcznych poprawek po imporcie.',
+      'Odsetek zamówień z błędem mapowania.',
+      'Czas reakcji na błąd.',
+    ],
+    limits: [
+      'Zakres zależy od API i modelu danych w Twoich systemach.',
+      'Nie zastępujemy ERP; integrujemy to, co już masz.',
+      'Nie obiecujemy, że każdy system da się połączyć — czasem trzeba zmienić proces, nie narzędzie.',
+      'To typowy zakres, nie zmierzony wynik klienta.',
+    ],
+    cta: 'Opisz swój przepływ',
+    href: '/kontakt?temat=integracja-zamowien',
+  },
+  {
+    slug: 'raport-operacyjny',
+    n: '03',
+    status: 'Zakres wdrożenia',
+    title: 'Raport operacyjny',
+    lead: 'Pięć plików mniej i raport o 06:00, który pokazuje też, czego w danych brakuje.',
+    type: 'Typowy zakres, nie realizacja klienta',
+    scope: '1 raport · 06:00',
+    stack: 'SQL · Python · PDF · e-mail',
+    flow: ['Źródła', 'SQL', 'Raport', '06:00'],
+    time: 'orientacyjnie 5–10 dni roboczych',
+    before: 'Pięć plików i godziny scalania. Raport gotowy dopiero po południu, często z inną liczbą niż w systemie.',
+    after: 'Jeden raport o 06:00. Te same liczby co w źródle, z logiem skąd przyszły.',
+    problem:
+      'Raport jest składany ręcznie z eksportów, które mają różne definicje. Nikt nie wie, która liczba jest prawdziwa, więc każda wersja ma swojego właściciela.',
+    build: [
+      'Jeden model danych i definicje liczb uzgodnione przed budową.',
+      'Harmonogram: pobranie danych, kontrola kompletności, wyliczenie i wygenerowanie raportu.',
+      'Rekonsyliacja: raport pokazuje, skąd przyszła liczba i czego brakuje.',
+      'Wysyłka PDF-em o stałej godzinie; błędy trafiają do logu i alertu.',
+    ],
+    how: [
+      'O 06:00 uruchamiamy pobranie danych.',
+      'Sprawdzamy kompletność i zgodność z poprzednim okresem.',
+      'Liczby są liczone z jednego źródła, nie z pięciu arkuszy.',
+      'Raport wychodzi z listą wyjątków, a nie z ukrytą różnicą.',
+    ],
+    measure: [
+      'Czas przygotowania raportu.',
+      'Liczba rozbieżności między raportem a źródłem.',
+      'Terminowość wysyłki.',
+      'Liczba ręcznych poprawek po wysłaniu.',
+    ],
+    limits: [
+      'Nie naprawiamy danych źródłowych; jeśli system ma błędne dane, raport to pokaże.',
+      'Nie budujemy dashboardu, jeśli wystarczy PDF.',
+      'Zakres zależy od dostępu do bazy lub API i definicji KPI.',
+      'To typowy zakres, nie zmierzony wynik klienta.',
+    ],
+    cta: 'Opisz swój raport',
+    href: '/kontakt?temat=raport-operacyjny',
+  },
+];
+
+const caseIndex = cases.map(({ slug, n, status, title, lead, scope, time }) => ({
+  slug,
+  n,
+  status,
+  title,
+  lead,
+  scope,
+  time,
+}));
+const extraCases = cases.slice(1);
 ---
 <Base
-  title="Realizacje, prototyp monitoringu cen i przykładowy raport"
-  description="Nie publikujemy wymyślonych case studies. Pokazujemy działający prototyp monitoringu cen, jego architekturę i ograniczenia oraz przykładowy raport z audytu na fikcyjnych danych."
+  title="Case studies: Strażnik cen, integracja zamówień, raport operacyjny"
+  description="Trzy studia przypadku Studio Automatyzacji: działający prototyp monitoringu cen i dwa typowe zakresy wdrożeń. Bez wymyślonych logotypów i wyników."
   path="/case-studies"
 >
-  <section class="page-head">
+  <section class="page-head case-hero">
     <div class="wrap">
       <div class="meta-line">
         <span>Realizacje</span>
-        <span>Żadnych wymyślonych liczb</span>
-        <span>Prototyp, nie wdrożenie klienta</span>
+        <span>1 prototyp</span>
+        <span>2 zakresy</span>
+        <span>0 wymyślonych liczb</span>
       </div>
-      <h1>Realizacje bez wymyślonych liczb</h1>
+      <h1>Case studies.<br />{' '}<em>Co jest faktem.</em></h1>
       <p class="lead">
-        Nie mamy jeszcze publicznych case studies. Nie wstawiamy cudzych logotypów,
-        wymyślonych opinii ani wyników bez pomiaru. Poniżej jest to, co faktycznie
-        istnieje: prototyp monitoringu cen, jego ograniczenia i przykładowy raport z audytu.
+        Mamy jeden działający prototyp i dwa typowe zakresy wdrożeń. Każdy opis mówi,
+        co zbudowaliśmy, co mierzymy i czego nie obiecujemy. Bez cudzych logotypów
+        i bez wyników bez pomiaru.
       </p>
       <div class="buttonrow">
-        <a class="btn btn--primary" href="#prototyp">Prototyp monitoringu cen</a>
+        <a class="btn btn--primary" href="#straznik-cen">Zobacz case studies</a>
         <a class="btn btn--ghost" href="/przykladowy-raport">Przykładowy raport z audytu</a>
       </div>
     </div>
@@ -30,39 +176,83 @@ import { P } from '../data/pricing';
 
   <section class="section">
     <div class="wrap">
-      <div class="split">
-        <div>
-          <h2>Dlaczego nie ma tu realizacji</h2>
-          <p>
-            Case study bez pomiaru przed i po jest reklamą, nie dowodem. Nie publikujemy
-            nazw klientów, logotypów ani liczb, dopóki klient nie zgodzi się na ich
-            pokazanie i dopóki nie mamy porównywalnego pomiaru.
-          </p>
-          <p>
-            Wolimy powiedzieć „jeszcze nie mamy”, niż pokazać cudzy sukces jako własny.
-            To samo dotyczy opinii i certyfikatów: na stronie nie znajdziesz ich bez
-            źródła.
-          </p>
-        </div>
-        <div class="note">
-          <strong>Prototyp, nie realizacja.</strong> Mamy działający prototyp monitoringu
-          cen: lista produktów, cykliczne zbieranie danych, wykrywanie zmian i alert.
-          Pokazujemy go na życzenie, przy mini-diagnozie albo audycie. Nie opisujemy go
-          jako wdrożenia klienta ani nie podajemy wyników, których nie zmierzyliśmy.
-        </div>
+      <div class="section-head">
+        <h2>Trzy procesy. Trzy poziomy dowodu.</h2>
+        <p class="section-intro">
+          Prototyp jest zbudowany i pokazujemy go na życzenie. Dwa pozostałe opisy
+          pokazują typowy zakres wdrożenia — nie wynik klienta, bo nie mamy zgody
+          ani pomiaru przed i po.
+        </p>
       </div>
+
+      <div class="study-index">
+        {caseIndex.map((s) => (
+          <a class="study-index-row" href={`#${s.slug}`}>
+            <span class="study-index-num">{s.n}</span>
+            <span class="study-index-main">
+              <span class="study-status">{s.status}</span>
+              <strong>{s.title}</strong>
+              <span>{s.lead}</span>
+            </span>
+            <span class="study-index-meta">{s.scope}<br />{s.time}</span>
+            <span class="study-index-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="small muted" style="margin-top:20px">
+        Każdy opis ma sekcję „Granice”. Jeśli czegoś nie zmierzyliśmy, jest to
+        napisane wprost. Publiczny case z nazwą klienta powstanie dopiero po
+        pilocie, pomiarze i pisemnej zgodzie.
+      </p>
     </div>
   </section>
 
-  <section class="section section--paper2" id="prototyp">
+  <section class="section section--paper2 study-section" id="straznik-cen" aria-labelledby="straznik-cen-title">
+    <span id="prototyp" class="anchor-alias" aria-hidden="true"></span>
     <div class="wrap">
-      <div class="section-head">
-        <h2>Prototyp monitoringu cen: co dokładnie robi</h2>
-        <p class="section-intro">
-          Pięć kroków, jeden schemat i jasne granice. To prototyp wewnętrzny,
-          nie wdrożenie klienta i nie usługa z SLA.
-        </p>
+      <div class="study-head">
+        <span class="study-kicker">01 / Prototyp wewnętrzny</span>
+        <div class="study-title">
+          <h2 id="straznik-cen-title">Strażnik cen: co dokładnie robi</h2>
+          <p class="lead">
+            Pięć sklepów, 50 produktów i jeden poranny przebieg. Prototyp pokazuje
+            metodę; nie jest wdrożeniem klienta ani usługą z SLA.
+          </p>
+        </div>
+        <dl class="study-meta">
+          <div><dt>Typ</dt><dd>Prototyp wewnętrzny</dd></div>
+          <div><dt>Zakres</dt><dd>50 produktów · 5 konkurentów</dd></div>
+          <div><dt>Stack</dt><dd>Python · HTTP · SQL · e-mail / Telegram</dd></div>
+          <div><dt>Status</dt><dd>bez SLA, pokaz na życzenie</dd></div>
+        </dl>
       </div>
+
+      <div class="study-compare">
+        <div class="study-side">
+          <span class="study-label">Przed</span>
+          <p>
+            Ręczne sprawdzanie cen w pięciu sklepach. 50 produktów, godzina dziennie,
+            arkusze rozjeżdżają się między osobami.
+          </p>
+        </div>
+        <div class="study-side">
+          <span class="study-label">Po</span>
+          <p>
+            Jeden przebieg rano. Alert tylko przy zmianie powyżej progu, historia
+            odczytów i link do źródła.
+          </p>
+        </div>
+      </div>
+
+      <ol class="study-flow" aria-label="Przepływ prototypu">
+        {cases[0].flow.map((step, index) => (
+          <li>
+            <span class="study-flow-step">{step}</span>
+            {index < cases[0].flow.length - 1 && <span class="study-flow-arrow" aria-hidden="true">→</span>}
+          </li>
+        ))}
+      </ol>
 
       <div class="split">
         <div>
@@ -195,7 +385,7 @@ import { P } from '../data/pricing';
         </figcaption>
       </figure>
 
-      <div class="split" style="margin-top:32px">
+      <div class="split study-bottom" style="margin-top:32px">
         <div>
           <h3>Architektura w punktach</h3>
           <ul class="checklist">
@@ -229,13 +419,99 @@ import { P } from '../data/pricing';
         Pokaz na życzenie: przy mini-diagnozie albo audycie, na ograniczonej liście
         publicznych stron. Bez obietnicy wyników i bez prezentacji sprzedażowej.
       </p>
+
+      <div class="study-foot">
+        <a class="btn btn--line" href="/kontakt?temat=monitoring-cen">Chcę sprawdzić swój proces</a>
+        <a class="text-link" href="/przykladowy-raport">Zobacz przykładowy raport →</a>
+      </div>
     </div>
   </section>
+
+  {extraCases.map((s, index) => (
+    <section
+      class:list={['section', 'study-section', index % 2 === 1 && 'section--paper2']}
+      id={s.slug}
+      aria-labelledby={`${s.slug}-title`}
+    >
+      <div class="wrap">
+        <div class="study-head">
+          <span class="study-kicker">{s.n} / {s.status}</span>
+          <div class="study-title">
+            <h2 id={`${s.slug}-title`}>{s.title}</h2>
+            <p class="lead">{s.lead}</p>
+          </div>
+          <dl class="study-meta">
+            <div><dt>Typ</dt><dd>{s.type}</dd></div>
+            <div><dt>Zakres</dt><dd>{s.scope}</dd></div>
+            <div><dt>Stack</dt><dd>{s.stack}</dd></div>
+            <div><dt>Czas</dt><dd>{s.time}</dd></div>
+          </dl>
+        </div>
+
+        <div class="study-compare">
+          <div class="study-side">
+            <span class="study-label">Przed</span>
+            <p>{s.before}</p>
+          </div>
+          <div class="study-side">
+            <span class="study-label">Po</span>
+            <p>{s.after}</p>
+          </div>
+        </div>
+
+        <ol class="study-flow" aria-label={`Przepływ: ${s.title}`}>
+          {s.flow.map((step, index) => (
+            <li>
+              <span class="study-flow-step">{step}</span>
+              {index < s.flow.length - 1 && <span class="study-flow-arrow" aria-hidden="true">→</span>}
+            </li>
+          ))}
+        </ol>
+
+        <div class="study-body">
+          <div>
+            <h3>Problem</h3>
+            <p>{s.problem}</p>
+            <h3>Co budujemy</h3>
+            <ul class="checklist">
+              {s.build.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3>Jak to działa</h3>
+            <ol class="number-list">
+              {s.how.map((item) => <li>{item}</li>)}
+            </ol>
+          </div>
+        </div>
+
+        <div class="study-bottom">
+          <div class="note">
+            <strong>Co mierzymy</strong>
+            <ul class="plainlist">
+              {s.measure.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="note">
+            <strong>Granice</strong>
+            <ul class="plainlist">
+              {s.limits.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+
+        <div class="study-foot">
+          <a class="btn btn--line" href={s.href}>{s.cta}</a>
+          <a class="text-link" href="#straznik-cen">Zobacz działający prototyp →</a>
+        </div>
+      </div>
+    </section>
+  ))}
 
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>Jak powstanie pierwszy case</h2>
+        <h2>Jak powstanie case klienta</h2>
         <p class="section-intro">
           Pilot za zgodą klienta. Pomiar ustalamy przed startem, a publikację
           zatwierdza klient, nie my.
@@ -299,10 +575,11 @@ import { P } from '../data/pricing';
         <div>
           <h2>Co możesz zobaczyć teraz</h2>
           <ul class="checklist">
-            <li><a class="text-link" href="#prototyp">Prototyp monitoringu cen</a> wraz ze schematem i ograniczeniami.</li>
+            <li><a class="text-link" href="#straznik-cen">Strażnik cen</a> — działający prototyp, schemat i granice.</li>
+            <li><a class="text-link" href="#integracja-zamowien">Integracja zamówień</a> — typowy zakres i to, co mierzymy.</li>
+            <li><a class="text-link" href="#raport-operacyjny">Raport operacyjny</a> — typowy zakres i zasady weryfikacji.</li>
             <li><a class="text-link" href="/przykladowy-raport">Przykładowy raport z audytu</a> na fikcyjnych danych, bez danych klienta.</li>
             <li>Zakres, cennik i kryteria odbioru.</li>
-            <li>Opis pracy z danymi i AI na stronie Zaufanie i dane.</li>
           </ul>
           <div class="buttonrow" style="margin-top:20px">
             <a class="btn btn--ghost" href="/zaufanie">Zaufanie i dane</a>
