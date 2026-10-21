@@ -147,7 +147,7 @@
 .report-banner-label {
   border: 1px solid var(--line-strong);
   border-radius: 2px;
-  color: var(--accent);
+  color: var(--accent-hover);
   font-size: 9.5px;
   letter-spacing: 0.1em;
 }
