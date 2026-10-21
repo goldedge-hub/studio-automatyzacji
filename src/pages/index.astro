@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import AutomationFlow from '../components/AutomationFlow.astro';
 import FAQ from '../components/FAQ.astro';
 import { homeFaq } from '../data/faq';
 import { P, PRICES } from '../data/pricing';
@@ -21,9 +22,42 @@ const services = [
 ];
 
 const cases = [
-  { n: '01', t: 'Strażnik Cen', tag: 'prototyp', before: 'ręczne sprawdzanie cen', after: '<b>50</b> produktów · 5 konkurentów', note: 'działa' },
-  { n: '02', t: 'Integracja zamówień', tag: 'zakres', before: 'przepisywanie między systemami', after: '<b>1</b> przepływ bez klikania', note: '5–10 dni' },
-  { n: '03', t: 'Raport operacyjny', tag: 'zakres', before: '5 plików i godziny scalania', after: '<b>1</b> raport o 06:00', note: 'codziennie' },
+  {
+    n: '01',
+    t: 'Strażnik Cen',
+    tag: 'prototyp',
+    before: 'ręczne sprawdzanie cen',
+    after: '<b>50</b> produktów · 5 konkurentów',
+    compare: {
+      before: 'Ręczne sprawdzanie cen w pięciu sklepach. 50 produktów, godzina dziennie, arkusze rozjeżdżają się między osobami.',
+      after: 'Jeden przebieg rano. Alert tylko przy zmianie powyżej progu, historia odczytów i link do źródła.',
+      note: 'Prototyp wewnętrzny. Nie publikujemy wyniku klienta, bo go nie zmierzyliśmy.',
+    },
+  },
+  {
+    n: '02',
+    t: 'Integracja zamówień',
+    tag: 'zakres',
+    before: 'przepisywanie między systemami',
+    after: '<b>1</b> przepływ bez klikania',
+    compare: {
+      before: 'Przepisywanie zamówień między sklepem, BaseLinker i ERP. Literówki, opóźnienia i brak jednego statusu.',
+      after: 'Jeden przepływ: zamówienie, stan, status i faktura bez przepisywania.',
+      note: 'Zakres typowego wdrożenia, nie obietnica konkretnego efektu.',
+    },
+  },
+  {
+    n: '03',
+    t: 'Raport operacyjny',
+    tag: 'zakres',
+    before: '5 plików i godziny scalania',
+    after: '<b>1</b> raport o 06:00',
+    compare: {
+      before: 'Pięć plików i godziny scalania. Raport gotowy dopiero po południu, często z inną liczbą niż w systemie.',
+      after: 'Jeden raport o 06:00. Te same liczby co w źródle, z logiem skąd przyszły.',
+      note: 'Zakres, nie wynik klienta.',
+    },
+  },
 ];
 
 const plans = [
@@ -98,6 +132,9 @@ const plans = [
         <p data-reveal>Automatyzowanie chaosu daje szybszy chaos. Dlatego każdy projekt zaczynamy od zmierzenia procesu, a kończymy na opiece, która utrzymuje efekt.</p>
       </div>
       <div class="protocol-grid">
+        <div class="protocol-rail" aria-hidden="true">
+          {protocol.map(() => <span></span>)}
+        </div>
         {protocol.map((p) => (
           <article class="protocol-item" data-reveal>
             <span class="p-num">{p.n}</span>
@@ -137,6 +174,8 @@ const plans = [
     </div>
   </section>
 
+  <AutomationFlow />
+
   <section class="proof-band" aria-labelledby="proof-title">
     <div class="wrap">
       <div class="proof-top">
@@ -169,14 +208,37 @@ const plans = [
       </div>
       <div class="case-rows">
         {cases.map((c) => (
-          <a class="case-row" href="/case-studies" data-reveal>
-            <span class="c-num">{c.n}</span>
-            <h3>{c.t}</h3>
-            <span class="c-tag">{c.tag}</span>
-            <span class="c-before">{c.before}</span>
-            <span class="c-after" set:html={c.after} />
-            <span class="c-arrow" aria-hidden="true">→</span>
-          </a>
+          <details
+            class="case-row"
+            data-reveal
+            data-umami-event="case_open"
+            data-umami-event-label={c.t}
+          >
+            <summary class="case-summary">
+              <span class="c-num">{c.n}</span>
+              <span class="c-title" role="heading" aria-level="3">{c.t}</span>
+              <span class="c-tag">{c.tag}</span>
+              <span class="c-before">{c.before}</span>
+              <span class="c-after" set:html={c.after} />
+              <span class="c-arrow" aria-hidden="true">→</span>
+            </summary>
+            <div class="case-panel">
+              <div class="case-compare">
+                <div class="case-side">
+                  <span class="case-label">Przed</span>
+                  <p>{c.compare.before}</p>
+                </div>
+                <div class="case-side">
+                  <span class="case-label">Po</span>
+                  <p>{c.compare.after}</p>
+                </div>
+              </div>
+              <div class="case-foot">
+                <p class="case-note">{c.compare.note}</p>
+                <a class="link-arrow" href="/case-studies">Zobacz pełny opis <span>→</span></a>
+              </div>
+            </div>
+          </details>
         ))}
       </div>
       <p class="small muted" style="margin-top:16px;max-width:70ch">Nie publikujemy wymyślonych logotypów ani cudzych wyników. „Prototyp” oznacza rzecz, którą zbudowaliśmy i pokazujemy na żywo; „zakres” to typowy kształt wdrożenia, nie obietnica konkretnego efektu.</p>
@@ -209,6 +271,11 @@ const plans = [
             <div><span>Oszczędność miesięcznie</span><b id="calc-save">—</b></div>
             <div><span>Zwrot z wdrożenia</span><b id="calc-pay">—</b></div>
           </div>
+          <div class="calc-payback" aria-hidden="true">
+            <div class="calc-payback-track"><span id="calc-paybar" data-state="good"></span></div>
+            <div class="calc-payback-scale"><span>0</span><span>12 mies.</span><span>24 mies.</span></div>
+          </div>
+          <p class="calc-verdict" id="calc-verdict" aria-live="polite">Zwrot liczymy po zmianie suwaka.</p>
           <p class="small muted" id="calc-note" style="margin:14px 0 0">Szacunek dla pakietu Start ({P.start}). Audyt {P.audit} odliczamy od wdrożenia.</p>
         </div>
       </div>
@@ -283,6 +350,8 @@ const plans = [
     const outP = document.getElementById('calc-people-v');
     const outSave = document.getElementById('calc-save');
     const outPay = document.getElementById('calc-pay');
+    const paybar = document.getElementById('calc-paybar');
+    const verdict = document.getElementById('calc-verdict');
 
     const fmt = (n) => new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 0 }).format(n);
 
@@ -296,9 +365,65 @@ const plans = [
       outSave.textContent = fmt(monthly) + ' zł';
       const payback = startPrice / monthly;
       outPay.textContent = payback <= 24 ? payback.toFixed(1).replace('.', ',') + ' mies.' : 'ponad 24 mies.';
+      if (paybar) {
+        const pct = Math.min(100, (payback / 24) * 100);
+        paybar.style.width = `${pct}%`;
+        paybar.dataset.state = payback <= 12 ? 'good' : payback <= 24 ? 'warn' : 'bad';
+      }
+      if (verdict) {
+        verdict.dataset.state = payback <= 12 ? 'good' : payback <= 24 ? 'warn' : 'bad';
+        verdict.textContent = payback <= 24
+          ? `Przy tych założeniach pakiet Start zwraca się w ok. ${payback.toFixed(1).replace('.', ',')} mies.`
+          : 'Przy tych założeniach zwrot przekracza 24 miesiące — zwykle odradzamy start.';
+      }
     }
     [hours, cost, people].forEach((el) => el && el.addEventListener('input', calc));
     calc();
+  </script>
+
+  <script>
+    const protocolSection = document.querySelector<HTMLElement>('.protocol');
+    const protocolSegments = protocolSection
+      ? [...protocolSection.querySelectorAll<HTMLElement>('.protocol-rail span')]
+      : [];
+    const protocolItems = protocolSection
+      ? [...protocolSection.querySelectorAll<HTMLElement>('.protocol-item')]
+      : [];
+
+    if (protocolSection && protocolSegments.length && protocolItems.length) {
+      let frame = 0;
+
+      const updateProtocol = () => {
+        frame = 0;
+        const rect = protocolSection.getBoundingClientRect();
+        const viewport = window.innerHeight;
+        const start = viewport * 0.7;
+        const span = rect.height + viewport * 0.2;
+        const progress = Math.min(1, Math.max(0, (start - rect.top) / span));
+        protocolSection.dataset.progress = progress.toFixed(3);
+        const active = Math.min(
+          protocolItems.length - 1,
+          Math.floor(progress * protocolItems.length),
+        );
+        protocolSection.dataset.active = String(active);
+        protocolSegments.forEach((segment, index) => {
+          segment.classList.toggle('is-filled', index <= active);
+        });
+        protocolItems.forEach((item, index) => {
+          item.classList.toggle('is-active', index === active);
+          if (index === active) item.setAttribute('aria-current', 'step');
+          else item.removeAttribute('aria-current');
+        });
+      };
+
+      const requestProtocolUpdate = () => {
+        if (!frame) frame = requestAnimationFrame(updateProtocol);
+      };
+
+      window.addEventListener('scroll', requestProtocolUpdate, { passive: true });
+      window.addEventListener('resize', requestProtocolUpdate);
+      updateProtocol();
+    }
   </script>
 
 </Base>

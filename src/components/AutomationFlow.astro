@@ -1,0 +1,32 @@
+---
+const steps = [
+  { n: '01', system: 'Sklep', what: 'Zamówienie i płatność', detail: 'Nowe zamówienie trafia do kolejki.', tag: 'webhook / API' },
+  { n: '02', system: 'BaseLinker', what: 'Kolejka i mapowanie', detail: 'Zamówienie, stan i status w jednym miejscu.', tag: 'API' },
+  { n: '03', system: 'ERP', what: 'Stany i faktura', detail: 'System źródłowy zostaje źródłem prawdy.', tag: 'REST / SQL' },
+  { n: '04', system: 'Raport / alert', what: '06:00 i wyjątki', detail: 'Rano dostajesz wynik, nie pięć plików.', tag: 'e-mail / Telegram' },
+];
+---
+
+<section class="section flow-section" id="flow" aria-labelledby="flow-title">
+  <div class="wrap">
+    <div class="flow-head">
+      <div>
+        <p class="eyebrow">Przepływ</p>
+        <h2 id="flow-title" data-reveal>Jedno zamówienie.<br />Cztery systemy.</h2>
+      </div>
+      <p data-reveal>Tak wygląda typowy przepływ. Każdy krok ma log, limit i obsługę błędu — a Ty widzisz tylko wynik.</p>
+    </div>
+    <ol class="flow-map" aria-label="Przepływ zamówienia przez sklep, BaseLinker, ERP i raport">
+      {steps.map((s) => (
+        <li class="flow-step">
+          <span class="flow-num">{s.n}</span>
+          <strong>{s.system}</strong>
+          <p>{s.what}</p>
+          <small>{s.detail}</small>
+          <span class="flow-tag">{s.tag}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="small muted flow-note">Schemat poglądowy. Zakres integracji zależy od systemów, które już masz; nie obiecujemy konkretnego efektu bez pomiaru.</p>
+  </div>
+</section>

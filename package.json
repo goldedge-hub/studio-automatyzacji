@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "og": "node scripts/og.mjs",
-    "test": "node --experimental-strip-types scripts/calc-check.mjs"
+    "test": "node --experimental-strip-types scripts/calc-check.mjs",
+    "qa:effects": "node scripts/effects-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",
