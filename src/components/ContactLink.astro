@@ -1,13 +1,20 @@
 ---
+import { CONTACT_HREF, withTrailingSlash } from '../config';
+
 const {
   class: className = 'btn btn--primary',
   label = 'Napisz do nas',
-  href = '/kontakt',
+  href = CONTACT_HREF,
   topic,
+  plan,
   eventLabel = label,
 } = Astro.props;
 
-const target = topic ? `${href}?temat=${encodeURIComponent(topic)}` : href;
+const params = new URLSearchParams();
+if (topic) params.set('temat', topic);
+if (plan) params.set('plan', plan);
+const base = withTrailingSlash(href);
+const target = params.size ? `${base}?${params.toString()}` : base;
 ---
 <a
   class={className}

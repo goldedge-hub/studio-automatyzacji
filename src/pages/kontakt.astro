@@ -1,14 +1,41 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE, FORM_ENDPOINT } from '../config';
+import {
+  CONTACT_EMAIL,
+  CONTACT_RESPONSE,
+  CONTACT_RESPONSE_PHRASE,
+  DIAGNOSIS_RESPONSE_PHRASE,
+  FORM_ENDPOINT,
+} from '../config';
 import { P } from '../data/pricing';
 
 const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+const planInfo: Record<string, { label: string; price: string }> = {
+  start: { label: 'Start', price: P.start },
+  growth: { label: 'Growth', price: P.growth },
+  scale: { label: 'Scale', price: P.scaleFrom },
+};
+
+const contextInfo: Record<string, { label: string; hint: string }> = {
+  'monitoring-cen': {
+    label: 'Monitoring cen',
+    hint: 'Opisz, które ceny i konkurenci są istotni oraz jak często sprawdzasz je ręcznie.',
+  },
+  'integracja-zamowien': {
+    label: 'Integracja zamówień',
+    hint: 'Napisz, między jakimi systemami przepisujesz zamówienia i gdzie najczęściej powstaje błąd.',
+  },
+  'raport-operacyjny': {
+    label: 'Raport operacyjny',
+    hint: 'Opisz, z jakich plików powstaje raport i jakie liczby muszą się w nim zgadzać.',
+  },
+};
 ---
 <Base
   title="Kontakt: opisz proces e-commerce"
-  description="Opisz proces, który zabiera czas. Odpowiadamy w ciągu jednego dnia roboczego. Bezpłatna mini-diagnoza e-mailem w 2 dni robocze. NDA na życzenie."
-  path="/kontakt"
+  description="Opisz proces, który zabiera czas. Odpowiadamy w ciągu 1 dnia roboczego. Bezpłatna mini-diagnoza e-mailem w ciągu 2 dni roboczych. NDA na życzenie."
+  path="/kontakt/"
 >
   <section class="page-head">
     <div class="wrap">
@@ -19,6 +46,8 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
       </div>
       <h1>Opisz proces, który zabiera czas</h1>
       <p class="lead">
+        Kontakt odbywa się wyłącznie przez formularz lub e-mail
+        <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         Wystarczy krótki opis. Odpowiemy z pytaniami albo od razu z informacją,
         czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest płatny audyt.
         Nie musisz mieć wszystkiego uporządkowanego.
@@ -48,6 +77,12 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
             aria-describedby="form-note"
           >
             <p class="small muted" style="margin:0">* pole wymagane</p>
+
+            <div class="form-context" id="form-context" aria-live="polite" hidden>
+              <span class="mono" id="form-context-label"></span>
+              <strong id="form-context-value"></strong>
+              <p id="form-context-hint"></p>
+            </div>
 
             <div class="form-grid">
               <div class="field">
@@ -118,7 +153,7 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
               </div>
 
               <div class="field field--full">
-                <label for="f-topic">Temat (opcjonalnie)</label>
+                <label for="f-topic">Temat zgłoszenia</label>
                 <select id="f-topic" name="topic">
                   <option value="mini-diagnoza">Mini-diagnoza e-mailem (bezpłatnie)</option>
                   <option value="audyt">Audyt {P.audit} netto</option>
@@ -135,7 +170,7 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
               <span>
                 Zgadzam się na przetwarzanie podanych danych w celu odpowiedzi na to zgłoszenie.
                 Administratorem danych jest Studio Automatyzacji; szczegóły w
-                <a href="/polityka-prywatnosci">polityce prywatności</a>.
+                <a href="/polityka-prywatnosci/">polityce prywatności</a>.
               </span>
             </label>
 
@@ -144,6 +179,8 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
               <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
             </div>
 
+            <input type="hidden" name="plan" id="f-plan" value="" />
+            <input type="hidden" name="context" id="f-context" value="" />
             <input type="hidden" name="source" value={sourcePath} />
             <input type="hidden" name="ts" id="f-ts" value="" />
 
@@ -153,19 +190,19 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 
             <p class="form-note" id="form-note">
               Po wysłaniu dostaniesz automatyczne potwierdzenie e-mailem. Odpowiadamy
-              w ciągu {CONTACT_RESPONSE}.
+              {CONTACT_RESPONSE_PHRASE}.
             </p>
           </form>
         </div>
 
         <aside>
-          <h2>Bezpośredni kontakt</h2>
+          <h2>Kontakt e-mail</h2>
           <p style="font-size:19px; line-height:1.4">
             <a class="text-link touch-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
           <p class="small muted">
-            Czas odpowiedzi: {CONTACT_RESPONSE}. Mini-diagnozę e-mailem wysyłamy
-            w {DIAGNOSIS_RESPONSE}. Na życzenie podpisujemy NDA przed przekazaniem materiałów.
+            Odpowiadamy {CONTACT_RESPONSE_PHRASE}. Mini-diagnozę e-mailem wysyłamy
+            {DIAGNOSIS_RESPONSE_PHRASE}. Na życzenie podpisujemy NDA przed przekazaniem materiałów.
           </p>
 
           <h2 style="margin-top:30px">Co warto napisać</h2>
@@ -183,37 +220,80 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
           </div>
 
           <p class="small muted" style="margin-top:22px">
-            Nie używamy zewnętrznego kalendarza. Kontakt odbywa się e-mailem,
-            w kolejności zgłoszeń.
+            Kontakt wyłącznie przez formularz lub e-mail. Zgłoszenia rozpatrujemy
+            w kolejności ich otrzymania.
           </p>
         </aside>
       </div>
     </div>
   </section>
 
-  <script is:inline>
+  <script is:inline define:vars={{ planInfo, contextInfo }}>
     (() => {
       const form = document.getElementById('contact-form');
       const topic = document.getElementById('f-topic');
       const status = document.getElementById('form-status');
       const timestamp = document.getElementById('f-ts');
+      const planInput = document.getElementById('f-plan');
+      const contextInput = document.getElementById('f-context');
+      const info = document.getElementById('form-context');
+      const infoLabel = document.getElementById('form-context-label');
+      const infoValue = document.getElementById('form-context-value');
+      const infoHint = document.getElementById('form-context-hint');
       const params = new URLSearchParams(window.location.search);
 
       // Znacznik czasu dla serwera: odrzuca wysyłki szybsze niż 3 s.
       // Bez JavaScriptu pole zostaje puste i serwer to akceptuje.
       if (timestamp) timestamp.value = String(Date.now());
 
-      // Preselekcja tematu: /kontakt?temat=audyt itd.
+      const showInfo = (label, value, hint) => {
+        if (!info || !infoLabel || !infoValue || !infoHint) return;
+        infoLabel.textContent = label;
+        infoValue.textContent = value;
+        infoHint.textContent = hint;
+        info.hidden = false;
+      };
+
+      // Preselekcja tematu. Każdy parametr użyty w linkach ma obsługę:
+      // ?temat=audyt|wdrozenie|opieka|agencja|inne, ?plan=start|growth|scale
+      // oraz konteksty z case studies. Nieznany temat => mini-diagnoza.
       const requestedTopic = params.get('temat');
-      if (topic && requestedTopic) {
-        const known = Array.prototype.some.call(
-          topic.options,
-          (option) => option.value === requestedTopic,
+      const requestedPlan = params.get('plan');
+      const plan = requestedPlan && planInfo[requestedPlan] ? planInfo[requestedPlan] : null;
+      const context = requestedTopic && contextInfo[requestedTopic] ? contextInfo[requestedTopic] : null;
+
+      if (plan && topic) {
+        topic.value = 'wdrozenie';
+        if (planInput) planInput.value = requestedPlan || '';
+        showInfo(
+          'Wybrany pakiet',
+          `${plan.label} — ${plan.price} netto`,
+          'Temat zgłoszenia: Wdrożenie. Opisz proces, który ma wejść w ten pakiet — resztę zakresu potwierdzimy e-mailem.',
         );
-        if (known) topic.value = requestedTopic;
+      } else if (context && topic) {
+        topic.value = 'wdrozenie';
+        if (contextInput) contextInput.value = requestedTopic || '';
+        showInfo('Kontekst zgłoszenia', context.label, `${context.hint} Temat: Wdrożenie.`);
+      } else if (topic) {
+        if (requestedTopic) {
+          const known = Array.prototype.some.call(
+            topic.options,
+            (option) => option.value === requestedTopic,
+          );
+          topic.value = known ? requestedTopic : 'mini-diagnoza';
+        }
+        if (topic.value === 'audyt') {
+          const auditLabel =
+            document.querySelector('#f-topic option[value="audyt"]')?.textContent || 'Audyt';
+          showInfo(
+            'Temat zgłoszenia',
+            auditLabel.trim(),
+            'Opisz proces i systemy, które mamy przeanalizować.',
+          );
+        }
       }
 
-      // Komunikaty po powrocie z serwera: /kontakt?blad=1|limit|walidacja
+      // Komunikaty po powrocie z serwera: /kontakt/?blad=1|limit|walidacja
       const code = params.get('blad');
       if (!status || !code) return;
 
@@ -241,5 +321,41 @@ const sourcePath = Astro.url.pathname.replace(/\/+$/, '') || '/';
         }
       }
     })();
+  </script>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const email = document.getElementById('f-email') as HTMLInputElement | null;
+    const process = document.getElementById('f-process') as HTMLTextAreaElement | null;
+    const consent = document.getElementById('f-consent') as HTMLInputElement | null;
+
+    const messages = {
+      email: 'Podaj poprawny adres e-mail, np. twoj@email.pl.',
+      process: 'Opisz proces, który zabiera czas — wystarczy jedno zdanie.',
+      consent: 'Zaznacz zgodę na przetwarzanie danych, żebyśmy mogli odpowiedzieć.',
+    };
+
+    const bind = (
+      field: HTMLInputElement | HTMLTextAreaElement | null,
+      message: string,
+      eventName: 'input' | 'change' = 'input',
+    ) => {
+      if (!field) return;
+      field.addEventListener('invalid', () => field.setCustomValidity(message));
+      field.addEventListener(eventName, () => field.setCustomValidity(''));
+    };
+
+    bind(email, messages.email);
+    bind(process, messages.process);
+    bind(consent, messages.consent, 'change');
+
+    form?.addEventListener('submit', () => {
+      email?.setCustomValidity('');
+      process?.setCustomValidity('');
+      consent?.setCustomValidity('');
+      if (email && !email.validity.valid) email.setCustomValidity(messages.email);
+      if (process && !process.validity.valid) process.setCustomValidity(messages.process);
+      if (consent && !consent.validity.valid) consent.setCustomValidity(messages.consent);
+    });
   </script>
 </Base>

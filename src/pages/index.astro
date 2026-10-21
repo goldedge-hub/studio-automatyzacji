@@ -9,7 +9,7 @@ const protocol = [
   { n: '01', t: 'Diagnoza', d: 'Mapa procesu, pomiar czasu i lista miejsc, w których ludzie robią pracę systemu.', when: '3 dni robocze' },
   { n: '02', t: 'Projekt', d: 'Zakres, architektura i kolejność wdrożeń. Wiesz, co powstanie i co zostaje poza zakresem.', when: '2 dni robocze' },
   { n: '03', t: 'Wdrożenie', d: 'Budowa, testy na Twoich danych, uruchomienie i szkolenie. Bez „prawie działa”.', when: '5–10 dni roboczych' },
-  { n: '04', t: 'Opieka', d: 'Monitoring, poprawki i miesięczny przegląd. System zostaje sprawny, kiedy nas nie ma.', when: '30 dni gwarancji' },
+  { n: '04', t: 'Opieka', d: 'Monitoring, poprawki i kwartalny przegląd. System zostaje sprawny, kiedy nas nie ma.', when: '30 dni gwarancji' },
 ];
 
 const services = [
@@ -18,7 +18,7 @@ const services = [
   { n: '03', t: 'Raporty i dashboardy', d: 'Jeden raport zamiast pięciu plików. Liczby zgodne z systemem źródłowym, nie „mniej więcej”.', tags: ['SQL', 'PDF', 'arkusze'] },
   { n: '04', t: 'Dokumenty i OCR', d: 'Faktury, umowy i skany: odczyt, klasyfikacja i wprowadzenie do obiegu bez klikania.', tags: ['OCR', 'faktury', 'klasyfikacja'] },
   { n: '05', t: 'n8n, Make, webhooki', d: 'Łączymy narzędzia, które nie mają gotowej integracji — z powiadomieniem, logiem i obsługą błędów.', tags: ['n8n', 'Make', 'webhooki'] },
-  { n: '06', t: 'Agenci AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi z kontrolą człowieka. Bez halucynacji na produkcji.', tags: ['LLM', 'kontrola', 'ewaluacja'] },
+  { n: '06', t: 'Agenci AI w procesie', d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi. Testy i kontrola człowieka; bez gwarancji 100% poprawności.', tags: ['LLM', 'kontrola', 'ewaluacja'] },
 ];
 
 const cases = [
@@ -26,7 +26,7 @@ const cases = [
     n: '01',
     t: 'Strażnik Cen',
     tag: 'prototyp',
-    href: '/case-studies#straznik-cen',
+    href: '/case-studies/#straznik-cen',
     before: 'ręczne sprawdzanie cen',
     after: '<b>50</b> produktów · 5 konkurentów',
     compare: {
@@ -39,7 +39,7 @@ const cases = [
     n: '02',
     t: 'Integracja zamówień',
     tag: 'zakres',
-    href: '/case-studies#integracja-zamowien',
+    href: '/case-studies/#integracja-zamowien',
     before: 'przepisywanie między systemami',
     after: '<b>1</b> przepływ bez klikania',
     compare: {
@@ -52,7 +52,7 @@ const cases = [
     n: '03',
     t: 'Raport operacyjny',
     tag: 'zakres',
-    href: '/case-studies#raport-operacyjny',
+    href: '/case-studies/#raport-operacyjny',
     before: '5 plików i godziny scalania',
     after: '<b>1</b> raport o 06:00',
     compare: {
@@ -64,9 +64,9 @@ const cases = [
 ];
 
 const plans = [
-  { name: 'Start', price: P.start.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Jeden proces, który najbardziej zjada czas.', feats: ['1 proces end-to-end', 'do 3 integracji API', 'testy na Twoich danych', 'dokumentacja i szkolenie', '30 dni gwarancji'], cta: 'Wybieram Start', href: '/kontakt?plan=start', hot: false },
-  { name: 'Growth', price: P.growth.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Trzy procesy i raport, który zastępuje arkusze.', feats: ['3 procesy end-to-end', 'dashboard lub raport cykliczny', 'do 6 integracji', 'alerty i obsługa błędów', '60 dni gwarancji'], cta: 'Wybieram Growth', href: '/kontakt?plan=growth', hot: true },
-  { name: 'Scale', price: P.scaleFrom.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Większe wdrożenie z wieloma systemami i zespołami.', feats: ['od 4 procesów', 'integracje ERP / WMS', 'agenci AI z kontrolą człowieka', 'wdrożenie etapami', 'opieka po odbiorze'], cta: 'Porozmawiajmy', href: '/kontakt?plan=scale', hot: false },
+  { name: 'Start', price: P.start.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Jeden proces, który najbardziej zjada czas.', feats: ['1 proces end-to-end', 'do 3 integracji API', 'testy na Twoich danych', 'dokumentacja i szkolenie', '30 dni gwarancji'], cta: 'Wybieram Start', href: '/kontakt/?plan=start', hot: false },
+  { name: 'Growth', price: P.growth.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Trzy procesy i raport, który zastępuje arkusze.', feats: ['3 procesy end-to-end', 'dashboard lub raport cykliczny', 'do 6 integracji', 'alerty i obsługa błędów', '60 dni gwarancji'], cta: 'Wybieram Growth', href: '/kontakt/?plan=growth', hot: true },
+  { name: 'Scale', price: P.scaleFrom.replace(' zł', '').replace(/ /g, ' '), unit: 'zł netto', desc: 'Większe wdrożenie z wieloma systemami i zespołami.', feats: ['od 4 procesów', 'integracje ERP / WMS', 'agenci AI z kontrolą człowieka', 'wdrożenie etapami', 'opieka po odbiorze'], cta: 'Wybieram Scale', href: '/kontakt/?plan=scale', hot: false },
 ];
 ---
 <Base
@@ -87,8 +87,8 @@ const plans = [
             Jeden zespół, jasny zakres, efekt, który da się policzyć.
           </p>
           <div class="hero-actions" data-reveal style="--d:.14s">
-            <a class="btn" href="/audyt">Zamów audyt — {P.audit} netto</a>
-            <a class="link-arrow" href="/wdrozenia">Zobacz, co wdrażamy <span>→</span></a>
+            <a class="btn" href="/kontakt/?temat=audyt">Zamów audyt — {P.audit} netto</a>
+            <a class="link-arrow" href="/wdrozenia/">Zobacz, co wdrażamy <span>→</span></a>
           </div>
           <div class="hero-meta" data-reveal style="--d:.2s">
             <span>10+ lat w danych i automatyce</span>
@@ -112,8 +112,8 @@ const plans = [
         </div>
         <div class="figure-side">
           <span class="mono">W skrócie</span>
-          <b>48 h</b>
-          <small>na zakres i wycenę po rozmowie. Potem decydujesz, czy wchodzimy.</small>
+          <b>2 dni</b>
+          <small>robocze na wycenę od otrzymania opisu. Potem decydujesz, czy wchodzimy.</small>
         </div>
       </div>
     </div>
@@ -159,13 +159,13 @@ const plans = [
         </div>
         <div class="sh-right" data-reveal>
           <p>Nie sprzedajemy narzędzi ani licencji. Budujemy przepływ, który działa na systemach, które już masz — albo mówimy wprost, że się nie da.</p>
-          <a class="link-arrow" href="/wdrozenia" style="margin-top:14px">Pełna oferta <span>→</span></a>
+          <a class="link-arrow" href="/wdrozenia/" style="margin-top:14px">Pełna oferta <span>→</span></a>
         </div>
       </div>
 
       <div class="service-list">
         {services.map((s) => (
-          <a class="service" href="/wdrozenia" data-reveal>
+          <a class="service" href="/wdrozenia/" data-reveal>
             <span class="s-num">{s.n}</span>
             <h3>{s.t}</h3>
             <p>{s.d}</p>
@@ -190,7 +190,7 @@ const plans = [
       </div>
       <div class="numbers">
         <div class="number" data-reveal><b>10+</b><span>lat</span><small>w danych, integracjach i automatyzacji procesów.</small></div>
-        <div class="number" data-reveal style="--d:.08s"><b>48 h</b><span>na wycenę</span><small>od rozmowy do zakresu i stałej ceny.</small></div>
+        <div class="number" data-reveal style="--d:.08s"><b>2 dni</b><span>robocze na wycenę</span><small>od otrzymania opisu do zakresu i stałej ceny.</small></div>
         <div class="number" data-reveal style="--d:.16s"><b>30 dni</b><span>gwarancji</span><small>na poprawki po odbiorze. Bez ukrytych kosztów.</small></div>
       </div>
       <div class="proof-quote" data-reveal>
@@ -207,7 +207,7 @@ const plans = [
           <p class="eyebrow">Dowody</p>
           <h2 id="cases-title" data-reveal>Zakres, nie obietnice.</h2>
         </div>
-        <a class="link-arrow" href="/case-studies">Wszystkie realizacje <span>→</span></a>
+        <a class="link-arrow" href="/case-studies/">Wszystkie realizacje <span>→</span></a>
       </div>
       <div class="case-rows">
         {cases.map((c) => (
@@ -254,8 +254,8 @@ const plans = [
         <div>
           <p class="eyebrow">Kalkulator</p>
           <h2 data-reveal style="font-size:clamp(36px,4.6vw,62px);margin-bottom:16px">Policz, ile to warte<br />w Twojej firmie.</h2>
-          <p class="lead" style="margin-bottom:18px">Trzy suwaki i jedna liczba. Bez zostawiania maila i bez rozmowy z handlowcem.</p>
-          <p class="small muted" style="max-width:420px">Kalkulator liczy ostrożnie: zakłada, że automatyzacja zdejmuje 70% ręcznej pracy, a stawka godzinowa to koszt pracownika wraz z narzutami.</p>
+          <p class="lead" style="margin-bottom:18px">Trzy suwaki i jedna liczba. Bez zostawiania maila i bez telefonu od handlowca.</p>
+          <p class="small muted" style="max-width:420px">Kalkulator liczy ostrożnie: zakłada 22 dni robocze w miesiącu, że automatyzacja zdejmuje 70% ręcznej pracy, a stawka godzinowa to koszt pracownika wraz z narzutami.</p>
         </div>
         <div class="calc-panel">
           <div class="calc-row">
@@ -279,7 +279,7 @@ const plans = [
             <div class="calc-payback-scale"><span>0</span><span>12 mies.</span><span>24 mies.</span></div>
           </div>
           <p class="calc-verdict" id="calc-verdict" aria-live="polite">Zwrot liczymy po zmianie suwaka.</p>
-          <p class="small muted" id="calc-note" style="margin:14px 0 0">Szacunek dla pakietu Start ({P.start}). Audyt {P.audit} odliczamy od wdrożenia.</p>
+          <p class="small muted" id="calc-note" style="margin:14px 0 0">Szacunek dla pakietu Start ({P.start}); 22 dni robocze w miesiącu i 70% pracy. Audyt {P.audit} odliczamy od wdrożenia.</p>
         </div>
       </div>
     </div>
@@ -318,7 +318,7 @@ const plans = [
           <p class="eyebrow">FAQ</p>
           <h2 id="faq-title" data-reveal>Pytania, które<br /> padają najczęściej.</h2>
         </div>
-        <p>Jeśli nie znajdziesz tu swojego pytania, napisz — odpowiadamy w ciągu jednego dnia roboczego.</p>
+        <p>Jeśli nie znajdziesz tu swojego pytania, napisz — odpowiadamy w ciągu 1 dnia roboczego.</p>
       </div>
       <FAQ items={homeFaq} />
     </div>
@@ -330,16 +330,16 @@ const plans = [
         <div>
           <p class="eyebrow">Start</p>
           <h2 data-reveal>Policzmy, ile godzin możesz <em>odzyskać.</em></h2>
-          <p data-reveal>20 minut rozmowy o procesie, który najbardziej zjada czas. Bez prezentacji i bez zobowiązań. Jeśli automatyzacja nie ma sensu, powiemy to wprost.</p>
+          <p data-reveal>Opisz proces, który najbardziej zjada czas. Bez prezentacji i bez zobowiązań. Jeśli automatyzacja nie ma sensu, powiemy to wprost.</p>
           <div class="buttonrow" data-reveal>
-            <a class="btn" href="/kontakt">Umów rozmowę</a>
+            <a class="btn" href="/kontakt/">Napisz do nas</a>
             <a class="link-arrow" href="mailto:kontakt@studioautomatyzacji.pl" style="color:var(--on-ink);border-color:rgba(244,241,232,.4)">Napisz maila <span>→</span></a>
           </div>
         </div>
         <div class="cta-side">
           <span class="mono">Kontakt bezpośredni</span>
           <a href="mailto:kontakt@studioautomatyzacji.pl">kontakt@studioautomatyzacji.pl</a>
-          <a href="/kontakt">Formularz →</a>
+          <a href="/kontakt/">Formularz →</a>
         </div>
       </div>
     </div>
@@ -356,7 +356,7 @@ const plans = [
     const paybar = document.getElementById('calc-paybar');
     const verdict = document.getElementById('calc-verdict');
 
-    const fmt = (n) => new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 0 }).format(n);
+    const fmt = (n) => new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 0, useGrouping: 'always' }).format(n);
 
     function calc() {
       if (!hours || !cost || !people || !outSave || !outPay) return;
@@ -364,7 +364,8 @@ const plans = [
       if (outH) outH.textContent = h + ' h';
       if (outC) outC.textContent = c + ' zł';
       if (outP) outP.textContent = String(p);
-      const monthly = h * p * 4.33 * c * 0.7;
+      // Wspólne założenia kalkulatorów: 22 dni robocze w miesiącu (22/5 tygodni) i 70% pracy.
+      const monthly = h * p * (22 / 5) * c * 0.7;
       outSave.textContent = fmt(monthly) + ' zł';
       const payback = startPrice / monthly;
       outPay.textContent = payback <= 24 ? payback.toFixed(1).replace('.', ',') + ' mies.' : 'ponad 24 mies.';

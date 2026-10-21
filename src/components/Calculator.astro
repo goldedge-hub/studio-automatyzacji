@@ -12,12 +12,12 @@ const compact = variant === 'compact';
 
 const nf0 = new Intl.NumberFormat('pl-PL', {
   maximumFractionDigits: 0,
-  useGrouping: true,
+  useGrouping: 'always',
 });
 const nf1 = new Intl.NumberFormat('pl-PL', {
   minimumFractionDigits: 1,
   maximumFractionDigits: 1,
-  useGrouping: true,
+  useGrouping: 'always',
 });
 
 const fields = [
@@ -57,7 +57,7 @@ const initialPayback = initial.saving > 0 ? packages[0].price / initial.saving :
 const initialVerdict = paybackVerdict(initialPayback);
 const verdictText = (payback: number) =>
   paybackVerdict(payback) === 'ok'
-    ? `Przy tych założeniach pakiet zwraca się w ok. ${fmtMonths(payback)} (szacunek [EST]).`
+    ? `Przy tych założeniach pakiet zwraca się w ok. ${fmtMonths(payback)} (szacunek).`
     : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
 ---
 <div
@@ -68,7 +68,7 @@ const verdictText = (payback: number) =>
 >
   <div class="calc-head">
     <h3 id={`${id}-title`}>Kalkulator oszczędności</h3>
-    <span class="scenario-label">Szacunek [EST], nie wynik klienta</span>
+    <span class="scenario-label">Szacunek, nie wynik klienta</span>
   </div>
 
   <div class="calc-body">
@@ -76,6 +76,7 @@ const verdictText = (payback: number) =>
       <p class="calc-desc">
         Policz, ile czasu i pieniędzy zostaje w firmie przy Twoim wolumenie i stawce.
         Wynik liczy się w przeglądarce — nic nie wysyłamy i nie zapisujemy.
+        Wspólne założenia: 22 dni robocze w miesiącu i 70% pracy przejmowanej przez automatyzację.
         {compact && ' Pełny opis założeń znajdziesz w kalkulatorze na stronie cennika.'}
       </p>
 
@@ -138,7 +139,7 @@ const verdictText = (payback: number) =>
         <dt>Oszczędność / 12 mies.</dt>
         <dd><span data-calc-out="saving12">{fmtMoney(initial.saving12)}</span></dd>
 
-        <dt class="calc-highlight">Prosty zwrot z pakietu</dt>
+        <dt class="calc-highlight">Prosty okres zwrotu z pakietu</dt>
         <dd class="calc-highlight"><span data-calc-out="payback">{fmtMonths(initialPayback)}</span></dd>
       </dl>
 
@@ -151,20 +152,21 @@ const verdictText = (payback: number) =>
       </p>
 
       <p class="calc-note">
-        Szacunek [EST], nie wynik klienta. Nie uwzględnia licencji i utrzymania.
+        Szacunek, nie wynik klienta. Nie uwzględnia licencji i utrzymania.
       </p>
 
       <div class="calc-cta">
         <a
           class="btn btn--primary"
-          href="/kontakt?temat=mini-diagnoza"
+          href="/kontakt/?plan=start"
+          data-calc-cta
           data-umami-event="cta_click"
           data-umami-event-label="Kalkulator: opisz ten proces"
         >Opisz ten proces</a>
         {compact && (
           <a
             class="text-link"
-            href="/ile-kosztuje#kalkulator"
+            href="/ile-kosztuje/#kalkulator"
             data-umami-event="cta_click"
             data-umami-event-label="Kalkulator: policz dokładniej"
           >Policz dokładniej</a>
@@ -183,12 +185,12 @@ const verdictText = (payback: number) =>
 
   const pl0 = new Intl.NumberFormat('pl-PL', {
     maximumFractionDigits: 0,
-    useGrouping: true,
+    useGrouping: 'always',
   });
   const pl1 = new Intl.NumberFormat('pl-PL', {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
-    useGrouping: true,
+    useGrouping: 'always',
   });
 
   const roots = document.querySelectorAll<HTMLElement>('[data-calculator]');
@@ -197,6 +199,7 @@ const verdictText = (payback: number) =>
     const packageSelect = root.querySelector<HTMLSelectElement>('[data-calc-package]');
     const warning = root.querySelector<HTMLElement>('[data-calc-warning]');
     const outputs = root.querySelectorAll<HTMLElement>('[data-calc-out]');
+    const cta = root.querySelector<HTMLAnchorElement>('[data-calc-cta]');
 
     const setOutput = (key: string, value: string) => {
       outputs.forEach((output) => {
@@ -223,6 +226,9 @@ const verdictText = (payback: number) =>
       const share = readValue('share');
       const selected = packageSelect?.selectedOptions[0];
       const price = Number(selected?.dataset.price ?? 0);
+      if (cta && packageSelect?.value) {
+        cta.href = `/kontakt/?plan=${packageSelect.value}`;
+      }
 
       const result = compute(orders, minutes, days, rate, share);
       const payback = result.saving > 0 ? price / result.saving : Infinity;
@@ -243,7 +249,7 @@ const verdictText = (payback: number) =>
         warning.classList.toggle('calc-verdict--bad', verdict === 'bad');
         warning.textContent =
           verdict === 'ok'
-            ? `Przy tych założeniach pakiet zwraca się w ok. ${pl1.format(payback)} mies. (szacunek [EST]).`
+            ? `Przy tych założeniach pakiet zwraca się w ok. ${pl1.format(payback)} mies. (szacunek).`
             : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
       }
     };
