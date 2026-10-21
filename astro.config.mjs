@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://www.studioautomatyzacji.pl',
+  site: 'https://studioautomatyzacji.pl',
   integrations: [
     sitemap({
       filter: (page) =>

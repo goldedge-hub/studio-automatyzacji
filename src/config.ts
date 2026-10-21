@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://www.studioautomatyzacji.pl';
+export const SITE_URL = 'https://studioautomatyzacji.pl';
 
 const clean = (value: string | undefined) => (value && value.trim() ? value.trim() : '');
 

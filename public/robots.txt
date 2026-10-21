@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.studioautomatyzacji.pl/sitemap-index.xml
+Sitemap: https://studioautomatyzacji.pl/sitemap-index.xml
