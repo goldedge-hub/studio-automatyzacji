@@ -6,6 +6,7 @@ import '../styles/global.css';
 import '../styles/premium.css';
 import '../styles/premium-shell.css';
 import '../styles/seo-premium.css';
+import '../styles/home-premium.css';
 
 import frauncesNormal from '../fonts/fraunces-latN-500.woff2?url';
 import frauncesExt from '../fonts/fraunces-extN-500.woff2?url';
@@ -38,26 +39,23 @@ const og = new URL('/og.png', site).toString();
 const year = new Date().getFullYear();
 
 const nav = [
-  ['/wdrozenia', 'Oferta'],
-  ['/ile-kosztuje', 'Ile kosztuje'],
+  ['/wdrozenia', 'Wdrożenia'],
+  ['/audyt', 'Audyt'],
+  ['/opieka', 'Opieka'],
   ['/dla-agencji', 'Dla agencji'],
-  ['/o-studiu', 'O studiu'],
-  ['/kontakt', 'Kontakt'],
+  ['/case-studies', 'Case studies'],
+  ['/o-studiu', 'Studio'],
 ];
 
 const mobileNavExtra = [
+  ['/ile-kosztuje', 'Cennik'],
   ['/integracje', 'Integracje'],
   ['/branze', 'Branże'],
   ['/przykladowy-raport', 'Przykładowy raport'],
   ['/zaufanie', 'Zaufanie i dane'],
 ];
 
-const isActive = (href: string) => {
-  if (href === '/wdrozenia') {
-    return ['/wdrozenia', '/audyt', '/opieka'].some((p) => path === p || path.startsWith(p + '/'));
-  }
-  return path === href || path.startsWith(href + '/');
-};
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
 
 const miniDiagnosisActive = path === '/audyt';
 
@@ -299,6 +297,7 @@ const faqLd = faq
           <p><a href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
           <p><a href="/audyt">Audyt {P.audit}</a></p>
           <p><a href="/wdrozenia">Wdrożenia</a></p>
+          <p><a href="/ile-kosztuje">Cennik</a></p>
           <p><a href="/opieka">Opieka od {P.careBasic}/mc</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
         </div>

@@ -67,7 +67,7 @@ export const homeFaq = [
     a: `Tak, w modelu white-label: ${P.whiteLabel} netto za proces do 3 integracji, pod marką agencji, bez kontaktu z klientem końcowym. To osobna ścieżka na stronie /dla-agencji. Nie publikujemy rabatów wolumenowych ani pilotażowych w cenniku.`,
   },
   {
-    q: 'Dlaczego nie ma tu case studies ani opinii?',
+    q: 'Dlaczego nie ma tu logotypów klientów ani opinii?',
     a: 'Bo nie publikujemy wymyślonych realizacji, logotypów ani opinii. Pierwszy publiczny case powstanie po pilocie za zgodą klienta, z pomiarem przed i po oraz akceptacją opisu. Do tego czasu pokazujemy metodykę i działający prototyp, a nie cudze wyniki.',
   },
 ];
