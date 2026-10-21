@@ -9,7 +9,7 @@ export default defineConfig({
         !page.includes('/o-mnie') && !page.includes('/404') && !page.includes('/dziekujemy'),
     }),
   ],
-  build: { inlineStylesheets: 'auto' },
+  build: { inlineStylesheets: 'always' },
   vite: {
     build: {
       // Skrypty zawsze jako osobne pliki: tekst komunikatu kalkulatora nie może

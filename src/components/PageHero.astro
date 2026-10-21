@@ -1,0 +1,49 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede: string;
+  index?: string;
+  meta?: string[];
+  backHref?: string;
+  backLabel?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  eyebrow = 'Studio Automatyzacji',
+  title,
+  lede,
+  index = '—',
+  meta = [],
+  backHref = '/',
+  backLabel = 'Strona główna',
+  ctaLabel,
+  ctaHref = '/kontakt',
+  secondaryLabel,
+  secondaryHref = '/kontakt',
+} = Astro.props;
+---
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-top">
+      <a class="back" href={backHref}>← {backLabel}</a>
+      <span class="ph-index">{eyebrow} / {index}</span>
+    </div>
+    <h1 set:html={title} />
+    <p class="ph-lede">{lede}</p>
+    {(ctaLabel || secondaryLabel) && (
+      <div class="ph-actions buttonrow">
+        {ctaLabel && <a class="btn" href={ctaHref}>{ctaLabel}</a>}
+        {secondaryLabel && <a class="link-arrow" href={secondaryHref}>{secondaryLabel} <span>→</span></a>}
+      </div>
+    )}
+    {meta.length > 0 && (
+      <div class="ph-meta">
+        {meta.map((m) => <span>{m}</span>)}
+      </div>
+    )}
+  </div>
+</section>

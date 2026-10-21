@@ -1,5 +1,21 @@
 ---
+// Premium shell (Paper & Signal) merged onto the r3 data/SEO contracts.
+// CSS order matters: fonts -> legacy r3 layers -> premium layer (premium wins).
+import '../styles/fonts.css';
 import '../styles/global.css';
+import '../styles/premium.css';
+import '../styles/premium-shell.css';
+import '../styles/seo-premium.css';
+
+import frauncesNormal from '../fonts/fraunces-latN-500.woff2?url';
+import frauncesExt from '../fonts/fraunces-extN-500.woff2?url';
+import frauncesItalic from '../fonts/fraunces-latI-500.woff2?url';
+import frauncesLight from '../fonts/fraunces-latN-300.woff2?url';
+import interLatin from '../fonts/inter-lat-400.woff2?url';
+import interExt from '../fonts/inter-ext-400.woff2?url';
+import jbmLatin from '../fonts/jbm-lat-400.woff2?url';
+import jbmExt from '../fonts/jbm-ext-400.woff2?url';
+
 import {
   CONTACT_EMAIL,
   CONTACT_HREF,
@@ -19,6 +35,7 @@ const { title, description, path = '/', noindex = false, faq = null } = Astro.pr
 const site = SITE_URL;
 const canonical = new URL(path, site).toString();
 const og = new URL('/og.png', site).toString();
+const year = new Date().getFullYear();
 
 const nav = [
   ['/wdrozenia', 'Oferta'],
@@ -28,12 +45,21 @@ const nav = [
   ['/kontakt', 'Kontakt'],
 ];
 
+const mobileNavExtra = [
+  ['/integracje', 'Integracje'],
+  ['/branze', 'Branże'],
+  ['/przykladowy-raport', 'Przykładowy raport'],
+  ['/zaufanie', 'Zaufanie i dane'],
+];
+
 const isActive = (href: string) => {
   if (href === '/wdrozenia') {
     return ['/wdrozenia', '/audyt', '/opieka'].some((p) => path === p || path.startsWith(p + '/'));
   }
   return path === href || path.startsWith(href + '/');
 };
+
+const miniDiagnosisActive = path === '/audyt';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -141,7 +167,7 @@ const faqLd = faq
   : null;
 ---
 <!doctype html>
-<html lang="pl">
+<html lang="pl" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -149,7 +175,7 @@ const faqLd = faq
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   <link rel="canonical" href={canonical} />
-  <meta name="theme-color" content="#f4f0e6" />
+  <meta name="theme-color" content="#F4F1E8" />
   <meta name="format-detection" content="telephone=no" />
 
   <meta property="og:type" content="website" />
@@ -169,12 +195,24 @@ const faqLd = faq
   <meta name="twitter:image" content={og} />
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preload" href={frauncesNormal} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={frauncesExt} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={frauncesItalic} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={frauncesLight} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={interExt} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={jbmLatin} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={jbmExt} as="font" type="font/woff2" crossorigin />
+
+  <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
+
   <script
     defer
     src={UMAMI_SRC}
     data-website-id={UMAMI_WEBSITE_ID}
     data-host-url={UMAMI_HOST}
-    data-domains="www.studioautomatyzacji.pl,studioautomatyzacji.pl"
+    data-domains="studioautomatyzacji.pl,www.studioautomatyzacji.pl"
     data-do-not-track="true"
   ></script>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -183,17 +221,15 @@ const faqLd = faq
 <body>
   <a class="skip" href="#main">Przejdź do treści</a>
 
-  <header class="site-header">
-    <div class="wrap nav">
-      <a class="brand" href="/">
-        Studio Automatyzacji
-        <small>Audyt i wdrożenia e-commerce</small>
-      </a>
+  <header class="site-head" id="site-header">
+    <div class="wrap head-row">
+      <a class="brand" href="/" aria-label="Studio Automatyzacji — strona główna">Studio<span>.</span>Automatyzacji</a>
 
-      <nav class="nav-links" aria-label="Menu główne">
+      <nav class="nav-desktop" aria-label="Menu główne">
         {nav.map(([href, label]) => (
           <a
             href={href}
+            class={isActive(href) ? 'is-active' : ''}
             aria-current={isActive(href) ? 'page' : undefined}
             data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
             data-umami-event-label={href === '/kontakt' ? 'Nawigacja: kontakt' : undefined}
@@ -201,39 +237,43 @@ const faqLd = faq
         ))}
       </nav>
 
-      <div class="nav-cta">
+      <div class="head-actions">
         <a
-          class="btn btn--primary"
+          class="head-cta"
           href={CONTACT_HREF}
           data-umami-event="cta_click"
           data-umami-event-label="Nagłówek: napisz do nas"
-        >Napisz do nas</a>
-      </div>
+        >Porozmawiajmy →</a>
 
-      <details class="menu">
-        <summary>Menu</summary>
-        <nav class="menu-panel" aria-label="Menu mobilne">
-          {nav.map(([href, label]) => (
+        <details class="menu">
+          <summary>Menu</summary>
+          <nav class="menu-panel" aria-label="Menu mobilne">
+            {nav.map(([href, label]) => (
+              <a
+                href={href}
+                class={isActive(href) ? 'is-active' : ''}
+                aria-current={isActive(href) ? 'page' : undefined}
+                data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
+                data-umami-event-label={href === '/kontakt' ? 'Menu mobilne: kontakt' : undefined}
+              >{label}</a>
+            ))}
+            <a href="/audyt#mini-diagnoza" class={miniDiagnosisActive ? 'is-active' : ''} aria-current={miniDiagnosisActive ? 'page' : undefined} data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
+            {mobileNavExtra.map(([href, label]) => (
+              <a
+                href={href}
+                class={isActive(href) ? 'is-active' : ''}
+                aria-current={isActive(href) ? 'page' : undefined}
+              >{label}</a>
+            ))}
             <a
-              href={href}
-              aria-current={isActive(href) ? 'page' : undefined}
-              data-umami-event={href === '/kontakt' ? 'cta_click' : undefined}
-              data-umami-event-label={href === '/kontakt' ? 'Menu mobilne: kontakt' : undefined}
-            >{label}</a>
-          ))}
-          <a href="/audyt#mini-diagnoza" data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
-          <a href="/integracje">Integracje</a>
-          <a href="/branze">Branże</a>
-          <a href="/przykladowy-raport">Przykładowy raport</a>
-          <a href="/zaufanie">Zaufanie i dane</a>
-          <a
-            class="btn btn--primary"
-            href={CONTACT_HREF}
-            data-umami-event="cta_click"
-            data-umami-event-label="Menu mobilne: napisz do nas"
-          >Napisz do nas</a>
-        </nav>
-      </details>
+              class="menu-cta"
+              href={CONTACT_HREF}
+              data-umami-event="cta_click"
+              data-umami-event-label="Menu mobilne: napisz do nas"
+            >Napisz do nas</a>
+          </nav>
+        </details>
+      </div>
     </div>
   </header>
 
@@ -241,57 +281,58 @@ const faqLd = faq
     <slot />
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-foot">
     <div class="wrap">
-      <div class="footer-top">
-        <p class="footer-wordmark">Studio Automatyzacji</p>
-        <p>
-          Automatyzacje dla e-commerce: zamówienia, zwroty, stany, faktury i korespondencja.
-          Stała cena, dokumentacja i kod po stronie klienta.
-        </p>
-      </div>
+      <p class="foot-word">Mniej ręcznie.</p>
 
-      <div class="footer-grid">
+      <div class="foot-grid">
         <div>
-          <h2>Studio</h2>
+          <p class="foot-label">Studio</p>
           <p><a href="/o-studiu">O studiu</a></p>
           <p><a href="/case-studies">Realizacje</a></p>
           <p><a href="/zaufanie">Zaufanie i dane</a></p>
           <p><a href="/kontakt" data-umami-event="cta_click" data-umami-event-label="Stopka: kontakt">Kontakt</a></p>
         </div>
+
         <div>
-          <h2>Oferta</h2>
+          <p class="foot-label">Oferta</p>
           <p><a href="/audyt#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
           <p><a href="/audyt">Audyt {P.audit}</a></p>
           <p><a href="/wdrozenia">Wdrożenia</a></p>
           <p><a href="/opieka">Opieka od {P.careBasic}/mc</a></p>
           <p><a href="/dla-agencji">Dla agencji</a></p>
         </div>
+
         <div>
-          <h2>Integracje i branże</h2>
+          <p class="foot-label">Integracje i branże</p>
           {SEO_PAGES.filter((p) => p.href.split('/').length > 2).map((p) => (
             <p><a href={p.href}>{p.title}</a></p>
           ))}
         </div>
+
         <div>
-          <h2>Dokumenty</h2>
+          <p class="foot-label">Dokumenty</p>
           <p><a href="/polityka-prywatnosci">Polityka prywatności</a></p>
           <p><a href="/regulamin">Regulamin</a></p>
           <p><a href="/zaufanie#ai-act">AI Act</a></p>
           <p><a href="/zaufanie#rodo">RODO</a></p>
         </div>
+
         <div>
-          <h2>Kontakt</h2>
+          <p class="foot-label">Kontakt</p>
           <p>
-            <a class="footer-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            <a class="foot-mail" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
-          <p><a href={CONTACT_HREF} data-umami-event="cta_click" data-umami-event-label="Stopka: napisz do nas">Napisz do nas</a> · odpowiedź w {CONTACT_RESPONSE}</p>
-          <p class="small">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
+          <p>
+            <a href={CONTACT_HREF} data-umami-event="cta_click" data-umami-event-label="Stopka: napisz do nas">Napisz do nas</a>
+            · odpowiedź w {CONTACT_RESPONSE}
+          </p>
+          <p class="small muted">Ceny netto. Aktualizacja cennika: {PRICE_UPDATED}.</p>
         </div>
       </div>
 
-      <div class="footer-legal">
-        <span>© {new Date().getFullYear()} Studio Automatyzacji</span>
+      <div class="foot-legal">
+        <span>© {year} Studio Automatyzacji</span>
         {COMPANY.legalName && <span>{COMPANY.legalName}</span>}
         {COMPANY.nip && <span>NIP {COMPANY.nip}</span>}
         {COMPANY_ADDRESS && <span>{COMPANY_ADDRESS}</span>}
@@ -300,5 +341,36 @@ const faqLd = faq
       </div>
     </div>
   </footer>
+
+  <script>
+    const header = document.getElementById('site-header');
+    const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    document.querySelectorAll<HTMLDetailsElement>('.menu').forEach((menu) => {
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.open = false; }));
+      document.addEventListener('click', (e) => {
+        if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+      });
+    });
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    if (reduced || !('IntersectionObserver' in window)) {
+      targets.forEach((el) => el.classList.add('in'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      targets.forEach((el) => io.observe(el));
+      setTimeout(() => targets.forEach((el) => el.classList.add('in')), 2800);
+    }
+  </script>
 </body>
 </html>

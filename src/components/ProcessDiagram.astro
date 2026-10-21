@@ -1,0 +1,17 @@
+---
+interface Step { n: string; t: string; d: string; }
+interface Props { steps: Step[]; }
+const { steps } = Astro.props;
+---
+<div class="process">
+  <div class="process-grid">
+    {steps.map((s, i) => (
+      <div class="process-step">
+        <span class="ps-n">{s.n}</span>
+        <h3>{s.t}</h3>
+        <p>{s.d}</p>
+        {i < steps.length - 1 && <span class="process-arrow" aria-hidden="true">→</span>}
+      </div>
+    ))}
+  </div>
+</div>

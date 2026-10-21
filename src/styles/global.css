@@ -1,8 +1,5 @@
 /* Fonty self-hosted. Żadnych requestów do zewnętrznych dostawców. */
-@import "@fontsource-variable/inter";
-@import "@fontsource/sora/400.css";
-@import "@fontsource/sora/600.css";
-@import "@fontsource/sora/700.css";
+/* Fontsource imports removed: premium.css maps --font/--display to self-hosted Inter/Fraunces. */
 
 /* ============================================================
    Studio Automatyzacji

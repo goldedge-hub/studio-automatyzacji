@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Studio Automatyzacji — SEO / legacy premium bridge (Track D)
+   Load order: global.css -> premium.css -> seo-premium.css
+
+   Covers the 27 r3 routes outside the home page, and only what premium.css
+   does not already own. Tokens are inherited from premium.css :root (--paper,
+   --paper-2, --ink, --ink-soft, --muted, --line, --line-strong, --accent,
+   --accent-soft, --on-dark). Fonts resolve as --font-display > --display >
+   literal and --font-mono > --mono > literal, so this file reads correctly
+   whichever alias premium.css publishes.
+
+   Two rules keep the bridge safe to load anywhere in the stack:
+   - Surface, type and state only. Grid columns, section padding and the
+     <=900px / <=640px stacking stay with global.css and premium.css, so no
+     rule here can resurrect a desktop layout on a phone.
+   - Everything sits in @media screen. The printed audit report is a
+     black-on-white document owned by the print block in global.css, and a
+     paper palette must not leak into it.
+
+   Selectors start at column 0 so `rg -c "^\."` counts rules.
+   ========================================================================== */
+
+:root {
+  --seo-display: var(--font-display, var(--display, "Fraunces", Georgia, "Times New Roman", serif));
+  --seo-mono: var(--font-mono, var(--mono, "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace));
+  --seo-edge: 2px;
+}
+
+@media screen {
+
+/* 1. Measure — /404, /dziekujemy, legal pages */
+.narrow { max-width: 74ch; }
+
+/* 2. Long-form documents — .doc-row (/zaufanie, /branze/*, /integracje/*)
+      and .prose (/polityka-prywatnosci, /regulamin) */
+.doc-row .doc-body p,
+.doc-row .doc-body li,
+.prose p,
+.prose li { color: var(--ink-soft); font-size: 16.5px; line-height: 1.7; }
+
+.prose li::marker { color: var(--muted); }
+
+.facts-table th {
+  font-family: var(--seo-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.table--numeric td:not(:first-child) {
+  font-family: var(--seo-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-note { font-family: var(--seo-mono); font-size: 10.5px; letter-spacing: 0.06em; }
+
+/* 3. Mobile card twins of the pricing and comparison tables
+      (/ile-kostuje, /wdrozenia, /branze, /poradnik) */
+.price-card h3 { font-family: var(--seo-display); font-weight: 500; letter-spacing: -0.02em; }
+
+.price-card .price-card-price,
+.compare-card .compare-price {
+  font-family: var(--seo-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.price-card .price-card-term {
+  font-family: var(--seo-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.compare-card dt { font-size: 13px; }
+
+/* 4. Calculator — /ile-kostuje, / (Calculator.astro) */
+.calc { border: 1px solid var(--line-strong); border-radius: var(--seo-edge); background: var(--paper-2); }
+
+.calc-results { background: var(--paper); }
+
+.calc-results h4 { font-size: 10px; letter-spacing: 0.08em; }
+
+.calc-results dt { font-size: 13px; }
+
+.calc-results dd { font-family: var(--seo-mono); font-variant-numeric: tabular-nums; }
+
+.calc-results .calc-highlight { color: var(--accent-hover); font-weight: 600; }
+
+.calc-field label { font-weight: 500; color: var(--ink); }
+
+.calc-field .calc-unit { font-family: var(--seo-mono); font-size: 10.5px; letter-spacing: 0.04em; }
+
+.calc input[type="number"],
+.calc select {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--seo-edge);
+  background: var(--paper);
+  font-family: var(--seo-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc input[type="range"] { height: 24px; accent-color: var(--accent); }
+
+.calc-warning { border-left: 2px solid var(--accent); font-size: 13px; }
+
+.calc-warning[data-state="bad"],
+.calc-warning.calc-verdict--bad { border-left-color: var(--danger, var(--ink)); }
+
+/* 5. Model scenario — /ile-kostuje, /poradnik/*, / (Scenario.astro and inline) */
+.scenario {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--seo-edge);
+  background: var(--paper-2);
+}
+
+.scenario-label { border-radius: 2px; font-size: 9.5px; letter-spacing: 0.08em; }
+
+.scenario-col h4 { font-size: 10px; letter-spacing: 0.08em; }
+
+.scenario td:last-child { font-size: 12.5px; font-variant-numeric: tabular-nums; }
+
+/* 6. Wrapper headings that would otherwise take the premium global h2 scale:
+      closing CTA band (CTA.astro, SeoCta.astro) and the .condition callout */
+.cta-grid h2 { font-size: clamp(32px, 3.8vw, 56px); letter-spacing: -0.035em; }
+
+.condition h2 { font-size: clamp(24px, 2.6vw, 34px); }
+
+.condition h3 { font-size: clamp(20px, 2.2vw, 26px); }
+
+/* 7. Example audit report — /przykladowy-raport */
+.report-banner {
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--seo-edge);
+  background: var(--paper-2);
+}
+
+.report-banner-label {
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  color: var(--accent);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+
+.report-doc { border: 1px solid var(--line-strong); border-radius: var(--seo-edge); box-shadow: none; }
+
+.report-meta dd { font-size: 12.5px; font-variant-numeric: tabular-nums; }
+
+.report-tag { border-radius: 2px; font-size: 9.5px; letter-spacing: 0.08em; }
+
+.report-small { font-family: var(--seo-mono); font-size: 10.5px; letter-spacing: 0.04em; }
+
+.report-doc .table { min-width: 560px; font-size: 13px; }
+
+/* 8. Prototype diagram — /case-studies (.flow-figure SVG) */
+.flow-figure { border: 1px solid var(--line-strong); border-radius: var(--seo-edge); }
+
+.flow-figure text { font-family: var(--seo-mono); }
+
+.flow-title { font-size: 12px; }
+
+.flow-sub,
+.flow-caption { font-size: 10.5px; }
+
+.flow-box,
+.flow-line { stroke-width: 1.25; }
+
+/* 9. Contact form extras — /kontakt (.consent, .req, .hint, .form-status) */
+.consent { font-size: 13px; }
+
+.consent input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+.field .req { color: var(--accent); font-weight: 500; }
+
+.field .hint { font-size: 12.5px; }
+
+.form-status { border-left: 2px solid var(--accent); font-size: 14px; }
+
+.form-status[data-state="error"] { border-left-color: var(--danger, var(--accent)); }
+
+}

@@ -18,7 +18,9 @@
     "astro": "^5.13.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.11",
     "@resvg/resvg-js": "^2.6.2",
-    "satori": "^0.63.0"
+    "satori": "^0.63.0",
+    "typescript": "^5.9.3"
   }
 }

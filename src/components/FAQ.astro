@@ -4,7 +4,7 @@ interface Item {
   a: string;
 }
 
-const { items }: { items: Item[] } = Astro.props;
+const { items = [] }: { items?: Item[] } = Astro.props;
 ---
 <div class="faq">
   {items.map((item) => (
