@@ -4,8 +4,8 @@ import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE } from '../config';
 ---
 <Base
   title="Dziękujemy za zgłoszenie | Studio Automatyzacji"
-  description="Zgłoszenie przyjęte. Automatyczne potwierdzenie poszło e-mailem. Odpowiadamy w ciągu jednego dnia roboczego, mini-diagnozę wysyłamy w 2 dni robocze."
-  path="/dziekujemy"
+  description="Zgłoszenie przyjęte. Automatyczne potwierdzenie poszło e-mailem. Odpowiadamy w ciągu 1 dnia roboczego, mini-diagnozę wysyłamy w ciągu 2 dni roboczych."
+  path="/dziekujemy/"
   noindex={true}
 >
   <section class="page-head">
@@ -32,7 +32,7 @@ import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE } from '../config';
         </li>
         <li>
           <strong>Czas mini-diagnozy: {DIAGNOSIS_RESPONSE}.</strong> Krótka pisemna ocena
-          jednego procesu, jeśli zgłoszenie jej dotyczy. Szacunki oznaczamy jako [EST].
+          jednego procesu, jeśli zgłoszenie jej dotyczy. Szacunki są jawnie opisane.
         </li>
         <li>
           <strong>Sprawdź spam i folder „Oferty”.</strong> Automatyczne potwierdzenie
@@ -55,20 +55,20 @@ import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE } from '../config';
       <div class="buttonrow" style="margin-top:32px">
         <a
           class="btn btn--primary"
-          href="/ile-kosztuje"
+          href="/ile-kosztuje/"
           data-umami-event="cta_click"
           data-umami-event-label="Dziękujemy: zobacz cennik"
         >Zobacz cennik</a>
         <a
           class="btn btn--ghost"
-          href="/przykladowy-raport"
+          href="/przykladowy-raport/"
           data-umami-event="cta_click"
           data-umami-event-label="Dziękujemy: przykładowy raport"
         >Przykładowy raport</a>
       </div>
 
       <p class="small muted" style="margin-top:18px">
-        Ceny netto. Kontakt odbywa się e-mailem, bez kalendarza.
+        Ceny netto. Kontakt odbywa się przez formularz lub e-mail.
       </p>
     </div>
   </section>

@@ -46,33 +46,33 @@ const assumptions = [
   [
     'Stawka kosztu pracy',
     `${money(rate)}/h netto`,
-    'Wynagrodzenie, narzuty i część kosztów pośrednich. Wartość przyjęta w przykładzie [EST].',
+    'Wynagrodzenie, narzuty i część kosztów pośrednich. Wartość przyjęta w przykładzie (szacunek).',
   ],
-  ['Dni robocze', `${workDays} dni/mc`, 'Bez weekendów i świąt. Wartość przyjęta w przykładzie [EST].'],
+  ['Dni robocze', `${workDays} dni/mc`, 'Bez weekendów i świąt. Wartość przyjęta w przykładzie (szacunek).'],
   [
     'Zamówienia',
     `${volumes.orders}/mc`,
-    'Shoper 120 + Allegro 120. Eksport BaseLinker z okresu 30 dni [EST].',
+    'Shoper 120 + Allegro 120. Eksport BaseLinker z okresu 30 dni (szacunek).',
   ],
   [
     'Zwroty i reklamacje',
     `${volumes.returns}/mc`,
-    'Około 18% zamówień. Eksport Shoper i etykiety w skrzynce [EST].',
+    'Około 18% zamówień. Eksport Shoper i etykiety w skrzynce (szacunek).',
   ],
-  ['Wiadomości do obsługi', `${volumes.messages}/mc`, 'Etykiety i liczniki w skrzynce, bez treści wiadomości [EST].'],
-  ['Aktywne SKU', `${volumes.skus}`, 'Lista produktów w Shoper i BaseLinker [EST].'],
-  ['Raporty sprzedaży', `${volumes.reports}/mc`, 'Zestawienie tygodniowe składane ręcznie [EST].'],
+  ['Wiadomości do obsługi', `${volumes.messages}/mc`, 'Etykiety i liczniki w skrzynce, bez treści wiadomości (szacunek).'],
+  ['Aktywne SKU', `${volumes.skus}`, 'Lista produktów w Shoperze i BaseLinker (szacunek).'],
+  ['Raporty sprzedaży', `${volumes.reports}/mc`, 'Zestawienie tygodniowe składane ręcznie (szacunek).'],
 ];
 
 const sources = [
   {
-    source: 'Eksport zamówień z BaseLinker (CSV)',
+    source: 'Eksport zamówień z BaseLinkera (CSV)',
     sample: `${volumes.orders} rekordów`,
     period: '01–30.09.2026',
     limit: 'Brak znaczników czasu poszczególnych kroków.',
   },
   {
-    source: 'Eksport zwrotów i reklamacji ze Shoper',
+    source: 'Eksport zwrotów i reklamacji ze Shopera',
     sample: `${volumes.returns} rekordów`,
     period: '01–30.09.2026',
     limit: 'Część statusów i ustaleń została w e-mailach.',
@@ -81,7 +81,7 @@ const sources = [
     source: 'Zestawienie zamówień Allegro',
     sample: '120 rekordów',
     period: '01–30.09.2026',
-    limit: 'Brak wspólnego identyfikatora ze Shoper; dopasowanie po numerze.',
+    limit: 'Brak wspólnego identyfikatora ze Shopera; dopasowanie po numerze.',
   },
   {
     source: 'Eksport faktur z systemu fakturownego',
@@ -102,7 +102,7 @@ const sources = [
     limit: 'Brak historii korekt i informacji, który system jest nadrzędny.',
   },
   {
-    source: 'Rozmowy z zespołem',
+    source: 'Ustalenia z zespołem',
     sample: '2 × 60 min',
     period: 'wrzesień 2026',
     limit: 'Czasy deklarowane, nie mierzone stoperem.',
@@ -271,7 +271,7 @@ const riskRows = [
   {
     risk: 'Czasy deklarowane, bez pomiaru per krok',
     impact: 'Oszczędność może być zawyżona albo zaniżona.',
-    action: 'Przed odbiorem: 5 dni pomiaru znaczników czasu w BaseLinker i systemie fakturowym.',
+    action: 'Przed odbiorem: 5 dni pomiaru znaczników czasu w BaseLinkerze i systemie fakturowym.',
   },
   {
     risk: 'Brak wspólnego identyfikatora Shoper / Allegro',
@@ -281,7 +281,7 @@ const riskRows = [
   {
     risk: 'Statusy zwrotów częściowo w e-mailach',
     impact: 'Brak jednego źródła prawdy; klient pyta drugi raz.',
-    action: 'Ustalić status w Shoper albo BaseLinkerze. Bez tego zwrotów nie automatyzujemy.',
+    action: 'Ustalić status w Shoperze albo BaseLinkerze. Bez tego zwrotów nie automatyzujemy.',
   },
   {
     risk: 'System fakturowy bez potwierdzonego środowiska testowego',
@@ -295,7 +295,7 @@ const riskRows = [
   },
   {
     risk: 'Sezonowość',
-    impact: 'Wrzesień jest poza szczytem; wolumen w Q4 może być wyższy [EST].',
+    impact: 'Wrzesień jest poza szczytem; wolumen w Q4 może być wyższy (szacunek).',
     action: 'Model przeliczyć na 300–350 zamówień/mc przed decyzją o kolejce i limitach API.',
   },
   {
@@ -319,12 +319,12 @@ const acceptanceRows = [
   {
     area: 'Zamówienia',
     criterion: '50 testowych zamówień (25 Shoper, 25 Allegro) w jednym rejestrze; 0 duplikatów; każde ma identyfikator źródła.',
-    method: 'Eksport i porównanie z BaseLinker po 5 dniach testu.',
+    method: 'Eksport i porównanie z BaseLinkera po 5 dniach testu.',
   },
   {
     area: 'Statusy',
-    criterion: 'Zmiana statusu w źródle jest widoczna w BaseLinker w maksymalnie 5 minut.',
-    method: 'Test z znacznikiem czasu i logiem zdarzeń.',
+    criterion: 'Zmiana statusu w źródle jest widoczna w BaseLinkerze w maksymalnie 5 minut.',
+    method: 'Test ze znacznikiem czasu i logiem zdarzeń.',
   },
   {
     area: 'Wyjątki',
@@ -365,8 +365,8 @@ const acceptanceRows = [
 ---
 <Base
   title="Przykładowy raport z audytu (fikcyjny sklep)"
-  description="Pełny przykład raportu z audytu automatyzacji dla fikcyjnego sklepu odzieżowego: mapa procesu, koszt pracy [EST], ranking, ryzyka i wycena z cennika. Dane fikcyjne."
-  path="/przykladowy-raport"
+  description="Pełny przykład raportu z audytu automatyzacji dla fikcyjnego sklepu odzieżowego: mapa procesu, koszt pracy (szacunek), ranking, ryzyka i wycena z cennika. Dane fikcyjne."
+  path="/przykladowy-raport/"
 >
   <div class="wrap" style="padding-top:24px">
     <div class="report-banner" role="note" aria-label="Zastrzeżenie do przykładowego raportu">
@@ -395,8 +395,8 @@ const acceptanceRows = [
         po wycenę, ryzyka i kryteria odbioru.
       </p>
       <div class="buttonrow">
-        <a class="btn btn--primary" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a>
-        <a class="btn btn--ghost" href="/audyt">Zakres audytu i cena</a>
+        <a class="btn btn--primary" href="/kontakt/?temat=audyt">Napisz w sprawie audytu</a>
+        <a class="btn btn--ghost" href="/audyt/">Zakres audytu i cena</a>
       </div>
       <p class="small muted report-print-hint" style="margin-top:14px">
         Strona jest przygotowana do wydruku: Ctrl/Cmd + P. Nie generujemy pliku PDF
@@ -425,8 +425,8 @@ const acceptanceRows = [
       </header>
 
       <p class="report-disclaimer">
-        <strong>Oznaczenia:</strong> [EST] to szacunek na jawnych założeniach, nie pomiar
-        ani wynik klienta. Ceny pochodzą z aktualnego cennika Studio Automatyzacji
+        <strong>Oznaczenia:</strong> wartości oznaczone „(szacunek)” pochodzą z jawnych
+        założeń, nie z pomiaru ani wyniku klienta. Ceny pochodzą z aktualnego cennika Studio Automatyzacji
         i są netto. Wszystkie dane w dokumencie są fikcyjne.
       </p>
 
@@ -469,7 +469,7 @@ const acceptanceRows = [
           Braki, które wpływają na wiarygodność liczb: brak znaczników czasu per krok,
           brak wspólnego identyfikatora zamówień Shoper / Allegro i niepotwierdzone
           środowisko testowe systemu fakturowego. Dlatego wszystkie godziny i kwoty
-          w sekcji 3 są oznaczone [EST].
+          w sekcji 3 są szacunkami.
         </p>
       </section>
 
@@ -487,7 +487,7 @@ const acceptanceRows = [
                 <th scope="col">Krok</th>
                 <th scope="col">Kto</th>
                 <th scope="col">Narzędzie</th>
-                <th scope="col">Czas [EST]</th>
+                <th scope="col">Czas (szacunek)</th>
                 <th scope="col">Błędy / wyjątki</th>
               </tr>
             </thead>
@@ -515,7 +515,7 @@ const acceptanceRows = [
         <p>
           Wyliczenie opiera się na czterech jawnych założeniach: wolumenie, czasie
           jednostkowym, liczbie dni roboczych i stawce kosztu pracy. Każda liczba
-          w tej sekcji jest szacunkiem [EST], nie wynikiem pomiaru.
+          w tej sekcji jest szacunkiem, nie wynikiem pomiaru.
         </p>
 
         <div class="table-wrap" tabindex="0" role="region" aria-label="Założenia kosztu ręcznej pracy">
@@ -537,9 +537,9 @@ const acceptanceRows = [
             <thead>
               <tr>
                 <th scope="col">Proces</th>
-                <th scope="col">Wyliczenie [EST]</th>
-                <th scope="col">Godziny/mc [EST]</th>
-                <th scope="col">Koszt/mc [EST]</th>
+                <th scope="col">Wyliczenie (szacunek)</th>
+                <th scope="col">Godziny/mc (szacunek)</th>
+                <th scope="col">Koszt/mc (szacunek)</th>
               </tr>
             </thead>
             <tbody>
@@ -564,7 +564,7 @@ const acceptanceRows = [
         </div>
 
         <div class="condition" style="margin-top:26px">
-          <h3>Koszt w skali roku [EST]</h3>
+          <h3>Koszt w skali roku (szacunek)</h3>
           <p>
             {moneyExact(totalCost)}/mc × 12 = <strong>{money(totalYear)}</strong> rocznie.
             To koszt pracy, nie utracony przychód. Wyliczenie nie zawiera kosztu błędów,
@@ -572,7 +572,7 @@ const acceptanceRows = [
           </p>
           <p class="small" style="margin-bottom:0">
             Po wdrożeniu rekomendowanego zakresu zostaje około
-            {moneyExact(totalCost - nowMoney)}/mc pracy ręcznej [EST] poza trzema
+            {moneyExact(totalCost - nowMoney)}/mc pracy ręcznej (szacunek) poza trzema
             zautomatyzowanymi procesami.
           </p>
         </div>
@@ -583,7 +583,7 @@ const acceptanceRows = [
         <p>
           Kolejność wynika z oszczędności, złożoności i ryzyka, nie z tego, co najłatwiej
           sprzedać. Oszczędność to część czasu z sekcji 3, którą da się zdjąć bez
-          pogorszenia kontroli. Wszystkie wartości są szacunkami [EST].
+          pogorszenia kontroli. Wszystkie wartości są szacunkami.
         </p>
 
         <div class="table-wrap" tabindex="0" role="region" aria-label="Ranking procesów do automatyzacji">
@@ -592,7 +592,7 @@ const acceptanceRows = [
               <tr>
                 <th scope="col">Proces</th>
                 <th scope="col">Wolumen</th>
-                <th scope="col">Oszczędność [EST]</th>
+                <th scope="col">Oszczędność (szacunek)</th>
                 <th scope="col">Złożoność</th>
                 <th scope="col">Ryzyko</th>
                 <th scope="col">Rekomendacja</th>
@@ -633,7 +633,7 @@ const acceptanceRows = [
         <p>
           <strong>Korekta adresów i danych do wysyłki — nie automatyzować.</strong>
           To około {volumes.returns} przypadków w miesiącu i {hours((volumes.returns * 2) / 60)}
-          pracy [EST]. Błędy powstają w formularzu, zanim zamówienie trafi do BaseLinkera,
+          pracy (szacunek). Błędy powstają w formularzu, zanim zamówienie trafi do BaseLinkera,
           a BaseLinker już sprawdza format. Automatyzacja nie usuwa źródła problemu,
           tylko dokłada kolejkę wyjątków. Najpierw warto poprawić formularz i pole telefonu;
           jeśli problem zostanie, wrócić do tematu po pomiarze.
@@ -670,8 +670,8 @@ const acceptanceRows = [
 
         <h3>Braki danych, których nie uzupełniamy zgadywaniem</h3>
         <ul class="plainlist">
-          <li>Brak pomiaru czasu per krok — zostaje szacunek [EST] i 5 dni pomiaru przed odbiorem.</li>
-          <li>Brak jednego statusu zwrotu — najpierw porządek w Shoper albo BaseLinkerze, potem automatyzacja.</li>
+          <li>Brak pomiaru czasu per krok — zostaje szacunek i 5 dni pomiaru przed odbiorem.</li>
+          <li>Brak jednego statusu zwrotu — najpierw porządek w Shoperze albo BaseLinkerze, potem automatyzacja.</li>
           <li>Brak potwierdzonego środowiska testowego faktur — faktury przechodzą dopiero po teście numeracji.</li>
           <li>Brak wskazanego źródła prawdy dla stanów — do tego czasu tylko alert, bez automatycznej korekty.</li>
         </ul>
@@ -720,7 +720,7 @@ const acceptanceRows = [
         </div>
 
         <div class="condition" style="margin-top:26px">
-          <h3>Zwrot z pakietu Growth [EST]</h3>
+          <h3>Zwrot z pakietu Growth (szacunek)</h3>
           <p>
             <strong>{P.growth} ÷ {money(nowMoney)}/mc = {num(growthPayback, 1)} miesiąca.</strong>
           </p>
@@ -731,7 +731,7 @@ const acceptanceRows = [
           </p>
           <p class="small" style="margin-bottom:0">
             Alternatywa: Start — {P.start} netto, jeden proces (zamówienia), do 3 integracji.
-            Zwrot: {P.start} ÷ {money(startSaving)}/mc = {num(startPayback, 1)} miesiąca [EST].
+            Zwrot: {P.start} ÷ {money(startSaving)}/mc = {num(startPayback, 1)} miesiąca (szacunek).
             Opieka po odbiorze jest opcjonalna: {P.care} netto/mc. Nie jest wliczona w zwrot.
           </p>
         </div>
@@ -792,11 +792,11 @@ const acceptanceRows = [
             <strong>Kontakt w sprawie raportu.</strong>
             <p>
               Napisz, jeśli chcesz omówić zakres albo zamówić audyt na własnych danych.
-              Nie umawiamy rozmowy przez kalendarz i nie wysyłamy oferty bez opisu procesu.
+              Ofertę wysyłamy dopiero po otrzymaniu opisu procesu.
             </p>
-            <p><a class="text-link" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a></p>
-            <p><a class="text-link" href="/audyt">Zakres i cena audytu</a></p>
-            <p><a class="text-link" href="/audyt#mini-diagnoza">Najpierw bezpłatna mini-diagnoza</a></p>
+            <p><a class="text-link" href="/kontakt/?temat=audyt">Napisz w sprawie audytu</a></p>
+            <p><a class="text-link" href="/audyt/">Zakres i cena audytu</a></p>
+            <p><a class="text-link" href="/audyt/#mini-diagnoza">Najpierw bezpłatna mini-diagnoza</a></p>
             <p class="small" style="margin-bottom:0">
               E-mail: <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
@@ -829,12 +829,12 @@ const acceptanceRows = [
         </div>
         <div class="cta-actions">
           <div class="buttonrow">
-            <a class="btn btn--accent" href="/kontakt?temat=audyt">Napisz w sprawie audytu</a>
-            <a class="btn btn--on-dark" href="/audyt">Zakres audytu i cena</a>
+            <a class="btn btn--accent" href="/kontakt/?temat=audyt">Napisz w sprawie audytu</a>
+            <a class="btn btn--on-dark" href="/audyt/">Zakres audytu i cena</a>
           </div>
           <p class="small">
             Audyt {P.audit} netto, odliczany od pierwszej faktury za wdrożenie.
-            Bez kalendarza i bez automatycznej rezerwacji terminu.
+            Bez automatycznej rezerwacji terminu.
           </p>
         </div>
       </div>

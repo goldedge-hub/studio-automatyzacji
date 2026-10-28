@@ -19,13 +19,27 @@ export const UMAMI_HOST = 'https://radarnieruchomosci.com/u';
 export const UMAMI_WEBSITE_ID = '3cdb8d46-37a3-4f2f-b71f-8db532876f56';
 
 /** Ścieżka kontaktu. Jeden cel dla wszystkich CTA w serwisie. */
-export const CONTACT_HREF = '/kontakt';
+export const CONTACT_HREF = '/kontakt/';
 
 export { PRICE_UPDATED } from './data/pricing';
 
 /** Deklarowane czasy odpowiedzi (obsługiwane treścią strony). */
 export const CONTACT_RESPONSE = '1 dzień roboczy';
+export const CONTACT_RESPONSE_PHRASE = 'w ciągu 1 dnia roboczego';
 export const DIAGNOSIS_RESPONSE = '2 dni robocze';
+export const DIAGNOSIS_RESPONSE_PHRASE = 'w ciągu 2 dni roboczych';
+
+/** Wymusza końcowy „/” w ścieżce wewnętrznej (bez ruszania query i kotwicy). */
+export const withTrailingSlash = (path: string) => {
+  if (!path || path === '/' || path.startsWith('#') || path.startsWith('//')) return path;
+  if (/^[a-z]+:/i.test(path)) return path;
+  const match = path.match(/^([^?#]*)(.*)$/);
+  if (!match) return path;
+  const [, pathname, rest] = match;
+  if (!pathname.startsWith('/') || pathname === '/') return path;
+  if (/\.[a-z0-9]+$/i.test(pathname)) return path;
+  return `${pathname.replace(/\/+$/, '')}/${rest}`;
+};
 
 export const mailtoHref = (subject = 'Zapytanie o automatyzację') =>
   `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;

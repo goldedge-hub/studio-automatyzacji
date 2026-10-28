@@ -29,7 +29,7 @@ const {
           <li>{PACKAGES.start.warranty}</li>
           <li>{PACKAGES.start.time}</li>
         </ul>
-        <a class="btn btn--ghost" href="/kontakt?temat=mini-diagnoza">Zapytaj o Start</a>
+        <a class="btn btn--ghost" href="/kontakt/?plan=start">Wybieram Start</a>
       </div>
 
       <div class="plan">
@@ -43,7 +43,7 @@ const {
           <li>{PACKAGES.growth.warranty}</li>
           <li>{PACKAGES.growth.time}</li>
         </ul>
-        <a class="btn btn--ghost" href="/kontakt?temat=mini-diagnoza">Zapytaj o Growth</a>
+        <a class="btn btn--ghost" href="/kontakt/?plan=growth">Wybieram Growth</a>
       </div>
 
       <div class="plan">
@@ -57,7 +57,7 @@ const {
           <li>wdrożenie etapami</li>
           <li>SLA w umowie</li>
         </ul>
-        <a class="btn btn--ghost" href="/kontakt?temat=mini-diagnoza">Zapytaj o Scale</a>
+        <a class="btn btn--ghost" href="/kontakt/?plan=scale">Wybieram Scale</a>
       </div>
     </div>
 
@@ -66,7 +66,7 @@ const {
         Audyt {P.audit} netto odliczamy od wdrożenia. Opieka {P.careMc} netto.
         Aktualizacja {PRICE_UPDATED}.
       </span>
-      <a class="text-link" href="/ile-kosztuje#porownanie">Pełny cennik</a>
+      <a class="text-link" href="/ile-kosztuje/#porownanie">Pełny cennik</a>
     </div>
 
     {note && <p class="small muted" style="margin-top:14px">{note}</p>}

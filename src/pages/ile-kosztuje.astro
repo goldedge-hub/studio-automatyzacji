@@ -14,8 +14,8 @@ const prices = [
   {
     service: 'Mini-diagnoza e-mailem',
     price: P.miniDiagnosis,
-    includes: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin [EST], narzędzia. Bez pełnego raportu i bez wyceny z gwarancją.',
-    term: 'Odpowiedź w 2 dni robocze',
+    includes: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin, narzędzia. Bez pełnego raportu i bez wyceny z gwarancją.',
+    term: 'Odpowiedź w ciągu 2 dni roboczych',
   },
   {
     service: 'Audyt automatyzacji',
@@ -106,7 +106,7 @@ const costDrivers = [
 <Base
   title="Cennik automatyzacji: audyt, wdrożenia, opieka"
   description={`Jawne ceny netto: mini-diagnoza ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.care}/mc.`}
-  path="/ile-kosztuje"
+  path="/ile-kosztuje/"
   faq={pricingFaq}
 >
   <section class="page-head">
@@ -268,7 +268,7 @@ const costDrivers = [
 
       <div class="section-foot">
         <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura.</span>
-        <a class="text-link" href="/wdrozenia#cennik">Opis pakietów i zakresów</a>
+        <a class="text-link" href="/wdrozenia/#cennik">Opis pakietów i zakresów</a>
       </div>
     </div>
   </section>
@@ -304,7 +304,7 @@ const costDrivers = [
 
       <div class="section-foot">
         <span class="small muted">Ceny netto. Nadwyżka ponad limit godzin wyceniana osobno, przed wykonaniem pracy.</span>
-        <a class="text-link" href="/opieka">Pełny opis opieki</a>
+        <a class="text-link" href="/opieka/">Pełny opis opieki</a>
       </div>
     </div>
   </section>
@@ -331,8 +331,8 @@ const costDrivers = [
           <span class="n">02</span>
           <h3>Mini-diagnoza</h3>
           <p class="price">{P.miniDiagnosis}</p>
-          <p>Krótka pisemna ocena jednego procesu: sens, szacunek godzin [EST], narzędzia.</p>
-          <span class="when">Odpowiedź w 2 dni robocze</span>
+          <p>Krótka pisemna ocena jednego procesu: sens, szacunek godzin, narzędzia.</p>
+          <span class="when">Odpowiedź w ciągu 2 dni roboczych</span>
         </div>
         <div class="path-step">
           <span class="n">03</span>
@@ -348,7 +348,7 @@ const costDrivers = [
           Po audycie: wdrożenie {P.start} / {P.growth} / {P.scaleFrom} netto, potem opcjonalna
           opieka {P.care} netto/mc.
         </span>
-        <a class="text-link" href="/wdrozenia">Zakres wdrożeń</a>
+        <a class="text-link" href="/wdrozenia/">Zakres wdrożeń</a>
       </div>
 
       <div class="condition" style="margin-top:32px">
@@ -424,7 +424,7 @@ const costDrivers = [
       <div class="section-head">
         <h2>Policz oszczędność na swoich założeniach</h2>
         <p class="section-intro">
-          Suwaki zmieniają wynik na żywo. To model [EST], nie wynik klienta.
+          Suwaki zmieniają wynik na żywo. To model (szacunek), nie wynik klienta.
           W audycie liczymy na Twoich danych, nie na przeciętnych.
         </p>
       </div>

@@ -12,7 +12,7 @@ const problems = [
   },
   {
     t: 'Webhooki bez idempotencji',
-    d: 'To samo zdarzenie przychodzi dwa razy albo po czasie. Bez klucza idempotencji powstają duplikaty zamówień i podwójne odejmowanie stanu.',
+    d: 'To samo zdarzenie przychodzi dwa razy albo z opóźnieniem. Bez klucza idempotencji powstają duplikaty zamówień i podwójne odejmowanie stanu.',
   },
   {
     t: 'Stany między sklepem, magazynem i marketplace',
@@ -50,7 +50,7 @@ const faq = [
 <Base
   title="WooCommerce: integracja, API i synchronizacja stanów"
   description="Integracja WooCommerce: REST API, webhooki, stany, faktury i maile o statusie. Kiedy wtyczka wystarcza, a kiedy potrzebna jest warstwa zewnętrzna."
-  path="/integracje/woocommerce"
+  path="/integracje/woocommerce/"
   faq={faq}
 >
   <section class="page-head">
@@ -131,7 +131,7 @@ const faq = [
             <li>Dopasuj produkty po SKU lub EAN.</li>
             <li>Oblicz stan dostępny z buforem bezpieczeństwa.</li>
             <li>Wyślij zmiany partiami przez REST API i zapisz wynik.</li>
-            <li>Porównaj odpowiedź z wysłanym stanem. Rozjazd zgłoś alertem.</li>
+            <li>Porównaj odpowiedź z wysłanym stanem. O rozjeździe poinformuj alertem.</li>
           </ol>
           <p><strong>Wynik:</strong> sklep pokazuje stan bliższy magazynowi.</p>
           <p><strong>Wyjątki:</strong> brak SKU, stan ujemny, produkt konfigurowalny, konflikt z ręczną korektą.</p>
@@ -216,11 +216,11 @@ const faq = [
         <div>
           <h2>Powiązane strony</h2>
           <ul class="plainlist">
-            <li><a class="text-link" href="/integracje/shoper">Shoper: API i webhooki</a></li>
-            <li><a class="text-link" href="/integracje/baselinker-allegro">BaseLinker ↔ Allegro</a></li>
-            <li><a class="text-link" href="/integracje/ksef">KSeF dla sklepów</a></li>
-            <li><a class="text-link" href="/audyt">Audyt automatyzacji</a></li>
-            <li><a class="text-link" href="/ile-kosztuje">Cennik netto</a></li>
+            <li><a class="text-link" href="/integracje/shoper/">Shoper: API i webhooki</a></li>
+            <li><a class="text-link" href="/integracje/baselinker-allegro/">BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/integracje/ksef/">KSeF dla sklepów</a></li>
+            <li><a class="text-link" href="/audyt/">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje/">Cennik netto</a></li>
           </ul>
         </div>
       </div>

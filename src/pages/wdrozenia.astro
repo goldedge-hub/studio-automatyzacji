@@ -19,8 +19,8 @@ const plans = [
       'dokumentacja i szkolenie',
       '30 dni gwarancji',
     ],
-    href: '/kontakt?temat=wdrozenie',
-    cta: 'Zapytaj o Start',
+    href: '/kontakt/?plan=start',
+    cta: 'Wybieram Start',
   },
   {
     name: 'Growth',
@@ -34,8 +34,8 @@ const plans = [
       'alerty i obsługa błędów',
       '60 dni gwarancji',
     ],
-    href: '/kontakt?temat=wdrozenie',
-    cta: 'Zapytaj o Growth',
+    href: '/kontakt/?plan=growth',
+    cta: 'Wybieram Growth',
   },
   {
     name: 'Scale',
@@ -49,8 +49,8 @@ const plans = [
       'SLA w umowie',
       'opieka po odbiorze',
     ],
-    href: '/kontakt?temat=wdrozenie',
-    cta: 'Zapytaj o Scale',
+    href: '/kontakt/?plan=scale',
+    cta: 'Wybieram Scale',
   },
 ];
 
@@ -105,7 +105,7 @@ const faq = [
 <Base
   title="Wdrożenia automatyzacji: Start, Growth, Scale"
   description={`Wdrożenia e-commerce: Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom} netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji.`}
-  path="/wdrozenia"
+  path="/wdrozenia/"
 >
   <section class="page-head">
     <div class="wrap">
@@ -123,7 +123,7 @@ const faq = [
       </p>
       <div class="buttonrow">
         <ContactLink class="btn btn--primary" label="Napisz do nas" />
-        <a class="btn btn--ghost" href="/ile-kosztuje">Pełny cennik</a>
+        <a class="btn btn--ghost" href="/ile-kosztuje/">Pełny cennik</a>
       </div>
     </div>
   </section>
@@ -162,7 +162,7 @@ const faq = [
 
       <div class="section-foot">
         <span class="small muted">Płatność 50% przed startem, 50% po odbiorze. Faktura. Audyt {P.audit} odliczany.</span>
-        <a class="text-link" href="/ile-kosztuje#porownanie">Tabela porównawcza i zależności cenowe</a>
+        <a class="text-link" href="/ile-kosztuje/#porownanie">Tabela porównawcza i zależności cenowe</a>
       </div>
     </div>
   </section>
@@ -295,7 +295,7 @@ const faq = [
 
       <p class="small muted" style="margin-top:18px">
         Potrzebujesz danych o zgodności i bezpieczeństwie?
-        <a class="text-link" href="/zaufanie">Zaufanie, dane i zgodność</a>.
+        <a class="text-link" href="/zaufanie/">Zaufanie, dane i zgodność</a>.
       </p>
     </div>
   </section>

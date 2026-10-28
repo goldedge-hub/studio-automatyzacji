@@ -39,7 +39,7 @@ const services = [
   {
     n: '06',
     t: 'Agenci AI w procesie',
-    d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi z kontrolą człowieka. Bez halucynacji na produkcji.',
+    d: 'Klasyfikacja wiadomości, streszczenia i odpowiedzi. Testy i kontrola człowieka; bez gwarancji 100% poprawności.',
     tags: ['LLM', 'kontrola', 'ewaluacja'],
   },
 ];
@@ -48,7 +48,7 @@ const steps = [
   { n: '01', t: 'Diagnoza', d: 'Mapa procesu, pomiar czasu i lista miejsc, w których ludzie robią pracę systemu.', when: '3 dni robocze' },
   { n: '02', t: 'Projekt', d: 'Zakres, architektura i kolejność wdrożeń. Wiesz, co powstanie i co zostaje poza zakresem.', when: '2 dni robocze' },
   { n: '03', t: 'Wdrożenie', d: 'Budowa, testy na Twoich danych, uruchomienie i szkolenie. Bez „prawie działa”.', when: '5–10 dni roboczych' },
-  { n: '04', t: 'Opieka', d: 'Monitoring, poprawki i miesięczny przegląd. System zostaje sprawny, kiedy nas nie ma.', when: '30 dni gwarancji' },
+  { n: '04', t: 'Opieka', d: 'Monitoring, poprawki i kwartalny przegląd. System zostaje sprawny, kiedy nas nie ma.', when: '30 dni gwarancji' },
 ];
 
 const flow = [
@@ -100,7 +100,7 @@ const plans = [
     desc: 'Jeden proces, który najbardziej zjada czas.',
     feats: ['1 proces end-to-end', 'do 3 integracji API', 'testy na Twoich danych', 'dokumentacja i szkolenie', '30 dni gwarancji'],
     cta: 'Wybieram Start',
-    href: '/kontakt?plan=start',
+    href: '/kontakt/?plan=start',
     hot: false,
   },
   {
@@ -111,7 +111,7 @@ const plans = [
     desc: 'Trzy procesy i raport, który zastępuje arkusze.',
     feats: ['3 procesy end-to-end', 'dashboard lub raport cykliczny', 'do 6 integracji', 'alerty i obsługa błędów', '60 dni gwarancji'],
     cta: 'Wybieram Growth',
-    href: '/kontakt?plan=growth',
+    href: '/kontakt/?plan=growth',
     hot: true,
   },
   {
@@ -122,14 +122,14 @@ const plans = [
     desc: 'Większe wdrożenie z wieloma systemami i zespołami.',
     feats: ['od 4 procesów', 'integracje ERP / WMS', 'agenci AI z kontrolą człowieka', 'wdrożenie etapami', 'opieka po odbiorze'],
     cta: 'Porozmawiajmy',
-    href: '/kontakt?plan=scale',
+    href: '/kontakt/?plan=scale',
     hot: false,
   },
 ];
 
 const numbers = [
   { b: '10+ lat', s: 'w danych, integracjach i automatyzacji procesów.' },
-  { b: '48 h', s: 'od rozmowy do zakresu i stałej ceny.' },
+  { b: '2 dni', s: 'robocze na wycenę od otrzymania opisu.' },
   { b: '30 dni', s: 'gwarancji na poprawki po odbiorze. Bez ukrytych kosztów.' },
 ];
 ---
@@ -154,10 +154,10 @@ const numbers = [
             Jeden zespół, jasny zakres, efekt, który da się policzyć.
           </p>
           <div class="sa-actions" data-reveal style="--d:.13s">
-            <a class="btn btn--primary" href="/audyt" data-umami-event="cta_click" data-umami-event-label="Hero: audyt">
+            <a class="btn btn--primary" href="/audyt/" data-umami-event="cta_click" data-umami-event-label="Hero: audyt">
               Zamów audyt — {P.audit} netto
             </a>
-            <a class="text-link" href="/wdrozenia">
+            <a class="text-link" href="/wdrozenia/">
               Zobacz, co wdrażamy <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -166,7 +166,7 @@ const numbers = [
         <aside class="sa-sheet" data-reveal style="--d:.18s" aria-label="Jak pracujemy">
           <div class="sa-sheet-head">
             <span>Jak pracujemy</span>
-            <span class="sa-stamp">48 h</span>
+            <span class="sa-stamp">2 dni</span>
           </div>
           <ol class="sa-sheet-list">
             <li><b>01</b><div><strong>Diagnoza</strong><span>Mierzymy, ile naprawdę kosztuje ręczna praca.</span></div></li>
@@ -179,7 +179,7 @@ const numbers = [
 
       <dl class="sa-facts">
         <div><dt>10+ lat</dt><dd>w danych i automatyzacji</dd></div>
-        <div><dt>48 h</dt><dd>na zakres i stałą cenę</dd></div>
+        <div><dt>2 dni</dt><dd>robocze na wycenę</dd></div>
         <div><dt>30 dni</dt><dd>gwarancji po odbiorze</dd></div>
         <div><dt>{P.miniDiagnosis}</dt><dd>za mini-diagnozę e-mailem</dd></div>
       </dl>
@@ -219,7 +219,7 @@ const numbers = [
       <ol class="sa-index">
         {services.map((s) => (
           <li data-reveal>
-            <a href="/wdrozenia">
+            <a href="/wdrozenia/">
               <span class="sa-index-num">{s.n}</span>
               <h3>{s.t}</h3>
               <p>{s.d}</p>
@@ -350,19 +350,19 @@ const numbers = [
       </header>
 
       <div class="sa-audience">
-        <a href="/branze/sklepy-wielokanalowe" data-reveal>
+        <a href="/branze/sklepy-wielokanalowe/" data-reveal>
           <span class="sa-audience-num">01</span>
           <h3>Sklepy wielokanałowe</h3>
           <p>Zamówienia, stany i zwroty z Allegro, Shopera i BaseLinkera w jednym przepływie — bez przepisywania między kartami.</p>
           <span class="sa-audience-arrow" aria-hidden="true">→</span>
         </a>
-        <a href="/branze/hurtownie-b2b" data-reveal>
+        <a href="/branze/hurtownie-b2b/" data-reveal>
           <span class="sa-audience-num">02</span>
           <h3>Hurtownie B2B</h3>
           <p>Cenniki, dostępność i zamówienia od stałych klientów. Oferta generowana z jednego źródła cen.</p>
           <span class="sa-audience-arrow" aria-hidden="true">→</span>
         </a>
-        <a href="/branze/biura-rachunkowe" data-reveal>
+        <a href="/branze/biura-rachunkowe/" data-reveal>
           <span class="sa-audience-num">03</span>
           <h3>Biura rachunkowe</h3>
           <p>Dokumenty z poczty i skanów do jednej kolejki: odczyt, klasyfikacja i wprowadzenie bez klikania.</p>
@@ -371,7 +371,7 @@ const numbers = [
       </div>
 
       <p class="note" style="margin-top:26px">
-        Jak pracujemy z danymi i AI: <a href="/zaufanie">zaufanie, RODO i AI Act</a>.
+        Jak pracujemy z danymi i AI: <a href="/zaufanie/">zaufanie, RODO i AI Act</a>.
       </p>
     </div>
   </section>
@@ -385,7 +385,7 @@ const numbers = [
         </div>
         <p data-reveal>
           Ceny netto. Audyt {P.audit} odliczamy od wdrożenia. Opieka {P.careMc} —
-          monitoring, poprawki i miesięczny przegląd.
+          monitoring, poprawki i kwartalny przegląd.
         </p>
       </header>
 
@@ -409,7 +409,7 @@ const numbers = [
       </div>
 
       <p class="note" style="margin-top:24px">
-        Pełne warunki, zakresy i przykłady wycen: <a href="/ile-kosztuje">cennik</a>.
+        Pełne warunki, zakresy i przykłady wycen: <a href="/ile-kosztuje/">cennik</a>.
         Płatność po odbiorze etapu, faktura VAT.
       </p>
     </div>
@@ -458,11 +458,11 @@ const numbers = [
           </p>
         </div>
         <div class="sa-cta-actions" data-reveal>
-          <a class="btn btn--primary" href="/audyt" data-umami-event="cta_click" data-umami-event-label="Stopka CTA: audyt">
+          <a class="btn btn--primary" href="/audyt/" data-umami-event="cta_click" data-umami-event-label="Stopka CTA: audyt">
             Zamów audyt — {P.audit} netto
           </a>
-          <a class="text-link" href="/kontakt">Napisz do nas <span aria-hidden="true">→</span></a>
-          <a class="sa-cta-mail" href="/audyt#mini-diagnoza">albo zacznij od bezpłatnej mini-diagnozy</a>
+          <a class="text-link" href="/kontakt/">Napisz do nas <span aria-hidden="true">→</span></a>
+          <a class="sa-cta-mail" href="/audyt/#mini-diagnoza">albo zacznij od bezpłatnej mini-diagnozy</a>
         </div>
       </div>
     </div>

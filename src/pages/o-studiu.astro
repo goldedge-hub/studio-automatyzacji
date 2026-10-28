@@ -10,7 +10,7 @@ const facts = [
   ['Ceny netto', `Mini-diagnoza ${P.miniDiagnosis} · audyt ${P.audit} · Start ${P.start} · Growth ${P.growth} · Scale ${P.scaleFrom}`],
   ['Opieka', `${P.care} netto/mc`],
   ['White-label', `${P.whiteLabel} netto/proces · ${P.whiteLabel3plus} przy 3+ procesach`],
-  ['Czas', 'Mini-diagnoza 2 dni rob. · audyt 3 dni rob. · Start 5–10 dni · Growth ok. 3 tyg. · Scale 4–6 tyg.'],
+  ['Czas', 'Mini-diagnoza 2 dni robocze · audyt 3 dni robocze · Start 5–10 dni roboczych · Growth ok. 3 tygodnie · Scale 4–6 tygodni'],
   ['Forma rozliczenia', '50% przed startem, 50% po odbiorze; faktura 7 dni; ceny netto'],
   ['Własność kodu', 'Po opłaceniu zlecenia kod i dokumentacja u klienta'],
   ['NDA', 'Na życzenie, przed przekazaniem materiałów'],
@@ -20,7 +20,7 @@ const facts = [
 <Base
   title="O studiu: automatyzacje dla e-commerce"
   description="Studio Automatyzacji projektuje integracje i procesy dla MŚP e-commerce: zamówienia, zwroty, stany, faktury. Stała cena, kod u klienta, AI z kontrolą człowieka."
-  path="/o-studiu"
+  path="/o-studiu/"
 >
   <section class="page-head">
     <div class="wrap">
@@ -141,18 +141,18 @@ const facts = [
         <div>
           <h2>Chcesz sprawdzić dopasowanie?</h2>
           <p class="lead">
-            Napisz, jaki proces zabiera czas. Odpowiemy w ciągu jednego dnia roboczego
+            Napisz, jaki proces zabiera czas. Odpowiemy w ciągu 1 dnia roboczego
             i powiemy, czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest audyt.
           </p>
           <div class="buttonrow">
             <ContactLink class="btn btn--primary" label="Napisz do nas" />
-            <a class="btn btn--ghost" href="/audyt">Mini-diagnoza i audyt</a>
+            <a class="btn btn--ghost" href="/audyt/">Mini-diagnoza i audyt</a>
           </div>
         </div>
         <div class="note">
           <strong>Kontakt bezpośredni.</strong>
           <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-          Odpowiadamy w ciągu jednego dnia roboczego. Na życzenie podpisujemy NDA
+          Odpowiadamy w ciągu 1 dnia roboczego. Na życzenie podpisujemy NDA
           przed przekazaniem materiałów.
         </div>
       </div>
