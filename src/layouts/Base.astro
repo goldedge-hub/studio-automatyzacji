@@ -7,11 +7,11 @@ import '../styles/premium.css';
 import '../styles/premium-shell.css';
 import '../styles/seo-premium.css';
 import '../styles/home-premium.css';
+import '../styles/identity.css';
 
-import frauncesNormal from '../fonts/fraunces-latN-500.woff2?url';
-import frauncesExt from '../fonts/fraunces-extN-500.woff2?url';
-import frauncesItalic from '../fonts/fraunces-latI-500.woff2?url';
-import frauncesLight from '../fonts/fraunces-latN-300.woff2?url';
+import instrumentLat from '../fonts/instrument-lat-400.woff2?url';
+import instrumentExt from '../fonts/instrument-ext-400.woff2?url';
+import instrumentItalic from '../fonts/instrument-lat-400i.woff2?url';
 import interLatin from '../fonts/inter-lat-400.woff2?url';
 import interExt from '../fonts/inter-ext-400.woff2?url';
 import jbmLatin from '../fonts/jbm-lat-400.woff2?url';
@@ -42,13 +42,13 @@ const nav = [
   ['/wdrozenia', 'Wdrożenia'],
   ['/audyt', 'Audyt'],
   ['/opieka', 'Opieka'],
-  ['/dla-agencji', 'Dla agencji'],
-  ['/case-studies', 'Case studies'],
+  ['/case-studies', 'Realizacje'],
+  ['/ile-kosztuje', 'Cennik'],
   ['/o-studiu', 'Studio'],
 ];
 
 const mobileNavExtra = [
-  ['/ile-kosztuje', 'Cennik'],
+  ['/dla-agencji', 'Dla agencji'],
   ['/integracje', 'Integracje'],
   ['/branze', 'Branże'],
   ['/przykladowy-raport', 'Przykładowy raport'],
@@ -194,10 +194,9 @@ const faqLd = faq
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-  <link rel="preload" href={frauncesNormal} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={frauncesExt} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={frauncesItalic} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={frauncesLight} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={instrumentLat} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={instrumentExt} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={instrumentItalic} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={interExt} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={jbmLatin} as="font" type="font/woff2" crossorigin />
@@ -218,6 +217,14 @@ const faqLd = faq
 </head>
 <body>
   <a class="skip" href="#main">Przejdź do treści</a>
+
+  <div class="sa-topbar">
+    <div class="sa-topbar-inner">
+      <span><b>Studio Automatyzacji</b> <span class="sa-topbar-dot">/</span> wydanie 2026</span>
+      <span class="sa-topbar-mid">Automatyzacja procesów · e-commerce · integracje</span>
+      <span>Olsztyn / zdalnie <span class="sa-topbar-dot">·</span> ceny netto</span>
+    </div>
+  </div>
 
   <header class="site-head" id="site-header">
     <div class="wrap head-row">
@@ -241,7 +248,7 @@ const faqLd = faq
           href={CONTACT_HREF}
           data-umami-event="cta_click"
           data-umami-event-label="Nagłówek: napisz do nas"
-        >Porozmawiajmy →</a>
+        >Porozmawiajmy <i aria-hidden="true">→</i></a>
 
         <details class="menu">
           <summary>Menu</summary>
@@ -281,7 +288,7 @@ const faqLd = faq
 
   <footer class="site-foot">
     <div class="wrap">
-      <p class="foot-word">Mniej ręcznie.</p>
+      <p class="foot-word">Mniej <em>ręcznie.</em></p>
 
       <div class="foot-grid">
         <div>
