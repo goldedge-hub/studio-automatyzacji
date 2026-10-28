@@ -13,7 +13,9 @@ export default defineConfig({
         !page.includes('/cennik'),
     }),
   ],
-  build: { inlineStylesheets: 'always' },
+  // CSS jako osobny, cache'owalny plik (28 podstron dzieli jeden arkusz).
+  // Inline 199 KB HTML zabijał LCP na mobile (Lighthouse 88 vs 97).
+  build: { inlineStylesheets: 'auto' },
   vite: {
     build: {
       // Skrypty zawsze jako osobne pliki: tekst komunikatu kalkulatora nie może

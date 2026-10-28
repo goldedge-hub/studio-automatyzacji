@@ -9,13 +9,12 @@ import '../styles/seo-premium.css';
 import '../styles/home-premium.css';
 import '../styles/identity.css';
 
+// Preload tylko fontów krytycznych dla pierwszego ekranu (nagłówek + treść).
+// Italic, JBM i podzbiory ext ładują się przez @font-face z font-display: swap;
+// preload 95 KB fontów zabierał pasmo arkuszowi CSS i podbijał LCP.
 import instrumentLat from '../fonts/instrument-lat-400.woff2?url';
 import instrumentExt from '../fonts/instrument-ext-400.woff2?url';
-import instrumentItalic from '../fonts/instrument-lat-400i.woff2?url';
 import interLatin from '../fonts/inter-lat-400.woff2?url';
-import interExt from '../fonts/inter-ext-400.woff2?url';
-import jbmLatin from '../fonts/jbm-lat-400.woff2?url';
-import jbmExt from '../fonts/jbm-ext-400.woff2?url';
 
 import {
   CONTACT_EMAIL,
@@ -209,11 +208,7 @@ const faqLd = faq
 
   <link rel="preload" href={instrumentLat} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={instrumentExt} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={instrumentItalic} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={interExt} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={jbmLatin} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={jbmExt} as="font" type="font/woff2" crossorigin />
 
   <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
 
