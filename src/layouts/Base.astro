@@ -8,12 +8,16 @@ import '../styles/premium-shell.css';
 import '../styles/seo-premium.css';
 import '../styles/home-premium.css';
 import '../styles/identity.css';
+// Edycja III „Atelier" — warstwa nadrzędna nad identity.css (tokeny + komponenty)
+// oraz kompozycja strony głównej. Muszą być ostatnie.
+import '../styles/atelier.css';
+import '../styles/home-atelier.css';
 
 // Preload tylko fontów krytycznych dla pierwszego ekranu (nagłówek + treść).
-// Italic, JBM i podzbiory ext ładują się przez @font-face z font-display: swap;
-// preload 95 KB fontów zabierał pasmo arkuszowi CSS i podbijał LCP.
-import instrumentLat from '../fonts/instrument-lat-400.woff2?url';
-import instrumentExt from '../fonts/instrument-ext-400.woff2?url';
+// Edycja III: display = Fraunces 300 (H1/H2), body = Inter 400.
+// Italic, JBM i podzbiory ext ładują się przez @font-face z font-display: swap.
+import frauncesLat from '../fonts/fraunces-latN-300.woff2?url';
+import frauncesExt from '../fonts/fraunces-extN-300.woff2?url';
 import interLatin from '../fonts/inter-lat-400.woff2?url';
 
 import {
@@ -183,7 +187,7 @@ const faqLd = faq
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   {!hideCanonical && <link rel="canonical" href={canonical} />}
-  <meta name="theme-color" content="#F4F1E8" />
+  <meta name="theme-color" content="#EFE9DB" />
   <meta name="format-detection" content="telephone=no" />
 
   <meta property="og:type" content="website" />
@@ -206,8 +210,8 @@ const faqLd = faq
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <link rel="preload" href={instrumentLat} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={instrumentExt} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={frauncesLat} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={frauncesExt} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
 
   <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
