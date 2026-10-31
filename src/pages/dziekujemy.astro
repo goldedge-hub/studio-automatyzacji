@@ -72,4 +72,13 @@ import { CONTACT_EMAIL, CONTACT_RESPONSE, DIAGNOSIS_RESPONSE } from '../config';
       </p>
     </div>
   </section>
+
+  <script>
+    // Lejek: potwierdzenie wysyłki formularza (pageview + zdarzenie).
+    type UmamiWindow = Window & { umami?: { track: (name: string, data?: Record<string, string>) => void } };
+    const params = new URLSearchParams(window.location.search);
+    (window as UmamiWindow).umami?.track('form_sent', {
+      temat: params.get('temat') || 'nieznany',
+    });
+  </script>
 </Base>

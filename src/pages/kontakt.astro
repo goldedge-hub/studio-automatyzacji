@@ -233,6 +233,19 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
     (() => {
       const form = document.getElementById('contact-form');
       const topic = document.getElementById('f-topic');
+
+      // Lejek: pierwszy kontakt z formularzem (raz na sesję). Bez TS — to define:vars.
+      const formEl = document.getElementById('contact-form');
+      let formStarted = false;
+      if (formEl) {
+        formEl.addEventListener('focusin', () => {
+          if (formStarted) return;
+          formStarted = true;
+          const t = document.getElementById('f-topic');
+          if (window.umami) window.umami.track('form_start', { temat: (t && t.value) || 'brak' });
+        });
+      }
+
       const status = document.getElementById('form-status');
       const timestamp = document.getElementById('f-ts');
       const planInput = document.getElementById('f-plan');
