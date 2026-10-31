@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Calculator from '../components/Calculator.astro';
+import ReportCard from '../components/ReportCard.astro';
 import FAQ from '../components/FAQ.astro';
 import { homeFaq } from '../data/faq';
 import { P } from '../data/pricing';
@@ -168,33 +169,8 @@ const marquee = ['BaseLinker', 'Shoper', 'Allegro API', 'n8n', 'Make', 'Google S
         </div>
 
         <div class="at-figure">
-          <p class="at-figure-cap"><span>Plansza 01</span><span>Przepływ zamówienia</span></p>
-          <aside class="at-board" aria-label="Schemat: zamówienie przechodzi przez sklep, BaseLinker i ERP, a rano powstaje raport">
-            <div class="at-board-head">
-              <b>Schemat systemu</b>
-              <span>REF. SA-01</span>
-            </div>
-            <ol class="at-board-list">
-              <li>
-                <div><b>Sklep</b><small>zamówienie i płatność</small></div>
-                <span class="at-proto">webhook</span>
-              </li>
-              <li>
-                <div><b>BaseLinker</b><small>kolejka i mapowanie</small></div>
-                <span class="at-proto">API</span>
-              </li>
-              <li>
-                <div><b>ERP</b><small>stany i faktura</small></div>
-                <span class="at-proto">REST / SQL</span>
-              </li>
-              <li>
-                <div><b>Raport</b><small>06:00 i wyjątki</small></div>
-                <span class="at-proto">e-mail</span>
-              </li>
-            </ol>
-            <span class="at-pulse" aria-hidden="true"></span>
-            <p class="at-board-foot">Log · limit · obsługa błędu — po stronie systemu</p>
-          </aside>
+          <p class="at-figure-cap"><span>Fig. 01</span><span>Przykładowy raport</span></p>
+          <ReportCard />
         </div>
       </div>
 

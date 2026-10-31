@@ -1,0 +1,471 @@
+/* ============================================================
+   STUDIO AUTOMATYZACJI — „OPERATIONAL EDITORIAL" (Edycja V, 2026-10-31)
+   Warstwa nadrzędna nad identity/atelier/home-atelier/console.
+   Jasny canvas, granat jako atrament, kobalt jako jedyny akcent akcji.
+   Artefakt przed dekoracją: dokument, mapa procesu, tabela, log.
+   Ładowana ostatnia w Base.astro.
+   ============================================================ */
+
+/* ---------- 1. Kroje: IBM Plex Sans / IBM Plex Mono / Source Serif 4 ---------- */
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/plex-sans-l400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/plex-sans-x400.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:500;font-display:swap;
+  src:url("../fonts/plex-sans-l500.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:500;font-display:swap;
+  src:url("../fonts/plex-sans-x500.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:600;font-display:swap;
+  src:url("../fonts/plex-sans-l600.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:600;font-display:swap;
+  src:url("../fonts/plex-sans-x600.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Plex Mono";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/plex-mono-l400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Plex Mono";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/plex-mono-x400.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Serif";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/serif-l400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif";font-style:normal;font-weight:400;font-display:swap;
+  src:url("../fonts/serif-x400.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Serif";font-style:normal;font-weight:600;font-display:swap;
+  src:url("../fonts/serif-l600.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif";font-style:normal;font-weight:600;font-display:swap;
+  src:url("../fonts/serif-x600.woff2") format("woff2");
+  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+/* ---------- 2. Tokeny ---------- */
+:root{
+  --canvas:#f2f2f2;
+  --paper:#f2f2f2;
+  --paper-2:#ffffff;
+  --paper-3:#e9ebee;
+
+  --ink:#082d4f;
+  --ink-2:#16405f;
+  --muted:#4f6679;
+
+  --rule:#d7dbdf;
+  --rule-2:#b6bfc6;
+
+  --accent:#1f2ad8;
+  --accent-ink:#141db5;
+  --accent-soft:#e9ebff;
+
+  --signal:#1f2ad8;
+  --signal-ink:#141db5;
+  --signal-bright:#3a45ea;
+  --signal-soft:#e9ebff;
+
+  --moss:#eef0f2;
+  --moss-2:#e5e8eb;
+
+  --on-dark:#f3f6f9;
+  --on-dark-muted:rgba(243,246,249,.74);
+  --on-dark-rule:rgba(243,246,249,.2);
+
+  --dark:#082d4f;
+  --dark-2:#0d3a60;
+
+  --font-body:"Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-display:"Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Plex Mono",ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+  --font-serif:"Source Serif",Georgia,"Times New Roman",serif;
+
+  --r-sm:4px;
+  --r-md:6px;
+  --r-lg:8px;
+  --r-pill:4px;
+
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+
+/* ---------- 3. Baza ---------- */
+html{background:var(--canvas)}
+body{
+  background:var(--canvas);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent);color:#fff}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;border-radius:2px
+}
+h1,h2,h3,h4,h5{font-family:var(--font-display);color:var(--ink);letter-spacing:-.022em;font-weight:600}
+h1 em,h2 em,h3 em,h4 em,.at-display em{font-style:normal;color:inherit;font-weight:inherit}
+p{color:var(--ink-2)}
+strong,b{font-weight:600}
+
+/* skala typograficzna: bez mikroskopijnego tekstu */
+.mono,.n,.foot-label,.meta-line,.sa-kicker,.at-figure-cap,.at-board-head,.at-proto,.at-board-foot,
+.tag,.chip,.status-pill,th,.table th,.form-note,.hint,figcaption,small,.small{
+  font-family:var(--font-mono);font-size:12px !important;line-height:1.45;
+  letter-spacing:.06em;text-transform:none;color:var(--muted)
+}
+.sa-kicker,.at-figure-cap,.meta-line,.foot-label{text-transform:uppercase;letter-spacing:.12em}
+
+/* ---------- 4. Nagłówek ---------- */
+.sa-topbar{display:none !important}
+.site-head{
+  position:sticky;top:0;z-index:60;
+  background:rgba(242,242,242,.92);
+  backdrop-filter:saturate(1.2) blur(10px);
+  border-bottom:1px solid var(--rule);
+  box-shadow:none;
+}
+.head-row{display:flex;align-items:center;gap:40px;min-height:74px}
+.brand{
+  font-family:var(--font-display);font-weight:600;font-size:17.5px;letter-spacing:-.02em;
+  color:var(--ink);text-decoration:none;white-space:nowrap
+}
+.brand span{color:var(--accent)}
+.nav-desktop{display:flex;gap:26px;margin-left:auto}
+.nav-desktop a{
+  font-size:15px;font-weight:400;color:var(--muted);padding:6px 0;position:relative;
+  text-decoration:none;transition:color .16s var(--ease)
+}
+.nav-desktop a:hover{color:var(--ink)}
+.nav-desktop a.is-active{color:var(--ink)}
+.nav-desktop a.is-active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--accent)
+}
+.head-actions{display:flex;align-items:center;gap:10px}
+.head-cta{
+  display:inline-flex;align-items:center;height:42px;padding:0 18px;border-radius:var(--r-md);
+  background:var(--ink);color:#fff;font-size:15px;font-weight:500;text-decoration:none;
+  transition:background .16s var(--ease)
+}
+.head-cta:hover{background:var(--accent)}
+.menu summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;height:42px;padding:0 14px;
+  border:1px solid var(--rule-2);border-radius:var(--r-md);font-size:14px;color:var(--ink);background:var(--paper-2)
+}
+.menu summary::-webkit-details-marker{display:none}
+.menu-panel{
+  position:absolute;right:20px;top:72px;background:var(--paper-2);border:1px solid var(--rule);
+  border-radius:var(--r-lg);padding:14px;min-width:250px;display:grid;gap:2px;
+  box-shadow:0 24px 60px -28px rgba(8,45,79,.4)
+}
+.menu-panel a{display:block;padding:11px 12px;border-radius:var(--r-sm);font-size:15px;color:var(--ink)}
+.menu-panel a:hover{background:var(--paper-3)}
+.menu-cta{background:var(--ink);color:#fff !important;margin-top:6px;text-align:center;font-weight:500}
+
+/* ---------- 5. Przyciski i linki ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 22px;border-radius:var(--r-md);
+  font-family:var(--font-body);font-size:16px;font-weight:500;letter-spacing:0;
+  border:1px solid transparent;text-decoration:none;cursor:pointer;
+  transition:background .16s var(--ease),color .16s var(--ease),border-color .16s var(--ease)
+}
+.btn--primary{background:var(--ink);color:#fff}
+.btn--primary:hover{background:var(--accent);color:#fff}
+.btn--ghost{background:var(--paper-2);border-color:var(--rule-2);color:var(--ink)}
+.btn--ghost:hover{border-color:var(--ink);background:#fff}
+.text-link{
+  display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--accent);
+  text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px
+}
+.text-link:hover{border-color:var(--accent)}
+.doc-body a,.prose a,.legal a,article p > a{
+  color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;
+  text-underline-offset:.2em;text-decoration-color:rgba(31,42,216,.35)
+}
+.doc-body a:hover,.prose a:hover{text-decoration-color:var(--accent)}
+
+/* ---------- 6. Hero strony głównej ---------- */
+.at-hero{background:var(--canvas);border-bottom:1px solid var(--rule);padding:84px 0 64px}
+.at-hero .wrap{display:block}
+.at-hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:32px;align-items:start}
+.at-hero-grid > div:first-child{grid-column:1/6;padding-top:8px}
+.at-hero-grid > .at-figure{grid-column:6/13;margin:0}
+.at-hero-kicker{margin-bottom:24px}
+.at-hero-kicker span{color:var(--accent);margin-right:8px}
+.at-display{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(42px,5.4vw,78px);line-height:1.02;letter-spacing:-.032em;
+  color:var(--ink);margin:0 0 26px;max-width:15ch
+}
+.at-display .l1,.at-display .l2{display:inline}
+.at-display .l3{display:block;color:var(--muted);font-weight:500}
+.at-lede{font-size:19.5px;line-height:1.5;color:var(--ink-2);max-width:46ch;margin:0 0 32px}
+.at-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.at-hero-note{font-size:14px;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px;max-width:48ch}
+.at-figure-cap{display:flex;justify-content:space-between;gap:16px;margin:0 0 10px;color:var(--muted)}
+.at-figure-cap span:first-child{color:var(--accent)}
+
+/* Plansza-schemat (jeśli używana) */
+.at-board{
+  background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+  padding:26px 28px;box-shadow:0 24px 60px -34px rgba(8,45,79,.35)
+}
+.at-board-head{display:flex;justify-content:space-between;border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:16px}
+.at-board-head b{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.at-board-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.at-board-list li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.at-board-list b{display:block;font-size:16px;font-weight:500}
+.at-board-list small{display:block;font-family:var(--font-body);font-size:13px;color:var(--muted);letter-spacing:0;text-transform:none}
+.at-proto{border:1px solid var(--rule);border-radius:3px;padding:3px 8px;background:var(--canvas);color:var(--muted) !important}
+.at-board-foot{margin:14px 0 0;color:var(--muted)}
+.at-pulse{display:none}
+
+/* ---------- 7. Karta raportu (artefakt hero) ---------- */
+.rep{
+  background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+  padding:32px 34px 30px;position:relative;
+  box-shadow:0 30px 70px -40px rgba(8,45,79,.45),0 1px 0 rgba(8,45,79,.05)
+}
+.rep-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--rule);padding-bottom:13px}
+.rep-title{font-family:var(--font-serif);font-weight:600;font-size:26px;line-height:1.22;letter-spacing:-.01em;margin:22px 0 6px;color:var(--ink)}
+.rep-sub{margin:0 0 22px;font-size:13.5px;color:var(--muted)}
+.rep-label{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.rep-chart svg{display:block;width:100%;height:auto}
+.rep-legend{display:flex;gap:18px;font-size:12.5px;color:var(--muted);margin-top:8px}
+.rep-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.rep-rows{margin-top:20px;border-top:1px solid var(--rule)}
+.rep-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--rule)}
+.rep-row span{font-size:13.5px;color:var(--muted)}
+.rep-row b{font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rep-row b.hot{color:var(--accent)}
+.rep-cap{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.rep-cap b{color:var(--ink-2);font-weight:500}
+
+/* fakty pod hero */
+.at-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:56px 0 0;padding:0;border-top:2px solid var(--ink)}
+.at-facts > div{padding:18px 24px 0 0;border-right:1px solid var(--rule)}
+.at-facts > div:last-child{border-right:0}
+.at-facts dt{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.at-facts dd{margin:0;font-size:16.5px;line-height:1.4;color:var(--ink)}
+
+/* ---------- 8. Sekcje, nagłówki sekcji ---------- */
+.section{padding:88px 0;border-bottom:1px solid var(--rule);background:var(--canvas)}
+.section--paper2{background:var(--paper-2)}
+.section--tight{padding:56px 0}
+.section-head{max-width:820px;margin-bottom:40px}
+.section-head h2,.section h2{font-size:clamp(28px,3.2vw,44px);line-height:1.1;margin:0 0 14px;letter-spacing:-.026em}
+.section-intro,.section-head p{font-size:17.5px;color:var(--muted);max-width:62ch;margin:0}
+.page-head{padding:64px 0 44px;border-bottom:1px solid var(--rule);background:var(--canvas)}
+.page-head h1{font-size:clamp(34px,4.4vw,58px);line-height:1.06;margin:14px 0 16px;letter-spacing:-.03em;max-width:24ch}
+.page-head .lead{font-size:19px;color:var(--ink-2);max-width:60ch;margin:0 0 22px}
+
+/* ---------- 9. Karty, listy, tabele ---------- */
+.card,.compare-card,.price-card,.problem-item,.path-step{
+  background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--r-md);
+  box-shadow:none;transition:border-color .16s var(--ease),transform .16s var(--ease)
+}
+.card:hover,.compare-card:hover,.problem-item:hover{border-color:var(--rule-2)}
+.price-card{border-top:2px solid var(--ink);border-radius:2px;padding:26px 24px;background:var(--paper-2)}
+.price-card-price,.price{font-size:32px;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.price-card-term{color:var(--muted)}
+.compare-cards,.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.plainlist{list-style:none;padding:0;margin:0}
+.plainlist li{padding:9px 0;border-bottom:1px solid var(--rule)}
+.table{width:100%;border-collapse:collapse;font-size:15.5px}
+.table th{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule-2);font-weight:400}
+.table td{padding:13px 14px;border-bottom:1px solid var(--rule);color:var(--ink-2)}
+.table td.num,.table th.num{text-align:right;font-variant-numeric:tabular-nums}
+.condition,.note{border-left:2px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 4px 4px 0;font-size:15px;color:var(--ink-2)}
+.lead{font-size:19px;line-height:1.5;color:var(--ink-2)}
+
+/* ---------- 10. Formularz ---------- */
+.form{display:grid;gap:18px}
+.field label,.field .label{display:block;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:7px}
+.field input,.field select,.field textarea,input[type=text],input[type=email],input[type=number],select,textarea{
+  width:100%;min-height:48px;padding:12px 14px;background:var(--paper-2);color:var(--ink);
+  border:1px solid var(--rule-2);border-radius:var(--r-sm);font-family:var(--font-body);font-size:16px;
+  transition:border-color .16s var(--ease),box-shadow .16s var(--ease)
+}
+.field textarea{min-height:140px;resize:vertical}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:var(--muted)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(31,42,216,.14);outline:none}
+.field .hint,.form-note{font-size:13px;color:var(--muted);font-family:var(--font-body);letter-spacing:0}
+.checklist{display:grid;gap:6px;font-size:14.5px;color:var(--ink-2)}
+.form-status{font-size:14px}
+.form-status[data-state="error"]{color:#b3261e}
+.form-status[data-state="ok"]{color:#0b6b3a}
+
+/* ---------- 11. Realizacje / case ---------- */
+.at-cases{display:grid;gap:20px}
+.at-case{background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;padding:24px 26px;display:block}
+.at-case:hover{border-color:var(--rule-2)}
+.at-case h3,.at-case-title{font-size:21px;line-height:1.3;margin:0 0 8px}
+.at-case-foot{color:var(--muted)}
+
+/* ---------- 12. Stopka i pasek mobilny ---------- */
+.site-foot{background:var(--dark);color:var(--on-dark);padding:64px 0 28px;margin-top:0}
+.site-foot a{color:var(--on-dark-muted);text-decoration:none}
+.site-foot a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.foot-word{font-family:var(--font-display);font-size:clamp(30px,3.4vw,46px);font-weight:600;letter-spacing:-.03em;margin:0 0 40px;color:var(--on-dark)}
+.foot-word em{font-style:normal;color:#9fb0c9}
+.foot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:28px}
+.foot-label{color:rgba(243,246,249,.55) !important;margin:0 0 12px}
+.foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot-grid li a{font-size:14px}
+.foot-legal{margin-top:36px;padding-top:18px;border-top:1px solid var(--on-dark-rule);color:rgba(243,246,249,.6) !important;font-family:var(--font-body);font-size:13px !important;letter-spacing:0}
+.mobile-cta{background:var(--dark);border-top:1px solid rgba(255,255,255,.14);color:#fff}
+.mobile-cta .mobile-cta-copy span{color:rgba(255,255,255,.72) !important}
+.mobile-cta .btn,.mobile-cta a[data-mobile-cta-action]{background:#fff;color:var(--ink);border-radius:var(--r-sm);font-weight:500}
+
+/* ---------- 13. Ramki pomocnicze ---------- */
+.skip{background:var(--ink);color:#fff}
+hr{border:0;border-top:1px solid var(--rule);margin:32px 0}
+mark{background:var(--accent-soft);color:var(--ink);padding:0 3px}
+
+/* ---------- 14. Responsywność ---------- */
+@media (max-width:1100px){
+  .foot-grid{grid-template-columns:repeat(3,1fr);gap:24px}
+}
+@media (max-width:900px){
+  body{font-size:16.5px}
+  .at-hero{padding:44px 0 40px}
+  .at-hero-grid{grid-template-columns:1fr;gap:34px}
+  .at-hero-grid > div:first-child,.at-hero-grid > .at-figure{grid-column:1/-1}
+  .at-display{font-size:38px;letter-spacing:-.024em;max-width:none}
+  .at-lede{font-size:17.5px}
+  .at-actions{flex-direction:column;align-items:stretch;gap:12px}
+  .at-actions .btn,.at-actions .text-link{width:100%;justify-content:center}
+  .at-facts{grid-template-columns:1fr;border-top-width:1px;margin-top:36px}
+  .at-facts > div{border-right:0;border-bottom:1px solid var(--rule);padding:14px 0}
+  .section,.page-head{padding:52px 0}
+  .page-head{padding:36px 0 30px}
+  .page-head h1{font-size:32px}
+  .compare-cards,.price-cards{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:repeat(2,1fr)}
+  .site-foot{padding:44px 0 24px}
+  .foot-word{margin-bottom:26px}
+  .nav-desktop{display:none}
+  .head-row{min-height:62px;gap:12px}
+  .head-cta{height:40px;padding:0 14px;font-size:14px}
+  .rep{padding:22px 20px}
+  .rep-title{font-size:21px}
+  .table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+
+/* ---------- 15. Wyrównanie specyficzności z warstwami starszymi ---------- */
+header.site-head{
+  background:rgba(242,242,242,.94);
+  border-bottom:1px solid var(--rule);
+  box-shadow:none;
+  backdrop-filter:blur(10px)
+}
+.site-head .brand{font-size:17.5px;color:var(--ink);font-family:var(--font-display);letter-spacing:-.02em}
+.site-head .brand span{color:var(--accent)}
+.nav-desktop a{font-family:var(--font-body);font-size:15px;color:var(--muted)}
+.nav-desktop a:hover,.nav-desktop a.is-active{color:var(--ink)}
+.nav-desktop a.is-active::after{background:var(--accent)}
+.site-head .head-cta,.head-cta{
+  background:var(--ink);border-color:var(--ink);color:#fff;font-family:var(--font-body);font-size:15px
+}
+.site-head .head-cta:hover,.head-cta:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.at-facts dd{font-family:var(--font-body);font-size:16.5px;color:var(--ink);letter-spacing:0;text-transform:none}
+.at-facts dt{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em}
+.at-display .l3{font-family:var(--font-display);font-weight:500;color:var(--muted)}
+.at-proto{font-family:var(--font-mono);font-size:12px}
+.at-board-list b{font-family:var(--font-body)}
+.at-board-list small{font-family:var(--font-body);font-size:13px}
+.menu summary{font-family:var(--font-body);font-size:14px;background:var(--paper-2);color:var(--ink)}
+.menu-panel a{font-family:var(--font-body)}
+
+/* ---------- 16. Tokeny starszych warstw (premium/atelier/console) ---------- */
+:root{
+  --surface:#ffffff;
+  --signal-lite:#1f2ad8;
+  --accent-hover:#3a45ea;
+  --accent-bright:#3a45ea;
+  --accent-soft:#e9ebff;
+  --ink-soft:#16405f;
+  --line:#d7dbdf;
+  --line-strong:#b6bfc6;
+  --on-dark-line:rgba(243,246,249,.22);
+  --danger:#b3261e;
+}
+
+/* ---------- 17. Ciemne pasy (dozwolone jako kontrast, nie jako tło serwisu) ---------- */
+.section.section--dark,.section.section--cta,.at-cta,.at-band,.cta-band{
+  background:var(--dark);color:var(--on-dark);border-color:var(--on-dark-rule)
+}
+.section.section--dark h1,.section.section--dark h2,.section.section--dark h3,
+.at-cta h2,.at-band h2,.cta-band h2{color:#fff}
+.section.section--dark p,.section.section--dark li,.section.section--dark .lead,
+.at-cta p,.at-band p,.at-band small,.at-band b,.cta-band p{color:var(--on-dark-muted)}
+.at-cta .at-cta-kicker,.at-band-kicker,.at-cta .mono,.at-band .mono{color:rgba(243,246,249,.62)}
+.at-cta .sa-kicker,.at-cta .sa-kicker span{color:#9fb0c9}
+.at-cta a:not(.btn),.at-band a:not(.btn){color:#fff}
+.section.section--dark .btn--primary,.at-cta .btn--primary{background:#fff;color:var(--ink);border-color:#fff}
+.section.section--dark .btn--primary:hover,.at-cta .btn--primary:hover{background:#e8ecff;color:var(--accent);border-color:#e8ecff}
+.section.section--dark .btn--ghost,.at-cta .btn--ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.34)}
+.section.section--dark .btn--ghost:hover,.at-cta .btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+/* akcent na kobalcie = biały tekst (nigdy czarny) */
+.btn.btn--accent,.buttonrow .btn--accent,.at-plan .btn,.at-plan-flag,
+.calc-highlight,.calc-highlight dt,.calc-highlight dd,.calc-highlight span,.calc-highlight b{
+  color:#fff
+}
+.at-plan-flag{border-color:rgba(255,255,255,.5);background:var(--accent)}
+
+/* ---------- 18. Ostatnie poprawki kontrastu (kobalt = biały tekst) ---------- */
+.buttonrow .btn,.buttonrow .btn--primary,.calc-cta .btn{background:var(--ink);color:#fff;border-color:var(--ink)}
+.buttonrow .btn:hover,.calc-cta .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.calc-highlight dt,.calc-highlight dd,.calc-highlight span,.calc-highlight b{color:#fff !important}
+.calc-highlight{background:var(--accent);border-radius:var(--r-sm)}
+.at-plan .btn,.at-plan .btn--ghost{background:var(--ink);color:#fff;border-color:var(--ink)}
+.at-plan .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.site-foot .foot-mail,.foot-mail{color:var(--on-dark)}
+.foot-mail:hover{color:#fff}
+.site-foot .sa-kicker,.site-foot .sa-kicker span{color:rgba(243,246,249,.66)}
+.at-band-word em,.at-cta em{color:#9fb0c9}
+
+/* ---------- 19. Domknięcie: kobalt i stopka (specyficzność warstw starszych) ---------- */
+a.btn.btn--accent:link,a.btn.btn--accent:visited,a.btn.btn--accent:hover,
+.btn.btn--accent,.buttonrow a.btn{color:#fff !important;background:var(--ink);border-color:var(--ink)}
+.buttonrow a.btn:hover{background:var(--accent);border-color:var(--accent)}
+.calc-out .calc-highlight,.calc-out .calc-highlight *,.calc-highlight{color:#fff !important}
+.site-foot .foot-word,.site-foot .foot-word em,p.foot-word{color:var(--on-dark) !important}
+.site-foot .foot-word em{color:#9fb0c9 !important}
+.site-foot .foot-grid a,.site-foot .foot-grid li a,.site-foot .foot-grid p,.site-foot .foot-grid li{color:rgba(243,246,249,.76) !important}
+.site-foot .foot-grid a:hover{color:#fff !important}
+/* w ciemnych pasach akcent dziedziczy kolor tekstu (kobalt na granacie nie czytelny) */
+.at-band span,.at-band em,.at-band b,.at-cta span,.at-cta em,.section--dark span,.section--dark em,
+.report-banner span,.report-banner em,.cta-band span,.cta-band em{color:inherit}
+/* numer kickera jako znacznik, nie kolorowy tekst na granacie */
+.at-hero-kicker span,.sa-kicker span:first-child{
+  display:inline-block;min-width:22px;padding:2px 5px;margin-right:8px;
+  background:var(--ink);color:#fff !important;border-radius:3px;text-align:center
+}
+.at-band blockquote span,.at-band blockquote em,.at-band blockquote b{color:#c3d2e2 !important}
+
+/* ---------- 20. Mobile: nagłówek i pasek CTA ---------- */
+.cta-short{display:none}
+@media (max-width:520px){
+  .head-cta{padding:0 12px;font-size:14px;gap:6px;white-space:nowrap}
+  .cta-long{display:none}
+  .cta-short{display:inline}
+  .head-row .brand{font-size:16px}
+}
+@media (max-width:900px){
+  .rep{padding:26px 22px 24px}
+  .rep-row{grid-template-columns:1fr auto;gap:10px}
+  .rep-row span{font-size:13px}
+  .mobile-cta{padding-bottom:max(10px, env(safe-area-inset-bottom))}
+}

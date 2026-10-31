@@ -16,3 +16,4 @@ studio-shots/
 # Artefakty audytu lokalnego (95 MB) — poza repo
 out/
 .hermes/
+cache_*.txt

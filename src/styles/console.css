@@ -73,12 +73,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 /* ziarno papieru nie ma sensu na konsoli */
-body::after { display: none !important; content: none !important; }
+body::after { display: none; content: none; }
 
 ::selection { background: var(--signal); color: #0a0b0d; }
 
 h1, h2, h3, h4, .at-display, .display {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-display);
   font-weight: 620;
   letter-spacing: -0.035em;
   color: var(--ink);
@@ -281,12 +281,12 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 
 /* ---------- 16. Typografia hero ---------- */
 .at-display .l1, .at-display .l2 {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-display);
   font-weight: 640;
   letter-spacing: -0.045em;
   line-height: 0.92;
 }
-.at-display .l3 { font-family: var(--font-display) !important; font-weight: 500; letter-spacing: -0.03em; }
+.at-display .l3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.03em; }
 .at-hero .lead, .page-head .lead, .lead { font-size: clamp(17px, 1.35vw, 20px); color: var(--ink-2); max-width: 52ch; }
 
 /* ---------- 17. Mobile ---------- */
@@ -361,30 +361,30 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 
 /* ---------- 19. Skala typografii pod grotesk ---------- */
 .at-display .l1, .at-display .l2 {
-  font-size: clamp(2.9rem, 6.4vw, 5.5rem) !important;
-  line-height: 0.94 !important;
-  letter-spacing: -0.042em !important;
-  font-weight: 640 !important;
+  font-size: clamp(2.9rem, 6.4vw, 5.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.042em;
+  font-weight: 640;
 }
 .at-display .l3 {
-  font-size: clamp(1.45rem, 3.1vw, 2.35rem) !important;
-  line-height: 1.1 !important;
-  letter-spacing: -0.03em !important;
-  font-weight: 500 !important;
+  font-size: clamp(1.45rem, 3.1vw, 2.35rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 500;
 }
 .at-display em, .at-display i {
-  font-style: normal !important;
-  color: var(--signal) !important;
-  font-weight: 640 !important;
+  font-style: normal;
+  color: var(--signal);
+  font-weight: 640;
 }
 .at-lede { font-size: clamp(17px, 1.5vw, 20px); color: var(--ink-2); max-width: 50ch; }
 
 /* nagłówek strony (podstrony) */
-.page-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.9rem) !important; line-height: 1.02 !important; }
+.page-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.9rem); line-height: 1.02; }
 
 @media (max-width: 900px) {
-  .at-display .l1, .at-display .l2 { font-size: clamp(2.4rem, 11.5vw, 3.4rem) !important; }
-  .at-display .l3 { font-size: clamp(1.25rem, 6vw, 1.7rem) !important; }
+  .at-display .l1, .at-display .l2 { font-size: clamp(2.4rem, 11.5vw, 3.4rem); }
+  .at-display .l3 { font-size: clamp(1.25rem, 6vw, 1.7rem); }
 }
 
 /* ---------- 20. Tokeny warstw starszych (premium.css, atelier) ---------- */
@@ -403,19 +403,19 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 
 /* nagłówek CTA: wymuszamy ciemny tekst na limonce */
 .site-head .head-cta, .head-cta {
-  background: var(--signal) !important;
-  border-color: var(--signal) !important;
-  color: #0a0b0d !important;
+  background: var(--signal);
+  border-color: var(--signal);
+  color: #0a0b0d;
 }
 .site-head .head-cta:hover, .head-cta:hover {
-  background: var(--signal-bright) !important;
-  border-color: var(--signal-bright) !important;
-  color: #0a0b0d !important;
+  background: var(--signal-bright);
+  border-color: var(--signal-bright);
+  color: #0a0b0d;
 }
 
 .at-plan-flag {
-  background: var(--signal) !important;
-  color: #0a0b0d !important;
+  background: var(--signal);
+  color: #0a0b0d;
   font-weight: 700;
 }
 
@@ -424,26 +424,26 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 
 /* ---------- 21. Wyróżniona karta planu: panel z limonkową ramką ---------- */
 .at-plan--hot {
-  background: var(--paper-3) !important;
-  color: var(--ink) !important;
-  border-color: var(--signal) !important;
+  background: var(--paper-3);
+  color: var(--ink);
+  border-color: var(--signal);
 }
-.at-plan--hot .at-plan-name { color: var(--signal) !important; }
+.at-plan--hot .at-plan-name { color: var(--signal); }
 .at-plan--hot .at-plan-desc,
-.at-plan--hot li { color: var(--ink-2) !important; }
-.at-plan--hot .at-plan-price { border-bottom-color: var(--rule-2) !important; }
+.at-plan--hot li { color: var(--ink-2); }
+.at-plan--hot .at-plan-price { border-bottom-color: var(--rule-2); }
 .at-plan--hot .at-plan-price b,
 .at-plan--hot .at-plan-price strong,
-.at-plan--hot .at-plan-price { color: var(--ink) !important; }
-.at-plan--hot .at-plan-price span { color: var(--muted) !important; }
-.at-plan--hot .btn { background: var(--signal) !important; border-color: var(--signal) !important; color: #0a0b0d !important; }
+.at-plan--hot .at-plan-price { color: var(--ink); }
+.at-plan--hot .at-plan-price span { color: var(--muted); }
+.at-plan--hot .btn { background: var(--signal); border-color: var(--signal); color: #0a0b0d; }
 
 /* akcent na limonce zawsze z ciemnym tekstem */
 .btn.btn--accent, .btn.btn--accent:link, .btn.btn--accent:visited,
 .section--dark .btn.btn--accent, .sa-cta .btn.btn--accent {
-  color: #0a0b0d !important;
+  color: #0a0b0d;
 }
-.btn.btn--accent:hover, .section--dark .btn.btn--accent:hover { color: #0a0b0d !important; }
+.btn.btn--accent:hover, .section--dark .btn.btn--accent:hover { color: #0a0b0d; }
 
 /* ---------- 22. Plansza hero: mocniejsza płaszczyzna i punkt skupienia ---------- */
 .at-board {
@@ -480,83 +480,3 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 @media (max-width: 900px) {
   .at-board { padding: 16px; border-radius: var(--r-md); }
 }
-
-/* ============================================================
-   ETAP 0 (2026-10-31) — szybkie poprawki czytelności i „szablonu"
-   1) linki nie są domyślnie podkreślone (podkreślenie tylko w treści)
-   2) minimalny rozmiar tekstu 12 px dla metadanych i UI
-   3) brak automatycznego tickera i masowych reveal
-   4) bez kursywy akcentującej w nagłówkach
-   5) limonka tylko dla akcji, nie dla ozdoby
-   ============================================================ */
-
-a { text-decoration: none; }
-a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
-/* podkreślenie zostaje tam, gdzie link jest częścią zdania */
-.doc-body a, .prose a, .legal a, p > a:not(.btn):not(.card):not(.text-link),
-li > a:not(.btn):not(.card):not(.text-link) {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.22em;
-  text-decoration-color: var(--rule-2);
-}
-.doc-body a:hover, p > a:hover, li > a:hover { text-decoration-color: var(--signal); }
-
-/* klikalny wiersz/karta: żaden opis nie wygląda jak link */
-.card, .card *, .sa-index a, .at-index a, .sa-case, .sa-case *,
-.at-case, .at-case *, .at-audience a, .at-audience a * { text-decoration: none; }
-.card:hover .text-link, .sa-index a:hover .text-link { text-decoration: underline; }
-
-/* --- minimalne rozmiary: metadane 12 px, UI 14–15 px --- */
-.mono, .n, .price, .when, .calc-unit, .at-num, .study-flow-step,
-.foot-label, .foot-note, .small, .meta, .tag, .label,
-.sa-topbar, .sa-topbar-inner, .sa-topbar-mid,
-.at-figure-cap, figcaption, th, .table th { font-size: 12px !important; }
-
-.btn, .head-cta, .at-plan-flag { font-size: 15px !important; }
-.text-link, .link { font-size: 15px !important; }
-.nav-desktop a, .menu-panel a, .site-foot a, .site-footer a { font-size: 14px !important; }
-.sa-topbar-inner b, .sa-topbar-dot { font-size: 12px !important; }
-.path-step .price, .plan .price small, .at-plan-price span { font-size: 13px !important; }
-
-/* --- bez kursywy akcentującej --- */
-h1 em, h2 em, h3 em, .at-display em, .sa-index em, .at-plan-name em {
-  font-style: normal !important;
-  color: inherit !important;
-  font-weight: inherit !important;
-}
-
-/* --- bez automatycznego tickera i bez reveal --- */
-.marquee, .at-marquee, .at-ticker { display: none !important; }
-[data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-
-/* --- limonka: tylko akcje i fokus; etykiety i liczby neutralne --- */
-.mono, .n, .when, .at-num, .study-flow-step, .foot-label { color: var(--muted) !important; }
-.price, .path-step .price { color: var(--ink-2) !important; }
-.at-plan-name, .at-plan--hot .at-plan-name { color: var(--ink) !important; }
-.at-plan-flag, .plan-flag { background: var(--paper-3) !important; color: var(--ink) !important; }
-.at-plan--hot { border-color: var(--rule-2) !important; }
-.at-board-list li:nth-child(2) .at-proto { border-color: var(--rule-2) !important; color: var(--ink-2) !important; }
-
-/* Etap 0b — konkretne komponenty mikrotypografii (zmierzone na żywym DOM) */
-.sa-kicker span, .sa-kicker, .at-toc-label, .at-facts dt, .at-facts dd,
-.at-board-head, .at-board-head *, .at-board-foot, .at-proto,
-.at-tags span, .at-tag, .price-card-term, .path-step .at-num,
-summary, label, .opt-hint, .form-note, .calc-hint, .foot-note,
-.at-study-meta, .study-meta { font-size: 12px !important; }
-.at-tags span, .at-proto { font-size: 12px !important; padding: 3px 8px !important; }
-.at-facts dd { line-height: 1.45; }
-.menu-panel summary, .menu-panel label { font-size: 14px !important; }
-.tag, .chip, .status-pill { font-size: 12px !important; }
-.skip { font-size: 13px !important; }
-/* liczby w cenniku: cyfry tabelaryczne */
-.price, .at-plan-price, .calc-value, .calc-out strong, td.num { font-variant-numeric: tabular-nums; }
-
-/* Etap 0c — reszta zmierzonych mikrotekstów */
-.foot-legal, .foot-legal *, .meta-line, .meta-line *, .study-meta dd, .study-meta dt,
-.mobile-cta-copy span, .report-num, .report-tag, .at-toc a, .at-case-ba em,
-.at-case-foot, .study-label, .at-flow-num, .at-flow-tag, .at-step-num, .at-step-time {
-  font-size: 12px !important;
-}
-.at-case-ba em, .at-case-foot { letter-spacing: .04em; }
-.mobile-cta-copy span { font-size: 12.5px !important; }

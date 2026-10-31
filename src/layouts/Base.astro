@@ -15,6 +15,10 @@ import '../styles/home-atelier.css';
 // Edycja IV „Konsola" (2026-10-31) — ciemna warstwa nadrzędna: Archivo zamiast
 // serify, panele zamiast papieru, limonka jako jedyny sygnał. Musi być ostatnia.
 import '../styles/console.css';
+// Edycja V „Operational Editorial" (2026-10-31) — jasna warstwa nadrzędna:
+// canvas #f2f2f2, granat jako atrament, kobalt jako jedyny akcent akcji,
+// Plex Sans/Mono + Source Serif wyłącznie w dokumencie. Musi być ostatnia.
+import '../styles/editorial.css';
 
 // Preload tylko fontów krytycznych dla pierwszego ekranu (nagłówek + treść).
 // Edycja IV: display = Archivo (variable) latin + latin-ext, body = Inter 400.
@@ -327,7 +331,7 @@ const articleLd = article
           href={CONTACT_HREF}
           data-umami-event="cta_click"
           data-umami-event-label="Nagłówek: napisz do nas"
-        >Napisz do nas →</a>
+        ><span class="cta-long">Napisz do nas</span><span class="cta-short">Napisz</span> →</a>
 
         <details class="menu">
           <summary>Menu</summary>

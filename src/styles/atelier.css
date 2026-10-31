@@ -911,7 +911,7 @@ strong, b { font-weight: 600; }
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--on-dark-muted);
-  margin-bottom: 14px !important;
+  margin-bottom: 14px;
 }
 
 .foot-mail { border-bottom: 1px solid var(--on-dark-rule); }
@@ -963,9 +963,9 @@ strong, b { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
   }
   [data-reveal] { opacity: 1; transform: none; }
 }
@@ -1025,7 +1025,7 @@ strong, b { font-weight: 600; }
   color: var(--on-dark);
   border-top: 1px solid var(--rule-2);
 }
-.mobile-cta[hidden] { display: none !important; }
+.mobile-cta[hidden] { display: none; }
 .mobile-cta-inner {
   display: flex;
   align-items: center;

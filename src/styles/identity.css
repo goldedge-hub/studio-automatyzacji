@@ -1639,7 +1639,7 @@ table.table, .table {
 .process-arrow { display: none; }
 @media (max-width: 780px) {
   .process-grid { grid-template-columns: 1fr; }
-  .process-step { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0 !important; }
+  .process-step { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0; }
   .process-step:last-child { border-bottom: 0; }
 }
 
@@ -1693,9 +1693,9 @@ table.table, .table {
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after {
-    animation-duration: .001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .001ms !important;
+    animation-duration: .001ms;
+    animation-iteration-count: 1;
+    transition-duration: .001ms;
   }
 }
 
@@ -1964,7 +1964,7 @@ table.table, .table {
 }
 @media (max-width: 560px) {
   .sa-flow { grid-template-columns: 1fr; }
-  .sa-flow li { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0 !important; }
+  .sa-flow li { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0; }
   .sa-flow li:last-child { border-bottom: 0; }
   .sa-flow li::before, .sa-flow li:not(:first-child)::before { left: 0; }
   .calc-head { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -2011,7 +2011,7 @@ table.table, .table {
   .sa-cases, .sa-plans, .plans, .problem-grid, .split { grid-template-columns: 1fr; }
   .sa-case:last-child, .sa-plan:last-child { grid-column: auto; }
   .sa-steps { grid-template-columns: 1fr; }
-  .sa-steps li { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0 !important; }
+  .sa-steps li { border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0; }
   .sa-steps li:last-child { border-bottom: 0; }
   .sa-steps li::before, .sa-steps li:not(:first-child)::before { left: 0; }
   .sa-band-grid { grid-template-columns: 1fr; }
@@ -2029,7 +2029,7 @@ table.table, .table {
   .site-head .brand { font-size: 21px; }
   .foot-grid { grid-template-columns: 1fr; }
   .sa-facts { grid-template-columns: 1fr; }
-  .sa-facts > div { border-right: 0; padding-left: 0 !important; }
+  .sa-facts > div { border-right: 0; padding-left: 0; }
   .sa-facts > div + div { border-top: 1px solid var(--rule); }
   .sa-index a { grid-template-columns: 34px 1fr; }
   .sa-index .sa-tags { grid-column: 2; }

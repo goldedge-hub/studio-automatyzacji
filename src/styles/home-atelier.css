@@ -1000,7 +1000,7 @@
   .at-display .l2 { font-size: clamp(3.2rem, 15.5vw, 4.6rem); }
   .at-display .l3 { font-size: clamp(1.6rem, 7.4vw, 2.2rem); }
   .at-flow { grid-template-columns: minmax(0, 1fr); }
-  .at-flow li::after { display: none !important; }
+  .at-flow li::after { display: none; }
   .at-actions { align-items: stretch; flex-direction: column; }
   .at-actions .btn { width: 100%; }
   .at-actions .text-link { align-self: flex-start; }
