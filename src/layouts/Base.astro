@@ -12,12 +12,14 @@ import '../styles/identity.css';
 // oraz kompozycja strony głównej. Muszą być ostatnie.
 import '../styles/atelier.css';
 import '../styles/home-atelier.css';
+// Edycja IV „Konsola" (2026-10-31) — ciemna warstwa nadrzędna: Archivo zamiast
+// serify, panele zamiast papieru, limonka jako jedyny sygnał. Musi być ostatnia.
+import '../styles/console.css';
 
 // Preload tylko fontów krytycznych dla pierwszego ekranu (nagłówek + treść).
-// Edycja III: display = Fraunces 300 (H1/H2), body = Inter 400.
-// Italic, JBM i podzbiory ext ładują się przez @font-face z font-display: swap.
-import frauncesLat from '../fonts/fraunces-latN-300.woff2?url';
-import frauncesExt from '../fonts/fraunces-extN-300.woff2?url';
+// Edycja IV: display = Archivo (variable) latin + latin-ext, body = Inter 400.
+import archivoLat from '../fonts/archivo-lat.woff2?url';
+import archivoExt from '../fonts/archivo-ext.woff2?url';
 import interLatin from '../fonts/inter-lat-400.woff2?url';
 
 import {
@@ -273,8 +275,8 @@ const articleLd = article
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <link rel="preload" href={frauncesLat} as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href={frauncesExt} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={archivoLat} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={archivoExt} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
 
   <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
