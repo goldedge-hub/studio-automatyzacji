@@ -480,3 +480,83 @@ hr { border: 0; border-top: 1px solid var(--rule); }
 @media (max-width: 900px) {
   .at-board { padding: 16px; border-radius: var(--r-md); }
 }
+
+/* ============================================================
+   ETAP 0 (2026-10-31) — szybkie poprawki czytelności i „szablonu"
+   1) linki nie są domyślnie podkreślone (podkreślenie tylko w treści)
+   2) minimalny rozmiar tekstu 12 px dla metadanych i UI
+   3) brak automatycznego tickera i masowych reveal
+   4) bez kursywy akcentującej w nagłówkach
+   5) limonka tylko dla akcji, nie dla ozdoby
+   ============================================================ */
+
+a { text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+/* podkreślenie zostaje tam, gdzie link jest częścią zdania */
+.doc-body a, .prose a, .legal a, p > a:not(.btn):not(.card):not(.text-link),
+li > a:not(.btn):not(.card):not(.text-link) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--rule-2);
+}
+.doc-body a:hover, p > a:hover, li > a:hover { text-decoration-color: var(--signal); }
+
+/* klikalny wiersz/karta: żaden opis nie wygląda jak link */
+.card, .card *, .sa-index a, .at-index a, .sa-case, .sa-case *,
+.at-case, .at-case *, .at-audience a, .at-audience a * { text-decoration: none; }
+.card:hover .text-link, .sa-index a:hover .text-link { text-decoration: underline; }
+
+/* --- minimalne rozmiary: metadane 12 px, UI 14–15 px --- */
+.mono, .n, .price, .when, .calc-unit, .at-num, .study-flow-step,
+.foot-label, .foot-note, .small, .meta, .tag, .label,
+.sa-topbar, .sa-topbar-inner, .sa-topbar-mid,
+.at-figure-cap, figcaption, th, .table th { font-size: 12px !important; }
+
+.btn, .head-cta, .at-plan-flag { font-size: 15px !important; }
+.text-link, .link { font-size: 15px !important; }
+.nav-desktop a, .menu-panel a, .site-foot a, .site-footer a { font-size: 14px !important; }
+.sa-topbar-inner b, .sa-topbar-dot { font-size: 12px !important; }
+.path-step .price, .plan .price small, .at-plan-price span { font-size: 13px !important; }
+
+/* --- bez kursywy akcentującej --- */
+h1 em, h2 em, h3 em, .at-display em, .sa-index em, .at-plan-name em {
+  font-style: normal !important;
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* --- bez automatycznego tickera i bez reveal --- */
+.marquee, .at-marquee, .at-ticker { display: none !important; }
+[data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* --- limonka: tylko akcje i fokus; etykiety i liczby neutralne --- */
+.mono, .n, .when, .at-num, .study-flow-step, .foot-label { color: var(--muted) !important; }
+.price, .path-step .price { color: var(--ink-2) !important; }
+.at-plan-name, .at-plan--hot .at-plan-name { color: var(--ink) !important; }
+.at-plan-flag, .plan-flag { background: var(--paper-3) !important; color: var(--ink) !important; }
+.at-plan--hot { border-color: var(--rule-2) !important; }
+.at-board-list li:nth-child(2) .at-proto { border-color: var(--rule-2) !important; color: var(--ink-2) !important; }
+
+/* Etap 0b — konkretne komponenty mikrotypografii (zmierzone na żywym DOM) */
+.sa-kicker span, .sa-kicker, .at-toc-label, .at-facts dt, .at-facts dd,
+.at-board-head, .at-board-head *, .at-board-foot, .at-proto,
+.at-tags span, .at-tag, .price-card-term, .path-step .at-num,
+summary, label, .opt-hint, .form-note, .calc-hint, .foot-note,
+.at-study-meta, .study-meta { font-size: 12px !important; }
+.at-tags span, .at-proto { font-size: 12px !important; padding: 3px 8px !important; }
+.at-facts dd { line-height: 1.45; }
+.menu-panel summary, .menu-panel label { font-size: 14px !important; }
+.tag, .chip, .status-pill { font-size: 12px !important; }
+.skip { font-size: 13px !important; }
+/* liczby w cenniku: cyfry tabelaryczne */
+.price, .at-plan-price, .calc-value, .calc-out strong, td.num { font-variant-numeric: tabular-nums; }
+
+/* Etap 0c — reszta zmierzonych mikrotekstów */
+.foot-legal, .foot-legal *, .meta-line, .meta-line *, .study-meta dd, .study-meta dt,
+.mobile-cta-copy span, .report-num, .report-tag, .at-toc a, .at-case-ba em,
+.at-case-foot, .study-label, .at-flow-num, .at-flow-tag, .at-step-num, .at-step-time {
+  font-size: 12px !important;
+}
+.at-case-ba em, .at-case-foot { letter-spacing: .04em; }
+.mobile-cta-copy span { font-size: 12.5px !important; }
