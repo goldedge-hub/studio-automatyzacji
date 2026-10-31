@@ -1160,3 +1160,19 @@ strong, b { font-weight: 600; }
   }
   .at-proof-figure { scrollbar-width: thin; }
 }
+
+/* Pasek mobilny: przycisk na ciemnym tle musi być odwrócony,
+   inaczej .btn--primary (tło = atrament) znika na pasku w tym samym kolorze. */
+@media (max-width: 900px) {
+  .mobile-cta .btn.btn--primary {
+    background: var(--on-dark);
+    color: var(--ink);
+    border-color: var(--on-dark);
+  }
+  .mobile-cta .btn.btn--primary:hover,
+  .mobile-cta .btn.btn--primary:focus-visible {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+}

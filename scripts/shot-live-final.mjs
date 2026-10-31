@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch();
+const m=await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+const mp=await m.newPage();
+const out='C:/Users/sfajr/Documents/StudioAutomation/screens/2026-10-31/';
+await mp.goto('https://www.studioautomatyzacji.pl/',{waitUntil:'networkidle'});
+await mp.evaluate(()=>window.scrollTo(0,700)); await mp.waitForTimeout(600);
+await mp.screenshot({path:out+'final-m-home.png'});
+await mp.goto('https://www.studioautomatyzacji.pl/audyt/',{waitUntil:'networkidle'});
+await mp.evaluate(()=>document.querySelector('.path')?.scrollIntoView({block:'start'})); await mp.evaluate(()=>window.scrollBy(0,-80)); await mp.waitForTimeout(600);
+await mp.screenshot({path:out+'final-m-audyt-path.png'});
+await mp.evaluate(()=>document.querySelector('.at-proof-figure')?.scrollIntoView({block:'center'})); await mp.waitForTimeout(700);
+await mp.screenshot({path:out+'final-m-audyt-proof.png'});
+const d=await b.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
+const dp=await d.newPage(); await dp.goto('https://www.studioautomatyzacji.pl/ile-kosztuje/',{waitUntil:'networkidle'});
+await dp.evaluate(()=>{const h=[...document.querySelectorAll('h2')].find(x=>x.textContent.includes('Cennik usług'));h?.scrollIntoView({block:'start'})}); await dp.waitForTimeout(700);
+await dp.screenshot({path:out+'final-d-cennik-table.png'});
+console.log('ok'); await b.close();

@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const B='http://localhost:4337';
+const B='https://www.studioautomatyzacji.pl';
 const b=await chromium.launch();
 const ctx=await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
 const p=await ctx.newPage();
