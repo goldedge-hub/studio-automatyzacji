@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
+import ArtifactHero from '../components/ArtifactHero.astro';
+import ReportCard from '../components/ReportCard.astro';
 import { DIAGNOSIS_RESPONSE_PHRASE } from '../config';
 import { P } from '../data/pricing';
 
@@ -57,30 +59,19 @@ const comparison = [
   path="/audyt/"
   faq={auditFaq}
 >
-  <section class="page-head">
-    <div class="wrap">
-      <div class="meta-line">
-        <span>Diagnoza i wycena {P.miniDiagnosis}</span>
-        <span>Audyt {P.audit} netto</span>
-        <span>Raport orientacyjnie w 3 dni robocze</span>
-      </div>
-      <h1>Najpierw bezpłatna diagnoza i wycena. Potem decyzja, czy audyt ma sens</h1>
-      <p class="lead">
-        Możesz zacząć bezpłatnie: opisz jeden proces, a {DIAGNOSIS_RESPONSE_PHRASE}
-        dostaniesz e-mail z oceną, szacunkiem oszczędności i orientacyjną wyceną wdrożenia.
-        Jeśli potrzebujesz mapy procesu, kosztu pracy i ryzyk, zamawiasz pogłębiony audyt
-        za {P.audit} netto, odliczany od wdrożenia.
-      </p>
-      <div class="buttonrow">
-        <ContactLink class="btn btn--primary" label="Bezpłatna diagnoza i wycena — 24 h" topic="diagnoza" />
-        <a class="btn btn--ghost" href="#co-dostajesz">Co zawiera audyt {P.audit} netto</a>
-      </div>
-      <p class="small muted" style="margin-top:14px">
-        Płatność przelewem, faktura. Audyt odliczamy od pierwszej faktury za wdrożenie.
-        Nie obiecujemy zwrotu gotówki.
-      </p>
-    </div>
-  </section>
+  <ArtifactHero
+    variant="document"
+    meta={[`Diagnoza i wycena ${P.miniDiagnosis}`, `Audyt ${P.audit} netto`, 'Raport orientacyjnie w 3 dni robocze']}
+    title="Najpierw bezpłatna diagnoza i wycena. Potem decyzja, czy audyt ma sens"
+    lead={`Możesz zacząć bezpłatnie: opisz jeden proces, a ${DIAGNOSIS_RESPONSE_PHRASE} dostaniesz e-mail z oceną, szacunkiem oszczędności i orientacyjną wyceną wdrożenia. Jeśli potrzebujesz mapy procesu, kosztu pracy i ryzyk, zamawiasz pogłębiony audyt za ${P.audit} netto, odliczany od wdrożenia.`}
+    note="Płatność przelewem, faktura. Audyt odliczamy od pierwszej faktury za wdrożenie. Nie obiecujemy zwrotu gotówki."
+  >
+    <Fragment slot="actions">
+      <ContactLink class="btn btn--primary" label="Bezpłatna diagnoza i wycena — 24 h" topic="diagnoza" />
+      <a class="btn btn--ghost" href="#co-dostajesz">Co zawiera audyt {P.audit} netto</a>
+    </Fragment>
+    <Fragment slot="artifact"><ReportCard compact /></Fragment>
+  </ArtifactHero>
 
   <section class="section" id="diagnoza">
     <div class="wrap">

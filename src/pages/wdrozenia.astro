@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import ContactLink from '../components/ContactLink.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
+import ArtifactHero from '../components/ArtifactHero.astro';
+import ProcessMap from '../components/ProcessMap.astro';
 import { PRICE_UPDATED } from '../config';
 import { P, PRICES, zl } from '../data/pricing';
 
@@ -107,26 +109,18 @@ const faq = [
   description={`Wdrożenia e-commerce: Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom} netto. Stała cena, testy, dokumentacja, 30–60 dni gwarancji.`}
   path="/wdrozenia/"
 >
-  <section class="page-head">
-    <div class="wrap">
-      <div class="meta-line">
-        <span>Oferta</span>
-        <span>Ceny netto</span>
-        <span>Aktualizacja: {PRICE_UPDATED}</span>
-      </div>
-      <h1>Wdrożenia, które da się rozliczyć</h1>
-      <p class="lead">
-        Wdrożenia dla e-commerce: zamówienia, zwroty, stany, faktury i korespondencja.
-        Każde zaczynamy od pytania „ile to oszczędza”, a kończymy na działającym procesie,
-        teście i dokumentacji. Cena jest stała, a zmiana zakresu to osobna decyzja —
-        nie niespodzianka na fakturze.
-      </p>
-      <div class="buttonrow">
-        <ContactLink class="btn btn--primary" label="Napisz do nas" />
-        <a class="btn btn--ghost" href="/ile-kosztuje/">Pełny cennik</a>
-      </div>
-    </div>
-  </section>
+  <ArtifactHero
+    variant="flow"
+    meta={['Oferta', 'Ceny netto', `Aktualizacja: ${PRICE_UPDATED}`]}
+    title="Wdrożenia, które da się rozliczyć"
+    lead="Wdrożenia dla e-commerce: zamówienia, zwroty, stany, faktury i korespondencja. Każde zaczynamy od pytania „ile to oszczędza”, a kończymy na działającym procesie, teście i dokumentacji. Cena jest stała, a zmiana zakresu to osobna decyzja — nie niespodzianka na fakturze."
+  >
+    <Fragment slot="actions">
+      <ContactLink class="btn btn--primary" label="Napisz do nas" />
+      <a class="btn btn--ghost" href="/ile-kosztuje/">Pełny cennik</a>
+    </Fragment>
+    <Fragment slot="artifact"><ProcessMap /></Fragment>
+  </ArtifactHero>
 
   <section class="section" id="cennik">
     <div class="wrap">

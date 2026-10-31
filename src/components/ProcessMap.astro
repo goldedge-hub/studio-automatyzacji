@@ -1,0 +1,47 @@
+---
+// Artefakt: mapa przepływu zamówienia. Używany w hero /wdrozenia/.
+---
+
+<figure class="artifact artifact--map">
+  <svg viewBox="0 0 640 380" role="img" aria-label="Mapa przepływu: sklep, BaseLinker, ERP, wysyłka i raport o 06:00">
+    <rect width="640" height="380" fill="#ffffff"/>
+    <text x="24" y="34" font-family="Plex Mono, monospace" font-size="11" letter-spacing="1.6" fill="#4f6679">PRZEPŁYW ZAMÓWIENIA</text>
+
+    <g font-family="Plex Sans, sans-serif" font-size="13" fill="#082d4f">
+      <rect x="24" y="56" width="132" height="46" fill="#082d4f"/>
+      <text x="40" y="84" fill="#ffffff">Sklep</text>
+      <text x="40" y="96" font-size="10" fill="#c3d2e2" font-family="Plex Mono, monospace">webhook</text>
+
+      <rect x="188" y="56" width="132" height="46" fill="none" stroke="#b6bfc6"/>
+      <text x="204" y="84">BaseLinker</text>
+      <text x="204" y="96" font-size="10" fill="#4f6679" font-family="Plex Mono, monospace">kolejka</text>
+
+      <rect x="352" y="56" width="132" height="46" fill="none" stroke="#b6bfc6"/>
+      <text x="368" y="84">ERP</text>
+      <text x="368" y="96" font-size="10" fill="#4f6679" font-family="Plex Mono, monospace">stany, faktura</text>
+
+      <rect x="516" y="56" width="100" height="46" fill="none" stroke="#b6bfc6"/>
+      <text x="532" y="84">Wysyłka</text>
+      <text x="532" y="96" font-size="10" fill="#4f6679" font-family="Plex Mono, monospace">etykieta</text>
+
+      <path d="M156 79h32M320 79h32M484 79h32" stroke="#b6bfc6" stroke-width="1"/>
+      <path d="M320 79v-0" stroke="#b6bfc6"/>
+
+      <line x1="24" y1="140" x2="616" y2="140" stroke="#d7dbdf"/>
+
+      <rect x="24" y="164" width="292" height="72" fill="none" stroke="#b6bfc6"/>
+      <text x="40" y="190" font-weight="500">Wyjątek: brak stanu</text>
+      <text x="40" y="208" font-size="11.5" fill="#4f6679">Proces staje, alert do człowieka,</text>
+      <text x="40" y="224" font-size="11.5" fill="#4f6679">zamówienie nie powstaje błędnie.</text>
+
+      <rect x="340" y="164" width="276" height="72" fill="#e9ebff" stroke="#1f2ad8"/>
+      <text x="356" y="190" fill="#1f2ad8" font-weight="500">Raport 06:00</text>
+      <text x="356" y="208" font-size="11.5" fill="#16405f">Zamówienia, błędy, czas obsługi</text>
+      <text x="356" y="224" font-size="11.5" fill="#16405f">i koszt pracy — jednym mailem.</text>
+    </g>
+
+    <text x="24" y="286" font-family="Plex Mono, monospace" font-size="11" fill="#4f6679">PRZED: 3 PRZEPISANIA · 2 ARKUSZE · 1 TELEFON</text>
+    <text x="24" y="310" font-family="Plex Mono, monospace" font-size="11" fill="#1f2ad8">PO: 1 PRZEPŁYW · KONTROLA CZŁOWIEKA PRZY WYJĄTKACH</text>
+    <text x="24" y="352" font-family="Plex Mono, monospace" font-size="10" fill="#4f6679">FIG. 02 — MAPA PROCESU · SCHEMAT, NIE WYNIK KLIENTA</text>
+  </svg>
+</figure>

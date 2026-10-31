@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
+import ArtifactHero from '../components/ArtifactHero.astro';
+import CaseMetrics from '../components/CaseMetrics.astro';
 import { P } from '../data/pricing';
 import '../styles/case-studies.css';
 
@@ -153,26 +155,18 @@ const extraCases = cases.slice(1);
   description="Trzy studia przypadku Studio Automatyzacji: działający prototyp monitoringu cen i dwa typowe zakresy wdrożeń. Bez wymyślonych logotypów i wyników."
   path="/case-studies/"
 >
-  <section class="page-head case-hero">
-    <div class="wrap">
-      <div class="meta-line">
-        <span>Realizacje</span>
-        <span>1 prototyp</span>
-        <span>2 zakresy</span>
-        <span>0 wymyślonych liczb</span>
-      </div>
-      <h1>Case studies.<br />{' '}<em>Co jest faktem.</em></h1>
-      <p class="lead">
-        Mamy jeden działający prototyp i dwa typowe zakresy wdrożeń. Każdy opis mówi,
-        co zbudowaliśmy, co mierzymy i czego nie obiecujemy. Bez cudzych logotypów
-        i bez wyników bez pomiaru.
-      </p>
-      <div class="buttonrow">
-        <a class="btn btn--primary" href="#straznik-cen">Zobacz case studies</a>
-        <a class="btn btn--ghost" href="/przykladowy-raport/">Przykładowy raport z audytu</a>
-      </div>
-    </div>
-  </section>
+  <ArtifactHero
+    variant="case"
+    meta={['Realizacje', '1 prototyp', '2 zakresy', '0 wymyślonych liczb']}
+    title="Case studies. Co jest faktem."
+    lead="Mamy jeden działający prototyp i dwa typowe zakresy wdrożeń. Każdy opis mówi, co zbudowaliśmy, co mierzymy i czego nie obiecujemy. Bez cudzych logotypów i bez wyników bez pomiaru."
+  >
+    <Fragment slot="actions">
+      <a class="btn btn--primary" href="#straznik-cen">Zobacz case studies</a>
+      <a class="btn btn--ghost" href="/przykladowy-raport/">Przykładowy raport z audytu</a>
+    </Fragment>
+    <Fragment slot="artifact"><CaseMetrics /></Fragment>
+  </ArtifactHero>
 
   <section class="section">
     <div class="wrap">

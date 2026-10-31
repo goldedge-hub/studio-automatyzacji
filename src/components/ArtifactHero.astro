@@ -1,0 +1,29 @@
+---
+// Hero podstrony z artefaktem po prawej. Warianty różnią kompozycję,
+// żeby audyt, wdrożenia i realizacje nie wyglądały jak ta sama strona.
+interface Props {
+  variant?: 'document' | 'flow' | 'case' | 'plain';
+  meta?: string[];
+  title: string;
+  lead: string;
+  note?: string;
+}
+const { variant = 'plain', meta = [], title, lead, note } = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${variant}`]}>
+  <div class="wrap ph-grid">
+    <div class="ph-copy">
+      {meta.length > 0 && (
+        <p class="meta-line ph-meta">
+          {meta.map((m, i) => (<span>{m}{i < meta.length - 1 ? <span class="ph-sep" aria-hidden="true"> · </span> : null}</span>))}
+        </p>
+      )}
+      <h1>{title}</h1>
+      <p class="lead">{lead}</p>
+      <div class="ph-actions"><slot name="actions" /></div>
+      {note && <p class="ph-note">{note}</p>}
+    </div>
+    <div class="ph-art"><slot name="artifact" /></div>
+  </div>
+</section>

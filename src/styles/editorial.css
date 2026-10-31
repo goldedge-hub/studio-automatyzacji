@@ -469,3 +469,66 @@ a.btn.btn--accent:link,a.btn.btn--accent:visited,a.btn.btn--accent:hover,
   .rep-row span{font-size:13px}
   .mobile-cta{padding-bottom:max(10px, env(safe-area-inset-bottom))}
 }
+
+/* ---------- 21. Hero podstron z artefaktem ---------- */
+.page-hero{padding:72px 0 56px;background:var(--canvas);border-bottom:1px solid var(--rule)}
+.ph-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:52px;align-items:start}
+.ph-copy{grid-column:1/6;padding-right:8px}
+.ph-art{grid-column:6/13;margin:0}
+.page-hero h1{font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:-.03em;margin:0 0 20px;max-width:22ch}
+.ph-meta{margin:0 0 18px;color:var(--muted)}
+.ph-sep{opacity:.5}
+.ph-copy .lead{font-size:19px;margin:0 0 26px;max-width:52ch}
+.ph-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.ph-note{font-size:14px;color:var(--muted);border-top:1px solid var(--rule);padding-top:14px;margin:0;max-width:52ch}
+.page-hero--plain .ph-copy{grid-column:1/9}
+.page-hero--plain .ph-art{display:none}
+
+.artifact{background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;padding:26px 28px;
+  box-shadow:0 30px 70px -44px rgba(8,45,79,.4);margin:0}
+.artifact svg{display:block;width:100%;height:auto}
+.artifact--map{padding:18px}
+.mt-head{display:flex;justify-content:space-between;gap:16px;font-family:var(--font-mono);font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);padding-bottom:12px}
+.mt-title{font-family:var(--font-serif);font-weight:600;font-size:24px;line-height:1.22;margin:20px 0 4px;letter-spacing:-.01em}
+.mt-sub{margin:0 0 18px;font-size:13.5px;color:var(--muted)}
+.mt-table{width:100%;border-collapse:collapse;font-size:14.5px}
+.mt-table th{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-align:left;font-weight:400;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.mt-table th:nth-child(2),.mt-table th:nth-child(3){text-align:right}
+.mt-table td{padding:11px 0;border-bottom:1px solid var(--rule);color:var(--ink-2)}
+.mt-table td:nth-child(2),.mt-table td:nth-child(3){text-align:right;font-variant-numeric:tabular-nums}
+.mt-table td.hot{color:var(--accent);font-weight:500}
+.mt-foot{display:flex;justify-content:space-between;gap:14px;margin:14px 0 0;font-size:12px;color:var(--muted)}
+.mt-foot b{color:var(--ink-2);font-weight:500}
+
+@media (max-width:900px){
+  .page-hero{padding:40px 0 36px}
+  .ph-grid{grid-template-columns:1fr;gap:28px}
+  .ph-copy,.ph-art{grid-column:1/-1}
+  .page-hero h1{font-size:32px;max-width:none}
+  .ph-copy .lead{font-size:17.5px}
+  .ph-actions{flex-direction:column;align-items:stretch}
+  .ph-actions .btn,.ph-actions .text-link{width:100%;justify-content:center}
+  .artifact{padding:20px 18px}
+  .mt-title{font-size:20px}
+  .mt-table{font-size:13.5px}
+}
+
+/* ---------- 22. Ścieżki decyzyjne w cenniku ---------- */
+.section--decision{padding:56px 0;background:var(--paper-2);border-bottom:1px solid var(--rule)}
+.decision-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--ink)}
+.decision{position:relative;display:block;padding:22px 22px 26px 0;border-right:1px solid var(--rule);text-decoration:none}
+.decision:last-child{border-right:0;padding-right:0}
+.decision-k{display:block;font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);margin-bottom:10px}
+.decision b{display:block;font-size:17px;font-weight:500;line-height:1.3;margin-bottom:8px;color:var(--ink)}
+.decision-d{display:block;font-size:14px;line-height:1.45;color:var(--muted);max-width:30ch}
+.decision-a{position:absolute;right:16px;top:20px;font-size:16px;color:var(--muted);transition:transform .16s var(--ease),color .16s var(--ease)}
+.decision:hover b{color:var(--accent)}
+.decision:hover .decision-a{transform:translateX(4px);color:var(--accent)}
+.decision:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media (max-width:900px){
+  .decision-row{grid-template-columns:1fr;border-top-width:1px}
+  .decision{border-right:0;border-top:1px solid var(--rule);padding:18px 32px 18px 0}
+  .decision:first-child{border-top:0}
+}

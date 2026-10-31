@@ -56,16 +56,20 @@ const canonical = new URL(withTrailingSlash(path), site).toString();
 const og = new URL('/og.png', site).toString();
 const year = new Date().getFullYear();
 
+// Nawigacja: maksymalnie 5 pozycji (plan 2026-10-31). Audyt, opieka i studio
+// zostają w stopce oraz w panelu mobilnym.
 const nav = [
   ['/wdrozenia/', 'Wdrożenia'],
-  ['/audyt/', 'Audyt'],
-  ['/opieka/', 'Opieka'],
-  ['/ile-kosztuje/', 'Cennik'],
+  ['/produkty/', 'Produkty'],
   ['/case-studies/', 'Realizacje'],
-  ['/o-studiu/', 'Studio'],
+  ['/ile-kosztuje/', 'Cennik'],
+  ['/poradnik/', 'Wiedza'],
 ];
 
 const mobileNavExtra = [
+  ['/audyt/', 'Audyt i diagnoza'],
+  ['/opieka/', 'Opieka'],
+  ['/o-studiu/', 'Studio'],
   ['/dla-agencji/', 'Dla agencji'],
   ['/integracje/', 'Integracje'],
   ['/branze/', 'Branże'],
