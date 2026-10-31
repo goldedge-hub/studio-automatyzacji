@@ -1,0 +1,176 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const faq = [
+  {
+    q: 'Czy wystarczy podzielić cenę wdrożenia przez miesięczną oszczędność?',
+    a: 'To pierwszy krok, ale nie cała odpowiedź. Trzeba jeszcze sprawdzić, czy oszczędność liczy się od realnych minut, czy od założenia „będzie szybciej”, oraz czy w koszcie po stronie klienta nie ma licencji i utrzymania.',
+  },
+  {
+    q: 'Jaką stawkę za godzinę pracy przyjąć?',
+    a: 'Nie „ile kosztuje pracownik”, a pełny koszt godziny: wynagrodzenie z narzutami podzielone przez realne godziny produktywne. Dla osoby na etacie wyjdzie zwykle więcej niż stawka z umowy, bo dochodzą składki, urlopy i przestoje.',
+  },
+  {
+    q: 'Czy w oszczędności liczyć uniknięte błędy?',
+    a: 'Tak, ale osobno i ostrożnie. Wartość błędu trzeba policzyć konkretnie: koszt korekty, koszt wysyłki, koszt obsługi reklamacji. Jeśli nie umiesz przypisać kwoty, wpisz zero — inaczej wynik przestaje być wiarygodny.',
+  },
+  {
+    q: 'Kiedy wynik oznacza „nie robić”?',
+    a: 'Gdy zwrot przekracza 12 miesięcy przy założeniach, których nie da się obronić, albo gdy proces zdarza się kilka razy w miesiącu. Wtedy taniej jest uporządkować proces niż budować automatyzację.',
+  },
+];
+
+const steps = [
+  {
+    t: 'Policz godziny, nie „oszczędność”',
+    d: 'Weź liczbę zdarzeń w miesiącu i pomnóż przez realny czas jednego zdarzenia. Nie przez czas „jak powinno być”, a przez zmierzony albo oszacowany ostrożnie. Do tego dodaj czas napraw i wyjątków, które zdarzają się co miesiąc.',
+  },
+  {
+    t: 'Ustal koszt godziny pracy',
+    d: 'Wynagrodzenie z narzutami podziel przez godziny produktywne. Dla etatu zwykle 160–170 godzin miesięcznie, nie 250. Dla właściciela firmy użyj stawki, po której realnie sprzedaje czas.',
+  },
+  {
+    t: 'Oddziel to, co automatyzacja przejmie',
+    d: 'Nie cały proces znika. Zwykle 60–80% kroków przechodzi do systemu, resztę zostaje przy człowieku: decyzje, wyjątki, weryfikacja. W kalkulatorze używamy 70% jako domyślnego założenia — i to założenie trzeba umieć obronić.',
+  },
+  {
+    t: 'Dodaj koszt po Twojej stronie',
+    d: 'Licencje narzędzi, hosting, koszt API i czas na utrzymanie. To nie wchodzi w cenę wdrożenia i potrafi zjeść część oszczędności. Jeśli nie znasz kwoty, przyjmij widełki i pokaż wynik w wariancie pesymistycznym.',
+  },
+  {
+    t: 'Podziel cenę przez miesięczną oszczędność',
+    d: 'Wynik to prosty okres zwrotu. Przy wdrożeniu Start za 2 730 zł i oszczędności 900 zł/mc wychodzi ok. 3 miesiące. Potem sprawdź ten sam rachunek przy założeniach o połowę gorszych — jeśli nadal się zwraca, decyzja jest odporna.',
+  },
+];
+---
+
+<Base
+  title="Jak policzyć, czy automatyzacja się zwraca"
+  description="Prosty rachunek zwrotu z automatyzacji: godziny, koszt godziny, udział pracy przejmowanej przez system i koszt po stronie klienta. Przykład modelowy."
+  path="/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/"
+  faq={faq}
+  article={{ datePublished: '2026-10-31', dateModified: '2026-10-31' }}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Poradnik</span>
+        <span>Rachunek</span>
+        <span>Przykład modelowy (szacunek)</span>
+      </div>
+      <h1>Jak policzyć, czy automatyzacja się zwraca</h1>
+      <p class="lead">
+        Jeden wzór, pięć danych i jedna zasada: licz na założeniach, które umiesz obronić.
+        Poniżej rachunek krok po kroku, pułapki, które zawyżają wynik, i moment,
+        w którym uczciwa odpowiedź brzmi „nie robić”.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
+        <a class="btn btn--ghost" href="/ile-kosztuje/#kalkulator">Policz na swoich danych</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Wzór, który wystarcza</h2>
+        <p class="section-intro">
+          Bez arkusza na dwadzieścia kolumn. Cztery mnożenia i jedno dzielenie.
+        </p>
+      </div>
+      <div class="split">
+        <div>
+          <ul class="plainlist">
+            <li><strong>Godziny / mc</strong> = liczba zdarzeń × minuty na zdarzenie ÷ 60.</li>
+            <li><strong>Koszt pracy / mc</strong> = godziny × koszt godziny.</li>
+            <li><strong>Oszczędność / mc</strong> = koszt pracy × udział pracy przejmowanej przez system.</li>
+            <li><strong>Zwrot</strong> = cena wdrożenia ÷ oszczędność / mc.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Przykład modelowy</h3>
+          <p>
+            240 zamówień miesięcznie × 4 minuty = 16 h. Przy koszcie godziny 55 zł
+            daje to 880 zł/mc. System przejmuje 70% pracy, czyli 616 zł/mc.
+            Wdrożenie Start za 2 730 zł zwraca się w ok. 4,4 miesiąca.
+          </p>
+          <p class="small muted">
+            To rachunek na danych z przykładu, nie obietnica wyniku. Twoje liczby będą inne.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pięć kroków, żeby wynik był prawdziwy</h2>
+        <p class="section-intro">
+          Kolejność ma znaczenie: najpierw dane, potem założenia, na końcu cena.
+        </p>
+      </div>
+      <div class="problem-grid">
+        {steps.map((s, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Co zawyża wynik</h2>
+          <ul class="plainlist">
+            <li>Liczenie pełnego procesu, choć część kroków zostaje przy człowieku.</li>
+            <li>Minuty „po optymalizacji” zamiast zmierzonych.</li>
+            <li>Pomijanie kosztu licencji i utrzymania po stronie klienta.</li>
+            <li>Doliczanie „unikniętych błędów” bez konkretnej kwoty.</li>
+            <li>Porównywanie ceny wdrożenia z roczną, a nie miesięczną oszczędnością.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Kiedy wynik mówi „nie”</h2>
+          <ul class="checklist">
+            <li>Zwrot powyżej 12 miesięcy przy ostrożnych założeniach.</li>
+            <li>Proces zdarza się kilka razy w miesiącu.</li>
+            <li>Proces właśnie się zmienia albo nie ma jednego źródła prawdy.</li>
+            <li>Każdy rekord wymaga decyzji człowieka i wyjątku.</li>
+            <li>Brak dostępu do API, eksportu albo danych testowych.</li>
+          </ul>
+          <p class="small muted" style="margin-top:12px">
+            W takich przypadkach zwykle taniej jest uporządkować proces niż go automatyzować.
+            Mówimy to także wtedy, gdy oznacza to brak zlecenia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o rachunek</h2>
+        <p class="section-intro">Stawki, założenia i granica opłacalności.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Policz to na swoich danych"
+    text="Napisz, ile razy w miesiącu powtarzasz proces, ile minut zajmuje i ile kosztuje godzina pracy. Diagnoza i wycena wrócą w ciągu 24 godzin, z rachunkiem i granicami zakresu."
+  />
+</Base>

@@ -153,6 +153,7 @@ const verdictText = (payback: number) =>
 
       <p class="calc-note">
         Szacunek, nie wynik klienta. Nie uwzględnia licencji i utrzymania.
+        Przy skrajnych założeniach wynik traci wiarygodność — dlatego zwrot liczymy od ceny Start.
       </p>
 
       <div class="calc-cta">
@@ -239,7 +240,7 @@ const verdictText = (payback: number) =>
       setOutput('saving12', `${pl0.format(Math.round(result.saving12))} zł`);
       setOutput(
         'payback',
-        Number.isFinite(payback) ? `${pl1.format(payback)} mies.` : '—',
+        !Number.isFinite(payback) ? '—' : payback < 1 ? '< 1 mies.' : `${pl1.format(payback)} mies.`,
       );
 
       const verdict = paybackVerdict(payback);
@@ -248,9 +249,11 @@ const verdictText = (payback: number) =>
         warning.classList.toggle('calc-verdict--ok', verdict === 'ok');
         warning.classList.toggle('calc-verdict--bad', verdict === 'bad');
         warning.textContent =
-          verdict === 'ok'
-            ? `Przy tych założeniach pakiet zwraca się w ok. ${pl1.format(payback)} mies. (szacunek).`
-            : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
+          payback < 1
+            ? 'Zwrot poniżej miesiąca oznacza skrajne założenia — sprawdź liczbę zamówień, minut i stawkę, zanim potraktujesz wynik poważnie.'
+            : verdict === 'ok'
+              ? `Przy tych założeniach pakiet zwraca się w ok. ${pl1.format(payback)} mies. (szacunek).`
+              : 'Przy tych założeniach wdrożenie się nie zwraca w 12 miesięcy — zwykle odradzamy';
       }
     };
 

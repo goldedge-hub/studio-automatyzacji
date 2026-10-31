@@ -4,15 +4,15 @@ import { PRICE_UPDATED } from '../config';
 export const homeFaq = [
   {
     q: 'Jak zacząć współpracę?',
-    a: 'Napisz przez formularz na stronie /kontakt. Wystarczy firma lub imię, e-mail, opis procesu, narzędzia i liczba osób, które go wykonują. Odpowiadamy w ciągu 1 dnia roboczego. Nie trzeba znać budżetu ani przygotowywać prezentacji.',
+    a: 'Napisz przez formularz na stronie /kontakt. Wystarczy firma lub imię, e-mail, opis procesu, narzędzia i liczba osób, które go wykonują. Odpowiadamy w ciągu 24 godzin. Nie trzeba znać budżetu ani przygotowywać prezentacji.',
   },
   {
-    q: 'Czym jest bezpłatna mini-diagnoza e-mailem?',
-    a: 'To krótka pisemna ocena jednego procesu. Wypełniasz formularz, a w ciągu 2 dni roboczych dostajesz e-mail z odpowiedzią: czy proces warto automatyzować, ile godzin może oszczędzić (szacunek) i jakich narzędzi wymaga. To nie jest pełny raport ani wycena wdrożenia z gwarancją. Jeśli zgłoszeń jest więcej, odpowiedź może się wydłużyć.',
+    q: 'Czym jest bezpłatna diagnoza i wycena e-mailem?',
+    a: 'To krótka pisemna ocena jednego procesu razem z orientacyjną wyceną wdrożenia. Wypełniasz formularz, a w ciągu 24 godzin dostajesz e-mail: czy proces warto automatyzować, ile godzin może oszczędzić (szacunek), jakich narzędzi wymaga i ile kosztuje wdrożenie rekomendowanego zakresu. Wycena jest bezpłatna i niezobowiązująca. Nie zastępuje pogłębionego audytu (mapa procesu, koszt pracy, ryzyka, plan).',
   },
   {
-    q: `Czym różni się mini-diagnoza od audytu za ${P.audit}?`,
-    a: 'Mini-diagnoza odpowiada na pytanie „czy to ma sens” na podstawie opisu z formularza. Audyt to płatna praca: ustalenia 60–90 minut, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, priorytety, ryzyka, wycena wdrożenia i 30-minutowe omówienie raportu. Audyt obejmuje też decyzję, czy wdrożenie ma sens przy zwrocie w maksymalnie 12 miesiącach.',
+    q: `Czym różni się diagnoza i wycena od audytu za ${P.audit}?`,
+    a: 'Diagnoza i wycena odpowiadają na pytanie „czy to ma sens i ile kosztuje” na podstawie opisu z formularza — bezpłatnie, w ciągu 24 godzin. Audyt to płatna, pogłębiona praca: ustalenia 60–90 minut, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, priorytety, ryzyka, plan wdrożenia i 30-minutowe omówienie raportu. Audyt ma sens, gdy decyzja dotyczy większego wdrożenia albo kilku procesów naraz.',
   },
   {
     q: 'Ile kosztuje audyt i czy jest odliczany?',
@@ -60,7 +60,7 @@ export const homeFaq = [
   },
   {
     q: 'Kiedy nie warto zlecać automatyzacji?',
-    a: 'Gdy proces zdarza się kilka razy w miesiącu, właśnie się zmienia, nie ma źródła prawdy w danych albo każdy rekord wymaga decyzji człowieka. Wtedy mówimy to wprost — także w mini-diagnozie. Czasem taniej jest uporządkować proces niż go automatyzować.',
+    a: 'Gdy proces zdarza się kilka razy w miesiącu, właśnie się zmienia, nie ma źródła prawdy w danych albo każdy rekord wymaga decyzji człowieka. Wtedy mówimy to wprost — także w diagnozie i wycenie. Czasem taniej jest uporządkować proces niż go automatyzować.',
   },
   {
     q: 'Pracujecie z agencjami?',
@@ -74,8 +74,8 @@ export const homeFaq = [
 
 export const pricingFaq = [
   {
-    q: 'Dlaczego mini-diagnoza jest bezpłatna, a audyt płatny?',
-    a: 'Mini-diagnoza to krótka ocena na podstawie opisu z formularza. Audyt to praca: ustalenia, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, ryzyka i wycena wdrożenia. Bezpłatna diagnoza filtruje zgłoszenia, płatny audyt daje dokument, na którym można oprzeć decyzję.',
+    q: 'Dlaczego diagnoza i wycena są bezpłatne, a audyt płatny?',
+    a: 'Diagnoza i wycena to krótka praca na podstawie opisu: ocena, czy proces warto automatyzować, szacunek oszczędności i widełki wdrożenia. Dlatego są bezpłatne i wracają w ciągu 24 godzin. Audyt to dokument decyzyjny: ustalenia, analiza systemów i danych, mapa procesu, koszt ręcznej pracy, ryzyka i plan. Płatny audyt wybierają ci, którzy potrzebują podstawy do decyzji o większym budżecie.',
   },
   {
     q: 'Czy audyt odliczacie od wdrożenia?',

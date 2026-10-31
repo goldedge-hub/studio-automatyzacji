@@ -12,3 +12,7 @@ audit*/
 after*/
 before*/
 studio-shots/
+
+# Artefakty audytu lokalnego (95 MB) — poza repo
+out/
+.hermes/

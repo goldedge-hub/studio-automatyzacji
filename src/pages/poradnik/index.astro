@@ -12,12 +12,26 @@ const articles = [
     desc: 'Od czego zależy cena, co jest w zakresie, czego nie ma, kiedy wystarczy gotowa integracja BaseLinkera i jak policzyć zwrot. Z przykładem modelowym (szacunek).',
     time: 'około 8 minut',
   },
+  {
+    href: '/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/',
+    kicker: 'Rachunek',
+    title: 'Jak policzyć, czy automatyzacja się zwraca',
+    desc: 'Wzór, pięć danych i lista rzeczy, które zawyżają wynik. Przykład modelowy i granica, po której uczciwa odpowiedź brzmi „nie robić”.',
+    time: 'około 6 minut',
+  },
+  {
+    href: '/poradnik/gotowa-integracja-czy-wlasna-warstwa/',
+    kicker: 'Decyzja techniczna',
+    title: 'Gotowa integracja czy własna warstwa?',
+    desc: 'Sześć pytań, które pokazują, czy wystarczy konfiguracja BaseLinkera, czy potrzebna jest własna warstwa integracyjna. Bez sprzedażowego optymizmu.',
+    time: 'około 6 minut',
+  },
 ];
 
 const faq = [
   {
     q: 'Czy poradnik to oferta?',
-    a: 'Nie. Poradnik opisuje sposób myślenia i kryteria decyzji. Oferta powstaje po mini-diagnozie albo audycie, na podstawie Twojego procesu. Nie ma tu gwarancji ceny ani terminu bez rozpoznania systemów.',
+    a: 'Nie. Poradnik opisuje sposób myślenia i kryteria decyzji. Oferta powstaje po diagnozie i wycenie albo audycie, na podstawie Twojego procesu. Nie ma tu gwarancji ceny ani terminu bez rozpoznania systemów.',
   },
   {
     q: 'Czy znajdę tu gotowe stawki za integrację?',
@@ -58,7 +72,7 @@ const faq = [
         brzmi „nic nie zlecaj”.
       </p>
       <div class="buttonrow">
-        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
         <a class="btn btn--ghost" href="/ile-kosztuje/">Cennik netto</a>
       </div>
     </div>
@@ -143,7 +157,7 @@ const faq = [
         <div class="problem-item">
           <span class="n">03</span>
           <div>
-            <h3><a class="text-link" href="/audyt/">Audyt i mini-diagnoza</a></h3>
+            <h3><a class="text-link" href="/audyt/">Audyt i diagnoza i wycena</a></h3>
             <p>Bezpłatna ocena jednego procesu albo płatny audyt z mapą, kosztem i wyceną wdrożenia.</p>
           </div>
         </div>
@@ -173,6 +187,6 @@ const faq = [
 
   <SeoCta
     title="Wolisz najpierw sprawdzić jeden proces?"
-    text="Napisz, co robisz ręcznie i jakie masz systemy. Mini-diagnoza jest bezpłatna i odpowiada na pytanie, czy automatyzacja ma sens, zanim cokolwiek zamówisz."
+    text="Napisz, co robisz ręcznie i jakie masz systemy. Diagnoza i wycena jest bezpłatna i odpowiada na pytanie, czy automatyzacja ma sens, zanim cokolwiek zamówisz."
   />
 </Base>

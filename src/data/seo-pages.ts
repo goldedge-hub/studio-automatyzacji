@@ -26,4 +26,14 @@ export const SEO_PAGES: SeoPage[] = [
     title: 'Ile kosztuje integracja BaseLinker i Allegro',
     group: 'poradnik',
   },
+  {
+    href: '/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/',
+    title: 'Jak policzyć zwrot z automatyzacji',
+    group: 'poradnik',
+  },
+  {
+    href: '/poradnik/gotowa-integracja-czy-wlasna-warstwa/',
+    title: 'Gotowa integracja czy własna warstwa',
+    group: 'poradnik',
+  },
 ];

@@ -34,7 +34,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
 ---
 <Base
   title="Kontakt: opisz proces e-commerce"
-  description="Opisz proces, który zabiera czas. Odpowiadamy w ciągu 1 dnia roboczego. Bezpłatna mini-diagnoza e-mailem w ciągu 2 dni roboczych. NDA na życzenie."
+  description="Opisz proces, który zabiera czas. Odpowiadamy w ciągu 24 godzin. Bezpłatna diagnoza i wycena e-mailem w ciągu 24 godzin. NDA na życzenie."
   path="/kontakt/"
 >
   <section class="page-head">
@@ -49,7 +49,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
         Kontakt odbywa się wyłącznie przez formularz lub e-mail
         <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         Wystarczy krótki opis. Odpowiemy z pytaniami albo od razu z informacją,
-        czy wystarczy bezpłatna mini-diagnoza, czy potrzebny jest płatny audyt.
+        czy wystarczy bezpłatna diagnoza i wycena, czy potrzebny jest płatny audyt.
         Nie musisz mieć wszystkiego uporządkowanego.
       </p>
     </div>
@@ -155,7 +155,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
               <div class="field field--full">
                 <label for="f-topic">Temat zgłoszenia</label>
                 <select id="f-topic" name="topic">
-                  <option value="mini-diagnoza">Mini-diagnoza e-mailem (bezpłatnie)</option>
+                  <option value="diagnoza i wycena">Diagnoza i wycena e-mailem (bezpłatnie)</option>
                   <option value="audyt">Audyt {P.audit} netto</option>
                   <option value="wdrozenie">Wdrożenie</option>
                   <option value="opieka">Opieka techniczna</option>
@@ -201,7 +201,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
             <a class="text-link touch-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
           <p class="small muted">
-            Odpowiadamy {CONTACT_RESPONSE_PHRASE}. Mini-diagnozę e-mailem wysyłamy
+            Odpowiadamy {CONTACT_RESPONSE_PHRASE}. Diagnozę i wycenę e-mailem wysyłamy
             {DIAGNOSIS_RESPONSE_PHRASE}. Na życzenie podpisujemy NDA przed przekazaniem materiałów.
           </p>
 
@@ -256,7 +256,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
 
       // Preselekcja tematu. Każdy parametr użyty w linkach ma obsługę:
       // ?temat=audyt|wdrozenie|opieka|agencja|inne, ?plan=start|growth|scale
-      // oraz konteksty z case studies. Nieznany temat => mini-diagnoza.
+      // oraz konteksty z case studies. Nieznany temat => diagnoza i wycena.
       const requestedTopic = params.get('temat');
       const requestedPlan = params.get('plan');
       const plan = requestedPlan && planInfo[requestedPlan] ? planInfo[requestedPlan] : null;
@@ -280,7 +280,7 @@ const contextInfo: Record<string, { label: string; hint: string }> = {
             topic.options,
             (option) => option.value === requestedTopic,
           );
-          topic.value = known ? requestedTopic : 'mini-diagnoza';
+          topic.value = known ? requestedTopic : 'diagnoza i wycena';
         }
         if (topic.value === 'audyt') {
           const auditLabel =

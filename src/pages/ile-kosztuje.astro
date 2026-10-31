@@ -12,10 +12,10 @@ import { notWorth } from '../data/content';
 
 const prices = [
   {
-    service: 'Mini-diagnoza e-mailem',
+    service: 'Diagnoza i wycena e-mailem',
     price: P.miniDiagnosis,
-    includes: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin, narzędzia. Bez pełnego raportu i bez wyceny z gwarancją.',
-    term: 'Odpowiedź w ciągu 2 dni roboczych',
+    includes: 'Krótka pisemna ocena jednego procesu: czy warto automatyzować, szacunek godzin, narzędzia i orientacyjna wycena wdrożenia. Bez mapy procesu i stałej wyceny z gwarancją.',
+    term: 'Odpowiedź w ciągu 24 godzin',
   },
   {
     service: 'Audyt automatyzacji',
@@ -71,7 +71,7 @@ const comparison = [
 const careRows = [
   ['Monitoring, alerty i kopie', 'tak'],
   ['Drobne zmiany', 'do 5 h/mc'],
-  ['SLA reakcji', '1 dzień roboczy'],
+  ['SLA reakcji', '24 h'],
   ['Przegląd', 'kwartalny + 1 h konsultacji/mc'],
   ['Zobowiązanie', 'miesięczne, wypowiedzenie 1 mc'],
 ];
@@ -105,7 +105,7 @@ const costDrivers = [
 ---
 <Base
   title="Cennik automatyzacji: audyt, wdrożenia, opieka"
-  description={`Jawne ceny netto: mini-diagnoza ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.care}/mc.`}
+  description={`Jawne ceny netto: diagnoza i wycena ${P.miniDiagnosis}, audyt ${P.audit} odliczany od wdrożenia, Start ${P.start}, Growth ${P.growth}, Scale ${P.scaleFrom}, opieka ${P.care}/mc.`}
   path="/ile-kosztuje/"
   faq={pricingFaq}
 >
@@ -178,7 +178,7 @@ const costDrivers = [
       </div>
       <p class="table-note">Cennik na wąskim ekranie jest pokazany jako lista.</p>
       <p class="small muted" style="margin-top:14px">
-        Audyt {P.audit} odliczamy od pierwszej faktury za wdrożenie. Mini-diagnoza jest
+        Audyt {P.audit} odliczamy od pierwszej faktury za wdrożenie. Diagnoza i wycena jest
         bezpłatna i nie zobowiązuje do audytu. White-label rozliczamy z agencją,
         nie z klientem końcowym.
       </p>
@@ -314,7 +314,7 @@ const costDrivers = [
       <div class="section-head">
         <h2>Ścieżka w trzech krokach</h2>
         <p class="section-intro">
-          Bezpłatna mini-diagnoza nie jest opłatą wstępną do wdrożenia. Audyt jest
+          Bezpłatna diagnoza i wycena nie jest opłatą wstępną do wdrożenia. Audyt jest
           osobną usługą, którą można zakończyć decyzją „nie wdrażamy”.
         </p>
       </div>
@@ -324,15 +324,15 @@ const costDrivers = [
           <span class="n">01</span>
           <h3>Napisz do nas</h3>
           <p class="price">{P.miniDiagnosis}</p>
-          <p>Opisujesz proces, narzędzia i liczbę osób. Odpowiadamy w ciągu 1 dnia roboczego.</p>
+          <p>Opisujesz proces, narzędzia i liczbę osób. Odpowiadamy w ciągu 24 godzin.</p>
           <span class="when">Formularz · e-mail</span>
         </div>
         <div class="path-step">
           <span class="n">02</span>
-          <h3>Mini-diagnoza</h3>
+          <h3>Diagnoza i wycena</h3>
           <p class="price">{P.miniDiagnosis}</p>
           <p>Krótka pisemna ocena jednego procesu: sens, szacunek godzin, narzędzia.</p>
-          <span class="when">Odpowiedź w ciągu 2 dni roboczych</span>
+          <span class="when">Odpowiedź w ciągu 24 godzin</span>
         </div>
         <div class="path-step">
           <span class="n">03</span>
@@ -412,7 +412,7 @@ const costDrivers = [
       </div>
 
       <div class="note" style="margin-top:32px">
-        <strong>Uczciwa ocena dopasowania.</strong> Jeśli po mini-diagnozie widać, że
+        <strong>Uczciwa ocena dopasowania.</strong> Jeśli po diagnozie i wycenie widać, że
         automatyzacja nie ma sensu, mówimy to od razu. Bezpłatna diagnoza nie jest
         etapem sprzedaży, po którym zawsze następuje oferta.
       </div>
@@ -458,6 +458,6 @@ const costDrivers = [
 
   <CTA
     title="Masz proces i chcesz poznać cenę?"
-    text="Napisz, co robisz ręcznie i z jakich narzędzi korzystasz. Odpowiemy, czy wystarczy mini-diagnoza, czy potrzebny jest audyt."
+    text="Napisz, co robisz ręcznie i z jakich narzędzi korzystasz. Odpowiemy, czy wystarczy diagnoza i wycena, czy potrzebny jest audyt."
   />
 </Base>

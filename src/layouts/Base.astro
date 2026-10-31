@@ -42,6 +42,7 @@ const {
   noindex = false,
   faq = null,
   hideCanonical = false,
+  article = null,
 } = Astro.props;
 
 const site = SITE_URL;
@@ -69,6 +70,52 @@ const mobileNavExtra = [
 const isActive = (href: string) => path === href || path.startsWith(href);
 
 const miniDiagnosisActive = path === '/audyt/';
+
+/** Etykiety sekcji do breadcrumbów (JSON-LD). */
+const PAGE_LABELS: Record<string, string> = {
+  '/wdrozenia/': 'Wdrożenia',
+  '/audyt/': 'Audyt i diagnoza',
+  '/opieka/': 'Opieka',
+  '/ile-kosztuje/': 'Cennik',
+  '/case-studies/': 'Realizacje',
+  '/o-studiu/': 'Studio',
+  '/dla-agencji/': 'Dla agencji',
+  '/kontakt/': 'Kontakt',
+  '/przykladowy-raport/': 'Przykładowy raport',
+  '/zaufanie/': 'Zaufanie i dane',
+  '/integracje/': 'Integracje',
+  '/branze/': 'Branże',
+  '/poradnik/': 'Poradnik',
+};
+
+const crumbTrail: Array<{ name: string; item: string }> = [{ name: 'Start', item: site }];
+if (path !== '/' && !path.startsWith('/dziekujemy')) {
+  const parts = path.split('/').filter(Boolean);
+  const seo = SEO_PAGES.find((p) => p.href === path);
+  let acc = '';
+  parts.forEach((segment: string, index: number) => {
+    acc += `/${segment}/`;
+    const label =
+      seo && index === parts.length - 1
+        ? seo.title
+        : PAGE_LABELS[acc] || segment.replace(/-/g, ' ');
+    crumbTrail.push({ name: label, item: new URL(acc, site).toString() });
+  });
+}
+
+const breadcrumbLd =
+  crumbTrail.length > 1
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: crumbTrail.map((c, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: c.name,
+          item: c.item,
+        })),
+      }
+    : null;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -102,10 +149,10 @@ const jsonLd = {
     itemListElement: [
       {
         '@type': 'Offer',
-        name: 'Bezpłatna mini-diagnoza e-mailem',
+        name: 'Bezpłatna diagnoza i wycena e-mailem',
         price: '0',
         priceCurrency: 'PLN',
-        url: `${site}/audyt/#mini-diagnoza`,
+        url: `${site}/audyt/#diagnoza`,
       },
       {
         '@type': 'Offer',
@@ -177,6 +224,22 @@ const faqLd = faq
       })),
     }
   : null;
+
+const articleLd = article
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      inLanguage: 'pl-PL',
+      mainEntityOfPage: canonical,
+      datePublished: article.datePublished,
+      dateModified: article.dateModified || article.datePublished,
+      author: { '@type': 'Organization', name: 'Studio Automatyzacji', url: site },
+      publisher: { '@type': 'Organization', name: 'Studio Automatyzacji', url: site },
+      ...(article.about ? { about: article.about } : {}),
+    }
+  : null;
 ---
 <!doctype html>
 <html lang="pl" class="no-js">
@@ -199,7 +262,7 @@ const faqLd = faq
   <meta property="og:image" content={og} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={`Studio Automatyzacji: mini-diagnoza e-mailem, audyt ${P.audit} netto, wdrożenia od ${P.start} netto.`} />
+  <meta property="og:image:alt" content={`Studio Automatyzacji: diagnoza i wycena e-mailem, audyt ${P.audit} netto, wdrożenia od ${P.start} netto.`} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
@@ -225,6 +288,8 @@ const faqLd = faq
     data-do-not-track="true"
   ></script>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  {breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
+  {articleLd && <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />}
   {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
 </head>
 <body>
@@ -274,7 +339,7 @@ const faqLd = faq
                 data-umami-event-label={href === '/kontakt/' ? 'Menu mobilne: kontakt' : undefined}
               >{label}</a>
             ))}
-            <a href="/audyt/#mini-diagnoza" class={miniDiagnosisActive ? 'is-active' : ''} aria-current={miniDiagnosisActive ? 'page' : undefined} data-umami-event="cta_click" data-umami-event-label="Menu mobilne: mini-diagnoza">Bezpłatna mini-diagnoza</a>
+            <a href="/audyt/#diagnoza" class={miniDiagnosisActive ? 'is-active' : ''} aria-current={miniDiagnosisActive ? 'page' : undefined} data-umami-event="cta_click" data-umami-event-label="Menu mobilne: diagnoza i wycena">Bezpłatna diagnoza i wycena</a>
             {mobileNavExtra.map(([href, label]) => (
               <a
                 href={href}
@@ -313,7 +378,7 @@ const faqLd = faq
 
         <div>
           <p class="foot-label">Oferta</p>
-          <p><a href="/audyt/#mini-diagnoza">Mini-diagnoza {P.miniDiagnosis}</a></p>
+          <p><a href="/audyt/#diagnoza">Diagnoza i wycena {P.miniDiagnosis}</a></p>
           <p><a href="/audyt/">Audyt {P.audit}</a></p>
           <p><a href="/wdrozenia/">Wdrożenia</a></p>
           <p><a href="/ile-kosztuje/">Cennik</a></p>
@@ -360,6 +425,23 @@ const faqLd = faq
     </div>
   </footer>
 
+  {path !== '/kontakt/' && (
+    <div class="mobile-cta" data-mobile-cta hidden>
+      <div class="mobile-cta-inner">
+        <span class="mobile-cta-copy">
+          <b>Bezpłatna diagnoza i wycena</b>
+          <span>odpowiedź w 24 h</span>
+        </span>
+        <a
+          class="btn btn--primary"
+          href="/kontakt/?temat=diagnoza"
+          data-umami-event="cta_click"
+          data-umami-event-label="Sticky mobile: diagnoza"
+        >Napisz</a>
+      </div>
+    </div>
+  )}
+
   <script>
     const header = document.getElementById('site-header');
     const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 10);
@@ -372,6 +454,18 @@ const faqLd = faq
         if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
       });
     });
+
+    const bar = document.querySelector<HTMLElement>('[data-mobile-cta]');
+    const foot = document.querySelector<HTMLElement>('.site-foot');
+    if (bar) {
+      const syncBar = () => {
+        const nearFoot = foot ? foot.getBoundingClientRect().top < window.innerHeight - 24 : false;
+        bar.hidden = window.scrollY < 520 || nearFoot;
+      };
+      window.addEventListener('scroll', syncBar, { passive: true });
+      window.addEventListener('resize', syncBar);
+      syncBar();
+    }
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');

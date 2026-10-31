@@ -69,7 +69,7 @@ export const notWorth = [
   },
   {
     t: 'Brak API i niski wolumen',
-    d: 'Eksport plików albo automatyzacja interfejsu bywa możliwa, ale przy małej skali nie zwróci się. W mini-diagnozie mówimy to wprost.',
+    d: 'Eksport plików albo automatyzacja interfejsu bywa możliwa, ale przy małej skali nie zwróci się. W diagnozie i wycenie mówimy to wprost.',
   },
   {
     t: 'Decyzja wymaga człowieka przy każdym kroku',

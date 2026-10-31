@@ -52,11 +52,11 @@ const rows = [
 const faq = [
   {
     q: `Czy ${P.start} to cena każdej integracji BaseLinker ↔ Allegro?`,
-    a: `To cena pakietu Start za jeden proces i do trzech integracji. Nie każda integracja wymaga tego zakresu. Po mini-diagnozie może się okazać, że wystarczy dobra konfiguracja natywnego połączenia BaseLinkera z Allegro.`,
+    a: `To cena pakietu Start za jeden proces i do trzech integracji. Nie każda integracja wymaga tego zakresu. Po diagnozie i wycenie może się okazać, że wystarczy dobra konfiguracja natywnego połączenia BaseLinkera z Allegro.`,
   },
   {
     q: 'Czy muszę zamówić audyt przed integracją?',
-    a: 'Nie. Audyt nie jest obowiązkowy. Mini-diagnoza jest bezpłatna, a integrację można zlecić po ustaleniu zakresu. Audyt daje mapę procesu i wycenę; odliczamy go od wdrożenia.',
+    a: 'Nie. Audyt nie jest obowiązkowy. Diagnoza i wycena jest bezpłatna, a integrację można zlecić po ustaleniu zakresu. Audyt daje mapę procesu i wycenę; odliczamy go od wdrożenia.',
   },
   {
     q: 'Czy cena zawiera licencje BaseLinkera i Allegro?',
@@ -73,6 +73,7 @@ const faq = [
   description="Od czego zależy koszt integracji BaseLinker ↔ Allegro, co jest w cenie, kiedy wystarczy gotowa integracja i jak policzyć zwrot. Ceny netto."
   path="/poradnik/ile-kosztuje-integracja-baselinker-allegro/"
   faq={faq}
+  article={{ datePublished: '2026-10-19', dateModified: '2026-10-31' }}
 >
   <section class="page-head">
     <div class="wrap">
@@ -89,7 +90,7 @@ const faq = [
         integracja BaseLinkera wystarcza.
       </p>
       <div class="buttonrow">
-        <ContactLink class="btn btn--primary" topic="mini-diagnoza" label="Mini-diagnoza 0 zł" />
+        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
         <a class="btn btn--ghost" href="/ile-kosztuje/#kalkulator">Policz zwrot</a>
       </div>
     </div>
@@ -292,7 +293,7 @@ const faq = [
           <ul class="plainlist">
             <li><a class="text-link" href="/integracje/baselinker-allegro/">Integracja BaseLinker ↔ Allegro: problemy i przepływy</a></li>
             <li><a class="text-link" href="/branze/sklepy-wielokanalowe/">Sklepy wielokanałowe: sklep, Allegro, marketplace</a></li>
-            <li><a class="text-link" href="/audyt/">Audyt automatyzacji i mini-diagnoza</a></li>
+            <li><a class="text-link" href="/audyt/">Audyt automatyzacji i diagnoza i wycena</a></li>
           </ul>
         </div>
         <div>
@@ -301,7 +302,7 @@ const faq = [
             Poniżej najczęstsze wątpliwości. Jeśli czegoś brakuje, napisz; odpowiemy
             e-mailem i bez prezentacji.
           </p>
-          <a class="btn btn--primary" href="/kontakt/?temat=mini-diagnoza">Zapytaj o mini-diagnozę</a>
+          <a class="btn btn--primary" href="/kontakt/?temat=diagnoza">Zapytaj o diagnozę i wycenę</a>
         </div>
       </div>
     </div>
@@ -321,6 +322,6 @@ const faq = [
 
   <SeoCta
     title="Chcesz wiedzieć, czy wystarczy gotowa integracja?"
-    text="Opisz, ile masz kont Allegro, skąd pochodzą stany i co robisz ręcznie, gdy coś się nie zgadza. Mini-diagnoza powie wprost, czy potrzebne jest wdrożenie, czy tylko konfiguracja."
+    text="Opisz, ile masz kont Allegro, skąd pochodzą stany i co robisz ręcznie, gdy coś się nie zgadza. Diagnoza i wycena powie wprost, czy potrzebne jest wdrożenie, czy tylko konfiguracja."
   />
 </Base>

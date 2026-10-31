@@ -24,10 +24,10 @@ export const CONTACT_HREF = '/kontakt/';
 export { PRICE_UPDATED } from './data/pricing';
 
 /** Deklarowane czasy odpowiedzi (obsługiwane treścią strony). */
-export const CONTACT_RESPONSE = '1 dzień roboczy';
-export const CONTACT_RESPONSE_PHRASE = 'w ciągu 1 dnia roboczego';
-export const DIAGNOSIS_RESPONSE = '2 dni robocze';
-export const DIAGNOSIS_RESPONSE_PHRASE = 'w ciągu 2 dni roboczych';
+export const CONTACT_RESPONSE = '24 h';
+export const CONTACT_RESPONSE_PHRASE = 'w ciągu 24 godzin';
+export const DIAGNOSIS_RESPONSE = '24 h';
+export const DIAGNOSIS_RESPONSE_PHRASE = 'w ciągu 24 godzin';
 
 /** Wymusza końcowy „/” w ścieżce wewnętrznej (bez ruszania query i kotwicy). */
 export const withTrailingSlash = (path: string) => {

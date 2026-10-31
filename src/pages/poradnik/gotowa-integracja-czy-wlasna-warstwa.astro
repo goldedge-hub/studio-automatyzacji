@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const faq = [
+  {
+    q: 'Po czym poznać, że wystarczy gotowa integracja?',
+    a: 'Gdy statusy w obu systemach da się mapować jeden do jednego, jest jedno konto sprzedażowe, nie ma dokumentów do wystawiania po stronie integracji i nikt nie poprawia wyników ręcznie. Wtedy konfiguracja zwykle wystarcza.',
+  },
+  {
+    q: 'Kiedy potrzebna jest własna warstwa?',
+    a: 'Gdy dochodzą wyjątki: wiele kont, nietypowe statusy, dokumenty, kolejka błędów, ponowienia i logi. Albo gdy trzeba połączyć trzy i więcej systemów, a nie dwa.',
+  },
+  {
+    q: 'Czy własna warstwa oznacza więcej pracy przy utrzymaniu?',
+    a: 'Tak. Każda warstwa pośrednia to dodatkowy element, który trzeba monitorować. Dlatego budujemy ją tylko wtedy, gdy daje coś, czego nie da się osiągnąć konfiguracją: kontrolę nad wyjątkami, dokumentami albo wieloma kontami.',
+  },
+  {
+    q: 'Czy da się zacząć od konfiguracji i później rozbudować?',
+    a: 'Tak i zwykle tak robimy. Najpierw sprawdzamy, czy gotowe połączenie realizuje 80% przepływu. Warstwę dokładamy dopiero do brakujących przypadków, zamiast budować wszystko od zera.',
+  },
+];
+
+const checks = [
+  {
+    t: 'Czy statusy mapują się jeden do jednego?',
+    d: 'Jeśli anulowanie, zwrot i „do wysyłki” mają odpowiedniki w obu systemach, konfiguracja wystarczy. Jeśli nie — potrzebna reguła, a reguła to już własna warstwa.',
+  },
+  {
+    t: 'Ile jest kont i kanałów?',
+    d: 'Jedno konto Allegro i jeden sklep to zwykle konfiguracja. Wiele kont, kilka marketplace’ów i różne cenniki wymagają wspólnej logiki i jednego miejsca prawdy.',
+  },
+  {
+    t: 'Czy powstają dokumenty?',
+    d: 'Faktury, potwierdzenia i etykiety wymagają powiązania z rekordem i kontroli numeracji. To najczęstszy powód, dla którego gotowa integracja przestaje wystarczać.',
+  },
+  {
+    t: 'Co się dzieje, gdy API zwróci błąd?',
+    d: 'Bez kolejki, ponowień i alertu błąd przejściowy zostawia dziurę w synchronizacji. Jeśli nikt tego nie widzi, potrzebna jest warstwa z logiem i obsługą wyjątków.',
+  },
+  {
+    t: 'Kto poprawia błędy ręcznie?',
+    d: 'Jeśli ktoś co tydzień porównuje arkusze i dopisuje brakujące rekordy, to jest właśnie koszt, który warstwa ma usunąć. Warto go policzyć przed decyzją.',
+  },
+  {
+    t: 'Czy systemy mają udokumentowane API?',
+    d: 'Bez API zostaje eksport, baza albo integracja pośrednia. Czasem to wystarcza, a czasem oznacza, że procesu nie da się sensownie zautomatyzować w tej wersji systemu.',
+  },
+];
+---
+
+<Base
+  title="Gotowa integracja czy własna warstwa?"
+  description="Sześć pytań, które rozstrzygają, czy wystarczy konfiguracja BaseLinkera, czy potrzebna jest własna warstwa integracyjna. Bez sprzedażowego optymizmu."
+  path="/poradnik/gotowa-integracja-czy-wlasna-warstwa/"
+  faq={faq}
+  article={{ datePublished: '2026-10-31', dateModified: '2026-10-31' }}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Poradnik</span>
+        <span>Decyzja techniczna</span>
+        <span>Checklista</span>
+      </div>
+      <h1>Gotowa integracja czy własna warstwa?</h1>
+      <p class="lead">
+        Większość problemów z zamówieniami nie wymaga budowy systemu. Wymaga konfiguracji,
+        której nikt nie dokończył. Poniżej sześć pytań, które pokazują, gdzie jest granica —
+        i kiedy płacenie za własną warstwę jest wyrzucaniem pieniędzy.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
+        <a class="btn btn--ghost" href="/integracje/">Zobacz integracje</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Sześć pytań przed decyzją</h2>
+        <p class="section-intro">
+          Odpowiedz „tak” albo „nie”. Trzy lub więcej „nie” oznacza, że konfiguracja
+          nie domknie procesu.
+        </p>
+      </div>
+      <div class="problem-grid">
+        {checks.map((c, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{c.t}</h3>
+              <p>{c.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy wystarczy konfiguracja</h2>
+          <ul class="checklist">
+            <li>Jeden sklep i jedno konto marketplace.</li>
+            <li>Statusy mapują się jeden do jednego.</li>
+            <li>Brak dokumentów po stronie integracji.</li>
+            <li>Nikt nie poprawia rekordów ręcznie.</li>
+            <li>Błędy API są rzadkie i widoczne w panelu.</li>
+          </ul>
+          <p class="small muted" style="margin-top:12px">
+            W takiej sytuacji mówimy wprost: nie trzeba wdrożenia. Zostaje konfiguracja
+            i krótka instrukcja, żeby nikt nie zgubił ustawień.
+          </p>
+        </div>
+        <div>
+          <h2>Kiedy potrzebna jest warstwa</h2>
+          <ul class="plainlist">
+            <li>Wiele kont, kanałów albo cenników.</li>
+            <li>Dokumenty: faktury, etykiety, potwierdzenia.</li>
+            <li>Nietypowe statusy i reguły biznesowe.</li>
+            <li>Kolejka błędów, ponowienia i logi.</li>
+            <li>Trzy i więcej systemów w jednym przepływie.</li>
+          </ul>
+          <p class="small muted" style="margin-top:12px">
+            Warstwa ma sens tylko wtedy, gdy daje kontrolę, której nie da się kupić
+            konfiguracją. Nie budujemy jej „na zapas”.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak to sprawdzamy w praktyce</h2>
+        <p class="section-intro">
+          Zanim cokolwiek wycenimy, przechodzimy ten sam test na Twoim opisie procesu.
+        </p>
+      </div>
+      <div class="split">
+        <div>
+          <ul class="plainlist">
+            <li>Spisujemy kroki i to, co dziś robi człowiek.</li>
+            <li>Sprawdzamy, które systemy mają API, a które tylko eksport.</li>
+            <li>Ustalamy, gdzie jest źródło prawdy dla zamówienia, stanu i ceny.</li>
+            <li>Listujemy wyjątki i sposób ich obsługi.</li>
+            <li>Dopiero potem mówimy, czy to konfiguracja, czy wdrożenie.</li>
+          </ul>
+        </div>
+        <div class="note">
+          <strong>Uczciwa odpowiedź bywa tania.</strong> Jeśli wystarczy gotowa integracja,
+          napiszesz to w diagnozie — bez proponowania wdrożenia za kilka tysięcy.
+          <span class="small muted" style="display:block;margin-top:10px">
+            Diagnoza i wycena: 0 zł, odpowiedź w ciągu 24 godzin.
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o wybór wariantu</h2>
+        <p class="section-intro">Konfiguracja, warstwa i granice obu.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Sprawdźmy to na Twoim procesie"
+    text="Opisz, między jakimi systemami krąży zamówienie i co robisz ręcznie, gdy coś się nie zgadza. Diagnoza i wycena wrócą w ciągu 24 godzin — także wtedy, gdy odpowiedź brzmi „wystarczy konfiguracja”."
+  />
+</Base>

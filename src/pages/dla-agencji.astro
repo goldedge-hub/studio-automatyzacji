@@ -1,12 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
+import FAQ from '../components/FAQ.astro';
 import { P } from '../data/pricing';
+
+const agencyFaq = [
+  {
+    q: 'Czy agencja musi podpisywać umowę bezpośrednio z klientem końcowym?',
+    a: 'Nie. Umowa jest między nami a agencją, a Ty rozliczasz się z klientem w swoim modelu. Nie wysyłamy ofert, nie dzwonimy i nie piszemy do klienta końcowego bez Twojej pisemnej zgody.',
+  },
+  {
+    q: 'Kto jest właścicielem kodu i dostępów?',
+    a: 'Kod, dokumentacja i dostępy przechodzą na agencję po opłaceniu zlecenia. Przekazujemy je w formie, którą możesz utrzymać sam albo zlecić dalej — bez uzależniania od naszego abonamentu.',
+  },
+  {
+    q: 'Czy możecie pracować na środowisku klienta, którego nie znacie?',
+    a: 'Tak, o ile jest dostęp testowy i dokumentacja API albo eksport danych. Jeśli system nie ma API, sprawdzamy bazę, eksport lub integrację pośrednią i mówimy wprost, kiedy połączenie jest nierealne.',
+  },
+  {
+    q: 'Jak szybko dostaniemy wycenę dla klienta?',
+    a: 'Diagnoza i wycena wracają w ciągu 24 godzin od briefu. Przy większych zakresach (trzy procesy lub środowisko ERP/WMS) podajemy widełki i pytania uzupełniające, a stałą cenę potwierdzamy po zebraniu brakujących danych.',
+  },
+  {
+    q: 'Czy wchodzicie w kontakt z klientem na etapie ustaleń?',
+    a: 'Domyślnie nie. Ustalenia prowadzi agencja, a my odpowiadamy na pytania techniczne przez Ciebie. Jeśli klient chce rozmowy bezpośredniej, robimy ją tylko za Twoją zgodą i z Twoim udziałem.',
+  },
+  {
+    q: 'Co, jeśli klient zgłosi błąd po odbiorze?',
+    a: `W zakresie uzgodnionym w zleceniu usuwamy błędy przez 30 dni. Dalsze utrzymanie może przejąć agencja albo zamówić opiekę w modelu white-label (${P.care} netto/mc za środowisko), z monitoringiem i alertami.`,
+  },
+];
 ---
+
 <Base
   title={`White-label dla agencji: ${P.whiteLabel}/proces`}
   description={`Automatyzacje e-commerce pod marką agencji: ${P.whiteLabel} netto za proces, NDA, bez kontaktu z klientem końcowym, kod i dokumentacja dla agencji.`}
   path="/dla-agencji/"
+  faq={agencyFaq}
 >
   <section class="page-head">
     <div class="wrap">
@@ -18,38 +48,44 @@ import { P } from '../data/pricing';
       <h1>Automatyzacje pod Twoją marką</h1>
       <p class="lead">
         Prowadzisz agencję marketingową, e-commerce albo integratorską i klient prosi
-        o automatyzację zamówień, zwrotów albo integracji sklepu? Wchodzę jako podwykonawca.
+        o automatyzację zamówień, zwrotów albo integracji sklepu? Wchodzimy jako podwykonawca.
         Cicho, terminowo, pod Twoim logo.
       </p>
       <div class="buttonrow">
         <a class="btn btn--primary" href="/kontakt/?temat=agencja" data-umami-event="cta_click" data-umami-event-label="Agencja: wyślij brief">Wyślij brief</a>
         <a class="btn btn--ghost" href="/ile-kosztuje/">Zobacz cennik</a>
       </div>
+      <p class="small muted" style="margin-top:14px">
+        Wycena dla klienta wraca w ciągu 24 godzin. Bez zobowiązania i bez kontaktu z klientem końcowym.
+      </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
+      <div class="section-head">
+        <h2>Dla jakich agencji to działa</h2>
+        <p class="section-intro">
+          Bierzemy te zlecenia, w których agencja sprzedaje efekt, a nie chce budować
+          własnego zespołu integracyjnego. Cztery najczęstsze sytuacje.
+        </p>
+      </div>
       <div class="split">
         <div>
-          <h2>Co dostajesz</h2>
           <ul class="checklist">
-            <li>Jeden proces end-to-end, do 3 integracji.</li>
-            <li>Wdrożenie, testy i dokumentację do przekazania klientowi.</li>
-            <li>Kod i dostępy przekazane agencji, nie bezpośrednio klientowi.</li>
-            <li>Kontakt operacyjny wyłącznie z Twoim zespołem.</li>
-            <li>NDA na życzenie, przed przekazaniem briefu.</li>
+            <li><strong>Agencja marketingowa</strong> — klient po kampanii potrzebuje, żeby zamówienia, statusy i faktury nie przechodziły ręcznie między sklepem, BaseLinkerem i ERP.</li>
+            <li><strong>Agencja e-commerce</strong> — wdrożyła sklep i dostaje pytania o integracje, których nie ma w zakresie utrzymania.</li>
+            <li><strong>Agencja integratorska</strong> — ma własny zespół, ale potrzebuje mocy na jeden proces albo wąską technologię (Python, API, OCR).</li>
+            <li><strong>Freelancer lub konsultant</strong> — sprzedaje doradztwo i chce mieć pewnego wykonawcę pod konkretny zakres, bez rekrutacji.</li>
           </ul>
         </div>
         <div>
-          <h2>Warunki</h2>
+          <h3>Kiedy to nie pasuje</h3>
           <ul class="plainlist">
-            <li>{P.whiteLabel} netto za jeden proces (do 3 integracji).</li>
-            <li>{P.whiteLabel3plus} netto za proces przy trzech procesach lub więcej.</li>
-            <li>Termin orientacyjnie 5–7 dni roboczych od briefu i dostępów.</li>
-            <li>Faktura na Twoją firmę. Płatność 50/50.</li>
-            <li>Brak kontaktu z klientem końcowym bez Twojej zgody.</li>
-            <li>Nie publikujemy realizacji bez pisemnej zgody agencji i klienta.</li>
+            <li>Proces wymaga ciągłej obecności u klienta i pracy w jego biurze.</li>
+            <li>Klient oczekuje umowy bezpośrednio z wykonawcą, a nie z agencją.</li>
+            <li>Zakres zmienia się co tydzień bez akceptacji zmian.</li>
+            <li>Brak dostępu do systemów, dokumentacji API i danych testowych.</li>
           </ul>
         </div>
       </div>
@@ -57,6 +93,105 @@ import { P } from '../data/pricing';
   </section>
 
   <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co dokładnie przejmujemy</h2>
+        <p class="section-intro">
+          Jeden proces end-to-end, do trzech integracji. Poniżej pełna lista tego,
+          co wchodzi w cenę — żebyś nie musiał domyślać się z oferty.
+        </p>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Praca techniczna</h3>
+          <ul class="checklist">
+            <li>Mapowanie pól i kierunków przepływu między systemami.</li>
+            <li>Integracja przez API, webhook, bazę danych albo eksport plików.</li>
+            <li>Obsługa wyjątków: ponowienia, kolejka błędów, alert do człowieka.</li>
+            <li>Testy na danych testowych klienta i lista przypadków brzegowych.</li>
+            <li>Logi, limity i zabezpieczenie przed podwójnym przetworzeniem.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Praca oddawana agencji</h3>
+          <ul class="checklist">
+            <li>Kod źródłowy i konfiguracja infrastruktury.</li>
+            <li>Dokumentacja wdrożenia: schemat przepływu, mapowanie, znane ograniczenia.</li>
+            <li>Instrukcja utrzymania i lista rzeczy, które wymagają reakcji.</li>
+            <li>Krótkie przekazanie techniczne dla Twojego zespołu (30–45 minut).</li>
+            <li>Kanał kontaktu operacyjnego wyłącznie po Twojej stronie.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak wygląda brief</h2>
+        <p class="section-intro">
+          Najlepszy brief to pół strony tekstu. Nie potrzebujesz prezentacji ani dostępu
+          do systemów na starcie — to ustalamy później.
+        </p>
+      </div>
+      <div class="split">
+        <div>
+          <ul class="plainlist">
+            <li>Które systemy mają rozmawiać ze sobą (np. sklep, BaseLinker, ERP, WMS, arkusz).</li>
+            <li>Który system jest źródłem prawdy dla zamówienia, stanu i ceny.</li>
+            <li>Co dziś robi człowiek: kroki, ich częstotliwość i czas trwania.</li>
+            <li>Gdzie najczęściej powstaje błąd i co się wtedy dzieje.</li>
+            <li>Czego klient oczekuje na końcu: brak ręcznej pracy, szybszy status, raport, kontrola.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Co dostajesz w odpowiedzi</h3>
+          <ul class="checklist">
+            <li>Ocenę, czy proces da się zautomatyzować w całości czy w części.</li>
+            <li>Stałą cenę za proces i orientacyjny termin.</li>
+            <li>Listę założeń i rzeczy, których nie obejmuje wycena.</li>
+            <li>Pytania techniczne, jeśli czegoś brakuje w briefie.</li>
+            <li>Informację, kiedy powiemy „stop” — jeśli automat nie ma sensu.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Wycena i warunki</h2>
+        <p class="section-intro">
+          Cennik jest stały i znany z góry. Nie rozliczamy godzin, nie doliczamy
+          dokumentacji po fakcie.
+        </p>
+      </div>
+      <div class="split">
+        <div>
+          <ul class="plainlist">
+            <li><strong>{P.whiteLabel} netto</strong> za jeden proces (do 3 integracji).</li>
+            <li><strong>{P.whiteLabel3plus} netto</strong> za proces przy trzech procesach lub więcej.</li>
+            <li>Termin orientacyjnie 5–7 dni roboczych od briefu i dostępów.</li>
+            <li>Faktura na Twoją firmę, płatność 50/50.</li>
+            <li>Zakres opisany przed startem; zmiany wyceniane osobno i tylko na piśmie.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Granice ceny</h3>
+          <ul class="plainlist">
+            <li>Licencje narzędzi (Make, n8n, cloud, API) po stronie klienta lub agencji.</li>
+            <li>Migracje danych historycznych to osobne zlecenie.</li>
+            <li>Zmiany w systemach zewnętrznych po odbiorze nie są objęte gwarancją.</li>
+            <li>Prace poza zakresem wymagają pisemnej akceptacji przed wykonaniem.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2>Jak to działa</h2>
@@ -79,7 +214,7 @@ import { P } from '../data/pricing';
           <h3>Wycena</h3>
           <p class="price">Stała cena</p>
           <p>Dostajesz zakres, cenę i orientacyjny termin. Bez rozliczania godzin.</p>
-          <span class="when">Przed pracami</span>
+          <span class="when">W ciągu 24 h</span>
         </div>
         <div class="path-step">
           <span class="n">03</span>
@@ -99,7 +234,7 @@ import { P } from '../data/pricing';
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--paper2">
     <div class="wrap">
       <div class="split">
         <div>
@@ -112,12 +247,13 @@ import { P } from '../data/pricing';
           </ul>
         </div>
         <div>
-          <h2>Kiedy to nie pasuje</h2>
+          <h2>Powiązane</h2>
           <ul class="plainlist">
-            <li>Proces wymaga ciągłej obecności u klienta i pracy w jego biurze.</li>
-            <li>Klient oczekuje umowy bezpośrednio z wykonawcą.</li>
-            <li>Zakres zmienia się co tydzień bez akceptacji zmian.</li>
-            <li>Brak dostępu do systemów i danych testowych.</li>
+            <li><a href="/integracje/">Integracje e-commerce: BaseLinker, Shoper, WooCommerce, KSeF</a></li>
+            <li><a href="/wdrozenia/">Zakresy wdrożeń Start, Growth i Scale</a></li>
+            <li><a href="/ile-kosztuje/">Pełny cennik z granicami zakresu</a></li>
+            <li><a href="/zaufanie/">Dane, NDA i zasady współpracy z AI</a></li>
+            <li><a href="/case-studies/">Co jest faktem w naszych realizacjach</a></li>
           </ul>
         </div>
       </div>
@@ -130,8 +266,17 @@ import { P } from '../data/pricing';
     </div>
   </section>
 
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania agencji</h2>
+      </div>
+      <FAQ items={agencyFaq} />
+    </div>
+  </section>
+
   <CTA
     title="Masz klienta, który potrzebuje automatyzacji?"
-    text="Prześlij brief przez formularz. Dostaniesz zakres, cenę i orientacyjny termin, zanim obiecasz cokolwiek klientowi."
+    text="Prześlij brief przez formularz. Dostaniesz zakres, cenę i orientacyjny termin w ciągu 24 godzin — zanim obiecasz cokolwiek klientowi."
   />
 </Base>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="rTitle rDesc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="rTitle">Podgląd raportu z audytu automatyzacji — strona pierwsza</title>
+  <desc id="rDesc">Ilustracja układu raportu: nagłówek z numerem, mapa procesu z czterema systemami, koszt pracy ręcznej, priorytety wdrożeń i ryzyka.</desc>
+  <rect width="1200" height="780" fill="#efe9db"/>
+  <rect x="0" y="0" width="1200" height="10" fill="#0f0e0b"/>
+
+  <!-- nagłówek -->
+  <text x="64" y="86" font-family="'Courier New', monospace" font-size="15" fill="#5d5748" letter-spacing="2">RAPORT Z AUDYTU · SA-2026-014</text>
+  <text x="64" y="146" font-size="42" fill="#0f0e0b">Mapa procesu i koszt pracy</text>
+  <text x="64" y="184" font-size="20" fill="#5d5748">Sklep odzieżowy · 3 kanały sprzedaży · dane fikcyjne (przykład)</text>
+  <line x1="64" y1="212" x2="1136" y2="212" stroke="#c8bda3" stroke-width="1"/>
+
+  <!-- mapa procesu -->
+  <text x="64" y="256" font-family="'Courier New', monospace" font-size="13" fill="#5d5748" letter-spacing="2">01 · PRZEPŁYW</text>
+  <g font-family="'Helvetica Neue', Arial, sans-serif">
+    <rect x="64" y="276" width="238" height="112" fill="#f7f3e8" stroke="#9c9179"/>
+    <text x="84" y="304" font-size="13" fill="#5d5748" letter-spacing="1">SKLEP</text>
+    <text x="84" y="332" font-size="17" fill="#0f0e0b">zamówienie</text>
+    <text x="84" y="356" font-size="15" fill="#5d5748">i płatność</text>
+
+    <rect x="342" y="276" width="238" height="112" fill="#f7f3e8" stroke="#9c9179"/>
+    <text x="362" y="304" font-size="13" fill="#5d5748" letter-spacing="1">BASELINKER</text>
+    <text x="362" y="332" font-size="17" fill="#0f0e0b">kolejka</text>
+    <text x="362" y="356" font-size="15" fill="#5d5748">i mapowanie</text>
+
+    <rect x="620" y="276" width="238" height="112" fill="#f7f3e8" stroke="#9c9179"/>
+    <text x="640" y="304" font-size="13" fill="#5d5748" letter-spacing="1">ERP</text>
+    <text x="640" y="332" font-size="17" fill="#0f0e0b">stany i faktura</text>
+    <text x="640" y="356" font-size="15" fill="#5d5748">REST / SQL</text>
+
+    <rect x="898" y="276" width="238" height="112" fill="#0c1030" stroke="#0c1030"/>
+    <text x="918" y="304" font-size="13" fill="#9aa4ff" letter-spacing="1">RAPORT</text>
+    <text x="918" y="332" font-size="17" fill="#f2ecdd">06:00 i wyjątki</text>
+    <text x="918" y="356" font-size="15" fill="#a8adc9">e-mail</text>
+
+    <g stroke="#1f2ad8" stroke-width="2">
+      <line x1="302" y1="332" x2="338" y2="332"/>
+      <line x1="580" y1="332" x2="616" y2="332"/>
+      <line x1="858" y1="332" x2="894" y2="332"/>
+    </g>
+    <text x="302" y="322" font-family="'Courier New', monospace" font-size="11" fill="#1f2ad8">webhook</text>
+    <text x="580" y="322" font-family="'Courier New', monospace" font-size="11" fill="#1f2ad8">API</text>
+    <text x="858" y="322" font-family="'Courier New', monospace" font-size="11" fill="#1f2ad8">REST</text>
+  </g>
+
+  <!-- koszt pracy -->
+  <text x="64" y="452" font-family="'Courier New', monospace" font-size="13" fill="#5d5748" letter-spacing="2">02 · KOSZT RĘCZNEJ PRACY</text>
+  <g font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#0f0e0b">
+    <text x="64" y="492">Przepisywanie zamówień</text>
+    <rect x="360" y="478" width="404" height="18" fill="#1f2ad8"/>
+    <text x="776" y="492" fill="#5d5748">38 h/mc</text>
+
+    <text x="64" y="532">Statusy i wysyłki</text>
+    <rect x="360" y="518" width="252" height="18" fill="#1f2ad8" opacity=".75"/>
+    <text x="624" y="532" fill="#5d5748">24 h/mc</text>
+
+    <text x="64" y="572">Faktury i zwroty</text>
+    <rect x="360" y="558" width="158" height="18" fill="#1f2ad8" opacity=".5"/>
+    <text x="530" y="572" fill="#5d5748">15 h/mc</text>
+
+    <text x="64" y="612">Raportowanie</text>
+    <rect x="360" y="598" width="84" height="18" fill="#1f2ad8" opacity=".32"/>
+    <text x="456" y="612" fill="#5d5748">8 h/mc</text>
+  </g>
+  <line x1="64" y1="642" x2="1136" y2="642" stroke="#c8bda3"/>
+
+  <!-- prawa kolumna -->
+  <text x="760" y="676" font-family="'Courier New', monospace" font-size="13" fill="#5d5748" letter-spacing="2">03 · PRIORYTET</text>
+  <text x="760" y="706" font-size="19" fill="#0f0e0b">1. Zamówienia — 38 h/mc</text>
+  <text x="760" y="732" font-size="15" fill="#5d5748">2. Statusy — 24 h/mc   3. Faktury — 15 h/mc</text>
+
+  <text x="64" y="676" font-family="'Courier New', monospace" font-size="13" fill="#5d5748" letter-spacing="2">WYMIAR</text>
+  <text x="64" y="708" font-size="34" fill="#0f0e0b">85 h/mc</text>
+  <text x="64" y="734" font-size="15" fill="#5d5748">łącznie do przejęcia · szacunek</text>
+</svg>
