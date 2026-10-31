@@ -1,0 +1,172 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import FAQ from '../../components/FAQ.astro';
+import { P } from '../../data/pricing';
+
+const faq = [
+  {
+    q: 'Czy raport zastępuje panel w BaseLinkerze lub ERP?',
+    a: 'Nie. Raport zbiera liczby z systemów, które już masz, i pokazuje je w jednym e-mailu. Nie zmienia stanów, nie księguje i nie zastępuje ERP ani księgowości.',
+  },
+  {
+    q: 'Skąd biorą się dane?',
+    a: 'Z API lub eksportu, który udostępnia system: zamówienia, płatności, stany, faktury, błędy integracji. Jeśli system nie ma API, ustalamy eksport pliku i kolejkę — wtedy zakres jest większy i wyceniamy go osobno.',
+  },
+  {
+    q: 'Co, jeśli rano liczby się nie zgadzają?',
+    a: 'Raport ma sekcję kontrolną: liczba zamówień, suma płatności i liczba dokumentów muszą się zgadzać z systemem źródłowym. Jeśli się nie zgadzają, dostajesz alert zamiast cichego błędu, a my dostajemy log.',
+  },
+  {
+    q: 'Ile to kosztuje?',
+    a: `Raport dla jednego–dwóch źródeł mieści się w pakiecie Start (${P.start} netto). Więcej źródeł, historii i alertów to zakres Growth (${P.growth} netto). Dokładny zakres potwierdzamy po diagnozie.`,
+  },
+  {
+    q: 'Czy mogę zrezygnować z raportu po wdrożeniu?',
+    a: 'Tak. Raport jest częścią wdrożenia, a nie abonamentem. Jeśli chcesz, żeby działał dalej i był monitorowany, wchodzi w zakres opieki technicznej.',
+  },
+];
+
+const sections = [
+  ['Zamówienia', 'nowe, opłacone, wysłane, anulowane — z podziałem na kanał'],
+  ['Pieniądze', 'suma opłaconych zamówień, zwroty, korekty, niezapłacone'],
+  ['Stany', 'produkty poniżej progu, rozjazdy między magazynem a sklepem'],
+  ['Błędy', 'nieudane integracje, odrzucone dokumenty, kolejka do poprawy'],
+  ['Odchylenia', 'co wygląda inaczej niż wczoraj i tydzień temu'],
+];
+---
+
+<Base
+  title="Raport operacyjny o 06:00 — jeden e-mail zamiast czterech paneli"
+  description="Codzienny raport z zamówień, płatności, stanów i błędów integracji. Jeden e-mail o 06:00, sekcja kontrolna i alert, gdy liczby się nie zgadzają."
+  path="/oferty/raport-operacyjny-0600/"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="mono">Oferta / raportowanie</p>
+      <h1>Raport operacyjny o 06:00.</h1>
+      <p class="lead">
+        Jeden e-mail, pięć liczb, zero klikania w cztery panele. Rano wiesz, co się sprzedało,
+        co się nie zgadza i gdzie system zgłosił błąd — zanim ktokolwiek zdąży o to zapytać.
+      </p>
+      <div class="buttonrow" style="margin-top:24px">
+        <a class="btn btn--primary" href="/kontakt/?temat=wdrozenie&amp;context=raport-0600"
+           data-umami-event="cta_click" data-umami-event-label="Oferta raport: diagnoza">Zamów bezpłatną diagnozę — 24 h</a>
+        <a class="text-link" href="#zakres">Zobacz zakres i granice</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="zakres">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co jest w e-mailu</h2>
+        <p class="section-intro">Pięć bloków, stała kolejność, zawsze o tej samej godzinie. Bez wykresów, których nikt nie czyta.</p>
+      </div>
+      <table class="table">
+        <tbody>
+          {sections.map(([name, desc]) => (
+            <tr>
+              <td><strong>{name}</strong></td>
+              <td>{desc}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:22px">
+        <strong>Warunek sensu:</strong> raport ma sens, gdy z systemów da się policzyć te same liczby,
+        które i tak sprawdzasz ręcznie. Jeśli nie da się — najpierw porządkujemy dane, dopiero potem raport.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Czego raport nie robi</h2>
+        <p class="section-intro">Granice są częścią oferty, nie drobnym drukiem.</p>
+      </div>
+      <ul class="checklist">
+        <li>Nie zastępuje ERP, księgowości ani systemu magazynowego.</li>
+        <li>Nie liczy marży, jeśli nie mamy kosztów zakupu i kosztów dostawy.</li>
+        <li>Nie tworzy dashboardu BI ani prognoz sprzedaży.</li>
+        <li>Nie poprawia danych źródłowych — pokazuje, gdzie się rozjeżdżają.</li>
+        <li>Nie wysyła raportu, jeśli źródło nie odpowiedziało w oknie czasowym — wtedy przychodzi alert.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Jak wygląda wdrożenie</h2>
+        <p class="section-intro">Cztery kroki, każdy z konkretnym rezultatem.</p>
+      </div>
+      <div class="path">
+        <div class="path-step">
+          <span class="n">01</span>
+          <h3>Źródła</h3>
+          <p class="price">Lista i dostępy</p>
+          <p>Ustalamy, z czego liczymy liczby i kto odpowiada za dostęp. Bez tego nie zaczynamy.</p>
+          <span class="when">Diagnoza + 1 dzień</span>
+        </div>
+        <div class="path-step">
+          <span class="n">02</span>
+          <h3>Metryki</h3>
+          <p class="price">Definicje na piśmie</p>
+          <p>Każda liczba ma definicję i źródło. „Zamówienie” znaczy to samo w raporcie i w systemie.</p>
+          <span class="when">2–3 dni</span>
+        </div>
+        <div class="path-step">
+          <span class="n">03</span>
+          <h3>Przepływ</h3>
+          <p class="price">E-mail o 06:00</p>
+          <p>Budujemy na danych testowych, z logiem i alertem przy błędzie. Nie na produkcji „na próbę”.</p>
+          <span class="when">3–5 dni</span>
+        </div>
+        <div class="path-step">
+          <span class="n">04</span>
+          <h3>Odbiór</h3>
+          <p class="price">Kryteria i runbook</p>
+          <p>Pięć dni porównania z systemem źródłowym. Zgodność liczb = odbiór. Rozjazdy = poprawka.</p>
+          <span class="when">5 dni testowych</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Cena i kryteria odbioru</h2>
+      </div>
+      <table class="table">
+        <tbody>
+          <tr><td><strong>Zakres</strong></td><td>1–2 źródła, 5 bloków raportu, e-mail o 06:00, alert przy błędzie</td></tr>
+          <tr><td><strong>Cena</strong></td><td>{P.start} netto (pakiet Start). Więcej źródeł i historii — {P.growth} netto (Growth).</td></tr>
+          <tr><td><strong>Termin</strong></td><td>5–10 dni roboczych od dostępów i danych testowych</td></tr>
+          <tr><td><strong>Odbiór</strong></td><td>5 dni kolejnych raportów; liczby zgodne z systemem źródłowym w polach kontrolnych; 0 błędów krytycznych</td></tr>
+          <tr><td><strong>Po odbiorze</strong></td><td>30 dni gwarancji. Dalej: opieka techniczna (monitoring, poprawki, przegląd kwartalny) albo przekazanie runbooka</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:18px">
+        <a class="text-link" href="/ile-kosztuje/">Pełny cennik i granice pakietów</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o raport</h2>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <CTA
+    title="Sprawdźmy, czy Twoje systemy policzą te same liczby."
+    text="Opisz, skąd dzisiaj bierzesz dane i co sprawdzasz ręcznie. Odpowiemy w ciągu 24 godzin, czy raport ma sens w Twoim przypadku."
+  />
+</Base>

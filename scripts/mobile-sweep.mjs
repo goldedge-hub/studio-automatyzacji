@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const paths=['/','/audyt/','/ile-kosztuje/','/opieka/','/wdrozenia/','/dla-agencji/','/o-studiu/','/kontakt/','/case-studies/','/przykladowy-raport/','/poradnik/','/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/','/poradnik/gotowa-integracja-czy-wlasna-warstwa/','/poradnik/ile-kosztuje-integracja-baselinker-allegro/','/branze/','/integracje/','/regulamin/','/polityka-prywatnosci/','/dziekujemy/'];
+const paths=['/','/audyt/','/ile-kosztuje/','/opieka/','/wdrozenia/','/dla-agencji/','/o-studiu/','/kontakt/','/case-studies/','/przykladowy-raport/','/poradnik/','/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/','/poradnik/gotowa-integracja-czy-wlasna-warstwa/','/poradnik/ile-kosztuje-integracja-baselinker-allegro/','/branze/','/integracje/','/regulamin/','/polityka-prywatnosci/','/dziekujemy/','/oferty/','/oferty/raport-operacyjny-0600/','/oferty/zamowienia-bez-przepisywania/','/produkty/','/produkty/audyt-procesu-diy/','/checklista/'];
 const widths=[320,360,390,414];
 const b=await chromium.launch(); const bad=[];
 for(const w of widths){

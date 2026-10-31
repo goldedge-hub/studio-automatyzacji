@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { P } from '../../data/pricing';
+
+const offers = [
+  {
+    href: '/oferty/zamowienia-bez-przepisywania/',
+    kicker: 'Proces / zamówienia',
+    title: 'Zamówienia bez przepisywania',
+    desc: 'Sklep i marketplace do ERP i księgowości. Kolejka wyjątków, log i alert, gdy przepływ się zatrzyma.',
+    price: `od ${P.start} netto`,
+  },
+  {
+    href: '/oferty/raport-operacyjny-0600/',
+    kicker: 'Proces / raportowanie',
+    title: 'Raport operacyjny o 06:00',
+    desc: 'Jeden e-mail rano: zamówienia, płatności, stany, błędy i odchylenia. Bez klikania w cztery panele.',
+    price: `od ${P.start} netto`,
+  },
+];
+---
+
+<Base
+  title="Oferty: zamówienia i raportowanie dla e-commerce"
+  description="Dwie oferty nazwane rezultatem: zamówienia bez przepisywania oraz raport operacyjny o 06:00. Zakres, granice i kryteria odbioru na piśmie."
+  path="/oferty/"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="mono">Oferty</p>
+      <h1>Kupujesz rezultat, nie liczbę procesów.</h1>
+      <p class="lead">
+        Pakiety Start, Growth i Scale mówią, ile procesów obejmują. Tutaj jest odwrotnie:
+        najpierw problem, który ma zniknąć, potem zakres i cena.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cards">
+        {offers.map((o) => (
+          <a class="card" href={o.href} data-umami-event="cta_click" data-umami-event-label={`Oferty: ${o.title}`}>
+            <p class="mono" style="margin:0 0 10px">{o.kicker}</p>
+            <h3 style="margin:0 0 10px">{o.title}</h3>
+            <p style="margin:0 0 18px">{o.desc}</p>
+            <p style="margin:0"><strong>{o.price}</strong> · <span class="text-link">Zobacz zakres →</span></p>
+          </a>
+        ))}
+      </div>
+      <p class="note" style="margin-top:26px">
+        <strong>Każda oferta kończy się kryteriami odbioru.</strong> Jeśli zakres tego nie spełnia,
+        nie podpisujemy odbioru. Ceny są netto; dokładny zakres potwierdzamy po bezpłatnej diagnozie.
+      </p>
+      <p style="margin-top:22px"><a class="text-link" href="/ile-kosztuje/">Pełny cennik pakietów i opieki</a></p>
+    </div>
+  </section>
+
+  <CTA
+    title="Nie wiesz, która oferta pasuje?"
+    text="Opisz proces, który zabiera najwięcej czasu. W ciągu 24 godzin powiemy, czy to zamówienia, raportowanie, czy coś zupełnie innego."
+  />
+</Base>

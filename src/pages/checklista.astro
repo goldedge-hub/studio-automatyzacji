@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+
+const groups = [
+  {
+    title: 'Proces',
+    intro: 'Bez tego nie da się policzyć, czy automatyzacja ma sens.',
+    items: [
+      ['Nazwa i cel procesu', 'Jedno zdanie: co ma się stać i po co. „Wystawianie faktur” to nie cel — cel to „faktura w ERP w ciągu 10 minut od opłacenia zamówienia”.'],
+      ['Wyzwalacz', 'Co dokładnie zaczyna proces: nowe zamówienie, zmiana statusu, godzina, e-mail, plik na dysku. Inny wyzwalacz = inna architektura.'],
+      ['Kroki i decyzje', 'Lista kroków po kolei oraz miejsca, w których ktoś podejmuje decyzję. Automatyzuje się kroki, nie decyzje, których nikt nie opisał.'],
+      ['Wyjątki', 'Co się dzieje, gdy produkt nie ma kodu, klient chce fakturę na inną nazwę, a zamówienie jest częściowo anulowane. Zwykle 10% przypadków zjada 90% czasu.'],
+    ],
+  },
+  {
+    title: 'Dane',
+    intro: 'Najczęstsza przyczyna nieudanych wdrożeń to nie kod, tylko dane.',
+    items: [
+      ['Pola krytyczne', 'Które pola muszą się zgadzać, żeby proces uznać za poprawny: NIP, kwota, numer zamówienia, kod produktu, termin dostawy.'],
+      ['Źródło prawdy', 'System, który jest rozstrzygający, gdy dwa systemy pokazują różne liczby. Jeśli nikt tego nie wie, automatyzacja sporu nie rozwiąże.'],
+      ['Wolumen', 'Ile razy dziennie, tygodniowo i w szczycie. Szczyt ma znaczenie większe niż średnia.'],
+      ['Jakość danych', 'Ile rekordów ma braki, duplikaty lub błędne formaty. Próbka 100 rekordów wystarczy, żeby zobaczyć skalę.'],
+    ],
+  },
+  {
+    title: 'Systemy',
+    intro: 'Lista bez wersji i dostępów to lista życzeń, nie wymagań.',
+    items: [
+      ['Lista systemów i wersji', 'Nazwa, wersja, dostawca, kto administruje. Wersja decyduje o tym, czy API w ogóle istnieje.'],
+      ['Sposób integracji', 'API, webhook, eksport pliku, baza danych, RPA po ekranie. Każdy z nich ma inną niezawodność i inny koszt utrzymania.'],
+      ['Limity i opóźnienia', 'Limity zapytań, okna synchronizacji, opóźnienia po stronie marketplace. Proces, który zakłada natychmiastowość, padnie na limicie.'],
+    ],
+  },
+  {
+    title: 'Ludzie i odpowiedzialność',
+    intro: 'Automatyzacja bez właściciela to awaria, która czeka na pierwszy urlop.',
+    items: [
+      ['Właściciel procesu', 'Osoba, która zna proces i może powiedzieć „tak, to jest poprawne”. Bez niej nie ma odbioru.'],
+      ['Kto akceptuje wynik', 'Kto sprawdza pierwsze dni pracy i podpisuje odbiór. Jeśli „wszyscy”, to znaczy „nikt”.'],
+    ],
+  },
+  {
+    title: 'Ryzyko',
+    intro: 'Dwie rzeczy, które trzeba ustalić przed startem, nie po incydencie.',
+    items: [
+      ['Co, jeśli się zatrzyma', 'Kto dostaje alert, w jakim czasie i co robi. Proces bez planu awaryjnego wraca do ręki w najgorszym momencie.'],
+      ['Dane osobowe i dostępy', 'Czy w procesie są dane osobowe, kto ma dostęp, jak długo trzymamy logi. To wpływa na architekturę, nie tylko na umowę.'],
+    ],
+  },
+];
+---
+
+<Base
+  title="15 danych, które musisz mieć przed automatyzacją procesu"
+  description="Checklista przed automatyzacją: proces, dane, systemy, odpowiedzialność i ryzyko. Piętnaście punktów, które decydują o tym, czy wdrożenie ma sens."
+  path="/checklista/"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="mono">Materiał / checklista</p>
+      <h1>15 danych przed automatyzacją.</h1>
+      <p class="lead">
+        Zanim wydasz pieniądze na wdrożenie, ktoś musi odpowiedzieć na piętnaście pytań.
+        Jeśli odpowiedzi nie ma, wdrożenie i tak je zada — tylko później i drożej.
+      </p>
+      <div class="buttonrow" style="margin-top:24px">
+        <a class="btn btn--primary" href="/kontakt/?temat=diagnoza"
+           data-umami-event="cta_click" data-umami-event-label="Checklista: diagnoza">Sprawdźmy to razem — 0 zł, 24 h</a>
+        <a class="text-link" href="/produkty/audyt-procesu-diy/">Wersja do samodzielnego wypełnienia</a>
+      </div>
+    </div>
+  </section>
+
+  {groups.map((g, gi) => (
+    <section class:list={['section', gi % 2 === 1 ? 'section--paper2' : '']}>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>{g.title}</h2>
+          <p class="section-intro">{g.intro}</p>
+        </div>
+        <ol class="checklist" start={gi * 4 + 1}>
+          {g.items.map(([name, desc]) => (
+            <li>
+              <strong>{name}.</strong> {desc}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co dalej</h2>
+        <p class="section-intro">Trzy ścieżki, zależnie od tego, ile już wiesz.</p>
+      </div>
+      <div class="cards">
+        <a class="card" href="/kontakt/?temat=diagnoza" data-umami-event="cta_click" data-umami-event-label="Checklista: diagnoza karta">
+          <p class="mono" style="margin:0 0 10px">0 zł</p>
+          <h3 style="margin:0 0 10px">Diagnoza i wycena</h3>
+          <p style="margin:0">Opisz proces, odpowiemy w 24 h: czy warto, ile godzin oszczędza i ile kosztuje wdrożenie.</p>
+        </a>
+        <a class="card" href="/produkty/audyt-procesu-diy/" data-umami-event="cta_click" data-umami-event-label="Checklista: produkt DIY">
+          <p class="mono" style="margin:0 0 10px">DIY</p>
+          <h3 style="margin:0 0 10px">Audyt procesu do samodzielnego wypełnienia</h3>
+          <p style="margin:0">Mapa, koszt pracy, priorytety i brief dla wykonawcy. W przygotowaniu — zapis na listę.</p>
+        </a>
+        <a class="card" href="/audyt/" data-umami-event="cta_click" data-umami-event-label="Checklista: audyt">
+          <p class="mono" style="margin:0 0 10px">Pogłębiony</p>
+          <h3 style="margin:0 0 10px">Audyt z raportem</h3>
+          <p style="margin:0">Mapa procesu, koszt ręcznej pracy, ryzyka i stała wycena wdrożenia. Odliczany od wdrożenia.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Masz już te dane? Sprawdźmy je."
+    text="Wyślij opis procesu i to, co udało się ustalić. Odpowiemy w ciągu 24 godzin — z wyceną albo z listą braków, które trzeba domknąć."
+  />
+</Base>

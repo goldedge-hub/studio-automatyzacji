@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+
+const products = [
+  {
+    href: '/produkty/audyt-procesu-diy/',
+    kicker: 'DIY / arkusz + przewodnik',
+    title: 'Audyt procesu do automatyzacji',
+    desc: 'Mapa jednego procesu, koszt ręcznej pracy, rejestr systemów, macierz priorytetów i brief dla wykonawcy.',
+    status: 'W przygotowaniu — zapis na listę',
+  },
+];
+const planned = [
+  ['KSeF — gotowość operacyjna sklepu', 'Mapa danych, odpowiedzialności, kolejka błędów i scenariusze wyjątków. Bez obietnicy zgodności prawnej z samego pobrania.'],
+  ['Zwroty i reklamacje bez chaosu', 'Statusy, rejestr zdarzeń, szablony komunikatów i kryteria eskalacji.'],
+  ['Dokumenty z poczty do kolejki', 'Słownik dokumentów, reguły OCR, progi pewności i kontrola człowieka.'],
+];
+---
+
+<Base
+  title="Produkty cyfrowe: arkusze i pakiety procesowe"
+  description="Produkty do samodzielnej pracy: audyt procesu DIY, pakiety procesowe KSeF, zwroty i dokumenty. Bez sklepu z dziesiątkami plików."
+  path="/produkty/"
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="mono">Produkty</p>
+      <h1>Wiedza, którą można kupić osobno.</h1>
+      <p class="lead">
+        Produkty są małe i konkretne: mają skrócić drogę do decyzji, a nie zastąpić wdrożenie.
+        Każdy zawiera rezultat, granice i brief, z którym można iść do wykonawcy.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cards">
+        {products.map((p) => (
+          <a class="card" href={p.href} data-umami-event="cta_click" data-umami-event-label={`Produkty: ${p.title}`}>
+            <p class="mono" style="margin:0 0 10px">{p.kicker}</p>
+            <h3 style="margin:0 0 10px">{p.title}</h3>
+            <p style="margin:0 0 16px">{p.desc}</p>
+            <p style="margin:0"><strong>{p.status}</strong> · <span class="text-link">Zobacz zawartość →</span></p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>W kolejce</h2>
+        <p class="section-intro">Powstaną dopiero po sprawdzeniu popytu — nie publikujemy czterech produktów naraz, żeby zapełnić sklep.</p>
+      </div>
+      <table class="table">
+        <tbody>
+          {planned.map(([name, desc]) => (
+            <tr><td><strong>{name}</strong></td><td>{desc}</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p style="margin-top:18px">
+        <a class="text-link" href="/kontakt/?temat=produkt">Napisz, który pakiet ma dla Ciebie sens →</a>
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Nie wiesz, czy produkt czy audyt?"
+    text="Opisz proces w dwóch zdaniach. Powiemy, czy wystarczy arkusz do samodzielnej pracy, czy potrzebna jest analiza systemów."
+  />
+</Base>

@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const paths=['/','/audyt/','/ile-kosztuje/','/dla-agencji/','/opieka/','/wdrozenia/','/o-studiu/','/kontakt/','/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/','/przykladowy-raport/','/regulamin/','/case-studies/'];
+const paths=['/','/audyt/','/ile-kosztuje/','/dla-agencji/','/opieka/','/wdrozenia/','/o-studiu/','/kontakt/','/poradnik/jak-policzyc-czy-automatyzacja-sie-zwraca/','/przykladowy-raport/','/regulamin/','/case-studies/','/oferty/','/oferty/raport-operacyjny-0600/','/oferty/zamowienia-bez-przepisywania/','/produkty/','/produkty/audyt-procesu-diy/','/checklista/'];
 const b=await chromium.launch();const c=await b.newContext({viewport:{width:1440,height:1000}});const p=await c.newPage();
 const bad=[];
 for(const u of paths){

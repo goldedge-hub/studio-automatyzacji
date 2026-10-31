@@ -1,0 +1,144 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import FAQ from '../../components/FAQ.astro';
+
+const inside = [
+  ['Arkusz mapy procesu', 'Kroki, wyzwalacz, decyzje i wyjątki — w formacie, który wypełnia się w 30–60 minut, jeśli znasz proces.'],
+  ['Kalkulator kosztu pracy', 'Czas × wolumen × stawka, z zastrzeżeniami i progiem, poniżej którego automatyzacja się nie zwraca.'],
+  ['Rejestr systemów i dostępów', 'Co jest potrzebne, kto administruje i czego nie wolno wklejać do arkusza.'],
+  ['Macierz priorytetów', 'Cztery kryteria: koszt czasu, ryzyko błędu, złożoność i zależność od ludzi. Wynik: kolejność wdrożeń.'],
+  ['Lista wyjątków', 'Szablon do zebrania przypadków, które psują proces — zanim zrobi to wykonawca.'],
+  ['Checklista bezpieczeństwa', 'Dane osobowe, dostępy, logi, kopie zapasowe. Pytania, które trzeba zadać przed startem.'],
+  ['Brief dla wykonawcy', 'Jedna strona: cel, zakres, kryteria odbioru, czego nie obejmuje. Do wysłania agencji lub programiście.'],
+];
+
+const faq = [
+  {
+    q: 'Czy to zastępuje audyt?',
+    a: 'Nie. To arkusz do samodzielnej pracy dla jednego procesu, który znasz. Audyt obejmuje analizę systemów, dane klienta, omówienie i stałą wycenę wdrożenia.',
+  },
+  {
+    q: 'W jakim formacie dostanę materiał?',
+    a: 'Arkusz XLSX, dokument PDF z instrukcją i wersja do druku. Wszystko w jednym archiwum, bez instalowania programów.',
+  },
+  {
+    q: 'Czy dostanę aktualizacje?',
+    a: 'Tak — aktualizacje wersji przez 12 miesięcy od zakupu, z informacją o zmianach. Po tym okresie materiał zostaje u Ciebie w wersji, którą pobrałeś.',
+  },
+  {
+    q: 'Jaki jest zakres wsparcia?',
+    a: 'Zgłoszenia błędów w niezmodyfikowanym pakiecie przez 14 dni. Pomoc w wypełnieniu, konsultacja procesu i adaptacja do Twoich systemów to osobna usługa.',
+  },
+  {
+    q: 'Czy mogę użyć tego u klienta, jeśli jestem agencją?',
+    a: 'Licencja podstawowa obejmuje jedną firmę. Do pracy z klientami potrzebna jest licencja agencyjna — napisz, przygotujemy warunki.',
+  },
+  {
+    q: 'Kiedy produkt będzie dostępny?',
+    a: 'Sprzedaż uruchamiamy po przygotowaniu dokumentów i procesu zakupu. Zapis na listę oznacza, że dostaniesz jedną wiadomość, gdy będzie gotowy — bez zobowiązań.',
+  },
+];
+---
+
+<Base
+  title="Audyt procesu do automatyzacji — arkusz do samodzielnej pracy"
+  description="Arkusz, kalkulator kosztu pracy, macierz priorytetów i brief dla wykonawcy. Samodzielna diagnoza jednego procesu przed wdrożeniem."
+  path="/produkty/audyt-procesu-diy/"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="mono">Produkt / DIY</p>
+      <h1>Audyt procesu do automatyzacji — zrób to sam.</h1>
+      <p class="lead">
+        Jeden proces, jedna mapa, jedna decyzja: automatyzować, użyć gotowej funkcji, czy najpierw
+        uporządkować dane. Arkusz prowadzi przez pytania, których nie zada Ci żaden generator tekstu.
+      </p>
+      <div class="buttonrow" style="margin-top:24px">
+        <a class="btn btn--primary" href="/kontakt/?temat=produkt"
+           data-umami-event="cta_click" data-umami-event-label="DIY: zapis na liste">Zapisz się na listę</a>
+        <a class="text-link" href="/checklista/">Najpierw zobacz 15 danych</a>
+      </div>
+      <p class="note" style="margin-top:22px">
+        <strong>Status:</strong> w przygotowaniu. Cena startowa 149 zł netto. Sprzedaż uruchomimy po
+        przygotowaniu dokumentów i procesu zakupu — zapis na listę nie jest zamówieniem i nie zobowiązuje do zakupu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co jest w środku</h2>
+        <p class="section-intro">Siedem elementów, które razem dają gotową decyzję i brief dla wykonawcy.</p>
+      </div>
+      <table class="table">
+        <tbody>
+          {inside.map(([name, desc]) => (
+            <tr><td><strong>{name}</strong></td><td>{desc}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Dla kogo, a dla kogo nie</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3 style="margin-top:0">Dla Ciebie, jeśli</h3>
+          <ul class="checklist">
+            <li>podejrzewasz, że tracisz godziny, ale nie wiesz, od czego zacząć;</li>
+            <li>znasz proces i możesz opisać go bez pomocy działu IT;</li>
+            <li>chcesz przygotować brief, zanim zapytasz wykonawcę o cenę;</li>
+            <li>potrzebujesz jednego dokumentu, a nie konsultacji.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Nie kupuj, jeśli</h3>
+          <ul class="checklist">
+            <li>szukasz gotowej integracji — to nie jest plik z kodem;</li>
+            <li>proces obejmuje kilka systemów i potrzebujesz decyzji technicznej — wybierz audyt;</li>
+            <li>potrzebujesz opinii prawnej lub podatkowej;</li>
+            <li>nie możesz poświęcić 30–60 minut na wypełnienie arkusza.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Warunki</h2>
+      </div>
+      <table class="table">
+        <tbody>
+          <tr><td><strong>Cena</strong></td><td>149 zł netto (cena startowa)</td></tr>
+          <tr><td><strong>Format</strong></td><td>XLSX + PDF (instrukcja i wersja do druku), archiwum ZIP</td></tr>
+          <tr><td><strong>Dostawa</strong></td><td>Link do pobrania na e-mail, ważny 14 dni; po tym czasie regenerujemy na prośbę</td></tr>
+          <tr><td><strong>Aktualizacje</strong></td><td>12 miesięcy od zakupu</td></tr>
+          <tr><td><strong>Wsparcie</strong></td><td>14 dni na zgłoszenia błędów w niezmodyfikowanym pakiecie</td></tr>
+          <tr><td><strong>Licencja</strong></td><td>Jedna firma. Praca u klientów — licencja agencyjna</td></tr>
+          <tr><td><strong>Wersja</strong></td><td>1.0 — publikacja przy starcie sprzedaży</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Pytania</h2></div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <CTA
+    title="Wolisz, żeby ktoś zrobił to z Tobą?"
+    text="Bezpłatna diagnoza i wycena w 24 h to ta sama praca, tylko po naszej stronie. Jeśli proces jest złożony, proponujemy audyt."
+  />
+</Base>
