@@ -1062,6 +1062,14 @@ strong, b { font-weight: 600; }
   .faq summary { min-height: 44px; padding-block: 10px; }
   .text-link { min-height: 44px; }
 
+  /* kontrolki formularzy i linki poza akapitem: pelny cel dotyku */
+  .skip { min-height: 44px; display: inline-flex; align-items: center; }
+  .calc input[type="range"] { height: 44px; }
+  .calc input[type="range"]::-webkit-slider-thumb { width: 22px; height: 22px; margin-top: -10.5px; }
+  .calc input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; }
+  .calc input[type="number"], .calc select { min-height: 44px; }
+  .at-cta-mail { min-height: 44px; display: inline-flex; align-items: center; }
+
   /* mniej pustki na waskim ekranie: krotsza strona bez ciecia tresci */
   :root { --section-y: clamp(44px, 7vw, 72px); }
   .at-hero { padding-top: 26px; }
@@ -1103,4 +1111,52 @@ strong, b { font-weight: 600; }
 @media (max-width: 900px) {
   .at-proof { grid-template-columns: 1fr; }
   .at-proof-figure { order: -1; }
+}
+
+/* ---------- Ścieżka procesu na wąskim ekranie ----------
+   identity.css nadpisał .path bez breakpointów: 4 kolumny po 87 px
+   łamały tekst i nachodziły na siebie. Poniżej stos: numer + treść. */
+@media (max-width: 900px) {
+  .path, .path--3 {
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--ink);
+  }
+  .path-step {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 18px 0 14px;
+    border-right: 0;
+    border-top: 1px solid var(--line);
+  }
+  .path-step:first-child { border-top: 0; }
+  .path-step > * { grid-column: 2; min-width: 0; }
+  .path-step .n {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    margin: 0;
+    padding-top: 3px;
+  }
+  .path-step h3 { margin: 0 0 6px; }
+  .path-step .price { margin: 0 0 8px; overflow-wrap: anywhere; }
+  .path-step .when { margin-top: 8px; }
+  .path-step:nth-child(2),
+  .path-step:nth-child(3),
+  .path-step:nth-child(4) { margin-top: 0; padding-right: 0; }
+}
+
+/* ---------- Podgląd raportu na wąskim ekranie ----------
+   Skala 1200 px wciśnięta w 346 px jest nieczytelna: pokazujemy
+   dokument w naturalnej szerokości z przewijaniem w poziomie. */
+@media (max-width: 900px) {
+  .at-proof-figure {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--surface);
+  }
+  .at-proof-figure img {
+    width: 720px;
+    max-width: none;
+  }
+  .at-proof-figure { scrollbar-width: thin; }
 }

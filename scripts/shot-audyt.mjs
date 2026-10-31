@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch();
+const d=await b.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
+const dp=await d.newPage(); await dp.goto('http://localhost:4337/audyt/',{waitUntil:'networkidle'});
+await dp.evaluate(()=>{const h=[...document.querySelectorAll('h2')].find(x=>x.textContent.includes('Jak wygląda audyt'));h?.scrollIntoView();}); await dp.waitForTimeout(800);
+await dp.screenshot({path:'C:/Users/sfajr/Documents/StudioAutomation/screens/2026-10-31/d-audyt-proof.png'});
+const m=await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+const mp=await m.newPage(); await mp.goto('http://localhost:4337/audyt/',{waitUntil:'networkidle'});
+await mp.evaluate(()=>{const h=[...document.querySelectorAll('h2')].find(x=>x.textContent.includes('Jak wygląda audyt'));h?.scrollIntoView();}); await mp.waitForTimeout(800);
+await mp.screenshot({path:'C:/Users/sfajr/Documents/StudioAutomation/screens/2026-10-31/m-audyt-proof.png'});
+console.log('ok'); await b.close();
