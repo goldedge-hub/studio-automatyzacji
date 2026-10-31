@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ArtifactHero from '../../components/ArtifactHero.astro';
+import ProcessMap from '../../components/ProcessMap.astro';
 import SeoCta from '../../components/SeoCta.astro';
 import SeoPricing from '../../components/SeoPricing.astro';
 import FAQ from '../../components/FAQ.astro';
@@ -77,26 +79,18 @@ const faq = [
   path="/integracje/"
   faq={faq}
 >
-  <section class="page-head">
-    <div class="wrap">
-      <div class="meta-line">
-        <span>Integracje</span>
-        <span>API, webhooki, kolejki wyjątków</span>
-        <span>Ceny netto</span>
-      </div>
-      <h1>Integracje e-commerce, które mają źródło prawdy</h1>
-      <p class="lead">
-        Integracja nie polega na tym, żeby „połączyć API”. Polega na ustaleniu, który
-        system jest nadrzędny, co się dzieje przy powtórzonym zdarzeniu i kiedy człowiek
-        musi przejąć rekord. Poniżej cztery obszary, które w e-commerce najczęściej
-        wymagają uporządkowania: BaseLinker z Allegro, Shoper, WooCommerce i KSeF.
-      </p>
-      <div class="buttonrow">
-        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
-        <a class="btn btn--ghost" href="#zasady">Trzy zasady integracji</a>
-      </div>
-    </div>
-  </section>
+  <ArtifactHero
+    variant="flow"
+    meta={['Integracje', 'API, webhooki, kolejki wyjątków', 'Ceny netto']}
+    title="Integracje e-commerce, które mają źródło prawdy"
+    lead="Integracja nie polega na tym, żeby „połączyć API”. Polega na ustaleniu, który system jest nadrzędny, co się dzieje przy powtórzonym zdarzeniu i kiedy człowiek musi przejąć rekord. Poniżej cztery obszary, które w e-commerce najczęściej wymagają uporządkowania: BaseLinker z Allegro, Shoper, WooCommerce i KSeF."
+  >
+    <Fragment slot="actions">
+      <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
+      <a class="btn btn--ghost" href="#zasady">Trzy zasady integracji</a>
+    </Fragment>
+    <Fragment slot="artifact"><ProcessMap /></Fragment>
+  </ArtifactHero>
 
   <section class="section">
     <div class="wrap">

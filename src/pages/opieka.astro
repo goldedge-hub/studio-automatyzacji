@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArtifactHero from '../components/ArtifactHero.astro';
+import SlaCard from '../components/SlaCard.astro';
 import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import { P } from '../data/pricing';
@@ -44,28 +46,19 @@ const rows = [
   path="/opieka/"
   faq={careFaq}
 >
-  <section class="page-head">
-    <div class="wrap">
-      <div class="meta-line">
-        <span>Po wdrożeniu</span>
-        <span>Opieka {P.care} netto/mc</span>
-        <span>Wypowiedzenie 1 mc</span>
-      </div>
-      <h1>Opieka techniczna po wdrożeniu</h1>
-      <p class="lead">
-        Automatyzacja nie jest pomnikiem. Zmieniają się API, cenniki i formaty plików.
-        Opieka pilnuje procesów e-commerce — zamówień, zwrotów, stanów i faktur — także
-        wtedy, gdy zmieni się coś poza naszym kodem.
-      </p>
-      <div class="buttonrow">
-        <a class="btn btn--primary" href="/kontakt/?temat=opieka" data-umami-event="cta_click" data-umami-event-label="Opieka: zapytaj o opiekę">Zapytaj o opiekę</a>
-        <a class="btn btn--ghost" href="/ile-kosztuje/#opieka">Zobacz cennik opieki</a>
-      </div>
-      <p class="small muted" style="margin-top:14px">
-        Oferta aktualna. Ceny netto. Plan miesięczny, bez rocznego zobowiązania.
-      </p>
-    </div>
-  </section>
+  <ArtifactHero
+    variant="document"
+    meta={['Po wdrożeniu', `Opieka ${P.care} netto/mc`, 'Wypowiedzenie 1 mc']}
+    title="Opieka techniczna po wdrożeniu"
+    lead="Automatyzacja nie jest pomnikiem. Zmieniają się API, cenniki i formaty plików. Opieka pilnuje procesów e-commerce — zamówień, zwrotów, stanów i faktur — także wtedy, gdy zmieni się coś poza naszym kodem."
+    note="Oferta aktualna. Ceny netto. Plan miesięczny, bez rocznego zobowiązania."
+  >
+    <Fragment slot="actions">
+      <a class="btn btn--primary" href="/kontakt/?temat=opieka" data-umami-event="cta_click" data-umami-event-label="Opieka: zapytaj o opiekę">Zapytaj o opiekę</a>
+      <a class="btn btn--ghost" href="/ile-kosztuje/#opieka">Zobacz cennik opieki</a>
+    </Fragment>
+    <Fragment slot="artifact"><SlaCard /></Fragment>
+  </ArtifactHero>
 
   <section class="section" id="poziomy">
     <div class="wrap">
