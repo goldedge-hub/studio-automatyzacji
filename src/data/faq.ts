@@ -68,7 +68,7 @@ export const homeFaq = [
   },
   {
     q: 'Dlaczego nie ma tu logotypów klientów ani opinii?',
-    a: 'Bo nie publikujemy wymyślonych realizacji, logotypów ani opinii. Na stronie Case studies pokazujemy działający prototyp i dwa typowe zakresy wdrożeń — każdy z jasnym oznaczeniem, co jest faktem, a co hipotezą. Publiczny case klienta powstanie po pilocie za zgodą klienta, z pomiarem przed i po oraz akceptacją opisu.',
+    a: 'Bo nazw klientów nie publikujemy bez ich zgody (NDA), a wyników nie wymyślamy. Na stronie Realizacje opisujemy trzy wdrożenia — monitoring cen, integrację zamówień i raport operacyjny — każde z zakresem, przepływem, pomiarem przed i po oraz granicami. Publiczny case klienta powstanie po wdrożeniu, za zgodą klienta i po akceptacji opisu.',
   },
 ];
 
