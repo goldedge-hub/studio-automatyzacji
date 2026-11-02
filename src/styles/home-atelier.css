@@ -387,7 +387,7 @@
 
 .at-tags span {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--muted);
@@ -452,7 +452,7 @@
 
 .at-flow-tag {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--signal-ink);
@@ -579,7 +579,7 @@
 
 .at-step-time {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -702,7 +702,7 @@
 
 .at-case-tag {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border: 1px solid var(--rule-2);
@@ -741,7 +741,7 @@
   display: block;
   margin-bottom: 4px;
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   font-style: normal;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -766,7 +766,7 @@
   padding-top: 12px;
   border-top: 1px solid var(--rule);
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
