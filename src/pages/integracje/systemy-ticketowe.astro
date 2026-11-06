@@ -1,0 +1,225 @@
+---
+import Base from '../../layouts/Base.astro';
+import SeoCta from '../../components/SeoCta.astro';
+import SeoPricing from '../../components/SeoPricing.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactLink from '../../components/ContactLink.astro';
+
+const problems = [
+  {
+    t: 'Zgłoszenia rozproszone po kanałach',
+    d: 'Mail, telefon, formularz i czat prowadzą do czterech miejsc. Zespół nie widzi, kto co obsługuje, a klient dostaje dwie różne odpowiedzi.',
+  },
+  {
+    t: 'Ticket nie ma kontekstu zamówienia',
+    d: 'Pytanie o zwrot albo status paczki wymaga ręcznego szukania zamówienia w sklepie. Bez powiązania ticket–zamówienie obsługa trwa dłużej, niż powinna.',
+  },
+  {
+    t: 'Priorytety i SLA ustalane na oko',
+    d: 'Reklamacja i prośba o rabat mają ten sam priorytet. Bez reguł kolejka działa jak skrzynka, a terminów nikt nie pilnuje.',
+  },
+  {
+    t: 'Zwroty i reklamacje poza obiegiem',
+    d: 'Ticket zamyka się po odpowiedzi, ale zwrot żyje dalej w magazynie. Nikt nie łączy zgłoszenia ze stanem towaru i dokumentem korekty.',
+  },
+  {
+    t: 'Brak pomiaru obsługi',
+    d: 'Ile trwa pierwsza odpowiedź? Ile zgłoszeń czeka? Bez raportu nie wiadomo, gdzie obsługa klienta traci czas.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Jaki system ticketowy wybrać dla sklepu?',
+    a: 'Zaczynamy od skali: liczba zgłoszeń, kanały i to, czy zespół pracuje w jednym miejscu. Dla mniejszych sklepów często wystarcza rozszerzenie obecnego narzędzia; dla wielokanałowych — system z automatyzacją i SLA.',
+  },
+  {
+    q: 'Czy system ticketowy połączy się ze Shoperem?',
+    a: 'Tak. Kluczowe jest powiązanie zgłoszenia z zamówieniem: dane klienta, status, paczka i historia. Ustalamy, które pola mają się synchronizować, i pilnujemy idempotencji, żeby jedno zdarzenie nie tworzyło duplikatów.',
+  },
+  {
+    q: 'Czy zwroty można obsłużyć w systemie ticketowym?',
+    a: 'Można poprowadzić zgłoszenie od przyjęcia do zamknięcia razem z decyzją. Fizyczny odbiór towaru i księgowanie korekty zostają po stronie zespołu — automatyzacja przygotowuje dane i pilnuje terminów.',
+  },
+  {
+    q: 'Ile trwa wdrożenie systemu ticketowego?',
+    a: 'Proste wdrożenie z jedną integracją zamyka się zwykle w tygodniu roboczym. Rozbudowane — z SLA, wieloma kanałami i raportowaniem — planujemy etapami, żeby obsługa klienta działała bez przestoju.',
+  },
+];
+---
+<Base
+  title="Systemy ticketowe dla e-commerce: Shoper, zgłoszenia, SLA"
+  description="System ticketowy dla sklepu: integracja ze Shoperem i BaseLinkerem, zwroty, reklamacje, priorytety i raport obsługi klienta. Ceny netto."
+  path="/integracje/systemy-ticketowe/"
+  faq={faq}
+>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="meta-line">
+        <span>Integracje</span>
+        <span>Obsługa klienta</span>
+        <span>Zgłoszenia, zwroty, SLA</span>
+      </div>
+      <h1>System ticketowy dla sklepu: zgłoszenia z kontekstem zamówienia</h1>
+      <p class="lead">
+        Większość zgłoszeń w e-commerce dotyczy zamówienia: status paczki, zwrot,
+        reklamacja, faktura. System ticketowy ma sens dopiero wtedy, gdy ticket
+        jest powiązany z zamówieniem i obiegiem w sklepie — nie jest drugą skrzynką.
+      </p>
+      <div class="buttonrow">
+        <ContactLink class="btn btn--primary" topic="diagnoza" label="Diagnoza i wycena 0 zł" />
+        <a class="btn btn--ghost" href="#problemy">Typowe problemy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Typowe problemy</h2>
+        <p class="section-intro">
+          Ticket to dopiero początek. Problemy zaczynają się tam, gdzie zgłoszenie
+          styka się z zamówieniem, magazynem i dokumentem.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        {problems.map((p, i) => (
+          <div class="problem-item">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2" id="co-automatyzujemy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Co automatyzujemy</h2>
+        <p class="section-intro">
+          Cztery przepływy w formacie: wyzwalacz → kroki → wynik → wyjątki do człowieka.
+          Każdy można wdrożyć osobno, z własnym kryterium odbioru.
+        </p>
+      </div>
+
+      <div class="doc-row">
+        <h3>1. Zgłoszenie z mailem trafia do ticketu z kontekstem</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> nowy mail na adres obsługi albo formularz ze strony.</p>
+          <ol class="number-list">
+            <li>Odbierz wiadomość i zapisz nadawcę oraz temat.</li>
+            <li>Dopasuj klienta po adresie e-mail albo numerze telefonu.</li>
+            <li>Powiąż ticket z zamówieniami klienta i dołącz statusy.</li>
+            <li>Przydziel kolejce według tematu: reklamacja, zwrot, pytanie.</li>
+          </ol>
+          <p><strong>Wynik:</strong> agent widzi historię klienta i zamówienia w jednym widoku.</p>
+          <p><strong>Wyjątki:</strong> nieznany nadawca, wiele zamówień, klient B2B, mail w innym języku.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>2. Priorytety i SLA pilnują same siebie</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> utworzenie ticketu albo zmiana statusu.</p>
+          <ol class="number-list">
+            <li>Ustal priorytet regułą: typ sprawy, wartość zamówienia, VIP.</li>
+            <li>Przypisz czas pierwszej odpowiedzi i rozwiązania.</li>
+            <li>Wysyłaj przypomnienia, gdy zbliża się termin.</li>
+            <li>Eskaluj do przełożonego po przekroczeniu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> reklamacje nie czekają za pytaniami o rabat.</p>
+          <p><strong>Wyjątki:</strong> spór, klient premium, temat spoza słownika, urlop agenta.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>3. Zwrot i reklamacja w jednym obiegu</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> zgłoszenie zwrotu lub reklamacji.</p>
+          <ol class="number-list">
+            <li>Utwórz rekord zwrotu powiązany z zamówieniem.</li>
+            <li>Zapisz powód, stan towaru i sposób rozliczenia.</li>
+            <li>Po przyjęciu towaru zaktualizuj status i poinformuj klienta.</li>
+            <li>Przygotuj dane do korekty i zamknij ticket po rozliczeniu.</li>
+          </ol>
+          <p><strong>Wynik:</strong> zgłoszenie i towar mają wspólną historię, a klient jeden status.</p>
+          <p><strong>Wyjątki:</strong> częściowy zwrot, uszkodzony towar, decyzja ręczna, korekta księgowa.</p>
+        </div>
+      </div>
+
+      <div class="doc-row">
+        <h3>4. Raport obsługi bez ręcznego liczenia</h3>
+        <div class="doc-body">
+          <p><strong>Wyzwalacz:</strong> cyklicznie, rano albo tygodniowo.</p>
+          <ol class="number-list">
+            <li>Zbierz otwarte tickety i czasy oczekiwania.</li>
+            <li>Policz pierwszą odpowiedź i czas rozwiązania per kolejka.</li>
+            <li>Zapisz trend i wyślij podsumowanie do kierownika.</li>
+            <li>Oznacz tickety bez odpowiedzi dłużej niż próg.</li>
+          </ol>
+          <p><strong>Wynik:</strong> wiadomo, gdzie obsługa traci czas i ile zgłoszeń naprawdę wpływa.</p>
+          <p><strong>Wyjątki:</strong> dni wolne, sezon, kampanie, zgłoszenia testowe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>Kiedy NIE warto</h2>
+          <p class="lead">
+            Nie każda skrzynka potrzebuje systemu ticketowego. Czasem wystarczy
+            porządek w kanałach i jedna odpowiedzialna osoba.
+          </p>
+          <ul class="plainlist">
+            <li>Zgłoszeń jest kilka dziennie i obsługuje je jedna osoba.</li>
+            <li>Sklep jest w trakcie migracji — wtedy najpierw stabilizujemy obieg zamówień.</li>
+            <li>Zespół pracuje już w narzędziu z natywnymi integracjami, którego nie używa w pełni.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Powiązane strony</h2>
+          <ul class="plainlist">
+            <li><a class="text-link" href="/integracje/shoper/">Integracja Shoper</a></li>
+            <li><a class="text-link" href="/integracje/baselinker-allegro/">BaseLinker ↔ Allegro</a></li>
+            <li><a class="text-link" href="/integracje/ksef/">KSeF dla sklepów</a></li>
+            <li><a class="text-link" href="/audyt/">Audyt automatyzacji</a></li>
+            <li><a class="text-link" href="/ile-kosztuje/">Cennik netto</a></li>
+          </ul>
+          <div class="note" style="margin-top:24px">
+            <strong>Ticket bez zamówienia to druga skrzynka.</strong> Zanim
+            wdrożymy system, sprawdzamy, które dane ze sklepu mają zasilać zgłoszenia.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SeoPricing
+    heading="Ile kosztuje wdrożenie systemu ticketowego"
+    intro="Start obejmuje zwykle jeden kanał i powiązanie ze sklepem. Growth ma sens, gdy dodajemy SLA, zwroty i raport. Ceny netto."
+    fit="Start dla maila + Shoper; Growth dla wielu kanałów, SLA i zwrotów; Scale dla zespołów z raportowaniem i integracją z ERP."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pytania o systemy ticketowe</h2>
+        <p class="section-intro">Wybór narzędzia, integracja ze sklepem i mierzenie obsługi. Bez założenia, że więcej funkcji znaczy lepiej.</p>
+      </div>
+      <FAQ items={faq} />
+    </div>
+  </section>
+
+  <SeoCta
+    title="Zgłoszenia z kontekstem zamówienia?"
+    text="Napisz, ile zgłoszeń obsługujecie i z których kanałów. Sprawdzimy, czy system ticketowy jest w ogóle potrzebny, czy wystarczy uporządkować obecny obieg."
+  />
+</Base>
